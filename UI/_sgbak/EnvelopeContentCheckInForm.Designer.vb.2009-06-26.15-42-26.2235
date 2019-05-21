@@ -1,0 +1,664 @@
+﻿Namespace UI
+
+  <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+  Partial Class VehicleCheckInForm
+    Inherits UI.MDIChildFormBase
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+      If disposing AndAlso components IsNot Nothing Then
+        components.Dispose()
+      End If
+      MyBase.Dispose(disposing)
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+      Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(VehicleCheckInForm))
+      Me.searchEnvelopeIdGroupBox = New System.Windows.Forms.GroupBox
+      Me.downloadAdButton = New System.Windows.Forms.Button
+      Me.senderLabel = New System.Windows.Forms.Label
+      Me.loadButton = New System.Windows.Forms.Button
+      Me.envelopeIdTextBox = New System.Windows.Forms.TextBox
+      Me.adDateLabel = New System.Windows.Forms.Label
+      Me.adDateTypeInDatePicker = New MCAP.UI.Controls.TypeInDatePicker
+      Me.marketLabel = New System.Windows.Forms.Label
+      Me.marketComboBox = New System.Windows.Forms.ComboBox
+      Me.retailerComboBox = New System.Windows.Forms.ComboBox
+      Me.retailerLabel = New System.Windows.Forms.Label
+      Me.newspaperComboBox = New System.Windows.Forms.ComboBox
+      Me.newspaperLabel = New System.Windows.Forms.Label
+      Me.startDateTypeInDatePicker = New MCAP.UI.Controls.TypeInDatePicker
+      Me.startDateLabel = New System.Windows.Forms.Label
+      Me.endDateTypeInDatePicker = New MCAP.UI.Controls.TypeInDatePicker
+      Me.endDateLabel = New System.Windows.Forms.Label
+      Me.flashCheckBox = New System.Windows.Forms.CheckBox
+      Me.vehicleIdLabel = New System.Windows.Forms.Label
+      Me.vehicleIdValueLabel = New System.Windows.Forms.Label
+      Me.checkInNewButton = New System.Windows.Forms.Button
+      Me.printLabelButton = New System.Windows.Forms.Button
+      Me.clearButton = New System.Windows.Forms.Button
+      Me.newRetailerButton = New System.Windows.Forms.Button
+      Me.ropCheckInButton = New System.Windows.Forms.Button
+      Me.requiredRetailersLabel = New System.Windows.Forms.Label
+      Me.requiredRetailersDataGridView = New System.Windows.Forms.DataGridView
+      Me.searchVehicleGroupBox = New System.Windows.Forms.GroupBox
+      Me.gotoButton = New System.Windows.Forms.Button
+      Me.vehicleIdTextBox = New System.Windows.Forms.TextBox
+      Me.languageComboBox = New System.Windows.Forms.ComboBox
+      Me.languageLabel = New System.Windows.Forms.Label
+      Me.closeButton = New System.Windows.Forms.Button
+      Me.mediaComboBox = New System.Windows.Forms.ComboBox
+      Me.mediaLabel = New System.Windows.Forms.Label
+      Me.tradeclassLabel = New System.Windows.Forms.Label
+      Me.tradeclassValueLabel = New System.Windows.Forms.Label
+      Me.checkInSameButton = New System.Windows.Forms.Button
+      Me.priorityValueLabel = New System.Windows.Forms.Label
+      Me.priorityLabel = New System.Windows.Forms.Label
+      Me.multipleOccurrencesCheckBox = New System.Windows.Forms.CheckBox
+      Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
+      Me.commentsTextBox = New System.Windows.Forms.TextBox
+      Me.commentsLabel = New System.Windows.Forms.Label
+      Me.checkInNewAndIndexButton = New System.Windows.Forms.Button
+      Me.checkInSameAndIndexButton = New System.Windows.Forms.Button
+      Me.deleteButton = New System.Windows.Forms.Button
+      CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
+      Me.searchEnvelopeIdGroupBox.SuspendLayout()
+      CType(Me.requiredRetailersDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+      Me.searchVehicleGroupBox.SuspendLayout()
+      Me.TableLayoutPanel1.SuspendLayout()
+      Me.SuspendLayout()
+      '
+      'smalliconImageList
+      '
+      Me.smalliconImageList.ImageStream = CType(resources.GetObject("smalliconImageList.ImageStream"), System.Windows.Forms.ImageListStreamer)
+      Me.smalliconImageList.Images.SetKeyName(0, "Filter.ico")
+      Me.smalliconImageList.Images.SetKeyName(1, "Printer.ico")
+      Me.smalliconImageList.Images.SetKeyName(2, "DefaultPrinter.ico")
+      '
+      'searchEnvelopeIdGroupBox
+      '
+      Me.searchEnvelopeIdGroupBox.Controls.Add(Me.downloadAdButton)
+      Me.searchEnvelopeIdGroupBox.Controls.Add(Me.senderLabel)
+      Me.searchEnvelopeIdGroupBox.Controls.Add(Me.loadButton)
+      Me.searchEnvelopeIdGroupBox.Controls.Add(Me.envelopeIdTextBox)
+      Me.searchEnvelopeIdGroupBox.Location = New System.Drawing.Point(12, 12)
+      Me.searchEnvelopeIdGroupBox.Name = "searchEnvelopeIdGroupBox"
+      Me.searchEnvelopeIdGroupBox.Size = New System.Drawing.Size(638, 47)
+      Me.searchEnvelopeIdGroupBox.TabIndex = 0
+      Me.searchEnvelopeIdGroupBox.TabStop = False
+      Me.searchEnvelopeIdGroupBox.Text = "Load from En&velope Id"
+      '
+      'downloadAdButton
+      '
+      Me.downloadAdButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+      Me.downloadAdButton.Location = New System.Drawing.Point(537, 17)
+      Me.downloadAdButton.Name = "downloadAdButton"
+      Me.downloadAdButton.Size = New System.Drawing.Size(95, 23)
+      Me.downloadAdButton.TabIndex = 39
+      Me.downloadAdButton.Text = "Download Ad"
+      Me.downloadAdButton.UseVisualStyleBackColor = True
+      '
+      'senderLabel
+      '
+      Me.senderLabel.AutoSize = True
+      Me.senderLabel.Location = New System.Drawing.Point(254, 22)
+      Me.senderLabel.Name = "senderLabel"
+      Me.senderLabel.Size = New System.Drawing.Size(84, 13)
+      Me.senderLabel.TabIndex = 2
+      Me.senderLabel.Text = "<Sender Name>"
+      '
+      'loadButton
+      '
+      Me.loadButton.Location = New System.Drawing.Point(173, 17)
+      Me.loadButton.Name = "loadButton"
+      Me.loadButton.Size = New System.Drawing.Size(75, 23)
+      Me.loadButton.TabIndex = 1
+      Me.loadButton.Text = "&Load"
+      Me.loadButton.UseVisualStyleBackColor = True
+      '
+      'envelopeIdTextBox
+      '
+      Me.envelopeIdTextBox.Location = New System.Drawing.Point(6, 19)
+      Me.envelopeIdTextBox.MaxLength = 10
+      Me.envelopeIdTextBox.Name = "envelopeIdTextBox"
+      Me.envelopeIdTextBox.Size = New System.Drawing.Size(161, 20)
+      Me.envelopeIdTextBox.TabIndex = 0
+      '
+      'adDateLabel
+      '
+      Me.adDateLabel.AutoSize = True
+      Me.adDateLabel.Location = New System.Drawing.Point(9, 156)
+      Me.adDateLabel.Name = "adDateLabel"
+      Me.adDateLabel.Size = New System.Drawing.Size(46, 13)
+      Me.adDateLabel.TabIndex = 7
+      Me.adDateLabel.Text = "&Ad Date"
+      '
+      'adDateTypeInDatePicker
+      '
+      Me.adDateTypeInDatePicker.Location = New System.Drawing.Point(79, 150)
+      Me.adDateTypeInDatePicker.MaximumSize = New System.Drawing.Size(72, 22)
+      Me.adDateTypeInDatePicker.MinimumSize = New System.Drawing.Size(72, 22)
+      Me.adDateTypeInDatePicker.Name = "adDateTypeInDatePicker"
+      Me.adDateTypeInDatePicker.Size = New System.Drawing.Size(72, 22)
+      Me.adDateTypeInDatePicker.TabIndex = 8
+      Me.adDateTypeInDatePicker.Value = Nothing
+      '
+      'marketLabel
+      '
+      Me.marketLabel.AutoSize = True
+      Me.marketLabel.Location = New System.Drawing.Point(9, 101)
+      Me.marketLabel.Name = "marketLabel"
+      Me.marketLabel.Size = New System.Drawing.Size(40, 13)
+      Me.marketLabel.TabIndex = 3
+      Me.marketLabel.Text = "&Market"
+      '
+      'marketComboBox
+      '
+      Me.marketComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
+      Me.marketComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+      Me.marketComboBox.FormattingEnabled = True
+      Me.marketComboBox.Location = New System.Drawing.Point(79, 96)
+      Me.marketComboBox.Name = "marketComboBox"
+      Me.marketComboBox.Size = New System.Drawing.Size(289, 21)
+      Me.marketComboBox.TabIndex = 4
+      '
+      'retailerComboBox
+      '
+      Me.retailerComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
+      Me.retailerComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+      Me.retailerComboBox.FormattingEnabled = True
+      Me.retailerComboBox.Location = New System.Drawing.Point(79, 178)
+      Me.retailerComboBox.Name = "retailerComboBox"
+      Me.retailerComboBox.Size = New System.Drawing.Size(289, 21)
+      Me.retailerComboBox.TabIndex = 10
+      '
+      'retailerLabel
+      '
+      Me.retailerLabel.AutoSize = True
+      Me.retailerLabel.Location = New System.Drawing.Point(9, 183)
+      Me.retailerLabel.Name = "retailerLabel"
+      Me.retailerLabel.Size = New System.Drawing.Size(43, 13)
+      Me.retailerLabel.TabIndex = 9
+      Me.retailerLabel.Text = "&Retailer"
+      '
+      'newspaperComboBox
+      '
+      Me.newspaperComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
+      Me.newspaperComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+      Me.newspaperComboBox.FormattingEnabled = True
+      Me.newspaperComboBox.Location = New System.Drawing.Point(79, 123)
+      Me.newspaperComboBox.Name = "newspaperComboBox"
+      Me.newspaperComboBox.Size = New System.Drawing.Size(289, 21)
+      Me.newspaperComboBox.TabIndex = 6
+      '
+      'newspaperLabel
+      '
+      Me.newspaperLabel.AutoSize = True
+      Me.newspaperLabel.Location = New System.Drawing.Point(9, 128)
+      Me.newspaperLabel.Name = "newspaperLabel"
+      Me.newspaperLabel.Size = New System.Drawing.Size(61, 13)
+      Me.newspaperLabel.TabIndex = 5
+      Me.newspaperLabel.Text = "Ne&wspaper"
+      '
+      'startDateTypeInDatePicker
+      '
+      Me.startDateTypeInDatePicker.Location = New System.Drawing.Point(79, 252)
+      Me.startDateTypeInDatePicker.MaximumSize = New System.Drawing.Size(72, 22)
+      Me.startDateTypeInDatePicker.MinimumSize = New System.Drawing.Size(72, 22)
+      Me.startDateTypeInDatePicker.Name = "startDateTypeInDatePicker"
+      Me.startDateTypeInDatePicker.Size = New System.Drawing.Size(72, 22)
+      Me.startDateTypeInDatePicker.TabIndex = 18
+      Me.startDateTypeInDatePicker.Value = Nothing
+      Me.startDateTypeInDatePicker.Visible = False
+      '
+      'startDateLabel
+      '
+      Me.startDateLabel.AutoSize = True
+      Me.startDateLabel.Location = New System.Drawing.Point(9, 255)
+      Me.startDateLabel.Name = "startDateLabel"
+      Me.startDateLabel.Size = New System.Drawing.Size(55, 13)
+      Me.startDateLabel.TabIndex = 17
+      Me.startDateLabel.Text = "&Start Date"
+      Me.startDateLabel.Visible = False
+      '
+      'endDateTypeInDatePicker
+      '
+      Me.endDateTypeInDatePicker.Location = New System.Drawing.Point(296, 252)
+      Me.endDateTypeInDatePicker.MaximumSize = New System.Drawing.Size(72, 22)
+      Me.endDateTypeInDatePicker.MinimumSize = New System.Drawing.Size(72, 22)
+      Me.endDateTypeInDatePicker.Name = "endDateTypeInDatePicker"
+      Me.endDateTypeInDatePicker.Size = New System.Drawing.Size(72, 22)
+      Me.endDateTypeInDatePicker.TabIndex = 20
+      Me.endDateTypeInDatePicker.Value = Nothing
+      Me.endDateTypeInDatePicker.Visible = False
+      '
+      'endDateLabel
+      '
+      Me.endDateLabel.AutoSize = True
+      Me.endDateLabel.Location = New System.Drawing.Point(223, 255)
+      Me.endDateLabel.Name = "endDateLabel"
+      Me.endDateLabel.Size = New System.Drawing.Size(52, 13)
+      Me.endDateLabel.TabIndex = 19
+      Me.endDateLabel.Text = "E&nd Date"
+      Me.endDateLabel.Visible = False
+      '
+      'flashCheckBox
+      '
+      Me.flashCheckBox.AutoSize = True
+      Me.flashCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+      Me.flashCheckBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.flashCheckBox.Location = New System.Drawing.Point(19, 280)
+      Me.flashCheckBox.Name = "flashCheckBox"
+      Me.flashCheckBox.Size = New System.Drawing.Size(65, 17)
+      Me.flashCheckBox.TabIndex = 23
+      Me.flashCheckBox.Text = "&FLASH"
+      Me.flashCheckBox.UseVisualStyleBackColor = True
+      '
+      'vehicleIdLabel
+      '
+      Me.vehicleIdLabel.AutoSize = True
+      Me.vehicleIdLabel.Location = New System.Drawing.Point(253, 281)
+      Me.vehicleIdLabel.Name = "vehicleIdLabel"
+      Me.vehicleIdLabel.Size = New System.Drawing.Size(54, 13)
+      Me.vehicleIdLabel.TabIndex = 25
+      Me.vehicleIdLabel.Text = "VehicleId:"
+      Me.vehicleIdLabel.Visible = False
+      '
+      'vehicleIdValueLabel
+      '
+      Me.vehicleIdValueLabel.AutoSize = True
+      Me.vehicleIdValueLabel.Location = New System.Drawing.Point(302, 281)
+      Me.vehicleIdValueLabel.Name = "vehicleIdValueLabel"
+      Me.vehicleIdValueLabel.Size = New System.Drawing.Size(66, 13)
+      Me.vehicleIdValueLabel.TabIndex = 26
+      Me.vehicleIdValueLabel.Text = "<Vehicle Id>"
+      Me.vehicleIdValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+      '
+      'checkInNewButton
+      '
+      Me.checkInNewButton.Location = New System.Drawing.Point(12, 303)
+      Me.checkInNewButton.Name = "checkInNewButton"
+      Me.checkInNewButton.Size = New System.Drawing.Size(97, 23)
+      Me.checkInNewButton.TabIndex = 27
+      Me.checkInNewButton.Text = "C&heck In - New"
+      Me.checkInNewButton.UseVisualStyleBackColor = True
+      '
+      'printLabelButton
+      '
+      Me.printLabelButton.Location = New System.Drawing.Point(12, 390)
+      Me.printLabelButton.Name = "printLabelButton"
+      Me.printLabelButton.Size = New System.Drawing.Size(97, 23)
+      Me.printLabelButton.TabIndex = 33
+      Me.printLabelButton.Text = "Print La&bel"
+      Me.printLabelButton.UseVisualStyleBackColor = True
+      '
+      'clearButton
+      '
+      Me.clearButton.Location = New System.Drawing.Point(115, 390)
+      Me.clearButton.Name = "clearButton"
+      Me.clearButton.Size = New System.Drawing.Size(75, 23)
+      Me.clearButton.TabIndex = 34
+      Me.clearButton.Text = "&Clear"
+      Me.clearButton.UseVisualStyleBackColor = True
+      '
+      'newRetailerButton
+      '
+      Me.newRetailerButton.Location = New System.Drawing.Point(12, 361)
+      Me.newRetailerButton.Name = "newRetailerButton"
+      Me.newRetailerButton.Size = New System.Drawing.Size(97, 23)
+      Me.newRetailerButton.TabIndex = 31
+      Me.newRetailerButton.Text = "New Re&tailer"
+      Me.newRetailerButton.UseVisualStyleBackColor = True
+      '
+      'ropCheckInButton
+      '
+      Me.ropCheckInButton.Location = New System.Drawing.Point(115, 361)
+      Me.ropCheckInButton.Name = "ropCheckInButton"
+      Me.ropCheckInButton.Size = New System.Drawing.Size(178, 23)
+      Me.ropCheckInButton.TabIndex = 32
+      Me.ropCheckInButton.Text = "Check-&In ROP for this Envelope"
+      Me.ropCheckInButton.UseVisualStyleBackColor = True
+      '
+      'requiredRetailersLabel
+      '
+      Me.requiredRetailersLabel.AutoSize = True
+      Me.requiredRetailersLabel.Location = New System.Drawing.Point(385, 69)
+      Me.requiredRetailersLabel.Name = "requiredRetailersLabel"
+      Me.requiredRetailersLabel.Size = New System.Drawing.Size(94, 13)
+      Me.requiredRetailersLabel.TabIndex = 35
+      Me.requiredRetailersLabel.Text = "Required Retailers"
+      '
+      'requiredRetailersDataGridView
+      '
+      Me.requiredRetailersDataGridView.AllowUserToAddRows = False
+      Me.requiredRetailersDataGridView.AllowUserToDeleteRows = False
+      Me.requiredRetailersDataGridView.AllowUserToResizeColumns = False
+      Me.requiredRetailersDataGridView.AllowUserToResizeRows = False
+      Me.requiredRetailersDataGridView.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+                  Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+      Me.requiredRetailersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+      Me.requiredRetailersDataGridView.Location = New System.Drawing.Point(388, 92)
+      Me.requiredRetailersDataGridView.Name = "requiredRetailersDataGridView"
+      Me.requiredRetailersDataGridView.ReadOnly = True
+      Me.requiredRetailersDataGridView.Size = New System.Drawing.Size(262, 377)
+      Me.requiredRetailersDataGridView.TabIndex = 36
+      Me.requiredRetailersDataGridView.TabStop = False
+      '
+      'searchVehicleGroupBox
+      '
+      Me.searchVehicleGroupBox.Controls.Add(Me.gotoButton)
+      Me.searchVehicleGroupBox.Controls.Add(Me.vehicleIdTextBox)
+      Me.searchVehicleGroupBox.Location = New System.Drawing.Point(12, 422)
+      Me.searchVehicleGroupBox.Name = "searchVehicleGroupBox"
+      Me.searchVehicleGroupBox.Size = New System.Drawing.Size(262, 47)
+      Me.searchVehicleGroupBox.TabIndex = 35
+      Me.searchVehicleGroupBox.TabStop = False
+      Me.searchVehicleGroupBox.Text = "Search on &Vehicle Id"
+      '
+      'gotoButton
+      '
+      Me.gotoButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+      Me.gotoButton.Location = New System.Drawing.Point(173, 18)
+      Me.gotoButton.Name = "gotoButton"
+      Me.gotoButton.Size = New System.Drawing.Size(75, 23)
+      Me.gotoButton.TabIndex = 36
+      Me.gotoButton.Text = "&Search"
+      Me.gotoButton.UseVisualStyleBackColor = True
+      '
+      'vehicleIdTextBox
+      '
+      Me.vehicleIdTextBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                  Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+      Me.vehicleIdTextBox.Location = New System.Drawing.Point(7, 20)
+      Me.vehicleIdTextBox.MaxLength = 10
+      Me.vehicleIdTextBox.Name = "vehicleIdTextBox"
+      Me.vehicleIdTextBox.Size = New System.Drawing.Size(160, 20)
+      Me.vehicleIdTextBox.TabIndex = 35
+      '
+      'languageComboBox
+      '
+      Me.languageComboBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                  Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+      Me.languageComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
+      Me.languageComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+      Me.languageComboBox.Location = New System.Drawing.Point(79, 225)
+      Me.languageComboBox.Name = "languageComboBox"
+      Me.languageComboBox.Size = New System.Drawing.Size(289, 21)
+      Me.languageComboBox.TabIndex = 16
+      Me.languageComboBox.TabStop = False
+      Me.languageComboBox.Visible = False
+      '
+      'languageLabel
+      '
+      Me.languageLabel.AutoSize = True
+      Me.languageLabel.Location = New System.Drawing.Point(9, 230)
+      Me.languageLabel.Name = "languageLabel"
+      Me.languageLabel.Size = New System.Drawing.Size(55, 13)
+      Me.languageLabel.TabIndex = 15
+      Me.languageLabel.Text = "Lang&uage"
+      Me.languageLabel.Visible = False
+      '
+      'closeButton
+      '
+      Me.closeButton.Location = New System.Drawing.Point(290, 439)
+      Me.closeButton.Name = "closeButton"
+      Me.closeButton.Size = New System.Drawing.Size(75, 23)
+      Me.closeButton.TabIndex = 37
+      Me.closeButton.Text = "Cl&ose"
+      Me.closeButton.UseVisualStyleBackColor = True
+      '
+      'mediaComboBox
+      '
+      Me.mediaComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
+      Me.mediaComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+      Me.mediaComboBox.FormattingEnabled = True
+      Me.mediaComboBox.Location = New System.Drawing.Point(79, 69)
+      Me.mediaComboBox.Name = "mediaComboBox"
+      Me.mediaComboBox.Size = New System.Drawing.Size(289, 21)
+      Me.mediaComboBox.TabIndex = 2
+      '
+      'mediaLabel
+      '
+      Me.mediaLabel.AutoSize = True
+      Me.mediaLabel.Location = New System.Drawing.Point(9, 74)
+      Me.mediaLabel.Name = "mediaLabel"
+      Me.mediaLabel.Size = New System.Drawing.Size(36, 13)
+      Me.mediaLabel.TabIndex = 1
+      Me.mediaLabel.Text = "Me&dia"
+      '
+      'tradeclassLabel
+      '
+      Me.tradeclassLabel.AutoSize = True
+      Me.tradeclassLabel.Location = New System.Drawing.Point(9, 205)
+      Me.tradeclassLabel.Name = "tradeclassLabel"
+      Me.tradeclassLabel.Size = New System.Drawing.Size(59, 13)
+      Me.tradeclassLabel.TabIndex = 11
+      Me.tradeclassLabel.Text = "Tradeclass"
+      '
+      'tradeclassValueLabel
+      '
+      Me.tradeclassValueLabel.AutoSize = True
+      Me.tradeclassValueLabel.Location = New System.Drawing.Point(80, 205)
+      Me.tradeclassValueLabel.Name = "tradeclassValueLabel"
+      Me.tradeclassValueLabel.Size = New System.Drawing.Size(71, 13)
+      Me.tradeclassValueLabel.TabIndex = 12
+      Me.tradeclassValueLabel.Text = "<Tradeclass>"
+      '
+      'checkInSameButton
+      '
+      Me.checkInSameButton.Location = New System.Drawing.Point(12, 332)
+      Me.checkInSameButton.Name = "checkInSameButton"
+      Me.checkInSameButton.Size = New System.Drawing.Size(97, 23)
+      Me.checkInSameButton.TabIndex = 29
+      Me.checkInSameButton.Text = "Chec&k In - Same"
+      Me.checkInSameButton.UseVisualStyleBackColor = True
+      '
+      'priorityValueLabel
+      '
+      Me.priorityValueLabel.AutoSize = True
+      Me.priorityValueLabel.Location = New System.Drawing.Point(318, 205)
+      Me.priorityValueLabel.Name = "priorityValueLabel"
+      Me.priorityValueLabel.Size = New System.Drawing.Size(50, 13)
+      Me.priorityValueLabel.TabIndex = 14
+      Me.priorityValueLabel.Text = "<Priority>"
+      '
+      'priorityLabel
+      '
+      Me.priorityLabel.AutoSize = True
+      Me.priorityLabel.Location = New System.Drawing.Point(271, 205)
+      Me.priorityLabel.Name = "priorityLabel"
+      Me.priorityLabel.Size = New System.Drawing.Size(41, 13)
+      Me.priorityLabel.TabIndex = 13
+      Me.priorityLabel.Text = "Priority:"
+      '
+      'multipleOccurrencesCheckBox
+      '
+      Me.multipleOccurrencesCheckBox.AutoSize = True
+      Me.multipleOccurrencesCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+      Me.multipleOccurrencesCheckBox.Location = New System.Drawing.Point(90, 280)
+      Me.multipleOccurrencesCheckBox.Name = "multipleOccurrencesCheckBox"
+      Me.multipleOccurrencesCheckBox.Size = New System.Drawing.Size(126, 17)
+      Me.multipleOccurrencesCheckBox.TabIndex = 24
+      Me.multipleOccurrencesCheckBox.Text = "Multipl&e Occurrences"
+      Me.multipleOccurrencesCheckBox.UseVisualStyleBackColor = True
+      '
+      'TableLayoutPanel1
+      '
+      Me.TableLayoutPanel1.ColumnCount = 2
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64.0!))
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+      Me.TableLayoutPanel1.Controls.Add(Me.commentsTextBox, 1, 0)
+      Me.TableLayoutPanel1.Controls.Add(Me.commentsLabel, 0, 0)
+      Me.TableLayoutPanel1.Location = New System.Drawing.Point(12, 225)
+      Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+      Me.TableLayoutPanel1.RowCount = 1
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+      Me.TableLayoutPanel1.Size = New System.Drawing.Size(356, 47)
+      Me.TableLayoutPanel1.TabIndex = 37
+      '
+      'commentsTextBox
+      '
+      Me.commentsTextBox.Dock = System.Windows.Forms.DockStyle.Fill
+      Me.commentsTextBox.Location = New System.Drawing.Point(67, 3)
+      Me.commentsTextBox.Multiline = True
+      Me.commentsTextBox.Name = "commentsTextBox"
+      Me.commentsTextBox.ReadOnly = True
+      Me.commentsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+      Me.commentsTextBox.Size = New System.Drawing.Size(286, 41)
+      Me.commentsTextBox.TabIndex = 1
+      Me.commentsTextBox.TabStop = False
+      '
+      'commentsLabel
+      '
+      Me.commentsLabel.AutoSize = True
+      Me.commentsLabel.Location = New System.Drawing.Point(3, 0)
+      Me.commentsLabel.Name = "commentsLabel"
+      Me.commentsLabel.Size = New System.Drawing.Size(56, 13)
+      Me.commentsLabel.TabIndex = 0
+      Me.commentsLabel.Text = "Comments"
+      '
+      'checkInNewAndIndexButton
+      '
+      Me.checkInNewAndIndexButton.Location = New System.Drawing.Point(115, 303)
+      Me.checkInNewAndIndexButton.Name = "checkInNewAndIndexButton"
+      Me.checkInNewAndIndexButton.Size = New System.Drawing.Size(178, 23)
+      Me.checkInNewAndIndexButton.TabIndex = 28
+      Me.checkInNewAndIndexButton.Text = "Check In - New; Index Now"
+      Me.checkInNewAndIndexButton.UseVisualStyleBackColor = True
+      '
+      'checkInSameAndIndexButton
+      '
+      Me.checkInSameAndIndexButton.Location = New System.Drawing.Point(115, 331)
+      Me.checkInSameAndIndexButton.Name = "checkInSameAndIndexButton"
+      Me.checkInSameAndIndexButton.Size = New System.Drawing.Size(178, 23)
+      Me.checkInSameAndIndexButton.TabIndex = 30
+      Me.checkInSameAndIndexButton.Text = "Check In - Same; Index Now"
+      Me.checkInSameAndIndexButton.UseVisualStyleBackColor = True
+      '
+      'deleteButton
+      '
+      Me.deleteButton.Location = New System.Drawing.Point(218, 390)
+      Me.deleteButton.Name = "deleteButton"
+      Me.deleteButton.Size = New System.Drawing.Size(75, 23)
+      Me.deleteButton.TabIndex = 38
+      Me.deleteButton.Text = "Delete"
+      Me.deleteButton.UseVisualStyleBackColor = True
+      '
+      'VehicleCheckInForm
+      '
+      Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+      Me.ClientSize = New System.Drawing.Size(662, 480)
+      Me.Controls.Add(Me.deleteButton)
+      Me.Controls.Add(Me.checkInSameAndIndexButton)
+      Me.Controls.Add(Me.checkInNewAndIndexButton)
+      Me.Controls.Add(Me.TableLayoutPanel1)
+      Me.Controls.Add(Me.multipleOccurrencesCheckBox)
+      Me.Controls.Add(Me.priorityValueLabel)
+      Me.Controls.Add(Me.priorityLabel)
+      Me.Controls.Add(Me.checkInSameButton)
+      Me.Controls.Add(Me.tradeclassValueLabel)
+      Me.Controls.Add(Me.tradeclassLabel)
+      Me.Controls.Add(Me.mediaComboBox)
+      Me.Controls.Add(Me.mediaLabel)
+      Me.Controls.Add(Me.closeButton)
+      Me.Controls.Add(Me.languageComboBox)
+      Me.Controls.Add(Me.languageLabel)
+      Me.Controls.Add(Me.searchVehicleGroupBox)
+      Me.Controls.Add(Me.requiredRetailersDataGridView)
+      Me.Controls.Add(Me.requiredRetailersLabel)
+      Me.Controls.Add(Me.ropCheckInButton)
+      Me.Controls.Add(Me.newRetailerButton)
+      Me.Controls.Add(Me.clearButton)
+      Me.Controls.Add(Me.printLabelButton)
+      Me.Controls.Add(Me.checkInNewButton)
+      Me.Controls.Add(Me.vehicleIdValueLabel)
+      Me.Controls.Add(Me.vehicleIdLabel)
+      Me.Controls.Add(Me.flashCheckBox)
+      Me.Controls.Add(Me.endDateTypeInDatePicker)
+      Me.Controls.Add(Me.endDateLabel)
+      Me.Controls.Add(Me.startDateTypeInDatePicker)
+      Me.Controls.Add(Me.startDateLabel)
+      Me.Controls.Add(Me.newspaperComboBox)
+      Me.Controls.Add(Me.newspaperLabel)
+      Me.Controls.Add(Me.retailerComboBox)
+      Me.Controls.Add(Me.retailerLabel)
+      Me.Controls.Add(Me.marketComboBox)
+      Me.Controls.Add(Me.marketLabel)
+      Me.Controls.Add(Me.adDateTypeInDatePicker)
+      Me.Controls.Add(Me.adDateLabel)
+      Me.Controls.Add(Me.searchEnvelopeIdGroupBox)
+      Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+      Me.Name = "VehicleCheckInForm"
+      Me.StatusMessage = ""
+      Me.Text = "Vehicle Check-In"
+      CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).EndInit()
+      Me.searchEnvelopeIdGroupBox.ResumeLayout(False)
+      Me.searchEnvelopeIdGroupBox.PerformLayout()
+      CType(Me.requiredRetailersDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+      Me.searchVehicleGroupBox.ResumeLayout(False)
+      Me.searchVehicleGroupBox.PerformLayout()
+      Me.TableLayoutPanel1.ResumeLayout(False)
+      Me.TableLayoutPanel1.PerformLayout()
+      Me.ResumeLayout(False)
+      Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents searchEnvelopeIdGroupBox As System.Windows.Forms.GroupBox
+    Friend WithEvents senderLabel As System.Windows.Forms.Label
+    Friend WithEvents loadButton As System.Windows.Forms.Button
+    Friend WithEvents envelopeIdTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents adDateLabel As System.Windows.Forms.Label
+    Friend WithEvents adDateTypeInDatePicker As MCAP.UI.Controls.TypeInDatePicker
+    Friend WithEvents marketLabel As System.Windows.Forms.Label
+    Friend WithEvents marketComboBox As System.Windows.Forms.ComboBox
+    Friend WithEvents retailerComboBox As System.Windows.Forms.ComboBox
+    Friend WithEvents retailerLabel As System.Windows.Forms.Label
+    Friend WithEvents newspaperComboBox As System.Windows.Forms.ComboBox
+    Friend WithEvents newspaperLabel As System.Windows.Forms.Label
+    Friend WithEvents startDateTypeInDatePicker As MCAP.UI.Controls.TypeInDatePicker
+    Friend WithEvents startDateLabel As System.Windows.Forms.Label
+    Friend WithEvents endDateTypeInDatePicker As MCAP.UI.Controls.TypeInDatePicker
+    Friend WithEvents endDateLabel As System.Windows.Forms.Label
+    Friend WithEvents flashCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents vehicleIdLabel As System.Windows.Forms.Label
+    Friend WithEvents vehicleIdValueLabel As System.Windows.Forms.Label
+    Friend WithEvents checkInNewButton As System.Windows.Forms.Button
+    Friend WithEvents printLabelButton As System.Windows.Forms.Button
+    Friend WithEvents clearButton As System.Windows.Forms.Button
+    Friend WithEvents newRetailerButton As System.Windows.Forms.Button
+    Friend WithEvents ropCheckInButton As System.Windows.Forms.Button
+    Friend WithEvents requiredRetailersLabel As System.Windows.Forms.Label
+    Friend WithEvents requiredRetailersDataGridView As System.Windows.Forms.DataGridView
+    Friend WithEvents searchVehicleGroupBox As System.Windows.Forms.GroupBox
+    Friend WithEvents gotoButton As System.Windows.Forms.Button
+    Friend WithEvents vehicleIdTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents languageComboBox As System.Windows.Forms.ComboBox
+    Friend WithEvents languageLabel As System.Windows.Forms.Label
+    Friend WithEvents closeButton As System.Windows.Forms.Button
+    Friend WithEvents mediaComboBox As System.Windows.Forms.ComboBox
+    Friend WithEvents mediaLabel As System.Windows.Forms.Label
+    Friend WithEvents tradeclassLabel As System.Windows.Forms.Label
+    Friend WithEvents tradeclassValueLabel As System.Windows.Forms.Label
+    Friend WithEvents checkInSameButton As System.Windows.Forms.Button
+    Friend WithEvents priorityValueLabel As System.Windows.Forms.Label
+    Friend WithEvents priorityLabel As System.Windows.Forms.Label
+    Friend WithEvents multipleOccurrencesCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+    Friend WithEvents commentsTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents commentsLabel As System.Windows.Forms.Label
+    Friend WithEvents checkInNewAndIndexButton As System.Windows.Forms.Button
+    Friend WithEvents checkInSameAndIndexButton As System.Windows.Forms.Button
+    Friend WithEvents deleteButton As System.Windows.Forms.Button
+    Friend WithEvents downloadAdButton As System.Windows.Forms.Button
+
+  End Class
+
+End Namespace

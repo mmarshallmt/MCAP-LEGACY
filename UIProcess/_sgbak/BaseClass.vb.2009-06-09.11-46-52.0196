@@ -1,0 +1,626 @@
+Imports System.Drawing.Printing
+
+
+Namespace UI.Processors
+
+  Public Class BaseClass
+    Implements IDisposable
+
+
+#Region " Deletages "
+
+    Public Delegate Sub MCAPEventHandler(ByVal sender As Object, ByVal e As UI.Processors.EventArgs)
+    Public Delegate Sub MCAPCancellableEventHandler(ByVal sender As Object, ByVal e As UI.Processors.CancellableEventArgs)
+
+#End Region
+
+
+    
+
+    ''' <summary>
+    ''' DataRow holding information about logged on user.
+    ''' </summary>
+    Protected Shared m_currentUser As UserRolesDataSet.UserRow
+
+    ''' <summary>
+    ''' Stores text which is to be printed as a barcode.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private m_barcodeText As String
+
+    ''' <summary>
+    ''' Stores text while is to be printer after barcode on same line in human readable characters.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private m_suffixText As String
+
+    ''' <summary>
+    ''' Description which is to be printed below barcode.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private m_barcodeDescription As String
+
+    Private m_VehicleId, m_EnvelopeId, m_PubVehicleId, m_Priority, m_AdDate, m_NPDate, m_Retailer, m_Market, m_ShortName, m_Publication, m_SenderName As String
+
+    ''' <summary>
+    ''' Instance of PrintDocument to print barcode to printer.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private WithEvents m_printDocument As System.Drawing.Printing.PrintDocument
+
+
+
+#Region " Constructor & Destructor "
+
+    ''' <summary>
+    ''' Default constructor.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Sub New()
+      m_printDocument = New System.Drawing.Printing.PrintDocument
+    End Sub
+
+    Private disposedValue As Boolean = False    ' To detect redundant calls
+
+    ' IDisposable
+    Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+      If Not Me.disposedValue Then
+        If disposing Then
+          ' TODO: free other state (managed objects).
+        End If
+
+        ' TODO: free your own state (unmanaged objects).
+        ' TODO: set large fields to null.
+      End If
+      Me.disposedValue = True
+    End Sub
+
+#Region " IDisposable Support "
+
+    ' This code added by Visual Basic to correctly implement the disposable pattern.
+    Public Sub Dispose() Implements IDisposable.Dispose
+      ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
+      Dispose(True)
+      GC.SuppressFinalize(Me)
+    End Sub
+
+#End Region
+
+
+#End Region
+
+
+    ''' <summary>
+    ''' Gets or sets text which is to be printed as barcode.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Property BarcodeText() As String
+      Get
+        Return m_barcodeText
+      End Get
+      Set(ByVal value As String)
+        m_barcodeText = value
+      End Set
+    End Property
+
+    ''' <summary>
+    ''' Gets or sets text which is to be printed after barcode on same line but 
+    ''' in human readable characters.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Property SuffixText() As String
+      Get
+        Return m_suffixText
+      End Get
+      Set(ByVal value As String)
+        m_suffixText = value
+      End Set
+    End Property
+
+    ''' <summary>
+    ''' Gets or sets text which is to be printed below barcode.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Property BarcodeDescription() As String
+      Get
+        Return m_barcodeDescription
+      End Get
+      Set(ByVal value As String)
+        m_barcodeDescription = value
+      End Set
+    End Property
+
+#Region " Extra properties for Vehicle's Barcode Label "
+
+    Protected Property VehicleId() As String
+      Get
+        Return m_VehicleId
+      End Get
+      Set(ByVal value As String)
+        m_VehicleId = value
+      End Set
+    End Property
+
+    Protected Property EnvelopeId() As String
+      Get
+        Return m_EnvelopeId
+      End Get
+      Set(ByVal value As String)
+        m_EnvelopeId = value
+      End Set
+    End Property
+
+    Protected Property PubVehicleId() As String
+      Get
+        Return m_PubVehicleId
+      End Get
+      Set(ByVal value As String)
+        m_PubVehicleId = value
+      End Set
+    End Property
+
+    Protected Property Priority() As String
+      Get
+        Return m_Priority
+      End Get
+      Set(ByVal value As String)
+        m_Priority = value
+      End Set
+    End Property
+
+    Protected Property AdDate() As String
+      Get
+        Return m_AdDate
+      End Get
+      Set(ByVal value As String)
+        m_AdDate = value
+      End Set
+    End Property
+
+    Protected Property NPDate() As String
+      Get
+        Return m_NPDate
+      End Get
+      Set(ByVal value As String)
+        m_NPDate = value
+      End Set
+    End Property
+
+    Protected Property Retailer() As String
+      Get
+        Return m_Retailer
+      End Get
+      Set(ByVal value As String)
+        m_Retailer = value
+      End Set
+    End Property
+
+    Protected Property Market() As String
+      Get
+        Return m_Market
+      End Get
+      Set(ByVal value As String)
+        m_Market = value
+      End Set
+    End Property
+
+    Protected Property ShortName() As String
+      Get
+        Return m_ShortName
+      End Get
+      Set(ByVal value As String)
+        m_ShortName = value
+      End Set
+    End Property
+
+    Protected Property Publication() As String
+      Get
+        Return m_Publication
+      End Get
+      Set(ByVal value As String)
+        m_Publication = value
+      End Set
+    End Property
+
+    Protected Property SenderName() As String
+      Get
+        Return m_SenderName
+      End Get
+      Set(ByVal value As String)
+        m_SenderName = value
+      End Set
+    End Property
+#End Region
+
+
+    ''' <summary>
+    ''' Gets user Id of currently logged on application user.
+    ''' </summary>
+    ''' <value>Integer</value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    ''' <exception cref="NullReferenceException">
+    ''' When logged on user information is not loaded.
+    ''' </exception>
+    Public ReadOnly Property UserID() As Integer
+      Get
+        Return m_currentUser.UserID
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets user name of currently logged on application user.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    ''' <exception cref="NullReferenceException">
+    ''' When logged on user information is not loaded.
+    ''' </exception>
+    Public ReadOnly Property Username() As String
+      Get
+        Return m_currentUser.Username
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets first name of currently logged on application user.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    ''' <exception cref="NullReferenceException">
+    ''' When logged on user information is not loaded.
+    ''' </exception>
+    Public ReadOnly Property UserFirstName() As String
+      Get
+        Return m_currentUser.FName
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets last name of currently logged on application user.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks>Returns zero length string, if LName contains Null.</remarks>
+    ''' <exception cref="NullReferenceException">
+    ''' When logged on user information is not loaded.
+    ''' </exception>
+    Public ReadOnly Property UserLastName() As String
+      Get
+        If m_currentUser.IsNull("LName") Then
+          Return ""
+        Else
+          Return m_currentUser.LName
+        End If
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets user name by concatenating user's first and last name.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property UserFullName() As String
+      Get
+        Return UserFirstName + " " + UserLastName
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets user locationId of currently logged on application user.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    ''' <exception cref="NullReferenceException">
+    ''' When logged on user information is not loaded.
+    ''' </exception>
+    Public ReadOnly Property UserLocationId() As Integer
+      Get
+        Return m_currentUser.LocationId
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets user location of currently logged on application user.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    ''' <exception cref="NullReferenceException">
+    ''' When logged on user information is not loaded.
+    ''' </exception>
+    Public ReadOnly Property UserLocation() As String
+      Get
+        Return m_currentUser.Location
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets instance of System.Drawing.Printing.PrintDocument, which allows to
+    ''' print documents.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property BarcodePrintDocument() As System.Drawing.Printing.PrintDocument
+      Get
+        Return m_printDocument
+      End Get
+    End Property
+
+
+
+    ''' <summary>
+    ''' Sets barcode printer for m_printDocument. If the printer found but if
+    ''' it is not a valid printer, printer name is reset to default printer.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Protected Sub SetBarcodePrinter()
+      Dim printerCounter As Integer
+      Dim printerName, defaultPrinter As String
+
+
+      printerName = String.Empty
+
+      With m_printDocument.PrinterSettings
+        For printerCounter = 0 To PrinterSettings.InstalledPrinters.Count - 1
+          If PrinterSettings.InstalledPrinters.Item(printerCounter).ToUpper().IndexOf(BarcodePrinterName.ToUpper()) >= 0 Then
+            printerName = PrinterSettings.InstalledPrinters.Item(printerCounter)
+            Exit For
+          End If
+        Next
+
+        If printerName.Length > 0 Then
+          defaultPrinter = .PrinterName
+          .PrinterName = printerName
+          If .IsValid = False Then .PrinterName = defaultPrinter
+        End If
+      End With
+
+    End Sub
+
+    Private Sub m_printDocument_PrintPage _
+        (ByVal sender As Object, ByVal e As System.Drawing.Printing.PrintPageEventArgs) _
+        Handles m_printDocument.PrintPage
+      Dim yPosition, xPosition As Single
+      Dim leftMargin As Single = 0
+      Dim topMargin As Single = 5
+      Dim line As String = Nothing
+      Dim barcodeFont, textFont As System.Drawing.Font
+      Dim myBrush As New SolidBrush(Color.Black)
+      Dim stringSize As System.Drawing.SizeF
+      'Dim RetMktDesc As String = ""
+      'Dim RetDesc As String = ""
+      'Dim MktDesc As String = ""
+      'If InStr(BarcodeDescription, "|") > 0 Then
+      '    RetMktDesc = Mid(BarcodeDescription, InStr(BarcodeDescription, "|") + 1)
+      '    RetDesc = Left(RetMktDesc, InStrRev(RetMktDesc, "|") - 1)
+      '    MktDesc = Mid(RetMktDesc, InStr(RetMktDesc, "|") + 1)
+      '    BarcodeDescription = Left(BarcodeDescription, InStr(BarcodeDescription, "|") - 1)
+      'End If
+      textFont = New System.Drawing.Font("Arial", 12, FontStyle.Regular, GraphicsUnit.Point)
+      barcodeFont = New System.Drawing.Font("Code 128AB", 24, FontStyle.Regular, GraphicsUnit.Point)
+
+      If BarcodePrinterName.IndexOf("Generic / Text Only") >= 0 Then
+          If Me.VehicleId IsNot Nothing Then
+              line = "N" + Environment.NewLine + "B0,0,0,1,2,4,40,N,""" _
+                      + Me.VehicleId + """" & Environment.NewLine
+          End If
+          If Me.PubVehicleId IsNot Nothing Then
+              line = "N" + Environment.NewLine + "B0,0,0,1,2,4,40,N,""" _
+                      + Me.PubVehicleId + """" & Environment.NewLine
+          End If
+          If Me.EnvelopeId IsNot Nothing Then
+              line = "N" + Environment.NewLine + "B0,0,0,1,2,4,40,N,""" _
+                      + Me.EnvelopeId + """" & Environment.NewLine
+          End If
+
+          If Retailer IsNot Nothing AndAlso Retailer.Length > 0 Then
+              line += "A165,0,0,2,1,1,N,""" + Retailer + """" _
+                      + Environment.NewLine
+          End If
+          If EnvelopeId IsNot Nothing AndAlso EnvelopeId.Length > 0 Then
+              line += "A165,0,0,2,1,1,N,""" + EnvelopeId + """" _
+                      + Environment.NewLine
+          End If
+          If PubVehicleId IsNot Nothing AndAlso PubVehicleId.Length > 0 Then
+              line += "A165,0,0,2,1,1,N,""" + PubVehicleId + """" _
+                      + Environment.NewLine
+          End If
+
+          If Market IsNot Nothing AndAlso Market.Length > 0 Then
+              line += "A165,23,0,2,1,1,N,""" + Market + """" _
+                      + Environment.NewLine
+          End If
+          If NPDate IsNot Nothing AndAlso NPDate.Length > 0 Then
+              line += "A165,23,0,2,1,1,N,""" + NPDate + """" _
+                      + Environment.NewLine
+          End If
+
+          If VehicleId IsNot Nothing AndAlso VehicleId.Length > 0 Then
+              line += "A0,55,0,2,1,1,N,""" + VehicleId + ", """ _
+                      + Environment.NewLine
+          End If
+          If Publication IsNot Nothing AndAlso Publication.Length > 0 Then
+              line += "A0,55,0,2,1,1,N,""" + Publication + """" _
+                      + Environment.NewLine
+          End If
+          If SenderName IsNot Nothing AndAlso SenderName.Length > 0 Then
+              line += "A0,55,0,2,1,1,N,""" + SenderName + """" _
+                      + Environment.NewLine
+          End If
+
+          If Priority IsNot Nothing AndAlso Priority.Length > 0 Then
+              line += "A120,55,0,2,1,1,N,""" + Priority + ", """ _
+                      + Environment.NewLine
+          End If
+          If AdDate IsNot Nothing AndAlso AdDate.Length > 0 Then
+              line += "A150,55,0,2,1,1,N,""" + AdDate + ", """ _
+                      + Environment.NewLine
+          End If
+          If ShortName IsNot Nothing AndAlso ShortName.Length > 0 Then
+              line += "A280,55,0,2,1,1,N,""" + ShortName + """" _
+                      + Environment.NewLine
+          End If
+
+            '  line += "A0,55,0,2,1,1,N,""" + Left(Me.BarcodeDescription, 34) + """" _
+            '+ Environment.NewLine + "P1" + Environment.NewLine
+          line += "P1" + Environment.NewLine
+
+          e.Graphics.DrawString(line, textFont, myBrush, leftMargin, yPosition, New StringFormat)
+
+      Else
+          xPosition = leftMargin
+          yPosition = topMargin + 5
+
+          If VehicleId IsNot Nothing AndAlso VehicleId.Length > 0 Then
+              line = EncodeToBC128A(Me.VehicleId)
+
+              ' calculate the next line position based on the height of the font according to the printing device 
+              ' yPosition = topMargin + (count * textFont.GetHeight(ev.Graphics)); // draw the next line in the 
+              ' rich edit control
+              e.Graphics.DrawString(line, barcodeFont, myBrush, xPosition, yPosition, New StringFormat)
+          End If
+
+          'If Me.SuffixText IsNot Nothing AndAlso Me.SuffixText.Length > 0 Then
+          '    stringSize = e.Graphics.MeasureString(line, barcodeFont)
+          '    xPosition += stringSize.Width
+          '    line = Me.SuffixText
+          '    e.Graphics.DrawString(line, textFont, myBrush, xPosition, yPosition, New StringFormat)
+          'End If
+
+          If BarcodeDescription IsNot Nothing AndAlso BarcodeDescription.Length > 0 Then
+              yPosition += barcodeFont.GetHeight(e.Graphics)
+
+              'A blank space is kept to left align with barcode.
+              line = " " + Me.BarcodeDescription
+
+              textFont = New System.Drawing.Font(textFont.Name, 7)
+
+              ' calculate the next line position based on the height of the font according to the printing device 
+              'yPosition = topMargin + (count * textFont.GetHeight(ev.Graphics));// draw the next line in the 
+              'rich edit control
+              e.Graphics.DrawString(line, textFont, myBrush, leftMargin, yPosition, New StringFormat)
+          End If
+      End If
+
+      myBrush.Dispose()
+      barcodeFont.Dispose()
+      textFont.Dispose()
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Inserts a row into supplied error table.
+    ''' </summary>
+    ''' <param name="errTable"></param>
+    ''' <param name="columnName"></param>
+    ''' <param name="columnCaption"></param>
+    ''' <param name="errorMessage"></param>
+    ''' <remarks></remarks>
+    Protected Sub AddErrorInformation _
+        (ByVal errTable As System.Data.DataTable, ByVal columnName As String, ByVal columnCaption As String _
+         , ByVal errorMessage As String)
+      Dim tempRow As Data.DataRow
+
+
+      tempRow = errTable.NewRow()
+      tempRow("ColumnName") = columnName
+      tempRow("ColumnCaption") = columnCaption
+      tempRow("Message") = errorMessage
+
+      errTable.Rows.Add(tempRow)
+      errTable.AcceptChanges()
+
+    End Sub
+
+    ''' <summary>
+    ''' Removes row with supplied column name from supplied data table.
+    ''' </summary>
+    ''' <param name="errTable"></param>
+    ''' <param name="columnName"></param>
+    ''' <remarks></remarks>
+    Protected Sub RemoveErrorInformation _
+        (ByVal errTable As System.Data.DataTable, ByVal columnName As String)
+      Dim deleteQuery As System.Collections.Generic.IEnumerable(Of Data.DataRow)
+
+
+      deleteQuery = From deleteRow In errTable _
+                    Select deleteRow _
+                    Where deleteRow("ColumnName") Is columnName
+
+
+      If deleteQuery.Count > 0 Then
+        deleteQuery(0).Delete()
+        errTable.AcceptChanges()
+      End If
+
+      deleteQuery = Nothing
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Inserts a row into supplied warning table.
+    ''' </summary>
+    ''' <param name="warningTable"></param>
+    ''' <param name="columnName"></param>
+    ''' <param name="columnCaption"></param>
+    ''' <param name="warningMessage"></param>
+    ''' <remarks></remarks>
+    Protected Sub AddWarningInformation _
+        (ByVal warningTable As System.Data.DataTable, ByVal columnName As String, ByVal columnCaption As String _
+         , ByVal warningMessage As String)
+      Dim tempRow As Data.DataRow
+
+
+      tempRow = warningTable.NewRow()
+      tempRow("ColumnName") = columnName
+      tempRow("ColumnCaption") = columnCaption
+      tempRow("Message") = warningMessage
+
+      warningTable.Rows.Add(tempRow)
+      warningTable.AcceptChanges()
+
+    End Sub
+
+    ''' <summary>
+    ''' Removes row with supplied column name from supplied data table.
+    ''' </summary>
+    ''' <param name="warningTable"></param>
+    ''' <param name="columnName"></param>
+    ''' <remarks></remarks>
+    Protected Sub RemoveWarningInformation _
+        (ByVal warningTable As System.Data.DataTable, ByVal columnName As String)
+      Dim deleteQuery As System.Collections.Generic.IEnumerable(Of Data.DataRow)
+
+
+      deleteQuery = From deleteRow In warningTable _
+                    Select deleteRow _
+                    Where deleteRow("ColumnName") Is columnName
+
+
+      If deleteQuery.Count > 0 Then
+        deleteQuery(0).Delete()
+        warningTable.AcceptChanges()
+      End If
+
+      deleteQuery = Nothing
+
+    End Sub
+
+
+  End Class
+
+End Namespace

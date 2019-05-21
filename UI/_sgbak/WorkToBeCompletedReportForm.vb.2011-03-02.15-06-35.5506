@@ -1,0 +1,511 @@
+﻿Namespace UI
+
+  Public Class WorkToBeCompletedReportForm
+    Implements IForm
+
+
+
+    Private m_DataSet As WorkToBeCompletedReportDataSet
+    Private m_reportFilterCriteria, m_reportTitle As String
+
+
+    Private ReadOnly Property Data() As WorkToBeCompletedReportDataSet
+      Get
+        Return m_DataSet
+      End Get
+    End Property
+
+    Private ReadOnly Property ReportTitle() As String
+      Get
+        Return m_reportTitle
+      End Get
+    End Property
+
+    Private ReadOnly Property FilterCriteria() As String
+      Get
+        Return m_reportFilterCriteria
+      End Get
+    End Property
+
+
+
+#Region " IForm Implementation "
+
+    Public Event ApplyingUserCredentials() Implements IForm.ApplyingUserCredentials
+    Public Event UserCredentialsApplied() Implements IForm.UserCredentialsApplied
+    Public Event InitializingForm() Implements IForm.InitializingForm
+    Public Event FormInitialized() Implements IForm.FormInitialized
+
+
+    Public Sub ApplyUserCredentials() Implements IForm.ApplyUserCredentials
+
+    End Sub
+
+    Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+      RaiseEvent InitializingForm()
+
+      Me.SuspendLayout()
+
+      m_DataSet = New WorkToBeCompletedReportDataSet()
+
+      LoadDataSet()
+
+      locationComboBox.DisplayMember = "Descrip"
+      locationComboBox.ValueMember = "CodeId"
+      locationComboBox.DataSource = Me.Data.vwLocation
+      If User.LocationId = 58 Then
+        locationComboBox.SelectedValue = 0
+      Else
+        locationComboBox.SelectedValue = User.LocationId
+      End If
+
+      priorityComboBox.DisplayMember = "PriorityText"
+      priorityComboBox.ValueMember = "Priority"
+      priorityComboBox.DataSource = Me.Data.vwPriority
+      priorityComboBox.SelectedValue = DBNull.Value
+
+      startdateTypeInDatePicker.Value = System.DateTime.Today.AddMonths(-1)
+      enddateTypeInDatePicker.Value = System.DateTime.Today
+      priorityGroupBox.Visible = False
+
+      Me.ResumeLayout()
+
+      RaiseEvent FormInitialized()
+
+    End Sub
+
+#End Region
+
+
+
+    Private Sub LoadDataSet()
+      Dim tempAdapter As WorkToBeCompletedReportDataSetTableAdapters.vwLocationTableAdapter
+      Dim tempRow As WorkToBeCompletedReportDataSet.vwLocationRow
+
+
+      tempAdapter = New WorkToBeCompletedReportDataSetTableAdapters.vwLocationTableAdapter()
+      tempAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      tempAdapter.Fill(Data.vwLocation)
+      tempAdapter.Dispose()
+      tempAdapter = Nothing
+
+      tempRow = Data.vwLocation.NewvwLocationRow()
+      tempRow.CodeId = 0
+      tempRow.Descrip = "All"
+      Data.vwLocation.AddvwLocationRow(tempRow)
+      tempRow = Nothing
+
+
+      Dim priorityAdapter As WorkToBeCompletedReportDataSetTableAdapters.vwPriorityTableAdapter
+      Dim priorityRow As WorkToBeCompletedReportDataSet.vwPriorityRow
+
+      priorityAdapter = New WorkToBeCompletedReportDataSetTableAdapters.vwPriorityTableAdapter
+      priorityAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      priorityAdapter.Fill(Data.vwPriority)
+      priorityAdapter.Dispose()
+      priorityAdapter = Nothing
+
+      priorityRow = Data.vwPriority.NewvwPriorityRow()
+      priorityRow.SetPriorityNull()
+      priorityRow.PriorityText = "All"
+      Data.vwPriority.AddvwPriorityRow(priorityRow)
+      Data.vwPriority.AcceptChanges()
+      priorityRow = Nothing
+    End Sub
+
+    Private Function AreInputsValid() As Boolean
+      Dim validatedSuccessfully As Boolean = True
+
+
+      If startdateTypeInDatePicker.Value.HasValue = False Then
+        SetErrorProvider(startdateTypeInDatePicker, "Provide valid start date.")
+        validatedSuccessfully = False
+      Else
+        RemoveErrorProvider(startdateTypeInDatePicker)
+      End If
+
+      If enddateTypeInDatePicker.Value.HasValue = False Then
+        SetErrorProvider(enddateTypeInDatePicker, "Provide valid end date.")
+        validatedSuccessfully = False
+      Else
+        RemoveErrorProvider(enddateTypeInDatePicker)
+      End If
+
+      If locationComboBox.SelectedValue Is Nothing Then
+        SetErrorProvider(locationComboBox, "Select location from drop down list.")
+        validatedSuccessfully = False
+      Else
+        RemoveErrorProvider(locationComboBox)
+      End If
+
+      If priorityComboBox.Visible AndAlso priorityComboBox.SelectedValue Is Nothing Then
+        SetErrorProvider(priorityComboBox, "Select priority from drop down list.")
+        validatedSuccessfully = False
+      Else
+        RemoveErrorProvider(priorityComboBox)
+      End If
+
+      Return validatedSuccessfully
+
+    End Function
+
+    Private Sub LoadDataForUnprocessedEnvelopes()
+      Dim locationId As Integer
+      Dim tempAdapter As WorkToBeCompletedReportDataSetTableAdapters.UnprocessedEnvelopeTableAdapter
+
+
+      If startdateTypeInDatePicker.Value.HasValue = False _
+        OrElse enddateTypeInDatePicker.Value.HasValue = False _
+        OrElse locationComboBox.SelectedValue Is Nothing _
+      Then
+        Exit Sub
+      ElseIf Integer.TryParse(locationComboBox.SelectedValue.ToString(), locationId) = False Then
+        locationId = -1
+      End If
+
+      If locationId < 0 Then
+        MessageBox.Show("Select location from drop down list.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      End If
+
+      tempAdapter = New WorkToBeCompletedReportDataSetTableAdapters.UnprocessedEnvelopeTableAdapter()
+      tempAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      m_reportTitle = "Envelopes with no Vehicles"
+      tempAdapter.FillByReceivedDtRangeAndReceivedAt(Data.UnprocessedEnvelope _
+                                                     , startdateTypeInDatePicker.Value.Value _
+                                                     , enddateTypeInDatePicker.Value.Value _
+                                                     , locationId)
+
+      tempAdapter.Dispose()
+      tempAdapter = Nothing
+
+    End Sub
+
+    Private Sub SetReportParametersForUnprocessedEnvelopes()
+      Dim filterCriteria As System.Text.StringBuilder
+
+
+      filterCriteria = New System.Text.StringBuilder()
+
+      If startdateTypeInDatePicker.Value.HasValue Then
+        filterCriteria.Append("Start date: ")
+        filterCriteria.Append(startdateTypeInDatePicker.Value.Value.ToString("MM/dd/yyyy"))
+      End If
+
+      If enddateTypeInDatePicker.Value.HasValue Then
+        If filterCriteria.Length > 0 Then filterCriteria.Append(", ")
+        filterCriteria.Append("End date: ")
+        filterCriteria.Append(enddateTypeInDatePicker.Value.Value.ToString("MM/dd/yyyy"))
+      End If
+
+      If locationComboBox.SelectedValue IsNot Nothing Then
+        If filterCriteria.Length > 0 Then filterCriteria.Append(", ")
+        filterCriteria.Append("Location: ")
+        filterCriteria.Append(locationComboBox.Text)
+      End If
+
+      m_reportFilterCriteria = filterCriteria.ToString()
+
+      filterCriteria.Remove(0, filterCriteria.Length)
+      filterCriteria = Nothing
+
+    End Sub
+
+
+    Private Sub LoadDataForUnprocessedROPs(ByVal reportId As Integer)
+      Dim locationId As Integer
+      Dim priority As Integer?
+      Dim startDt, endDt As DateTime
+      Dim tempAdapter As WorkToBeCompletedReportDataSetTableAdapters.UnprocessedROPTableAdapter
+
+
+      If priorityComboBox.SelectedValue Is DBNull.Value Then
+        priority = Nothing
+      Else
+        priority = CType(priorityComboBox.SelectedValue, Integer)
+      End If
+
+      If Integer.TryParse(locationComboBox.SelectedValue.ToString(), locationId) = False Then
+        locationId = -1
+      End If
+
+      startDt = startdateTypeInDatePicker.Value.Value
+      'This is done to overcome DateTime comparision issue due to the Time part in DateTime data type. 
+      '01/01/01' is less than '01/01/01 12:00:01 AM'. So, between operator always ignore time stamps
+      'having date same as end date due to that time part in DateTime datatype.
+      endDt = enddateTypeInDatePicker.Value.Value.AddDays(1)
+
+      tempAdapter = New WorkToBeCompletedReportDataSetTableAdapters.UnprocessedROPTableAdapter()
+      tempAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      If reportId = 5 Then
+        m_reportTitle = "Newspapers Waiting for Pulling"
+        If locationId = 0 Then
+          tempAdapter.FillWaitingForPullingFromAllLocations(Data.UnprocessedROP, priority, startDt, endDt)
+        Else
+          tempAdapter.FillWaitingForPulling(Data.UnprocessedROP, priority, locationId, startDt, endDt)
+        End If
+      ElseIf reportId = 6 Then
+        m_reportTitle = "Newspapers Waiting for Scanning"
+        If locationId = 0 Then
+          tempAdapter.FillWaitingForScanningFromAllLocations(Data.UnprocessedROP, priority, startDt, endDt)
+        Else
+          tempAdapter.FillWaitingForScanning(Data.UnprocessedROP, priority, locationId, startDt, endDt)
+        End If
+      ElseIf reportId = 7 Then
+        m_reportTitle = "Newspapers Wating for Indexing"
+        If locationId = 0 Then
+          tempAdapter.FillWaitingForIndexingFromAllLocations(Data.UnprocessedROP, priority, startDt, endDt)
+        Else
+          tempAdapter.FillWaitingForIndexing(Data.UnprocessedROP, priority, locationId, startDt, endDt)
+        End If
+
+      ElseIf reportId = 8 Then
+        m_reportTitle = "Newspapers Indexing in Progress"
+        If locationId = 0 Then
+          tempAdapter.FillIndexingInProgressFromAllLocations(Data.UnprocessedROP, priority, startDt, endDt)
+        Else
+          tempAdapter.FillIndexingInProgress(Data.UnprocessedROP, priority, locationId, startDt, endDt)
+        End If
+      ElseIf reportId = 9 Then
+        m_reportTitle = "Newspapers Waiting for QC"
+        If locationId = 0 Then
+          tempAdapter.FillWaitingForQCFromAllLocations(Data.UnprocessedROP, priority, startDt, endDt)
+        Else
+          tempAdapter.FillWaitingForQC(Data.UnprocessedROP, priority, locationId, startDt, endDt)
+        End If
+      End If
+
+      tempAdapter.Dispose()
+      tempAdapter = Nothing
+
+    End Sub
+
+    Private Sub SetReportParametersForUnprocessedROPs(ByVal vehicleStatusId As Integer)
+      Dim filterCriteria As System.Text.StringBuilder
+
+
+      filterCriteria = New System.Text.StringBuilder()
+
+      If startdateTypeInDatePicker.Value.HasValue Then
+        If filterCriteria.Length > 0 Then filterCriteria.Append(", ")
+        filterCriteria.Append("Start date: ")
+        filterCriteria.Append(startdateTypeInDatePicker.Value.Value.ToString("MM/dd/yyyy"))
+      End If
+
+      If enddateTypeInDatePicker.Value.HasValue Then
+        If filterCriteria.Length > 0 Then filterCriteria.Append(", ")
+        filterCriteria.Append("End date: ")
+        filterCriteria.Append(enddateTypeInDatePicker.Value.Value.ToString("MM/dd/yyyy"))
+      End If
+
+      If locationComboBox.SelectedValue IsNot Nothing Then
+        If filterCriteria.Length > 0 Then filterCriteria.Append(", ")
+        filterCriteria.Append("Location: ")
+        filterCriteria.Append(locationComboBox.Text)
+      End If
+
+      If priorityComboBox.Visible AndAlso priorityComboBox.SelectedValue IsNot Nothing Then
+        If filterCriteria.Length > 0 Then filterCriteria.Append(", ")
+        filterCriteria.Append("Priority: ")
+        filterCriteria.Append(priorityComboBox.Text)
+      End If
+
+      m_reportFilterCriteria = filterCriteria.ToString()
+
+      filterCriteria.Remove(0, filterCriteria.Length)
+      filterCriteria = Nothing
+
+    End Sub
+
+    Private Sub LoadDataForUnprocessedVehicles(ByVal reportId As Integer)
+      Dim locationId As Integer
+      Dim priority As Integer?
+      Dim startDt, endDt As DateTime
+      Dim tempAdapter As WorkToBeCompletedReportDataSetTableAdapters.UnprocessedVehicleTableAdapter
+
+
+      If priorityComboBox.SelectedValue Is DBNull.Value Then
+        priority = Nothing
+      Else
+        priority = CType(priorityComboBox.SelectedValue, Integer)
+      End If
+
+      If Integer.TryParse(locationComboBox.SelectedValue.ToString(), locationId) = False Then
+        locationId = -1
+      End If
+
+      startDt = startdateTypeInDatePicker.Value.Value
+      'This is done to overcome DateTime comparision issue due to the Time part in DateTime data type. 
+      '01/01/01' is less than '01/01/01 12:00:01 AM'. So, between operator always ignore time stamps
+      'having date same as end date due to that time part in DateTime datatype.
+      endDt = enddateTypeInDatePicker.Value.Value.AddDays(1)
+
+      tempAdapter = New WorkToBeCompletedReportDataSetTableAdapters.UnprocessedVehicleTableAdapter()
+      tempAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      If reportId = 1 Then
+        m_reportTitle = "Vehicles Waiting for Indexing"
+        If locationId = 0 Then
+          tempAdapter.FillForNotIndexedByCreateDtRange(Data.UnprocessedVehicle, startDt, endDt, priority)
+        Else
+          tempAdapter.FillForNotIndexedByCreateDtRangeAndLocation(Data.UnprocessedVehicle, startDt, endDt, locationId, priority)
+        End If
+      ElseIf reportId = 2 Then
+        m_reportTitle = "Vehicles Waiting for Scanning"
+        If locationId = 0 Then
+          tempAdapter.FillForNotScannedByCreateDtRange(Data.UnprocessedVehicle, startDt, endDt, priority)
+        Else
+          tempAdapter.FillForNotScannedByCreateDtRangeAndLocation(Data.UnprocessedVehicle, startDt, endDt, locationId, priority)
+        End If
+      ElseIf reportId = 3 Then
+        m_reportTitle = "Vehicles Waiting for QC"
+        If locationId = 0 Then
+          tempAdapter.FillForNotQCedByCreateDtRange(Data.UnprocessedVehicle, startDt, endDt, priority)
+        Else
+          tempAdapter.FillForNotQCedByCreateDtRangeAndLocation(Data.UnprocessedVehicle, startDt, endDt, locationId, priority)
+        End If
+      ElseIf reportId = 4 Then
+        m_reportTitle = "Vehicles Waiting for SP Review"
+        If locationId = 0 Then
+          tempAdapter.FillForNotSPReviewedByCreateDtRange(Data.UnprocessedVehicle, startDt, endDt, priority)
+        Else
+          tempAdapter.FillForNotSPReviewedByCreateDtRangeAndLocation(Data.UnprocessedVehicle, startDt, endDt, locationId, priority)
+        End If
+      End If
+
+      tempAdapter.Dispose()
+      tempAdapter = Nothing
+
+    End Sub
+
+    Private Sub SetReportParametersForUnprocessedVehicles(ByVal vehicleStatusId As Integer)
+      Dim filterCriteria As System.Text.StringBuilder
+
+
+      filterCriteria = New System.Text.StringBuilder()
+
+      If startdateTypeInDatePicker.Value.HasValue Then
+        If filterCriteria.Length > 0 Then filterCriteria.Append(", ")
+        filterCriteria.Append("Start date: ")
+        filterCriteria.Append(startdateTypeInDatePicker.Value.Value.ToString("MM/dd/yyyy"))
+      End If
+
+      If enddateTypeInDatePicker.Value.HasValue Then
+        If filterCriteria.Length > 0 Then filterCriteria.Append(", ")
+        filterCriteria.Append("End date: ")
+        filterCriteria.Append(enddateTypeInDatePicker.Value.Value.ToString("MM/dd/yyyy"))
+      End If
+
+      If locationComboBox.SelectedValue IsNot Nothing Then
+        If filterCriteria.Length > 0 Then filterCriteria.Append(", ")
+        filterCriteria.Append("Location: ")
+        filterCriteria.Append(locationComboBox.Text)
+      End If
+
+      If priorityComboBox.Visible AndAlso priorityComboBox.SelectedValue IsNot Nothing Then
+        If filterCriteria.Length > 0 Then filterCriteria.Append(", ")
+        filterCriteria.Append("Priority: ")
+        filterCriteria.Append(priorityComboBox.Text)
+      End If
+
+      m_reportFilterCriteria = filterCriteria.ToString()
+
+      filterCriteria.Remove(0, filterCriteria.Length)
+      filterCriteria = Nothing
+
+    End Sub
+
+
+    Private Sub closeButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles closeButton.Click
+
+      Me.Close()
+
+    End Sub
+
+    Private Sub reportComboBox_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles reportComboBox.SelectedIndexChanged
+
+      priorityGroupBox.Visible = (reportComboBox.SelectedIndex > 0)
+
+    End Sub
+
+    Private Sub generateReportButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles generateReportButton.Click
+      Dim reportForm As ShowReportForm
+
+
+      If AreInputsValid() = False Then Exit Sub
+
+      reportForm = New ShowReportForm()
+
+      If reportComboBox.SelectedIndex = 0 Then
+        LoadDataForUnprocessedEnvelopes()
+        SetReportParametersForUnprocessedEnvelopes()
+        reportForm.ReportFileResourceName = "MCAP.UnprocessedEnvelopeReport.rdlc"
+        reportForm.DataSources.Add("WorkToBeCompletedReportDataSet_UnprocessedEnvelope", Data.UnprocessedEnvelope)
+        reportForm.ReportName = "Envelopes without any Vehicles"
+      ElseIf reportComboBox.SelectedIndex > 0 AndAlso reportComboBox.SelectedIndex < 5 Then
+        Me.Data.UnprocessedVehicle.Rows.Clear()
+        LoadDataForUnprocessedVehicles(reportComboBox.SelectedIndex)
+        SetReportParametersForUnprocessedVehicles(reportComboBox.SelectedIndex)
+        reportForm.ReportFileResourceName = "MCAP.UnprocessedVehicleReport.rdlc"
+        reportForm.DataSources.Add("WorkToBeCompletedReportDataSet_UnprocessedVehicle", Data.UnprocessedVehicle)
+        reportForm.ReportName = "Unprocessed Vehicles"
+      ElseIf reportComboBox.SelectedIndex > 4 AndAlso reportComboBox.SelectedIndex < 10 Then
+        LoadDataForUnprocessedROPs(reportComboBox.SelectedIndex)
+        SetReportParametersForUnprocessedROPs(reportComboBox.SelectedIndex)
+        reportForm.ReportFileResourceName = "MCAP.UnprocessedROPReport.rdlc"
+        reportForm.DataSources.Add("WorkToBeCompletedReportDataSet_UnprocessedROP", Data.UnprocessedROP)
+        reportForm.ReportName = "Unprocessed ROPs"
+      End If
+
+      reportForm.Parameters.Add("ReportTitle", ReportTitle)
+      reportForm.Parameters.Add("FilterCriteria", FilterCriteria)
+      If reportComboBox.SelectedIndex = 1 Then
+        reportForm.Parameters.Add("DtColumnHeader", "# Days Since Check-In")
+        reportForm.Parameters.Add("ShowEnvDaysColumn", "True")
+      ElseIf reportComboBox.SelectedIndex = 2 Then
+        reportForm.Parameters.Add("DtColumnHeader", "# Days Since Indexed")
+        reportForm.Parameters.Add("ShowEnvDaysColumn", "False")
+      ElseIf reportComboBox.SelectedIndex = 3 Then
+        reportForm.Parameters.Add("DtColumnHeader", "# Days Since Images Scanned")
+        reportForm.Parameters.Add("ShowEnvDaysColumn", "False")
+      ElseIf reportComboBox.SelectedIndex = 4 Then
+        reportForm.Parameters.Add("DtColumnHeader", "# Days Since QCed")
+        reportForm.Parameters.Add("ShowEnvDaysColumn", "False")
+      ElseIf reportComboBox.SelectedIndex = 5 Then
+        reportForm.Parameters.Add("DtColumnHeader", "Create Date")
+        reportForm.Parameters.Add("DaysColumnHeader", "#Days Since Checked In")
+      ElseIf reportComboBox.SelectedIndex = 6 Then
+        reportForm.Parameters.Add("DtColumnHeader", "Pull Date")
+        reportForm.Parameters.Add("DaysColumnHeader", "#Days Since Pulled")
+      ElseIf reportComboBox.SelectedIndex = 7 Then
+        reportForm.Parameters.Add("DtColumnHeader", "Scan Date")
+        reportForm.Parameters.Add("DaysColumnHeader", "#Days Since Scanned")
+      ElseIf reportComboBox.SelectedIndex = 8 Then
+        reportForm.Parameters.Add("DtColumnHeader", "Scan Date")
+        reportForm.Parameters.Add("DaysColumnHeader", "#Days Since Scanned")
+      ElseIf reportComboBox.SelectedIndex = 9 Then
+        reportForm.Parameters.Add("DtColumnHeader", "Index Date")
+        reportForm.Parameters.Add("DaysColumnHeader", "#Days Since Indexed")
+      End If
+      reportForm.PrepareReport()
+
+      If screenRadioButton.Checked Then
+        reportForm.RefreshReport()
+        reportForm.WindowState = FormWindowState.Maximized
+        reportForm.ShowDialog(Me)
+      Else
+        reportForm.ExportReportToExcel(System.IO.Path.GetTempFileName())
+      End If
+
+      reportForm.Dispose()
+      reportForm = Nothing
+
+    End Sub
+
+  End Class
+
+End Namespace

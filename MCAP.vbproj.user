@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <PublishUrlHistory>\\mt6sql1.apima01.local\MCAPInstall\|\\mt3sql1\MCAPInstall\|\\mt3sql1\MCAPInstall\Test\|\\mtcansql1\MCAPInstall\|\\mt1sql04\MCAPInstall\</PublishUrlHistory>
+    <InstallUrlHistory>
+    </InstallUrlHistory>
+    <SupportUrlHistory>
+    </SupportUrlHistory>
+    <UpdateUrlHistory>
+    </UpdateUrlHistory>
+    <BootstrapperUrlHistory>\\mt4bu0\Downloads\MSApplications\MSAccessDBEng2010|\\mt4bu0\Downloads\MSApplications\MSAccessDBEng2010\AccessDatabaseEngine 32 bit</BootstrapperUrlHistory>
+    <ErrorReportUrlHistory>
+    </ErrorReportUrlHistory>
+    <FallbackCulture>en-US</FallbackCulture>
+    <VerifyUploadedFiles>true</VerifyUploadedFiles>
+    <ProjectView>ProjectFiles</ProjectView>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ReferencePath>C:\Program Files\Common Files\Microsoft Shared\OFFICE14\</ReferencePath>
+  </PropertyGroup>
+</Project>

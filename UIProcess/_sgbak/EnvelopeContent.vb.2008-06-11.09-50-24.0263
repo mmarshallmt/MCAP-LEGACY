@@ -1,0 +1,756 @@
+﻿Namespace UI.Processors
+
+
+  Public Class EnvelopeContent
+    Inherits BaseClass
+    Implements IBarcode
+
+
+
+#Region " Events "
+
+
+    'Events can be extended to supply necessary information to consumer along with events.
+    'Information passed into event can be useful to consumer while processing the event.
+
+    Public Event Initializing()
+    Public Event Initialized()
+
+    Public Event PreparingAdapter()
+    Public Event AdapterPrepared()
+
+    Public Event LoadingEnvelopeSender()
+    Public Event EnvelopeSenderLoaded()
+    Public Event EnvelopeSenderNotFound()
+
+    Public Event ValidatingInputs()
+    Public Event InputsValidated()
+    Public Event InvalidInputExist()
+
+    Public Event Inserting()
+    Public Event Inserted()
+
+    Public Event Saving()
+    Public Event Saved()
+
+    Public Event Removing()
+    Public Event Removed()
+
+    Public Event Synchronizing()
+    Public Event Synchronized()
+
+    Public Event LoadingVehicle()
+    Public Event VehicleLoaded()
+    Public Event VehicleNotFound()
+
+
+#End Region
+
+
+
+    Private m_barcodePrinter As String
+    Private m_marketAdapter As EnvelopeContentDataSetTableAdapters.MktTableAdapter
+    Private m_mediaAdapter As EnvelopeContentDataSetTableAdapters.MediaTableAdapter
+    Private m_senderAdapter As EnvelopeContentDataSetTableAdapters.SenderTableAdapter
+    Private m_retailerAdapter As EnvelopeContentDataSetTableAdapters.RetTableAdapter
+    Private m_expectedRetailerAdapter As EnvelopeContentDataSetTableAdapters.vwExpectedRetTableAdapter
+    Private m_publicationAdapter As EnvelopeContentDataSetTableAdapters.PublicationTableAdapter
+    Private m_vehicleAdapter As EnvelopeContentDataSetTableAdapters.vwCircularTableAdapter
+    Private m_tradeclassAdapter As EnvelopeContentDataSetTableAdapters.TradeClassTableAdapter
+    Private m_vehicleStatusAdapter As EnvelopeContentDataSetTableAdapters.VehicleStatusTableAdapter
+    Private m_envelopeContentDataSet As EnvelopeContentDataSet
+
+
+
+    ''' <summary>
+    ''' Gets table adapter for Sender table.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property SenderAdapter() As EnvelopeContentDataSetTableAdapters.SenderTableAdapter
+      Get
+        Return m_senderAdapter
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets table adapter for Mkt table.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property MarketAdapter() As EnvelopeContentDataSetTableAdapters.MktTableAdapter
+      Get
+        Return m_marketAdapter
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets table adapter for Media table.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property MediaAdapter() As EnvelopeContentDataSetTableAdapters.MediaTableAdapter
+      Get
+        Return m_mediaAdapter
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets table adapter for Ret table.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property RetailerAdapter() As EnvelopeContentDataSetTableAdapters.RetTableAdapter
+      Get
+        Return m_retailerAdapter
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets table adapter for Expecttion-Ret table.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property ExpectedRetailerAdapter() As EnvelopeContentDataSetTableAdapters.vwExpectedRetTableAdapter
+      Get
+        Return m_expectedRetailerAdapter
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets table adapter for Publication table.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property PublicationAdapter() As EnvelopeContentDataSetTableAdapters.PublicationTableAdapter
+      Get
+        Return m_publicationAdapter
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets table adapter for Vehicle table.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property VehicleAdapter() As EnvelopeContentDataSetTableAdapters.vwCircularTableAdapter
+      Get
+        Return m_vehicleAdapter
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets table adapter for TradeClass table.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property TradeclassAdapter() As EnvelopeContentDataSetTableAdapters.TradeClassTableAdapter
+      Get
+        Return m_tradeclassAdapter
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets table adapter for Code table, for Vehicle Status value.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property VehicleStatusAdapter() As EnvelopeContentDataSetTableAdapters.VehicleStatusTableAdapter
+      Get
+        Return m_vehicleStatusAdapter
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Gets dataset containing tables related Envelope Content Check-In process.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property EnvelopeContentDataSet() As EnvelopeContentDataSet
+      Get
+        Return m_envelopeContentDataSet
+      End Get
+    End Property
+
+
+
+    ''' <summary>
+    ''' Default constructor.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Sub New()
+
+      m_barcodePrinter = String.Empty
+      m_senderAdapter = New EnvelopeContentDataSetTableAdapters.SenderTableAdapter
+      m_marketAdapter = New EnvelopeContentDataSetTableAdapters.MktTableAdapter
+      m_mediaAdapter = New EnvelopeContentDataSetTableAdapters.MediaTableAdapter
+      m_retailerAdapter = New EnvelopeContentDataSetTableAdapters.RetTableAdapter
+      m_expectedRetailerAdapter = New EnvelopeContentDataSetTableAdapters.vwExpectedRetTableAdapter
+      m_publicationAdapter = New EnvelopeContentDataSetTableAdapters.PublicationTableAdapter
+      m_vehicleAdapter = New EnvelopeContentDataSetTableAdapters.vwCircularTableAdapter
+      m_tradeclassAdapter = New EnvelopeContentDataSetTableAdapters.TradeClassTableAdapter
+      m_vehicleStatusAdapter = New EnvelopeContentDataSetTableAdapters.VehicleStatusTableAdapter
+      m_envelopeContentDataSet = New EnvelopeContentDataSet
+
+    End Sub
+
+
+
+    ''' <summary>
+    ''' Initializes object of this class.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub Initialize()
+
+      RaiseEvent Initializing()
+
+      SenderAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      MarketAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      MediaAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      RetailerAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      ExpectedRetailerAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      PublicationAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      VehicleAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      TradeclassAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      VehicleStatusAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      RaiseEvent Initialized()
+
+    End Sub
+
+
+    Private Function GetRetailerNotRequiredStatusId() As Integer
+      Dim statusId As Integer
+      Dim tempView As Data.DataView
+
+
+      tempView = New Data.DataView(EnvelopeContentDataSet.VehicleStatus)
+      tempView.RowFilter = "Descrip = 'Not Required'"
+
+      If tempView.Count = 1 Then
+        If Integer.TryParse(tempView(0).Item("CodeId").ToString(), statusId) = False Then
+          statusId = -1
+        End If
+      End If
+
+      tempView.Dispose()
+      tempView = Nothing
+
+      Return statusId
+
+    End Function
+
+
+#Region " IBarcode Implementation "
+
+
+    Public Event BarcodePrinted() Implements IBarcode.BarcodePrinted
+    Public Event PrintingBarcode() Implements IBarcode.PrintingBarcode
+
+
+    Public Property BarcodePrinter() As String Implements IBarcode.BarcodePrinter
+      Get
+        Return m_barcodePrinter
+      End Get
+      Set(ByVal value As String)
+        m_barcodePrinter = value
+      End Set
+    End Property
+
+    ''' <summary>
+    ''' Apply character encoding for printing barcode.
+    ''' </summary>
+    ''' <param name="decodedText"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GenerateBarcode(ByVal decodedText As String) As String Implements IBarcode.GenerateBarcode
+
+      decodedText = EncodeToBC128A(decodedText)
+
+      Return decodedText
+
+    End Function
+
+    ''' <summary>
+    ''' Prints barcode without description below the barcode.
+    ''' </summary>
+    ''' <param name="barcodedText">Text to be printed as barcode.</param>
+    ''' <remarks></remarks>
+    Public Sub PrintBarcode(ByVal barcodedText As String) Implements IBarcode.PrintBarcode
+
+      BarcodeText = barcodedText
+      BarcodeDescription = String.Empty
+      SetBarcodePrinter()
+      BarcodePrintDocument.Print()
+
+    End Sub
+
+    ''' <summary>
+    ''' Prints barcode with description text below the barcode.
+    ''' </summary>
+    ''' <param name="barcodedText">Text to be printed as barcode.</param>
+    ''' <param name="printText">Description to be printed below barcode.</param>
+    ''' <remarks></remarks>
+    Public Sub PrintBarcode(ByVal barcodedText As String, ByVal printText As String) Implements IBarcode.PrintBarcode
+
+      BarcodeText = barcodedText
+      BarcodeDescription = printText
+      SetBarcodePrinter()
+      BarcodePrintDocument.Print()
+
+    End Sub
+
+
+#End Region
+
+
+    Public Function IsRequiredRetailer(ByVal retId As Integer) As Boolean
+      Dim isRequired As Boolean
+      Dim tempView As Data.DataView
+
+
+      tempView = New Data.DataView(EnvelopeContentDataSet.vwExpectedRet)
+
+      tempView.RowFilter = "RetId=" + retId.ToString()
+      isRequired = (tempView.Count > 0)
+
+      tempView.Dispose()
+      tempView = Nothing
+
+      Return isRequired
+
+    End Function
+
+
+
+#Region " Validation related methods "
+
+
+#Region " Business Logic related validation methods "
+
+
+    ''' <summary>
+    ''' If retailer is one of the rquired retailers, validates Publication and 
+    ''' Page count column values and returns status accordingly. If retailer is 
+    ''' not in the list of required retailers, sets Publication, start date, 
+    ''' end date, page count and occurances column values to null and returns true.
+    ''' </summary>
+    ''' <param name="validateRow"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Function ValidateRequiredRetailerInputs _
+        (ByVal validateRow As EnvelopeContentDataSet.vwCircularRow) _
+        As Boolean
+      Dim tempView As Data.DataView
+
+
+      '
+      'Check whether the retailer exists in list of required retailers or not. 
+      'If exist, validate publication and page count column values otherwise 
+      'set Publication, start date, end date, Check-in and Occurances column 
+      'values to null and return true. 
+      '
+      tempView = New Data.DataView(EnvelopeContentDataSet.vwExpectedRet)
+      tempView.RowFilter = "RetId=" + validateRow.RetId.ToString()
+      If tempView.Count = 0 Then
+        tempView.Dispose()
+        tempView = Nothing
+
+        validateRow.SetPublicationIdNull()
+        validateRow.SetColumnError("PublicationId", "")
+        validateRow.SetStartDtNull()
+        validateRow.SetColumnError("StartDt", "")
+        validateRow.SetEndDtNull()
+        validateRow.SetColumnError("EndDt", "")
+        validateRow.SetCheckInPageCountNull()
+        validateRow.SetColumnError("CheckInPageCount", "")
+        validateRow.SetCheckInOccurancesNull()
+        validateRow.SetColumnError("CheckInOccurances", "")
+        validateRow.StatusId = GetRetailerNotRequiredStatusId()
+
+        Return True
+      End If
+
+      'If validateRow.IsNull("PublicationId") Then
+      If validateRow.IsPublicationIdNull() Then
+        validateRow.SetColumnError("PublicationId", "Publication is not specified.")
+      Else
+        validateRow.SetColumnError("PublicationId", "")
+      End If
+
+      If validateRow.IsCheckInPageCountNull() Then
+        validateRow.SetColumnError("CheckInPageCount", "Page Count is not specified.")
+      Else
+        validateRow.SetColumnError("CheckInPageCount", "")
+      End If
+
+      validateRow.SetStatusIdNull()
+
+      tempView.Dispose()
+      tempView = Nothing
+
+    End Function
+
+    ''' <summary>
+    ''' Validates start date for its duration from Ad date. 
+    ''' </summary>
+    ''' <param name="validateRow"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Function IsStartDateValid(ByVal validateRow As EnvelopeContentDataSet.vwCircularRow) As Boolean
+      Dim dateDifference As Integer
+
+
+      If validateRow.IsStartDtNull() Then
+        validateRow.SetColumnError("StartDt", "")
+        Return True
+      End If
+
+      dateDifference = validateRow.StartDt.Subtract(validateRow.BreakDt).Days
+
+      If (validateRow.MediaRow.Descrip.ToUpper() = "MAILER" _
+        Or validateRow.MediaRow.Descrip.ToUpper() = "CATALOG") _
+        And (dateDifference < -7 Or dateDifference > 7) _
+      Then
+        validateRow.SetColumnError("StartDt", "Start Date needs to be within 7 days of Ad Date.")
+
+      ElseIf validateRow.RetRow.TradeClassRow.Descrip.ToUpper() = "DEPARTMENT" _
+        And (dateDifference < -14 Or dateDifference > 14) _
+      Then
+        validateRow.SetColumnError("StartDt", "Start Date needs to be within 14 days of Ad Date.")
+
+      ElseIf dateDifference < -28 Or dateDifference > 28 Then
+        validateRow.SetColumnError("StartDt", "Start Date needs to be within 28 days of Ad Date.")
+
+      ElseIf dateDifference < -3 Or dateDifference > 3 Then
+        validateRow.SetColumnError("StartDt", "Start Date is not within 3 days of Ad Date.")
+      End If
+
+    End Function
+
+    ''' <summary>
+    ''' Validates end date for its duration from start date and ad date.
+    ''' </summary>
+    ''' <param name="validateRow"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function IsEndDateValid(ByVal validateRow As EnvelopeContentDataSet.vwCircularRow) As Boolean
+
+      If validateRow.IsEndDtNull() Then
+        validateRow.SetColumnError("EndDt", "")
+        Return True
+      End If
+
+      If validateRow.EndDt.Subtract(validateRow.StartDt).Days < 0 Then
+        validateRow.SetColumnError("EndDt", "End date can not be prior to Start date.")
+      ElseIf validateRow.EndDt.Subtract(validateRow.StartDt).Days > 30 Then
+        validateRow.SetColumnError("EndDt", "End date is not within 30 days of Start date.")
+      ElseIf validateRow.BreakDt.Subtract(validateRow.EndDt).Days > 35 Then
+        validateRow.SetColumnError("EndDt", "End date is not within 35 days of Ad date.")
+      End If
+
+    End Function
+
+
+#End Region
+
+
+    ''' <summary>
+    ''' Validates all columns of supplied DataRow.
+    ''' </summary>
+    ''' <param name="validateRow"></param>
+    ''' <returns>
+    ''' True if all columns contains valid inforamtion. False otherwise.
+    ''' </returns>
+    ''' <remarks></remarks>
+    Public Function AreInputsValid(ByVal validateRow As EnvelopeContentDataSet.vwCircularRow) As Boolean
+
+      RaiseEvent ValidatingInputs()
+
+      If validateRow.IsNull("EnvelopeId") Then
+        validateRow.SetColumnError("EnvelopeId", "Envelope is missing.")
+      Else
+        validateRow.SetColumnError("EnvelopeId", "")
+      End If
+
+      If validateRow.IsNull("BreakDt") Then
+        validateRow.SetColumnError("BreakDt", "Ad date is not specified.")
+      Else
+        validateRow.SetColumnError("BreakDt", "")
+      End If
+
+      If validateRow.IsNull("RetId") Then
+        validateRow.SetColumnError("RetId", "Retailer is not specified.")
+      Else
+        validateRow.SetColumnError("RetId", "")
+      End If
+
+      If validateRow.IsNull("MktId") Then
+        validateRow.SetColumnError("MktId", "Market is not specified.")
+      Else
+        validateRow.SetColumnError("MktId", "")
+      End If
+
+      If validateRow.IsNull("MediaId") Then
+        validateRow.SetColumnError("MediaId", "Media is not specified.")
+      Else
+        validateRow.SetColumnError("MediaId", "")
+      End If
+
+      If validateRow.RowState = DataRowState.Detached Then
+        If validateRow.IsCreateDtNull() Then validateRow.CreateDt = System.DateTime.Today
+        If validateRow.IsCreatedByIdNull() Then validateRow.CreatedById = UserID
+      End If
+
+      '
+      'Business logic related validations.
+      '
+      If validateRow.HasErrors = False Then
+        ValidateRequiredRetailerInputs(validateRow)
+        IsStartDateValid(validateRow)
+        IsEndDateValid(validateRow)
+      End If
+
+      If validateRow.HasErrors = False And validateRow.IsPublicationIdNull() Then
+        validateRow.SetPriorityNull()
+      ElseIf validateRow.HasErrors = False Then
+        validateRow.Priority = GetPriority(validateRow.RetId, validateRow.MktId, validateRow.MediaId)
+        If validateRow.Priority < 0 Then
+          validateRow.SetColumnError("Priority", "Unexpected Market-Media-Retailer combination.")
+          validateRow.SetPriorityNull()
+        End If
+      End If
+
+      RaiseEvent InputsValidated()
+
+      Return (Not validateRow.HasErrors)
+
+    End Function
+
+
+#End Region
+
+
+    ''' <summary>
+    ''' Returns new blank row associated with vehicle table.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function CreateNew() As EnvelopeContentDataSet.vwCircularRow
+
+      Return EnvelopeContentDataSet.vwCircular.NewvwCircularRow()
+
+    End Function
+
+    ''' <summary>
+    ''' Inserts record into Vehicle table in dataset.
+    ''' </summary>
+    ''' <param name="newRow">Row containing inforamtion to be inserted into dataset.</param>
+    ''' <remarks></remarks>
+    Public Sub Add(ByVal newRow As EnvelopeContentDataSet.vwCircularRow)
+
+      EnvelopeContentDataSet.vwCircular.AddvwCircularRow(newRow)
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Retrives envelope information from envelope table based on supplied envelopeID.
+    ''' </summary>
+    ''' <param name="envelopeID">ID of the envelope, whose information is to be loaded.</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetEnvelopeSenderName(ByVal envelopeID As Integer) As String
+      Dim senderName As String
+
+
+      senderName = SenderAdapter.GetEnvelopeSenderName(envelopeID)
+
+      Return senderName
+
+    End Function
+
+    ''' <summary>
+    ''' Retrives priority based on supplied retailer, market and media id values.
+    ''' </summary>
+    ''' <param name="RetId"></param>
+    ''' <param name="MktId"></param>
+    ''' <param name="MediaId"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetPriority _
+        (ByVal RetId As Integer, ByVal MktId As Integer, ByVal MediaId As Integer) _
+        As Integer
+      Dim priorityValue As Global.System.Nullable(Of Integer)
+
+
+      priorityValue = ExpectedRetailerAdapter.GetPriority(RetId, MktId, MediaId)
+
+      If priorityValue Is Nothing Then
+        Return -1
+      Else
+        Return CType(priorityValue, Integer)
+      End If
+
+    End Function
+
+
+
+    ''' <summary>
+    ''' Save vehicle information into database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub Save()
+
+      RaiseEvent Synchronizing()
+
+      VehicleAdapter.Update(EnvelopeContentDataSet.vwCircular)
+
+      RaiseEvent Synchronized()
+
+    End Sub
+
+
+
+    ''' <summary>
+    ''' Loads vehicle information based on supplied vehicle id.
+    ''' </summary>
+    ''' <param name="vehicleID">Vehicle Id to load Vehicle information</param>
+    ''' <remarks></remarks>
+    Public Function LoadVehicle(ByVal vehicleID As Integer) As EnvelopeContentDataSet.vwCircularRow
+      Dim tempRow As EnvelopeContentDataSet.vwCircularRow
+
+
+      VehicleAdapter.FillByVehicleId(EnvelopeContentDataSet.vwCircular, vehicleID)
+
+      If EnvelopeContentDataSet.vwCircular.Count = 0 Then
+        tempRow = Nothing
+      Else
+        tempRow = EnvelopeContentDataSet.vwCircular(0)
+      End If
+
+      Return tempRow
+
+    End Function
+
+
+    ''' <summary>
+    ''' Gets code id for Review status.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetStatusIdForReview() As Integer
+      Dim statusId As Integer
+
+
+      If Integer.TryParse(VehicleStatusAdapter.GetStatusIdForReview().ToString(), statusId) = False Then
+        statusId = -1
+      End If
+
+      Return statusId
+
+    End Function
+
+
+    ''' <summary>
+    ''' Gets code id for Clear Duplicate status.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetStatusIdForClearDuplicate() As Integer
+      Dim statusId As Integer
+
+
+      If Integer.TryParse(VehicleStatusAdapter.GetStatusIdForClearDuplicate().ToString(), statusId) = False Then
+        statusId = -1
+      End If
+
+      Return statusId
+
+        End Function
+
+
+    ''' <summary>
+    ''' Returns true if vehicle is having status set to Review, false otherwise.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function IsVehicleReviewed(ByVal vehicleId As Integer) As Boolean
+      Dim recordCount As Integer
+      Dim reviewStatus As Object
+
+
+      reviewStatus = VehicleStatusAdapter.IsVehicleStatusReview(vehicleId)
+      If reviewStatus Is Nothing Or reviewStatus Is DBNull.Value Then
+        recordCount = 0
+      ElseIf Integer.TryParse(reviewStatus.ToString(), recordCount) = False Then
+        recordCount = 0
+      End If
+
+      reviewStatus = Nothing
+
+      Return (recordCount > 0)
+
+    End Function
+
+    ''' <summary>
+    ''' Returns true if vehicle is having status set to Clear Duplicate, false otherwise.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function IsVehicleClearDuplicate(ByVal vehicleId As Integer) As Boolean
+      Dim recordCount As Integer
+      Dim reviewStatus As Object
+
+
+      reviewStatus = VehicleStatusAdapter.IsVehicleStatusClearDuplicate(vehicleId)
+      If reviewStatus Is Nothing Or reviewStatus Is DBNull.Value Then
+        recordCount = 0
+      ElseIf Integer.TryParse(reviewStatus.ToString(), recordCount) = False Then
+        recordCount = 0
+      End If
+
+      reviewStatus = Nothing
+
+      Return (recordCount > 0)
+
+    End Function
+
+    ''' <summary>
+    ''' Returns true if vehicle is having status set to Published, false otherwise.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function IsVehiclePublished(ByVal vehicleId As Integer) As Boolean
+      Dim recordCount As Nullable(Of Integer)
+
+
+      recordCount = VehicleAdapter.IsVehiclePublished(vehicleId)
+
+      If recordCount IsNot Nothing AndAlso recordCount > 0 Then
+        Return True
+      Else
+        Return False
+      End If
+
+    End Function
+
+
+
+  End Class
+
+
+End Namespace

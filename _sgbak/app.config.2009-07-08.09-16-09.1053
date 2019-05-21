@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+      <section name="MCAP.My.MySettings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <connectionStrings>
+    <add name="MCAP.My.MySettings.ConnectionString" connectionString="Data Source=#ServerName#;Initial Catalog=#DatabaseName#;Integrated Security=SSPI;"
+      providerName="System.Data.SqlClient" />
+    <add name="MCAP.My.MySettings.MCAPConnectionString" connectionString="Data Source=mt1sql10;Initial Catalog=MCAP;Integrated Security=True;"
+      providerName="System.Data.SqlClient" />
+    <add name="MCAP.My.MySettings.MCAPLogConnectionString" connectionString="Data Source=mt1sql10;Initial Catalog=MCAPLog;Integrated Security=True;"
+      providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <system.diagnostics>
+    <sources>
+      <!-- This section defines the logging configuration for My.Application.Log -->
+      <source name="DefaultSource" switchName="DefaultSwitch">
+        <listeners>
+          <add name="FileLog"/>
+          <!-- Uncomment the below section to write to the Application Event Log -->
+          <!--<add name="EventLog"/>-->
+        </listeners>
+      </source>
+    </sources>
+    <switches>
+      <add name="DefaultSwitch" value="Information" />
+    </switches>
+    <sharedListeners>
+      <add name="FileLog"
+           type="Microsoft.VisualBasic.Logging.FileLogTraceListener, Microsoft.VisualBasic, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
+           initializeData="FileLogWriter"/>
+      <!-- Uncomment the below section and replace APPLICATION_NAME with the name of your application to write to the Application Event Log -->
+      <!--<add name="EventLog" type="System.Diagnostics.EventLogTraceListener" initializeData="APPLICATION_NAME"/> -->
+    </sharedListeners>
+  </system.diagnostics>
+  <applicationSettings>
+    <MCAP.My.MySettings>
+      <setting name="DatabaseName" serializeAs="String">
+        <value>MCAPConfig</value>
+      </setting>
+      <setting name="ErrorsCorrectedReport" serializeAs="String">
+        <value>..\..\Reports\ErrorsCorrectedReport.rdlc</value>
+      </setting>
+      <setting name="FamilyExpectationReport" serializeAs="String">
+        <value>..\..\Reports\FamilyExpectationReport.rdlc</value>
+      </setting>
+      <setting name="DropExpectationReport" serializeAs="String">
+        <value>..\..\Reports\DropExpectationReport.rdlc</value>
+      </setting>
+      <setting name="PackageExpectationReceivedReport" serializeAs="String">
+        <value>..\..\Reports\PackageExpectation_ReceivedReport.rdlc</value>
+      </setting>
+      <setting name="PackageExpectationNotReceivedReport" serializeAs="String">
+        <value>..\..\Reports\PackageExpectation_NotReceivedReport.rdlc</value>
+      </setting>
+      <setting name="ServerName" serializeAs="String">
+        <value>mt1sql10</value>
+      </setting>
+    </MCAP.My.MySettings>
+  </applicationSettings>
+</configuration>

@@ -1,0 +1,9 @@
+SCC = This is a source code control file
+
+[MCAP.sln]
+SCC_Aux_Path = http://source.markettrack.com/VaultService|mt1source1:3
+SCC_Project_Name = $/MCAP/MCAP
+
+[MCAP.vbproj]
+SCC_Aux_Path = http://source.markettrack.com/VaultService|mt1source1:3
+SCC_Project_Name = $/MCAP/MCAP

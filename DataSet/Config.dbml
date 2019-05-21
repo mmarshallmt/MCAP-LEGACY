@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MCAPConfig" Class="ConfigDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=MT4SQL06;Initial Catalog=MCAPConfig;Integrated Security=True" SettingsObjectName="WishabiImage.My.MySettings" SettingsPropertyName="MCAPConfigConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AppParameters" Member="AppParameters">
+    <Type Name="AppParameter">
+      <Column Name="AppName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ParamName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="DatabaseParameterID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ParamValue" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

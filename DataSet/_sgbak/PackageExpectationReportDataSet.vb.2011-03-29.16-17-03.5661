@@ -1,0 +1,22 @@
+﻿
+
+Partial Class PackageExpectationReportDataSet
+  Partial Class PackageNotReceivedDataTable
+
+
+
+  End Class
+
+End Class
+
+Namespace PackageExpectationReportDataSetTableAdapters
+    
+    Partial Public Class PackageReceivedTableAdapter
+    End Class
+End Namespace
+
+Namespace PackageExpectationReportDataSetTableAdapters
+    
+    Partial Public Class PackageNotReceivedTableAdapter
+    End Class
+End Namespace

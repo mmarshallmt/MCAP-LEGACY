@@ -1,0 +1,2068 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{58D98A59-1217-476C-A64F-DF20CB993FC6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>MCAP.My.MyApplication</StartupObject>
+    <RootNamespace>MCAP</RootNamespace>
+    <AssemblyName>MCAP</AssemblyName>
+    <MyType>WindowsForms</MyType>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <OptionStrict>On</OptionStrict>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ApplicationIcon>Resources\MCAP.ico</ApplicationIcon>
+    <ManifestCertificateThumbprint>9CE836ADB6E67938F96659A24918FE38C755EDD9</ManifestCertificateThumbprint>
+    <ManifestKeyFile>MCAP_3_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>MCAP_2_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <PublishUrl>\\mt6sql1.apima01.local\MCAPInstall\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>MCAP 1.2</ProductName>
+    <PublisherName>Market Track, LLC</PublisherName>
+    <SuiteName>Data Entry</SuiteName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>33</ApplicationRevision>
+    <ApplicationVersion>1.2.4.33</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+    <BootstrapperComponentsUrl>\\mt4bu0\Downloads\MSApplications\MSAccessDBEng2010</BootstrapperComponentsUrl>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>MCAP.xml</DocumentationFile>
+    <NoWarn>42030,42104,42105,42106,42107,42108,42109,42353,42354,42355</NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>MCAP.xml</DocumentationFile>
+    <NoWarn>42030,42104,42105,42106,42107,42108,42109,42353,42354,42355</NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ImageCache, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Reference MCAP\ImageCache.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <HintPath>Components\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="ceTe.DynamicPDF.Rasterizer.35.x86, Version=1.0.1.35, Culture=neutral, PublicKeyToken=09b5ce0d5c0a9d8b, processorArchitecture=x86">
+      <HintPath>Components\ceTe.DynamicPDF.Rasterizer.35.x86.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="stdole1">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 9.0\Visual Studio Tools for Office\PIA\Office11\stdole.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WebsitesScreenshot, Version=1.5.0.0, Culture=neutral, PublicKeyToken=a86c4eea080940bd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Components\WebsitesScreenshot.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataSet\AdSearchDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdSearchDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="ApplicationVariableStorage.vb" />
+    <Compile Include="BackgroundThreading\Controller.vb" />
+    <Compile Include="BackgroundThreading\IClient.vb" />
+    <Compile Include="BackgroundThreading\IController.vb" />
+    <Compile Include="BackgroundThreading\IWorker.vb" />
+    <Compile Include="BC123AB.vb" />
+    <Compile Include="DataSet\AdSearchDataSet.vb">
+      <DependentUpon>AdSearchDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\BypassVehicleDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BypassVehicleDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\CHub.designer.vb">
+      <DependentUpon>CHub.dbml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="DataSet\CHub.vb">
+      <DependentUpon>CHub.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\CompareACImportType.designer.vb">
+      <DependentUpon>CompareACImportType.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\CompareACImportType.vb">
+      <DependentUpon>CompareACImportType.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\Config.designer.vb">
+      <DependentUpon>Config.dbml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="DataSet\Config.vb">
+      <DependentUpon>Config.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\Coverage.Designer.vb">
+      <DependentUpon>Coverage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\Coverage.vb">
+      <DependentUpon>Coverage.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\CoverageDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CoverageDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\CoverageDataSet.vb">
+      <DependentUpon>CoverageDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\DESPDataSet.vb">
+      <DependentUpon>DESPDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\DESPRoleAssocDataSet.Designer.vb">
+      <DependentUpon>DESPRoleAssocDataSet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\DESPRoleAssocDataSet.vb">
+      <DependentUpon>DESPRoleAssocDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\DupCheckDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DupCheckDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\DupCheckDataSet.vb">
+      <DependentUpon>DupCheckDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\EnvelopeContentDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnvelopeContentDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\EnvelopeContentDataSet.vb">
+      <DependentUpon>EnvelopeContentDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\EnvelopeDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnvelopeDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\EnvelopeDataSet.vb">
+      <DependentUpon>EnvelopeDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\eropDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>eropDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\eropDataSet.vb">
+      <DependentUpon>eropDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\ErrorCorrectedReportDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorCorrectedReportDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\ErrorCorrectedReportDataSet.vb">
+      <DependentUpon>ErrorCorrectedReportDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\ExpectationReportDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExpectationReportDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\FamilyCheckInDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FamilyCheckInDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\FamilyCheckInDataSet.vb">
+      <DependentUpon>FamilyCheckInDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\FamilyDataSet.Designer.vb">
+      <DependentUpon>FamilyDataSet.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="DataSet\FamilyDataSet.vb">
+      <DependentUpon>FamilyDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\FamilyExpectationReportDataSet.vb">
+      <DependentUpon>FamilyExpectationReportDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\Maintenance.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Maintenance.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\Maintenance.vb">
+      <DependentUpon>Maintenance.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\MaintenanceDataSet.Designer.vb">
+      <DependentUpon>MaintenanceDataSet.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="DataSet\MaintenanceDataSet.vb">
+      <DependentUpon>MaintenanceDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\PackageExpectationReportDataSet.vb">
+      <DependentUpon>PackageExpectationReportDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\PublicationCheckInDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PublicationCheckInDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\PublicationCheckInDataSet.vb">
+      <DependentUpon>PublicationCheckInDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\PublicationNotDroppedDataSet.vb">
+      <DependentUpon>PublicationNotDroppedDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\PublicationPullDataSet.vb">
+      <DependentUpon>PublicationPullDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\QCDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QCDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\QCDataSet.vb">
+      <DependentUpon>QCDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\FamilyExpectationReportDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FamilyExpectationReportDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\PublicationPullDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PublicationPullDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\ReportsDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportsDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\ResequenceDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResequenceDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\PackageExpectationReportDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PackageExpectationReportDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\FRDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FRDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\ROPVehicleSearch.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ROPVehicleSearch.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\ROPVehicleSearch.vb">
+      <DependentUpon>ROPVehicleSearch.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\SPReviewDataSet.vb">
+      <DependentUpon>SPReviewDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\StatusReportDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StatusReportDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\SubscriptionDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubscriptionDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\SubscriptionDataSet.vb">
+      <DependentUpon>SubscriptionDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\WorkToBeCompletedReportDataSet.vb">
+      <DependentUpon>WorkToBeCompletedReportDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\PublicationNotDroppedDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PublicationNotDroppedDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\SPReviewDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SPReviewDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\DESPDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DESPDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="UIProcess\AddrMapping.vb" />
+    <Compile Include="UIProcess\canadaLoad.vb" />
+    <Compile Include="UIProcess\clsExpectation.vb" />
+    <Compile Include="UIProcess\clsExpectationController.vb" />
+    <Compile Include="UIProcess\clsFaceBook.vb" />
+    <Compile Include="UIProcess\clsFaceBookController.vb" />
+    <Compile Include="UIProcess\clsOutofMemoryLogController.vb" />
+    <Compile Include="UIProcess\clsRet.vb" />
+    <Compile Include="UIProcess\clsRetController.vb" />
+    <Compile Include="UIProcess\clsUtility.vb" />
+    <Compile Include="UIProcess\clsVehicle.vb" />
+    <Compile Include="UIProcess\clsVehicleController.vb" />
+    <Compile Include="UIProcess\DAO.vb" />
+    <Compile Include="UIProcess\DupCheckProcess.vb" />
+    <Compile Include="UIProcess\EditableBase.vb" />
+    <Compile Include="UIProcess\Expectation.vb" />
+    <Compile Include="UIProcess\Extensions.vb" />
+    <Compile Include="UIProcess\memoryLog.vb" />
+    <Compile Include="UIProcess\AdExpectationReport.vb" />
+    <Compile Include="UIProcess\CCTasksLog.vb" />
+    <Compile Include="UIProcess\ConversionEventArgs.vb" />
+    <Compile Include="UIProcess\MidWeek.vb" />
+    <Compile Include="UIProcess\MissingAdLog.vb" />
+    <Compile Include="UIProcess\RequiredProcess.vb" />
+    <Compile Include="UIProcess\SafeDataReader.vb" />
+    <Compile Include="UIProcess\ScanTrackerRemoteQc.vb" />
+    <Compile Include="UIProcess\DESP.vb" />
+    <Compile Include="UIProcess\DirectoryEventArgs.vb" />
+    <Compile Include="UIProcess\DoubleTruckPageEventArgs.vb" />
+    <Compile Include="UIProcess\EROPLogEventArgs.vb" />
+    <Compile Include="UIProcess\FileEventArgs.vb" />
+    <Compile Include="UIProcess\FileSystemEventArgs.vb" />
+    <Compile Include="UIProcess\MoveImageEventArgs.vb" />
+    <Compile Include="UIProcess\MovePublicationImagesEventArgs.vb" />
+    <Compile Include="UIProcess\ScanTrackerEROP.vb" />
+    <Compile Include="UIProcess\SocialMedia.vb" />
+    <Compile Include="UIProcess\SqlHelper.vb" />
+    <Compile Include="UIProcess\SQLInfoEnumerator.vb" />
+    <Compile Include="UIProcess\UnzipEventArgs.vb" />
+    <Compile Include="UIProcess\UnzipFileEventArgs.vb" />
+    <Compile Include="UIProcess\VehicleChildrenCreation.vb" />
+    <Compile Include="UIProcess\webpageMaintenance.vb" />
+    <Compile Include="UI\AddressMappingForm.Designer.vb">
+      <DependentUpon>AddressMappingForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AddressMappingForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AdExpectationReportForm.Designer.vb">
+      <DependentUpon>AdExpectationReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AdExpectationReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AdSearchForm.Designer.vb">
+      <DependentUpon>AdSearchForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AdSearchForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\BypassVehicleForm.Designer.vb">
+      <DependentUpon>BypassVehicleForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BypassVehicleForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CCFormsSubmitMessageBox.Designer.vb">
+      <DependentUpon>CCFormsSubmitMessageBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CCFormsSubmitMessageBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CCTasksLogForm.Designer.vb">
+      <DependentUpon>CCTasksLogForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CCTasksLogForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CCTasksLogSenderDetailsForm.Designer.vb">
+      <DependentUpon>CCTasksLogSenderDetailsForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CCTasksLogSenderDetailsForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ChildVehicleListForm.Designer.vb">
+      <DependentUpon>ChildVehicleListForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ChildVehicleListForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ProgressInformationForm.Designer.vb">
+      <DependentUpon>ProgressInformationForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\ProgressInformationForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Wizard.Designer.vb">
+      <DependentUpon>Wizard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\Wizard.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CCSearchForm.Designer.vb">
+      <DependentUpon>CCSearchForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CCSearchForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\clsMessageBox.Designer.vb">
+      <DependentUpon>clsMessageBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\clsMessageBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ImagesViewForm.designer.vb">
+      <DependentUpon>ImagesViewForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ImagesViewForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\inputSenderComment.Designer.vb">
+      <DependentUpon>inputSenderComment.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\inputSenderComment.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MidWeekForm.Designer.vb">
+      <DependentUpon>MidWeekForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MidWeekForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MissingAdLogForm.Designer.vb">
+      <DependentUpon>MissingAdLogForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MissingAdLogForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\newExpectationForm.Designer.vb">
+      <DependentUpon>newExpectationForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\newExpectationForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\NewRetailerForm.Designer.vb">
+      <DependentUpon>NewRetailerForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NewRetailerForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\qcImageMaintenance.Designer.vb">
+      <DependentUpon>qcImageMaintenance.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\qcImageMaintenance.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\RequiredForm.Designer.vb">
+      <DependentUpon>RequiredForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\RequiredForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ReviewRetailerForm.Designer.vb">
+      <DependentUpon>ReviewRetailerForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ReviewRetailerForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ScanTrackerRemoteQCForm.Designer.vb">
+      <DependentUpon>ScanTrackerRemoteQCForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ScanTrackerRemoteQCForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DESPForm.Designer.vb">
+      <DependentUpon>DESPForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DESPForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DESPResultForm.Designer.vb">
+      <DependentUpon>DESPResultForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DESPResultForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DropdownOptionForm.Designer.vb">
+      <DependentUpon>DropdownOptionForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DropdownOptionForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DuplicatePublicationListForm.Designer.vb">
+      <DependentUpon>DuplicatePublicationListForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DuplicatePublicationListForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\QcStatusDisplayScreen.Designer.vb">
+      <DependentUpon>QcStatusDisplayScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\QcStatusDisplayScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\QcSubjectButtonForm.Designer.vb">
+      <DependentUpon>QcSubjectButtonForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\QcSubjectButtonForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ReviewWVNNVehicleForm.Designer.vb">
+      <DependentUpon>ReviewWVNNVehicleForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ReviewWVNNVehicleForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIProcess\EnvelopeLabelPrint.vb" />
+    <Compile Include="UIProcess\ExcelHelper.vb" />
+    <Compile Include="UIProcess\NPLogReportHelper.vb" />
+    <Compile Include="UIProcess\NPMissingLogReportHelper.vb" />
+    <Compile Include="UIProcess\PackageExpectationReport.vb" />
+    <Compile Include="UIProcess\PrintBase.vb" />
+    <Compile Include="UIProcess\PublicationLabelPrint.vb" />
+    <Compile Include="UIProcess\PublicationNotDropped.vb" />
+    <Compile Include="UIProcess\PublicationDigitalPull.vb" />
+    <Compile Include="UIProcess\RetrieveImages.vb">
+    </Compile>
+    <Compile Include="UIProcess\VehicleLabelPrint.vb" />
+    <Compile Include="UI\Controls\DataGridViewAutoFilterTextBoxColumn.vb">
+    </Compile>
+    <Compile Include="UI\Controls\DataGridViewAutoFilterColumnHeaderCell.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\DataGridViewCheckedListBoxCell.vb" />
+    <Compile Include="UI\Controls\DataGridViewCheckedListBoxColumn.vb" />
+    <Compile Include="UI\Controls\DataGridViewCheckedListBoxEditingControl.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ImageViewerForm.Designer.vb">
+      <DependentUpon>ImageViewerForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\ImageViewerForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\MessageBoxForm.Designer.vb">
+      <DependentUpon>MessageBoxForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\MessageBoxForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\MultipleScanForm.Designer.vb">
+      <DependentUpon>MultipleScanForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\MultipleScanForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\StatusMessageForm.Designer.vb">
+      <DependentUpon>StatusMessageForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\StatusMessageForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ThumbnailBrowserForm.Designer.vb">
+      <DependentUpon>ThumbnailBrowserForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\ThumbnailBrowserForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\EnvelopeStatusReportForm.Designer.vb">
+      <DependentUpon>EnvelopeStatusReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\EnvelopeStatusReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ExpectationReportForm.Designer.vb">
+      <DependentUpon>ExpectationReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ExpectationReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FlashReportForm.Designer.vb">
+      <DependentUpon>FlashReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FlashReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MissingFilesForm.Designer.vb">
+      <DependentUpon>MissingFilesForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MissingFilesForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PermissionForm.Designer.vb">
+      <DependentUpon>PermissionForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PermissionForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PrinterSelectionForm.Designer.vb">
+      <DependentUpon>PrinterSelectionForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PrinterSelectionForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PublicationDigitalPullForm.Designer.vb">
+      <DependentUpon>PublicationDigitalPullForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PublicationDigitalPullForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PublicationNotDroppedForm.Designer.vb">
+      <DependentUpon>PublicationNotDroppedForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PublicationNotDroppedForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\RetrieveImagesForm.Designer.vb">
+      <DependentUpon>RetrieveImagesForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\RetrieveImagesForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ReviewVehicleForm.Designer.vb">
+      <DependentUpon>ReviewVehicleForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ReviewVehicleForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ROPStatusReportForm.Designer.vb">
+      <DependentUpon>ROPStatusReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ROPStatusReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ScanTrackerEROPForm.Designer.vb">
+      <DependentUpon>ScanTrackerEROPForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ScanTrackerEROPForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SendernotmatchingImport.Designer.vb">
+      <DependentUpon>SendernotmatchingImport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SendernotmatchingImport.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SenderSelectionHelpForm.Designer.vb">
+      <DependentUpon>SenderSelectionHelpForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SenderSelectionHelpForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Splash.xaml.vb">
+      <DependentUpon>Splash.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIProcess\CancellableEventArgs.vb" />
+    <Compile Include="UIProcess\EventArgs.vb" />
+    <Compile Include="UIProcess\Exception.vb" />
+    <Compile Include="UIProcess\FamilyExpectationReport.vb" />
+    <Compile Include="UIProcess\Maintenance.vb" />
+    <Compile Include="UIProcess\NewspaperLogReport.vb" />
+    <Compile Include="UI\Controls\CalendarCell.vb" />
+    <Compile Include="UI\Controls\CalendarColumn.vb" />
+    <Compile Include="UI\Controls\CalendarEditingControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\thumbnailToolTipForm.Designer.vb">
+      <DependentUpon>thumbnailToolTipForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\thumbnailToolTipForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FamilyBaseForm.Designer.vb">
+      <DependentUpon>FamilyBaseForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FamilyBaseForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FamilyExpectationReportForm.Designer.vb">
+      <DependentUpon>FamilyExpectationReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FamilyExpectationReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MaintenanceForm.Designer.vb">
+      <DependentUpon>MaintenanceForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MaintenanceForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIProcess\ErrorsCorrectedReport.vb" />
+    <Compile Include="UIProcess\IndexBase.vb" />
+    <Compile Include="UIProcess\Index.vb" />
+    <Compile Include="UIProcess\PublicationIndexQC.vb" />
+    <Compile Include="UIProcess\PublicationPullQC.vb" />
+    <Compile Include="UIProcess\ScanTracker.vb" />
+    <Compile Include="UI\Controls\TypeInDatePicker.Designer.vb">
+      <DependentUpon>TypeInDatePicker.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\TypeInDatePicker.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\DateCheckDialog.Designer.vb">
+      <DependentUpon>DateCheckDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\DateCheckDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ErrorsCorrectedReportForm.Designer.vb">
+      <DependentUpon>ErrorsCorrectedReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ErrorsCorrectedReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\IndexBaseForm.Designer.vb">
+      <DependentUpon>IndexBaseForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\IndexBaseForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\IndexForm.Designer.vb">
+      <DependentUpon>IndexForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\IndexForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIProcess\ApplicationUser.vb" />
+    <Compile Include="DataSet\CodeDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodeDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Main.vb" />
+    <Compile Include="DataSet\PageDefinitionsDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PageDefinitionsDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\PageDefinitionsDataSet.vb">
+      <DependentUpon>PageDefinitionsDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="UIProcess\DupCheck.vb" />
+    <Compile Include="UIProcess\EnvelopeContent.vb" />
+    <Compile Include="UIProcess\FamilyCheckIn.vb" />
+    <Compile Include="UIProcess\FamilyCreation.vb" />
+    <Compile Include="UIProcess\FamilyReview.vb" />
+    <Compile Include="UIProcess\FamilyView.vb" />
+    <Compile Include="UIProcess\ImageCountWorker.vb" />
+    <Compile Include="UIProcess\MoveWorker.vb" />
+    <Compile Include="UIProcess\PageDefinitions.vb" />
+    <Compile Include="UIProcess\PublicationCheckIn.vb" />
+    <Compile Include="UIProcess\PublicationPull.vb" />
+    <Compile Include="UIProcess\QCVehicleImages.vb" />
+    <Compile Include="UIProcess\Resequence.vb" />
+    <Compile Include="UIProcess\VehicleImageBase.vb" />
+    <Compile Include="UIProcess\Role.vb" />
+    <Compile Include="DataSet\RoleDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RoleDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\RoleDataSet.vb">
+      <DependentUpon>RoleDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NewspaperLogReportForm.Designer.vb">
+      <DependentUpon>NewspaperLogReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NewspaperLogReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PackageExpectationReportForm.Designer.vb">
+      <DependentUpon>PackageExpectationReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PackageExpectationReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PublicationIndexQCForm.Designer.vb">
+      <DependentUpon>PublicationIndexQCForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PublicationIndexQCForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PublicationPullQCForm.Designer.vb">
+      <DependentUpon>PublicationPullQCForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PublicationPullQCForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\QCForm.Designer.vb">
+      <DependentUpon>QCForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\QCForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ResequenceForm.Designer.vb">
+      <DependentUpon>ResequenceForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ResequenceForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ScanTrackerReviewForm.Designer.vb">
+      <DependentUpon>ScanTrackerReviewForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ScanTrackerReviewForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\sentToIndex.Designer.vb">
+      <DependentUpon>sentToIndex.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\sentToIndex.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ShowReportForm.Designer.vb">
+      <DependentUpon>ShowReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ShowReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SIMRLogForm.Designer.vb">
+      <DependentUpon>SIMRLogForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SIMRLogForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SimrPopupForm.Designer.vb">
+      <DependentUpon>SimrPopupForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SimrPopupForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SocialMediaForm.Designer.vb">
+      <DependentUpon>SocialMediaForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SocialMediaForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SPReviewForm.Designer.vb">
+      <DependentUpon>SPReviewForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SPReviewForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\URLInputBox.Designer.vb">
+      <DependentUpon>URLInputBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\URLInputBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\VehicleChildrenCreation.Designer.vb">
+      <DependentUpon>VehicleChildrenCreation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\VehicleChildrenCreation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\VehicleImageFormBase.Designer.vb">
+      <DependentUpon>VehicleImageFormBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\VehicleImageFormBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DupCheckForm.Designer.vb">
+      <DependentUpon>DupCheckForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DupCheckForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\EnvelopeContentCheckInForm.Designer.vb">
+      <DependentUpon>EnvelopeContentCheckInForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\EnvelopeContentCheckInForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FamilyCheckInForm.Designer.vb">
+      <DependentUpon>FamilyCheckInForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FamilyCheckInForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FamilyCreationForm.Designer.vb">
+      <DependentUpon>FamilyCreationForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FamilyCreationForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FamilyReviewForm.Designer.vb">
+      <DependentUpon>FamilyReviewForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FamilyReviewForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FamilyViewForm.Designer.vb">
+      <DependentUpon>FamilyViewForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FamilyViewForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\IDuplicateCheck.vb" />
+    <Compile Include="UI\MDIChildFormBase.Designer.vb">
+      <DependentUpon>MDIChildFormBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MDIChildFormBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PageDefinitionsForm.Designer.vb">
+      <DependentUpon>PageDefinitionsForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PageDefinitionsForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PublicationCheckInForm.Designer.vb">
+      <DependentUpon>PublicationCheckInForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PublicationCheckInForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PublicationPullForm.Designer.vb">
+      <DependentUpon>PublicationPullForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PublicationPullForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UIProcess\BaseClass.vb" />
+    <Compile Include="UIProcess\Envelope.vb" />
+    <Compile Include="UIProcess\IBarcode.vb" />
+    <Compile Include="UI\BaseForm.Designer.vb">
+      <DependentUpon>BaseForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BaseForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\EnvelopeCheckInForm.Designer.vb">
+      <DependentUpon>EnvelopeCheckInForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\EnvelopeCheckInForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FormStateEnum.vb" />
+    <Compile Include="UI\IForm.vb" />
+    <Compile Include="UI\MDIForm.Designer.vb">
+      <DependentUpon>MDIForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MDIForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIProcess\User.vb" />
+    <Compile Include="UI\ScanTrackerForm.Designer.vb">
+      <DependentUpon>ScanTrackerForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ScanTrackerForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIProcess\UserBase.vb" />
+    <Compile Include="UI\VehicleInclusionForm.Designer.vb">
+      <DependentUpon>VehicleInclusionForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\VehicleInclusionForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\VehicleStatusReportForm.Designer.vb">
+      <DependentUpon>VehicleStatusReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\VehicleStatusReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\WebBrowserForm.Designer.vb">
+      <DependentUpon>WebBrowserForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WebBrowserForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataSet\UserRolesDataSet.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UserRolesDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSet\UserRolesDataSet.vb">
+      <DependentUpon>UserRolesDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WebsiteMaintenanceForm.Designer.vb">
+      <DependentUpon>WebsiteMaintenanceForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WebsiteMaintenanceForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\wishabi.Designer.vb">
+      <DependentUpon>wishabi.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\wishabi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\WorkToBeCompletedReportForm.Designer.vb">
+      <DependentUpon>WorkToBeCompletedReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WorkToBeCompletedReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataSet\WorkToBeCompletedReportDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorkToBeCompletedReportDataSet.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataSet\BypassVehicleDataSet.xsc">
+      <DependentUpon>BypassVehicleDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\BypassVehicleDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>BypassVehicleDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\BypassVehicleDataSet.xss">
+      <DependentUpon>BypassVehicleDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\CHub.dbml.layout">
+      <DependentUpon>CHub.dbml</DependentUpon>
+    </None>
+    <None Include="DataSet\CompareACImportType.xsc">
+      <DependentUpon>CompareACImportType.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\CompareACImportType.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CompareACImportType1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\CompareACImportType.xss">
+      <DependentUpon>CompareACImportType.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\Config.dbml.layout">
+      <DependentUpon>Config.dbml</DependentUpon>
+    </None>
+    <EmbeddedResource Include="Reports\AdExpectation_NotReceivedReport.rdlc" />
+    <EmbeddedResource Include="Reports\AdExpectation_ReceivedReport.rdlc" />
+    <EmbeddedResource Include="Reports\BypassVehicleReports.rdlc" />
+    <EmbeddedResource Include="Reports\CCMissingAdLogs.rdlc" />
+    <EmbeddedResource Include="Reports\CCSearchForm_MissingAd.rdlc" />
+    <EmbeddedResource Include="Reports\CCSearchForm_TaskLog.rdlc" />
+    <EmbeddedResource Include="Reports\CCTaskLogs.rdlc" />
+    <EmbeddedResource Include="Reports\ExportFlashRecords.rdlc" />
+    <EmbeddedResource Include="Reports\PackageExpectation_NotReceivedReport.rdlc" />
+    <EmbeddedResource Include="Reports\PackageExpectation_ReceivedReport.rdlc" />
+    <EmbeddedResource Include="Reports\DropExpectationReport.rdlc" />
+    <EmbeddedResource Include="Reports\FamilyExpectationReport.rdlc" />
+    <EmbeddedResource Include="Reports\SendersNotMatchingImport.rdlc" />
+    <EmbeddedResource Include="Reports\UnprocessedVehicleSimrReport.rdlc" />
+    <EmbeddedResource Include="Reports\UnProcessFamilyReviewReport.rdlc" />
+    <EmbeddedResource Include="Reports\VehicleInclusionReport.rdlc" />
+    <EmbeddedResource Include="UI\AddressMappingForm.resx">
+      <DependentUpon>AddressMappingForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AdExpectationReportForm.resx">
+      <DependentUpon>AdExpectationReportForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AdSearchForm.resx">
+      <DependentUpon>AdSearchForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\BypassVehicleForm.resx">
+      <DependentUpon>BypassVehicleForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CCFormsSubmitMessageBox.resx">
+      <DependentUpon>CCFormsSubmitMessageBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CCTasksLogForm.resx">
+      <DependentUpon>CCTasksLogForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CCTasksLogSenderDetailsForm.resx">
+      <DependentUpon>CCTasksLogSenderDetailsForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ChildVehicleListForm.resx">
+      <DependentUpon>ChildVehicleListForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\ProgressInformationForm.resx">
+      <DependentUpon>ProgressInformationForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CCSearchForm.resx">
+      <DependentUpon>CCSearchForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\clsMessageBox.resx">
+      <DependentUpon>clsMessageBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ImagesViewForm.resx">
+      <DependentUpon>ImagesViewForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\inputSenderComment.resx">
+      <DependentUpon>inputSenderComment.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MidWeekForm.resx">
+      <DependentUpon>MidWeekForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MissingAdLogForm.resx">
+      <DependentUpon>MissingAdLogForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\newExpectationForm.resx">
+      <DependentUpon>newExpectationForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\NewRetailerForm.resx">
+      <DependentUpon>NewRetailerForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\qcImageMaintenance.resx">
+      <DependentUpon>qcImageMaintenance.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\RequiredForm.resx">
+      <DependentUpon>RequiredForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ReviewRetailerForm.resx">
+      <DependentUpon>ReviewRetailerForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ScanTrackerRemoteQCForm.resx">
+      <DependentUpon>ScanTrackerRemoteQCForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DESPForm.resx">
+      <DependentUpon>DESPForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DESPResultForm.resx">
+      <DependentUpon>DESPResultForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DropdownOptionForm.resx">
+      <DependentUpon>DropdownOptionForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DuplicatePublicationListForm.resx">
+      <DependentUpon>DuplicatePublicationListForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\QcStatusDisplayScreen.resx">
+      <DependentUpon>QcStatusDisplayScreen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\QcSubjectButtonForm.resx">
+      <DependentUpon>QcSubjectButtonForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ReviewWVNNVehicleForm.resx">
+      <DependentUpon>ReviewWVNNVehicleForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\ImageViewerForm.resx">
+      <DependentUpon>ImageViewerForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\MessageBoxForm.resx">
+      <DependentUpon>MessageBoxForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\MultipleScanForm.resx">
+      <DependentUpon>MultipleScanForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\StatusMessageForm.resx">
+      <DependentUpon>StatusMessageForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\ThumbnailBrowserForm.resx">
+      <DependentUpon>ThumbnailBrowserForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\EnvelopeStatusReportForm.resx">
+      <DependentUpon>EnvelopeStatusReportForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ExpectationReportForm.resx">
+      <DependentUpon>ExpectationReportForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FlashReportForm.resx">
+      <DependentUpon>FlashReportForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MissingFilesForm.resx">
+      <DependentUpon>MissingFilesForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PermissionForm.resx">
+      <DependentUpon>PermissionForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PrinterSelectionForm.resx">
+      <DependentUpon>PrinterSelectionForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PublicationDigitalPullForm.resx">
+      <DependentUpon>PublicationDigitalPullForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PublicationNotDroppedForm.resx">
+      <DependentUpon>PublicationNotDroppedForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\RetrieveImagesForm.resx">
+      <DependentUpon>RetrieveImagesForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ReviewVehicleForm.resx">
+      <DependentUpon>ReviewVehicleForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ROPStatusReportForm.resx">
+      <DependentUpon>ROPStatusReportForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ScanTrackerEROPForm.resx">
+      <DependentUpon>ScanTrackerEROPForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SendernotmatchingImport.resx">
+      <DependentUpon>SendernotmatchingImport.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SenderSelectionHelpForm.resx">
+      <DependentUpon>SenderSelectionHelpForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\thumbnailToolTipForm.resx">
+      <DependentUpon>thumbnailToolTipForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FamilyBaseForm.resx">
+      <DependentUpon>FamilyBaseForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FamilyExpectationReportForm.resx">
+      <DependentUpon>FamilyExpectationReportForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MaintenanceForm.resx">
+      <DependentUpon>MaintenanceForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ErrorsCorrectedReport.rdlc" />
+    <EmbeddedResource Include="UI\Controls\TypeInDatePicker.resx">
+      <DependentUpon>TypeInDatePicker.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\DateCheckDialog.resx">
+      <DependentUpon>DateCheckDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ErrorsCorrectedReportForm.resx">
+      <DependentUpon>ErrorsCorrectedReportForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\IndexBaseForm.resx">
+      <DependentUpon>IndexBaseForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\IndexForm.resx">
+      <DependentUpon>IndexForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\NewspaperLogReportForm.resx">
+      <DependentUpon>NewspaperLogReportForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PackageExpectationReportForm.resx">
+      <DependentUpon>PackageExpectationReportForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PublicationIndexQCForm.resx">
+      <DependentUpon>PublicationIndexQCForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PublicationPullQCForm.resx">
+      <DependentUpon>PublicationPullQCForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\QCForm.resx">
+      <DependentUpon>QCForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ResequenceForm.resx">
+      <DependentUpon>ResequenceForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ScanTrackerReviewForm.resx">
+      <DependentUpon>ScanTrackerReviewForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\sentToIndex.resx">
+      <DependentUpon>sentToIndex.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ShowReportForm.resx">
+      <DependentUpon>ShowReportForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SIMRLogForm.resx">
+      <DependentUpon>SIMRLogForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SimrPopupForm.resx">
+      <DependentUpon>SimrPopupForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SocialMediaForm.resx">
+      <DependentUpon>SocialMediaForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SPReviewForm.resx">
+      <DependentUpon>SPReviewForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\URLInputBox.resx">
+      <DependentUpon>URLInputBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\VehicleChildrenCreation.resx">
+      <DependentUpon>VehicleChildrenCreation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\VehicleImageFormBase.resx">
+      <DependentUpon>VehicleImageFormBase.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DupCheckForm.resx">
+      <DependentUpon>DupCheckForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\EnvelopeContentCheckInForm.resx">
+      <DependentUpon>EnvelopeContentCheckInForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FamilyCheckInForm.resx">
+      <DependentUpon>FamilyCheckInForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FamilyCreationForm.resx">
+      <DependentUpon>FamilyCreationForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FamilyReviewForm.resx">
+      <DependentUpon>FamilyReviewForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FamilyViewForm.resx">
+      <DependentUpon>FamilyViewForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MDIChildFormBase.resx">
+      <DependentUpon>MDIChildFormBase.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PageDefinitionsForm.resx">
+      <DependentUpon>PageDefinitionsForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PublicationCheckInForm.resx">
+      <DependentUpon>PublicationCheckInForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PublicationPullForm.resx">
+      <DependentUpon>PublicationPullForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\BaseForm.resx">
+      <DependentUpon>BaseForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\EnvelopeCheckInForm.resx">
+      <DependentUpon>EnvelopeCheckInForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MDIForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MDIForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ScanTrackerForm.resx">
+      <DependentUpon>ScanTrackerForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\VehicleInclusionForm.resx">
+      <DependentUpon>VehicleInclusionForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\VehicleStatusReportForm.resx">
+      <DependentUpon>VehicleStatusReportForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\WebBrowserForm.resx">
+      <DependentUpon>WebBrowserForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\UnprocessedEnvelopeReport.rdlc" />
+    <EmbeddedResource Include="UI\WebsiteMaintenanceForm.resx">
+      <DependentUpon>WebsiteMaintenanceForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\wishabi.resx">
+      <DependentUpon>wishabi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\WorkToBeCompletedReportForm.resx">
+      <DependentUpon>WorkToBeCompletedReportForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\UnprocessedVehicleReport.rdlc" />
+    <EmbeddedResource Include="Reports\UnprocessedROPReport.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="app.xsd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="DataSet\CHub.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>CHub.designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\CodeDataSet.xsc">
+      <DependentUpon>CodeDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\CodeDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CodeDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\CodeDataSet.xss">
+      <DependentUpon>CodeDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\Config.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>Config.designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\DupCheckDataSet.xsc">
+      <DependentUpon>DupCheckDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\DupCheckDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DupCheckDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\DupCheckDataSet.xss">
+      <DependentUpon>DupCheckDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\EnvelopeContentDataSet.xsc">
+      <DependentUpon>EnvelopeContentDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\EnvelopeContentDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EnvelopeContentDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\EnvelopeContentDataSet.xss">
+      <DependentUpon>EnvelopeContentDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\EnvelopeDataSet.xsc">
+      <DependentUpon>EnvelopeDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\EnvelopeDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>EnvelopeDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\EnvelopeDataSet.xss">
+      <DependentUpon>EnvelopeDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\FamilyCheckInDataSet.xsc">
+      <DependentUpon>FamilyCheckInDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\FamilyCheckInDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FamilyCheckInDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\FamilyCheckInDataSet.xss">
+      <DependentUpon>FamilyCheckInDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\FamilyDataSet.xsc">
+      <DependentUpon>FamilyDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\FamilyDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FamilyDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\FamilyDataSet.xss">
+      <DependentUpon>FamilyDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\Maintenance.xsc">
+      <DependentUpon>Maintenance.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\Maintenance.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Maintenance.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\Maintenance.xss">
+      <DependentUpon>Maintenance.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\MaintenanceDataSet.xsc">
+      <DependentUpon>MaintenanceDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\MaintenanceDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MaintenanceDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\MaintenanceDataSet.xss">
+      <DependentUpon>MaintenanceDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\ReportsDataSet.xsc">
+      <DependentUpon>ReportsDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\ReportsDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReportsDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\ReportsDataSet.xss">
+      <DependentUpon>ReportsDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\StatusReportDataSet.xsc">
+      <DependentUpon>StatusReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\StatusReportDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>StatusReportDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\StatusReportDataSet.xss">
+      <DependentUpon>StatusReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\PageDefinitionsDataSet.xsc">
+      <DependentUpon>PageDefinitionsDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\PageDefinitionsDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PageDefinitionsDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\PageDefinitionsDataSet.xss">
+      <DependentUpon>PageDefinitionsDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\RoleDataSet.xsc">
+      <DependentUpon>RoleDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\RoleDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RoleDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\RoleDataSet.xss">
+      <DependentUpon>RoleDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\UserRolesDataSet.xsc">
+      <DependentUpon>UserRolesDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\UserRolesDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>UserRolesDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\UserRolesDataSet.xss">
+      <DependentUpon>UserRolesDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\PublicationCheckInDataSet.xsc">
+      <DependentUpon>PublicationCheckInDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\PublicationCheckInDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PublicationCheckInDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\PublicationCheckInDataSet.xss">
+      <DependentUpon>PublicationCheckInDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\PublicationPullDataSet.xsc">
+      <DependentUpon>PublicationPullDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\PublicationPullDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PublicationPullDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\PublicationPullDataSet.xss">
+      <DependentUpon>PublicationPullDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\QCDataSet.xsc">
+      <DependentUpon>QCDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\QCDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>QCDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\QCDataSet.xss">
+      <DependentUpon>QCDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\ResequenceDataSet.xsc">
+      <DependentUpon>ResequenceDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\ResequenceDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ResequenceDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\ResequenceDataSet.xss">
+      <DependentUpon>ResequenceDataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Access.Database.Engine.2010">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Access database engine 2010 %28x86, x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.ReportViewer.8.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Visual Studio 2008 Report Viewer</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataSet\AdSearchDataSet.xsc">
+      <DependentUpon>AdSearchDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\AdSearchDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AdSearchDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\AdSearchDataSet.xss">
+      <DependentUpon>AdSearchDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\eropDataSet.xsc">
+      <DependentUpon>eropDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\eropDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>eropDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\eropDataSet.xss">
+      <DependentUpon>eropDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\ErrorCorrectedReportDataSet.xsc">
+      <DependentUpon>ErrorCorrectedReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\ErrorCorrectedReportDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ErrorCorrectedReportDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\ErrorCorrectedReportDataSet.xss">
+      <DependentUpon>ErrorCorrectedReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\ExpectationReportDataSet.xsc">
+      <DependentUpon>ExpectationReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\ExpectationReportDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ExpectationReportDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\ExpectationReportDataSet.xss">
+      <DependentUpon>ExpectationReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\FamilyExpectationReportDataSet.xsc">
+      <DependentUpon>FamilyExpectationReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\FamilyExpectationReportDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FamilyExpectationReportDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\FamilyExpectationReportDataSet.xss">
+      <DependentUpon>FamilyExpectationReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\PackageExpectationReportDataSet.xsc">
+      <DependentUpon>PackageExpectationReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\PackageExpectationReportDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PackageExpectationReportDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\PackageExpectationReportDataSet.xss">
+      <DependentUpon>PackageExpectationReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\FRDataSet.xsc">
+      <DependentUpon>FRDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\FRDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>FRDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\FRDataSet.xss">
+      <DependentUpon>FRDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\DESPDataSet.xsc">
+      <DependentUpon>DESPDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\DESPDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DESPDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\DESPDataSet.xss">
+      <DependentUpon>DESPDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\ROPVehicleSearch.xsc">
+      <DependentUpon>ROPVehicleSearch.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\ROPVehicleSearch.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ROPVehicleSearch.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\ROPVehicleSearch.xss">
+      <DependentUpon>ROPVehicleSearch.xsd</DependentUpon>
+    </None>
+    <None Include="MCAP_1_TemporaryKey.pfx" />
+    <None Include="MCAP_TemporaryKey.pfx" />
+    <None Include="DataSet\PublicationNotDroppedDataSet.xsc">
+      <DependentUpon>PublicationNotDroppedDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\PublicationNotDroppedDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PublicationNotDroppedDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\PublicationNotDroppedDataSet.xss">
+      <DependentUpon>PublicationNotDroppedDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\SPReviewDataSet.xsc">
+      <DependentUpon>SPReviewDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\SPReviewDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SPReviewDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\SPReviewDataSet.xss">
+      <DependentUpon>SPReviewDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="UPProcessor.cd" />
+    <None Include="DataSet\WorkToBeCompletedReportDataSet.xsc">
+      <DependentUpon>WorkToBeCompletedReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\WorkToBeCompletedReportDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>WorkToBeCompletedReportDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\WorkToBeCompletedReportDataSet.xss">
+      <DependentUpon>WorkToBeCompletedReportDataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Splash.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reference MCAP\ImageCache.dll" />
+    <Content Include="Resources\Error.ico" />
+    <Content Include="Resources\Information.ico" />
+    <Content Include="Resources\MCAP.ico" />
+    <None Include="DataSet\Coverage.xsc">
+      <DependentUpon>Coverage.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\Coverage.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\Coverage.xss">
+      <DependentUpon>Coverage.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\CoverageDataSet.xsc">
+      <DependentUpon>CoverageDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\DESPRoleAssocDataSet.xsc">
+      <DependentUpon>DESPRoleAssocDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\DESPRoleAssocDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DESPRoleAssocDataSet1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSet\DESPRoleAssocDataSet.xss">
+      <DependentUpon>DESPRoleAssocDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\CoverageDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CoverageDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\CoverageDataSet.xss">
+      <DependentUpon>CoverageDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\SubscriptionDataSet.xsc">
+      <DependentUpon>SubscriptionDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSet\SubscriptionDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SubscriptionDataSet.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="DataSet\SubscriptionDataSet.xss">
+      <DependentUpon>SubscriptionDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="License\ceTeLicenseKeys.csl3" />
+    <None Include="MCAP_2_TemporaryKey.pfx" />
+    <None Include="MCAP_3_TemporaryKey.pfx" />
+    <None Include="Resources\MT_logo_RGB_web90.jpg" />
+    <Content Include="Resources\notfound.jpg" />
+    <Content Include="Resources\nothumbnail.JPG" />
+    <Content Include="Resources\notscanned.JPG" />
+    <Content Include="Resources\nottransferred.jpg" />
+    <Content Include="Resources\Question.ico" />
+    <Content Include="Resources\Warning.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="ADODB">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="ImageCache">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Interop.stdole">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.Office.Interop.Excel">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.ReportViewer.Common">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.ReportViewer.DataVisualization">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.ReportViewer.ProcessingObjectModel">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.ReportViewer.WebForms">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.ReportViewer.WinForms">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.Vbe.Interop">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="office">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

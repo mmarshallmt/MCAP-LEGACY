@@ -1,0 +1,1317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="EnvelopeContentDataSet" targetNamespace="http://tempuri.org/EnvelopeContentDataSet.xsd" xmlns:mstns="http://tempuri.org/EnvelopeContentDataSet.xsd" xmlns="http://tempuri.org/EnvelopeContentDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="MCAPConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="MCAPConnectionString (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.MCAP.My.MySettings.GlobalReference.Default.MCAPConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="VehicleStatusTableAdapter" GeneratorDataComponentClassName="VehicleStatusTableAdapter" Name="VehicleStatus" UserDataComponentName="VehicleStatusTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.vwVehicleStatus" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT * FROM vwVehicleStatus
+</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodeId" DataSetColumn="CodeId" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+              <Mapping SourceColumn="CodeTypeId" DataSetColumn="CodeTypeId" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Code" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetStatusIdForDuplicate" Modifier="Public" Name="GetStatusIdForDuplicate" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="GetStatusIdForDuplicate">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     CodeId
+FROM         Code
+WHERE     (Descrip = 'Duplicate')</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Code" DbObjectType="Table" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="GetStatusIdForReview" Modifier="Public" Name="GetStatusIdForReview" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="GetStatusIdForReview">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     CodeId
+FROM         Code
+WHERE     (Descrip = 'Review')</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="IsVehicleStatusDuplicate" Modifier="Public" Name="IsVehicleStatusDuplicate" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="IsVehicleStatusDuplicate">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     COUNT(*)
+FROM         vwCircular INNER JOIN
+                      vwVehicleStatus ON vwCircular.StatusID = vwVehicleStatus.CodeId
+WHERE     (vwCircular.VehicleId = @VehicleId) AND (vwVehicleStatus.Descrip = 'Duplicate')</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="VehicleId" ColumnName="VehicleId" DataSourceName="MCAP_old.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@VehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="IsVehicleStatusReview" Modifier="Public" Name="IsVehicleStatusReview" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="IsVehicleStatusReview">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     COUNT(*)
+FROM         vwCircular INNER JOIN
+                      vwVehicleStatus ON vwCircular.StatusID = vwVehicleStatus.CodeId
+WHERE     (vwCircular.VehicleId = @VehicleId) AND (vwVehicleStatus.Descrip = 'Duplicate')</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="VehicleId" ColumnName="VehicleId" DataSourceName="MCAP_old.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@VehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EnvelopeSenderTableAdapter" GeneratorDataComponentClassName="EnvelopeSenderTableAdapter" Name="EnvelopeSender" UserDataComponentName="EnvelopeSenderTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Sender" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     Sender.SenderId, Sender.Name, Sender.Priority, Sender.IndNoPublications
+FROM         Sender INNER JOIN
+                      Envelope ON Sender.SenderId = Envelope.SenderId
+WHERE     (Sender.EndDt IS NULL) AND (Envelope.EnvelopeId = @EnvelopeId)
+ORDER BY Sender.Name</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="EnvelopeId" ColumnName="EnvelopeId" DataSourceName="MCAP.dbo.Envelope" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@EnvelopeId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="EnvelopeId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="SenderId" DataSetColumn="SenderId" />
+              <Mapping SourceColumn="Name" DataSetColumn="Name" />
+              <Mapping SourceColumn="Priority" DataSetColumn="Priority" />
+              <Mapping SourceColumn="IndNoPublications" DataSetColumn="IndNoPublications" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="TradeClassTableAdapter" GeneratorDataComponentClassName="TradeClassTableAdapter" Name="TradeClass" UserDataComponentName="TradeClassTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.TradeClass" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT TradeClassId, Descrip FROM dbo.TradeClass</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="TradeClassId" DataSetColumn="TradeClassId" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="RetTableAdapter" GeneratorDataComponentClassName="RetTableAdapter" Name="Ret" UserDataComponentName="RetTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Ret" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     RetId, Descrip, TradeClassId, LanguageId, Priority
+FROM         Ret
+WHERE     (EndDt IS NULL)
+ORDER BY Descrip</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="RetId" DataSetColumn="RetId" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+              <Mapping SourceColumn="TradeClassId" DataSetColumn="TradeClassId" />
+              <Mapping SourceColumn="Priority" DataSetColumn="Priority" />
+              <Mapping SourceColumn="LanguageId" DataSetColumn="LanguageId" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Ret" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillByMediaIdMktId" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="FillByMediaIdMktId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillByMediaIdMktId">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT R.RetId, R.Descrip, R.TradeClassId, R.Priority, R.LanguageId
+FROM Ret R
+	INNER JOIN Expectation E ON R.RetId = E.RetId
+WHERE (R.EndDt IS NULL) 
+	AND (E.MediaId = @MediaId) 
+	AND (E.MktId = @MktId) 
+	AND (E.EndDt IS NULL)
+ORDER BY R.Descrip</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="MediaId" ColumnName="MediaId" DataSourceName="MCAP.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MediaId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="MktId" ColumnName="MktId" DataSourceName="MCAP.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP_Micro.dbo.Ret" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillBySenderExpectation" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillBySenderExpectation" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="FillBySenderExpectation">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     Distinct a.RetId, a.Descrip, a.TradeClassId, a.LanguageId, a.Priority
+FROM         Ret a INNER JOIN
+                      Expectation b ON a.RetId = b.RetId INNER JOIN
+                      SenderExpectation c ON c.ExpectationId = b.ExpectationId
+                      where (b.MediaID=@MediaID) and (b.MktId=@MktID)
+                       and (b.EndDt &gt;= GetDate()or b.EndDt IS NULL) and (a.EndDt &gt;= GetDate() or a.EndDt IS NULL)
+                       and (c.SenderId = @SenderId)
+ORDER BY Descrip</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="MediaID" ColumnName="MediaId" DataSourceName="MCAP_Micro.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MediaID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MktID" ColumnName="MktId" DataSourceName="MCAP_Micro.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="SenderId" ColumnName="SenderId" DataSourceName="MCAP_Micro.dbo.SenderExpectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@SenderId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="SenderId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="IsRetailerMarketValidForFlash" Modifier="Public" Name="IsRetailerMarketValidForFlash" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="IsRetailerMarketValidForFlash">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     COUNT(*) AS Expr1
+FROM         FRControl AS FR INNER JOIN
+                      Ret AS R ON FR.RetId = R.RetId INNER JOIN
+                      Mkt AS M ON FR.MktId = M.MktId
+WHERE     (FR.RetId = @RetId) AND (FR.MktId = @MktId OR
+                      FR.MktId = 201)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="RetId" ColumnName="RetId" DataSourceName="MCAP.dbo.FRControl" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@RetId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="RetId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="MktId" ColumnName="MktId" DataSourceName="MCAP.dbo.FRControl" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="IsRetailerValidForNational" Modifier="Public" Name="IsRetailerValidForNational" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="IsRetailerValidForNational">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     COUNT(*) AS Expr1
+FROM         FRControl AS FR INNER JOIN
+                      Ret AS R ON FR.RetId = R.RetId INNER JOIN
+                      Mkt AS M ON FR.MktId = M.MktId
+WHERE     (FR.RetId = @RetId) AND (FR.MktId=201)
+</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="RetId" ColumnName="RetId" DataSourceName="MCAP.dbo.FRControl" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@RetId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="RetId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="MediaTableAdapter" GeneratorDataComponentClassName="MediaTableAdapter" Name="Media" UserDataComponentName="MediaTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Media" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT MediaID, Descrip 
+FROM Media 
+WHERE (IndDisplayValue IS NULL OR IndDisplayValue=1)
+ORDER BY Descrip</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="MediaID" DataSetColumn="MediaID" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP_Micro.dbo.Media" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillBySenderExpectation" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy2" GeneratorSourceName="FillBySenderExpectation" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillBySenderExpectation">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT DISTINCT a.MediaID, a.Descrip
+FROM            Media AS a INNER JOIN
+                         Expectation AS b ON a.MediaID = b.MediaId
+WHERE        (b.ExpectationID IN
+                             (SELECT        ExpectationID
+                               FROM            SenderExpectation AS c
+                               WHERE        (SenderId = @SenderID)) and (b.EndDt &gt;= GetDate() or b.EndDt IS NULL))
+ORDER BY a.Descrip</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="SenderID" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@SenderID" Precision="0" Scale="0" Size="4" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Media" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetIndIgnorePublication" Modifier="Public" Name="GetIndIgnorePublication" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="GetIndIgnorePublication">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     IndIgnorePublication
+FROM         Media
+WHERE     (MediaID = @Param1)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="Param1" ColumnName="MediaID" DataSourceName="MCAP.dbo.Media" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@Param1" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Media" DbObjectType="Table" GenerateShortCommands="true" GeneratorGetMethodName="GetMediaType" GeneratorSourceName="GetIndTreatAsFSI" Modifier="Public" Name="GetIndTreatAsFSI" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="GetIndTreatAsFSI">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT IndTreatAsFSI
+FROM Media 
+WHERE     (MediaID = @Param1)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="Param1" ColumnName="MediaID" DataSourceName="MCAP.dbo.Media" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@Param1" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="MktTableAdapter" GeneratorDataComponentClassName="MktTableAdapter" Name="Mkt" UserDataComponentName="MktTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Mkt" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     Mkt.MktId, Mkt.Descrip, Mkt.StartDt, Mkt.EndDt
+FROM         Mkt INNER JOIN
+                      SenderMktAssoc ON Mkt.MktId = SenderMktAssoc.MktId INNER JOIN
+                          (SELECT     EnvelopeId, SenderId
+                            FROM          Envelope
+                            WHERE      (EnvelopeId = @EnvelopeId)) AS E ON SenderMktAssoc.SenderId = E.SenderId
+WHERE     (Mkt.EndDt IS NULL)
+ORDER BY Mkt.Descrip</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="EnvelopeId" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@EnvelopeId" Precision="0" Scale="0" Size="4" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="MktId" DataSetColumn="MktId" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+              <Mapping SourceColumn="StartDt" DataSetColumn="StartDt" />
+              <Mapping SourceColumn="EndDt" DataSetColumn="EndDt" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP_Micro.dbo.Mkt" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillAllData" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillAllData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillAllData">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     distinct(Mkt.MktId), Mkt.Descrip, Mkt.StartDt, Mkt.EndDt
+FROM         Mkt
+ORDER BY Mkt.Descrip</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP_Micro.dbo.Mkt" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillBySenderExpectation" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillBySenderExpectation" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="FillBySenderExpectation">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT    DISTINCT a.MktId, a.Descrip, a.StartDt, a.EndDt
+FROM         Mkt a INNER JOIN
+                      Expectation b ON a.MktId = b.MktId
+                      where b.Expectationid in(select c.ExpectationId FROM senderexpectation c where c.SenderId = @SenderID) and (b.MediaID = @MediaID) and (b.EndDt &gt;= GetDate()or b.EndDt IS NULL) AND (a.EndDt &gt;= GetDate() or a.EndDt IS NULL)
+ORDER BY Descrip</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="MediaID" ColumnName="MediaId" DataSourceName="MCAP_Micro.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MediaID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="SenderID" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@SenderID" Precision="0" Scale="0" Size="4" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Mkt" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillForCatalog" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="FillForCatalog" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="FillForCatalog">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>
+                      SELECT     Mkt.MktId, Mkt.Descrip, Mkt.StartDt, Mkt.EndDt
+                      FROM         Mkt
+                      WHERE     (Mkt.EndDt IS NULL) AND (Mkt.Descrip='Various' OR Mkt.Descrip='Various (CAN)')
+                      ORDER BY Mkt.Descrip</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="PublicationTableAdapter" GeneratorDataComponentClassName="PublicationTableAdapter" Name="Publication" UserDataComponentName="PublicationTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTesting.dbo.Publication" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT PublicationId, Descrip, MktId, LanguageID, StartDt, EndDt 
+FROM dbo.Publication 
+WHERE EndDt IS NULL
+ORDER BY Descrip Asc</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="PublicationId" DataSetColumn="PublicationId" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+              <Mapping SourceColumn="MktId" DataSetColumn="MktId" />
+              <Mapping SourceColumn="LanguageID" DataSetColumn="LanguageID" />
+              <Mapping SourceColumn="StartDt" DataSetColumn="StartDt" />
+              <Mapping SourceColumn="EndDt" DataSetColumn="EndDt" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTesting.dbo.Publication" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillByMktId" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByMktId" GeneratorSourceName="FillByMktId" GetMethodModifier="Public" GetMethodName="GetDataByMktId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByMktId" UserSourceName="FillByMktId">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT Descrip, EndDt, LanguageID, MktId, PublicationId, StartDt FROM Publication WHERE (EndDt IS NULL) AND (MktId = @MktId) order by Descrip asc</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="MktId" ColumnName="MktId" DataSourceName="MCAPTesting.dbo.Publication" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTesting.dbo.Publication" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillNA" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorGetMethodName="GetDataNA" GeneratorSourceName="FillNA" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillNA">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT TOP 1 PublicationId, Descrip, MktId, LanguageID, StartDt, EndDt 
+FROM dbo.Publication 
+WHERE EndDt IS NULL AND Descrip = 'NA' /*AND MktId=@MktId*/
+ORDER BY PublicationId</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vwExpectedRetTableAdapter" GeneratorDataComponentClassName="vwExpectedRetTableAdapter" Name="vwExpectedRet" UserDataComponentName="vwExpectedRetTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillByMktIdAndMediaId" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="FillByMktIdAndMediaId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="FillByMktIdAndMediaId">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     vwExpectedRet.RetId, vwExpectedRet.Descrip, vwExpectedRet.TradeClassId, vwExpectedRet.Priority, TradeClass.Descrip AS Tradeclass, vwExpectedRet.Comments, vwExpectedRet.ExpectationId, vwExpectedRet.MktId
+FROM         vwExpectedRet LEFT OUTER JOIN
+                      TradeClass ON vwExpectedRet.TradeClassId = TradeClass.TradeClassId
+WHERE     (vwExpectedRet.EndDt IS NULL) AND (vwExpectedRet.MktId = @MktId) AND (vwExpectedRet.MediaId = @MediaId)
+ORDER BY vwExpectedRet.Priority, vwExpectedRet.Descrip</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="MktId" ColumnName="MktId" DataSourceName="MCAPTesting.dbo.vwExpectedRet" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MediaId" ColumnName="MediaId" DataSourceName="MCAPTesting.dbo.vwExpectedRet" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MediaId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="RetId" DataSetColumn="RetId" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+              <Mapping SourceColumn="TradeClassId" DataSetColumn="TradeClassId" />
+              <Mapping SourceColumn="Priority" DataSetColumn="Priority" />
+              <Mapping SourceColumn="Tradeclass" DataSetColumn="Tradeclass" />
+              <Mapping SourceColumn="Comments" DataSetColumn="Comments" />
+              <Mapping SourceColumn="ExpectationId" DataSetColumn="ExpectationId" />
+              <Mapping SourceColumn="MktId" DataSetColumn="MktId" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTesting.dbo.vwExpectedRet" DbObjectType="View" GenerateShortCommands="true" GeneratorSourceName="FillByExpectationId" Modifier="Public" Name="FillByExpectationId" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillByExpectationId">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     vwExpectedRet.ExpectationId
+FROM         vwExpectedRet LEFT OUTER JOIN
+                      TradeClass ON vwExpectedRet.TradeClassId = TradeClass.TradeClassId
+WHERE     (vwExpectedRet.EndDt IS NULL) AND (vwExpectedRet.MktId = @MktId) AND (vwExpectedRet.MediaId = @MediaId)  AND (vwExpectedRet.RetId = @RetId)
+ORDER BY vwExpectedRet.Priority, vwExpectedRet.Descrip</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="MktId" ColumnName="MktId" DataSourceName="MCAPTesting.dbo.vwExpectedRet" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MediaId" ColumnName="MediaId" DataSourceName="MCAPTesting.dbo.vwExpectedRet" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MediaId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="RetId" ColumnName="RetId" DataSourceName="MCAPTesting.dbo.vwExpectedRet" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@RetId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="RetId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillBySEExpectedRet" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillBySEExpectedRet" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="FillBySEExpectedRet">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     vwExpectedRet.RetId, vwExpectedRet.Descrip, vwExpectedRet.TradeClassId, vwExpectedRet.Priority, TradeClass.Descrip AS Tradeclass, vwExpectedRet.Comments, vwExpectedRet.expectationId, vwExpectedRet.MktId 
+FROM         vwExpectedRet LEFT OUTER JOIN
+                      TradeClass ON vwExpectedRet.TradeClassId = TradeClass.TradeClassId
+WHERE     (vwExpectedRet.EndDt IS NULL) AND (vwExpectedRet.MktId = @MktId) AND (vwExpectedRet.MediaId = @MediaId) and (vwExpectedRet.ExpectationId in(select ExpectationId from SenderExpectation where SenderId = @SenderId))
+ORDER BY vwExpectedRet.Priority, vwExpectedRet.Descrip</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="MktId" ColumnName="MktId" DataSourceName="MCAPTesting.dbo.vwExpectedRet" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MediaId" ColumnName="MediaId" DataSourceName="MCAPTesting.dbo.vwExpectedRet" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MediaId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="SenderId" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@SenderId" Precision="0" Scale="0" Size="4" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillBySenderExpectedRet" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillBySenderExpectedRet" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="FillBySenderExpectedRet">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     vwExpectedRet.RetId, vwExpectedRet.Descrip, vwExpectedRet.TradeClassId, vwExpectedRet.Priority, TradeClass.Descrip AS Tradeclass, vwExpectedRet.Comments, vwExpectedRet.expectationId, vwExpectedRet.MktId 
+FROM         vwExpectedRet LEFT OUTER JOIN
+                      TradeClass ON vwExpectedRet.TradeClassId = TradeClass.TradeClassId
+WHERE     (vwExpectedRet.EndDt IS NULL) AND (vwExpectedRet.ExpectationId in(select ExpectationId from SenderExpectation where SenderId = @SenderId))
+ORDER BY vwExpectedRet.Priority, vwExpectedRet.Descrip</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="SenderId" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@SenderId" Precision="0" Scale="0" Size="4" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTesting.dbo.Expectation" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="getExpectationID" Modifier="Public" Name="getExpectationID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="getExpectationID">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     expectationId
+FROM         Expectation vwExpectedRet
+WHERE     (vwExpectedRet.EndDt IS NULL) AND (vwExpectedRet.MktId = @MktId) AND (vwExpectedRet.MediaId = @MediaId)  AND (vwExpectedRet.RetId = @RetId)
+</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="MktId" ColumnName="MktId" DataSourceName="MCAPTesting.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MediaId" ColumnName="MediaId" DataSourceName="MCAPTesting.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MediaId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="RetId" ColumnName="RetId" DataSourceName="MCAPTesting.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@RetId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="RetId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTesting.dbo.Expectation" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetPriority" Modifier="Public" Name="GetPriority" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy4" UserSourceName="GetPriority">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     Priority
+FROM         Expectation
+WHERE     (RetId = @RetId) AND (MktId = @MktId) AND (MediaId = @MediaId)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="RetId" ColumnName="RetId" DataSourceName="MCAPTesting.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@RetId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="RetId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MktId" ColumnName="MktId" DataSourceName="MCAPTesting.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MediaId" ColumnName="MediaId" DataSourceName="MCAPTesting.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MediaId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Expectation" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetScanDPI" Modifier="Public" Name="GetScanDPI" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy5" UserSourceName="GetScanDPI">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     ScanDPI
+FROM         Expectation
+WHERE     (RetId = @RetId) AND (MktId = @MktId) AND (MediaId = @MediaId)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="RetId" ColumnName="RetId" DataSourceName="MCAP.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@RetId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="RetId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MktId" ColumnName="MktId" DataSourceName="MCAP.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MediaId" ColumnName="MediaId" DataSourceName="MCAP.dbo.Expectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MediaId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="LanguageTableAdapter" GeneratorDataComponentClassName="LanguageTableAdapter" Name="Language" UserDataComponentName="LanguageTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Language" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT LanguageID, Descrip FROM dbo.Language</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="LanguageID" DataSetColumn="LanguageID" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vwCircularTableAdapter" GeneratorDataComponentClassName="vwCircularTableAdapter" Name="vwCircular" UserDataComponentName="vwCircularTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPDev.dbo.mt_proc_GetVehicleById" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <DeleteCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>DELETE FROM Page
+WHERE        (VehicleId = @VehicleId)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="VehicleId" ColumnName="VehicleId" DataSourceName="MCAPDev.dbo.Page" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@VehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </DeleteCommand>
+                <InsertCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>INSERT INTO vwCircular
+                         (EnvelopeId, RetId, MktId, BreakDt, StartDt, EndDt, LanguageId, MediaId, PublicationId, FlashInd, CreateDt, CreatedById, FamilyId, Priority, CheckInPageCount, CheckInOccurrences, StatusID, FormName, 
+                         NationalInd, SPReviewStatusId, DistDt)
+VALUES        (@EnvelopeId,@RetId,@MktId,@BreakDt,@StartDt,@EndDt,@LanguageId,@MediaId,@PublicationId,@FlashInd, 
+                         GETDATE(),@CreatedById,@FamilyId,@Priority,@CheckInPageCount,@CheckInOccurrences,@StatusID,@FormName,@NationalInd,@SPReviewStatusId,@DistDt);
+
+SELECT V.VehicleId, V.EnvelopeId, V.RetId, V.MktId, V.BreakDt, V.StartDt, V.EndDt
+		, V.LanguageId, V.EventId, V.ThemeId, V.MediaId, V.PublicationId, V.FlashInd
+		, V.CreateDt, V.CreatedById, V.ScanDt, V.ScannedById, V.IndexDt, V.IndexedById
+		, V.QCDt, V.QCedById, V.FamilyId, V.CouponInd, V.CreateSizedDt, V.Priority
+		, V.CheckInPageCount, V.CheckInOccurrences, V.StatusID, V.FormName
+		, V.ActualPageCount, VS.Descrip [Status], V.NationalInd, V.SPReviewStatusId
+		, SPRS.Descrip [SPReviewStatus], V.EntryInd, V.ParentVehicleId, V.Subject, V.SentFrom, V.SentBy, V.DistDt
+	FROM vwCircular V  with(nolock)
+		LEFT JOIN vwVehicleStatus VS with(nolock) ON V.StatusID = VS.CodeId
+		LEFT JOIN vwSPReviewStatus SPRS with(nolock) ON V.SPReviewStatusId = SPRS.CodeId
+	WHERE (V.VehicleId = scope_identity())</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="EnvelopeId" ColumnName="EnvelopeId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@EnvelopeId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="EnvelopeId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="RetId" ColumnName="RetId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@RetId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="RetId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MktId" ColumnName="MktId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="BreakDt" ColumnName="BreakDt" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@BreakDt" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="BreakDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="StartDt" ColumnName="StartDt" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@StartDt" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="StartDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="EndDt" ColumnName="EndDt" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@EndDt" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="EndDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="LanguageId" ColumnName="LanguageId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@LanguageId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="LanguageId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MediaId" ColumnName="MediaId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MediaId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="PublicationId" ColumnName="PublicationId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@PublicationId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="PublicationId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="FlashInd" ColumnName="FlashInd" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="tinyint" DbType="Byte" Direction="Input" ParameterName="@FlashInd" Precision="0" ProviderType="TinyInt" Scale="0" Size="1" SourceColumn="FlashInd" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="CreatedById" ColumnName="CreatedById" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CreatedById" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CreatedById" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="FamilyId" ColumnName="FamilyId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@FamilyId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="FamilyId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="Priority" ColumnName="Priority" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@Priority" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="Priority" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="CheckInPageCount" ColumnName="CheckInPageCount" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CheckInPageCount" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CheckInPageCount" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="CheckInOccurrences" ColumnName="CheckInOccurrences" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CheckInOccurrences" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CheckInOccurrences" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="StatusID" ColumnName="StatusID" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@StatusID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="StatusID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="FormName" ColumnName="FormName" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="varchar(100)" DbType="AnsiString" Direction="Input" ParameterName="@FormName" Precision="0" ProviderType="VarChar" Scale="0" Size="100" SourceColumn="FormName" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="NationalInd" ColumnName="NationalInd" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="tinyint" DbType="Byte" Direction="Input" ParameterName="@NationalInd" Precision="0" ProviderType="TinyInt" Scale="0" Size="1" SourceColumn="NationalInd" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="SPReviewStatusId" ColumnName="SPReviewStatusId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@SPReviewStatusId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="SPReviewStatusId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="DistDt" ColumnName="DistDt" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@DistDt" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="DistDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </InsertCommand>
+                <SelectCommand>
+                  <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
+                    <CommandText>dbo.mt_proc_GetVehicleById</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="ReturnValue" ParameterName="@RETURN_VALUE" Precision="10" ProviderType="Int" Scale="0" Size="4" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@pVehicleId" Precision="10" ProviderType="Int" Scale="0" Size="4" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DataTypeServer="varchar" DbType="AnsiString" Direction="Input" ParameterName="@pFormName" Precision="0" ProviderType="VarChar" Scale="0" Size="50" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DataTypeServer="varchar" DbType="AnsiString" Direction="InputOutput" ParameterName="@pErrorMessage" Precision="0" ProviderType="VarChar" Scale="0" Size="50" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>UPDATE       vwCircular
+SET                RetId = @RetId, MktId = @MktId, BreakDt = @BreakDt, StartDt = @StartDt, EndDt = @EndDt, LanguageId = @LanguageId, MediaId = @MediaId, PublicationId = @PublicationId, FlashInd = @FlashInd, 
+                         FamilyId = @FamilyId, Priority = @Priority, CheckInPageCount = @CheckInPageCount, CheckInOccurrences = @CheckInOccurrences, StatusID = @StatusID, FormName = @FormName, NationalInd = @NationalInd,
+                          SPReviewStatusId = @SPReviewStatusId, DistDt = @DistDt
+WHERE        (VehicleId = @VehicleId)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="RetId" ColumnName="RetId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@RetId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="RetId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MktId" ColumnName="MktId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MktId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MktId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="BreakDt" ColumnName="BreakDt" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@BreakDt" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="BreakDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="StartDt" ColumnName="StartDt" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@StartDt" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="StartDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="EndDt" ColumnName="EndDt" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@EndDt" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="EndDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="LanguageId" ColumnName="LanguageId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@LanguageId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="LanguageId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="MediaId" ColumnName="MediaId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@MediaId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="MediaId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="PublicationId" ColumnName="PublicationId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@PublicationId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="PublicationId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="FlashInd" ColumnName="FlashInd" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="tinyint" DbType="Byte" Direction="Input" ParameterName="@FlashInd" Precision="0" ProviderType="TinyInt" Scale="0" Size="1" SourceColumn="FlashInd" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="FamilyId" ColumnName="FamilyId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@FamilyId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="FamilyId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="Priority" ColumnName="Priority" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@Priority" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="Priority" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="CheckInPageCount" ColumnName="CheckInPageCount" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CheckInPageCount" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CheckInPageCount" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="CheckInOccurrences" ColumnName="CheckInOccurrences" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@CheckInOccurrences" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CheckInOccurrences" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="StatusID" ColumnName="StatusID" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@StatusID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="StatusID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="FormName" ColumnName="FormName" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="varchar(100)" DbType="AnsiString" Direction="Input" ParameterName="@FormName" Precision="0" ProviderType="VarChar" Scale="0" Size="100" SourceColumn="FormName" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="NationalInd" ColumnName="NationalInd" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="tinyint" DbType="Byte" Direction="Input" ParameterName="@NationalInd" Precision="0" ProviderType="TinyInt" Scale="0" Size="1" SourceColumn="NationalInd" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="SPReviewStatusId" ColumnName="SPReviewStatusId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@SPReviewStatusId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="SPReviewStatusId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="DistDt" ColumnName="DistDt" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@DistDt" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="DistDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="VehicleId" ColumnName="VehicleId" DataSourceName="MCAPDev.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@VehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="VehicleId" DataSetColumn="VehicleId" />
+              <Mapping SourceColumn="EnvelopeId" DataSetColumn="EnvelopeId" />
+              <Mapping SourceColumn="RetId" DataSetColumn="RetId" />
+              <Mapping SourceColumn="MktId" DataSetColumn="MktId" />
+              <Mapping SourceColumn="BreakDt" DataSetColumn="BreakDt" />
+              <Mapping SourceColumn="StartDt" DataSetColumn="StartDt" />
+              <Mapping SourceColumn="EndDt" DataSetColumn="EndDt" />
+              <Mapping SourceColumn="LanguageId" DataSetColumn="LanguageId" />
+              <Mapping SourceColumn="EventId" DataSetColumn="EventId" />
+              <Mapping SourceColumn="ThemeId" DataSetColumn="ThemeId" />
+              <Mapping SourceColumn="MediaId" DataSetColumn="MediaId" />
+              <Mapping SourceColumn="PublicationId" DataSetColumn="PublicationId" />
+              <Mapping SourceColumn="FlashInd" DataSetColumn="FlashInd" />
+              <Mapping SourceColumn="CreateDt" DataSetColumn="CreateDt" />
+              <Mapping SourceColumn="CreatedById" DataSetColumn="CreatedById" />
+              <Mapping SourceColumn="ScanDt" DataSetColumn="ScanDt" />
+              <Mapping SourceColumn="ScannedById" DataSetColumn="ScannedById" />
+              <Mapping SourceColumn="QCDt" DataSetColumn="QCDt" />
+              <Mapping SourceColumn="QCedById" DataSetColumn="QCedById" />
+              <Mapping SourceColumn="FamilyId" DataSetColumn="FamilyId" />
+              <Mapping SourceColumn="CouponInd" DataSetColumn="CouponInd" />
+              <Mapping SourceColumn="CreateSizedDt" DataSetColumn="CreateSizedDt" />
+              <Mapping SourceColumn="Priority" DataSetColumn="Priority" />
+              <Mapping SourceColumn="CheckInPageCount" DataSetColumn="CheckInPageCount" />
+              <Mapping SourceColumn="CheckInOccurrences" DataSetColumn="CheckInOccurrences" />
+              <Mapping SourceColumn="StatusID" DataSetColumn="StatusID" />
+              <Mapping SourceColumn="FormName" DataSetColumn="FormName" />
+              <Mapping SourceColumn="ActualPageCount" DataSetColumn="ActualPageCount" />
+              <Mapping SourceColumn="Status" DataSetColumn="Status" />
+              <Mapping SourceColumn="IndexDt" DataSetColumn="IndexDt" />
+              <Mapping SourceColumn="IndexedById" DataSetColumn="IndexedById" />
+              <Mapping SourceColumn="NationalInd" DataSetColumn="NationalInd" />
+              <Mapping SourceColumn="SPReviewStatusId" DataSetColumn="SPReviewStatusId" />
+              <Mapping SourceColumn="SPReviewStatus" DataSetColumn="SPReviewStatus" />
+              <Mapping SourceColumn="EntryInd" DataSetColumn="EntryInd" />
+              <Mapping SourceColumn="ParentVehicleId" DataSetColumn="ParentVehicleId" />
+              <Mapping SourceColumn="Subject" DataSetColumn="Subject" />
+              <Mapping SourceColumn="SentFrom" DataSetColumn="SentFrom" />
+              <Mapping SourceColumn="SentBy" DataSetColumn="SentBy" />
+              <Mapping SourceColumn="DistDt" DataSetColumn="DistDt" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="isAllowedBypassRequired" Modifier="Public" Name="isAllowedBypassRequired" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="isAllowedBypassRequired">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     COUNT(U.UserID) AS Expr1
+FROM         [User] AS U INNER JOIN
+                      UserRoles AS UR ON UR.UserId = U.UserID INNER JOIN
+                      Role AS R ON R.RoleId = UR.RoleId AND R.Descrip = 'Check-In Required' AND U.UserID = @UserId
+</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="UserId" ColumnName="UserID" DataSourceName="MCAPTesting.dbo.[User]" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@UserId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="UserID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="isAllowedBypassSenderExpectationFilter" Modifier="Public" Name="isAllowedBypassSenderExpectationFilter" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="isAllowedBypassSenderExpectationFilter">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     COUNT(U.UserID) AS Expr1
+FROM         [User] AS U INNER JOIN
+                      UserRoles AS UR ON UR.UserId = U.UserID INNER JOIN
+                      Role AS R ON R.RoleId = UR.RoleId AND R.Descrip = 'Bypass Sender Expectation Filter' AND U.UserID = @UserId</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="UserId" ColumnName="UserID" DataSourceName="MCAPDev.dbo.[User]" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@UserId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="UserID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="isAllowedCheckinNonRequired" Modifier="Public" Name="isAllowedCheckinNonRequired" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="isAllowedCheckinNonRequired">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     COUNT(U.UserID) AS Expr1
+FROM         [User] AS U INNER JOIN
+                      UserRoles AS UR ON UR.UserId = U.UserID INNER JOIN
+                      Role AS R ON R.RoleId = UR.RoleId AND R.Descrip = 'Check-In Non-Required' AND U.UserID = @UserId
+</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="UserId" ColumnName="UserID" DataSourceName="MCAPTesting.dbo.[User]" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@UserId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="UserID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="UpdateVehicleIdForDupFormId" Modifier="Public" Name="UpdateVehicleIdForDupFormId" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="UpdateVehicleIdForDupFormId">
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>UPDATE DupFormLog SET
+	VehicleId=@VehicleId
+WHERE DupFormId=@DupFormId</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="VehicleId" ColumnName="VehicleId" DataSourceName="MCAPTest.dbo.DupFormLog" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@VehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="DupFormId" ColumnName="DupFormId" DataSourceName="MCAPTest.dbo.DupFormLog" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@DupFormId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="DupFormId" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="UserTableAdapter" GeneratorDataComponentClassName="UserTableAdapter" Name="User" UserDataComponentName="UserTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.[User]" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT UserId, Username, FName, LName, LocationId
+		, FName + ' ' + ISNULL(LName, '') FullName
+		, FName + LEFT(ISNULL(LName, ' '), 1) ShortName
+FROM [User]
+WHERE UserId = @UserId</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="UserId" ColumnName="UserID" DataSourceName="MCAP.dbo.[User]" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@UserId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="UserID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="UserId" DataSetColumn="UserId" />
+              <Mapping SourceColumn="Username" DataSetColumn="Username" />
+              <Mapping SourceColumn="FName" DataSetColumn="FName" />
+              <Mapping SourceColumn="LName" DataSetColumn="LName" />
+              <Mapping SourceColumn="LocationId" DataSetColumn="LocationId" />
+              <Mapping SourceColumn="FullName" DataSetColumn="FullName" />
+              <Mapping SourceColumn="ShortName" DataSetColumn="ShortName" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="IsUserSupervisorOrAdmin" Modifier="Public" Name="IsUserSupervisorOrAdmin" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="IsUserSupervisorOrAdmin">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     COUNT(*) AS UserCount
+FROM         [User] INNER JOIN
+                      UserRoles ON [User].UserID = UserRoles.UserId INNER JOIN
+                      Role ON UserRoles.RoleId = Role.RoleId
+WHERE     (Role.Descrip = 'Administrator' OR
+                      Role.Descrip = 'Supervisor') AND ([User].UserID = @UserId)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="UserId" ColumnName="UserID" DataSourceName="MCAP.dbo.[User]" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@UserId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="UserID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vwUserScreensFunctionalityTableAdapter" GeneratorDataComponentClassName="vwUserScreensFunctionalityTableAdapter" Name="vwUserScreensFunctionality" UserDataComponentName="vwUserScreensFunctionalityTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.vwUserScreensFunctionality" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT distinct UserId, FormName, Functionality, ObjectName 
+FROM vwUserScreensFunctionality 
+WHERE FormName=@FormName AND UserId=@UserId</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="FormName" ColumnName="FormName" DataSourceName="MCAP.dbo.vwUserScreensFunctionality" DataTypeServer="varchar(50)" DbType="AnsiString" Direction="Input" ParameterName="@FormName" Precision="0" ProviderType="VarChar" Scale="0" Size="50" SourceColumn="FormName" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="UserId" ColumnName="UserID" DataSourceName="MCAP.dbo.vwUserScreensFunctionality" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@UserId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="UserID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="UserId" DataSetColumn="UserId" />
+              <Mapping SourceColumn="FormName" DataSetColumn="FormName" />
+              <Mapping SourceColumn="Functionality" DataSetColumn="Functionality" />
+              <Mapping SourceColumn="ObjectName" DataSetColumn="ObjectName" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SenderExpectationTableAdapter" GeneratorDataComponentClassName="SenderExpectationTableAdapter" Name="SenderExpectation" UserDataComponentName="SenderExpectationTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTesting.dbo.vwSenderExpectation" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select * from vwSenderExpectation  </CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="SenderId" DataSetColumn="SenderId" />
+              <Mapping SourceColumn="ExpectationID" DataSetColumn="ExpectationID" />
+              <Mapping SourceColumn="RetId" DataSetColumn="RetId" />
+              <Mapping SourceColumn="MktId" DataSetColumn="MktId" />
+              <Mapping SourceColumn="MediaId" DataSetColumn="MediaId" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTesting.dbo.vwSenderExpectation" DbObjectType="View" GenerateShortCommands="true" GeneratorSourceName="getExpectationId" Modifier="Public" Name="getExpectationId" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="getExpectationId">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select * from vwSenderExpectation  where expectationId =@expectationId </CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="expectationId" ColumnName="ExpectationID" DataSourceName="MCAPTesting.dbo.vwSenderExpectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@expectationId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="ExpectationID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="GetValdExpectationID" Modifier="Public" Name="GetValdExpectationID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="GetValdExpectationID">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT COUNT(*) FROM vwSenderExpectation where expectationid = @expectationId</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="expectationId" ColumnName="ExpectationID" DataSourceName="MCAPTesting.dbo.vwSenderExpectation" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@expectationId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="ExpectationID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="TempRetTableAdapter" GeneratorDataComponentClassName="TempRetTableAdapter" Name="TempRet" UserDataComponentName="TempRetTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTesting.dbo.TempRet" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <InsertCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>INSERT INTO [TempRet] ([VehicleID], [Descrip]) VALUES (@VehicleID, @Descrip)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@VehicleID" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="VehicleID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Descrip" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Descrip" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </InsertCommand>
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>Select * from TempRet</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="TempRetID" DataSetColumn="TempRetID" />
+              <Mapping SourceColumn="VehicleID" DataSetColumn="VehicleID" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="addTempRetailer" Modifier="Public" Name="addTempRetailer" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="addTempRetailer">
+                <InsertCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>INSERT INTO [UnregisteredRetailers] ( [VehicleID], [Descrip]) VALUES ( @VehicleID, @Descrip)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="VehicleID" ColumnName="VehicleID" DataSourceName="MCAPTesting.dbo.UnRegisteredRetailers" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@VehicleID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="Descrip" ColumnName="Descrip" DataSourceName="MCAPTesting.dbo.UnRegisteredRetailers" DataTypeServer="nvarchar(50)" DbType="String" Direction="Input" ParameterName="@Descrip" Precision="0" ProviderType="NVarChar" Scale="0" Size="50" SourceColumn="Descrip" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </InsertCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTesting.dbo.TempRet" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillByVehicleId" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillByVehicleId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="FillByVehicleId">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT Descrip, TempRetID, VehicleID FROM TempRet WHERE (VehicleID = @vehicleId)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="vehicleId" ColumnName="VehicleID" DataSourceName="MCAPTesting.dbo.TempRet" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@vehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="EnvelopeContentDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="EnvelopeContentDataSet" msprop:Generator_UserDSName="EnvelopeContentDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="VehicleStatus" msprop:Generator_UserTableName="VehicleStatus" msprop:Generator_RowEvArgName="VehicleStatusRowChangeEvent" msprop:Generator_TableVarName="tableVehicleStatus" msprop:Generator_TablePropName="VehicleStatus" msprop:Generator_RowDeletingName="VehicleStatusRowDeleting" msprop:Generator_RowChangingName="VehicleStatusRowChanging" msprop:Generator_RowDeletedName="VehicleStatusRowDeleted" msprop:Generator_RowEvHandlerName="VehicleStatusRowChangeEventHandler" msprop:Generator_TableClassName="VehicleStatusDataTable" msprop:Generator_RowChangedName="VehicleStatusRowChanged" msprop:Generator_RowClassName="VehicleStatusRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodeId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCodeId" msprop:Generator_ColumnPropNameInRow="CodeId" msprop:Generator_ColumnPropNameInTable="CodeIdColumn" msprop:Generator_UserColumnName="CodeId" type="xs:int" />
+              <xs:element name="Descrip" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodeTypeId" msprop:Generator_ColumnVarNameInTable="columnCodeTypeId" msprop:Generator_ColumnPropNameInRow="CodeTypeId" msprop:Generator_ColumnPropNameInTable="CodeTypeIdColumn" msprop:Generator_UserColumnName="CodeTypeId" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnvelopeSender" msprop:Generator_UserTableName="EnvelopeSender" msprop:Generator_RowEvArgName="EnvelopeSenderRowChangeEvent" msprop:Generator_TableVarName="tableEnvelopeSender" msprop:Generator_TablePropName="EnvelopeSender" msprop:Generator_RowDeletingName="EnvelopeSenderRowDeleting" msprop:Generator_RowChangingName="EnvelopeSenderRowChanging" msprop:Generator_RowDeletedName="EnvelopeSenderRowDeleted" msprop:Generator_RowEvHandlerName="EnvelopeSenderRowChangeEventHandler" msprop:Generator_TableClassName="EnvelopeSenderDataTable" msprop:Generator_RowChangedName="EnvelopeSenderRowChanged" msprop:Generator_RowClassName="EnvelopeSenderRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SenderId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnSenderId" msprop:Generator_ColumnPropNameInRow="SenderId" msprop:Generator_ColumnPropNameInTable="SenderIdColumn" msprop:Generator_UserColumnName="SenderId" type="xs:int" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Priority" msprop:Generator_ColumnVarNameInTable="columnPriority" msprop:Generator_ColumnPropNameInRow="Priority" msprop:Generator_ColumnPropNameInTable="PriorityColumn" msprop:Generator_UserColumnName="Priority" type="xs:int" minOccurs="0" />
+              <xs:element name="IndNoPublications" msprop:Generator_ColumnVarNameInTable="columnIndNoPublications" msprop:Generator_ColumnPropNameInRow="IndNoPublications" msprop:Generator_ColumnPropNameInTable="IndNoPublicationsColumn" msprop:Generator_UserColumnName="IndNoPublications" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TradeClass" msprop:Generator_UserTableName="TradeClass" msprop:Generator_RowEvArgName="TradeClassRowChangeEvent" msprop:Generator_TableVarName="tableTradeClass" msprop:Generator_TablePropName="TradeClass" msprop:Generator_RowDeletingName="TradeClassRowDeleting" msprop:Generator_RowChangingName="TradeClassRowChanging" msprop:Generator_RowDeletedName="TradeClassRowDeleted" msprop:Generator_RowEvHandlerName="TradeClassRowChangeEventHandler" msprop:Generator_TableClassName="TradeClassDataTable" msprop:Generator_RowChangedName="TradeClassRowChanged" msprop:Generator_RowClassName="TradeClassRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TradeClassId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnTradeClassId" msprop:Generator_ColumnPropNameInRow="TradeClassId" msprop:Generator_ColumnPropNameInTable="TradeClassIdColumn" msprop:Generator_UserColumnName="TradeClassId" type="xs:int" />
+              <xs:element name="Descrip" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Ret" msprop:Generator_UserTableName="Ret" msprop:Generator_RowEvArgName="RetRowChangeEvent" msprop:Generator_TableVarName="tableRet" msprop:Generator_TablePropName="Ret" msprop:Generator_RowDeletingName="RetRowDeleting" msprop:Generator_RowChangingName="RetRowChanging" msprop:Generator_RowDeletedName="RetRowDeleted" msprop:Generator_RowEvHandlerName="RetRowChangeEventHandler" msprop:Generator_TableClassName="RetDataTable" msprop:Generator_RowChangedName="RetRowChanged" msprop:Generator_RowClassName="RetRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RetId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnRetId" msprop:Generator_ColumnPropNameInRow="RetId" msprop:Generator_ColumnPropNameInTable="RetIdColumn" msprop:Generator_UserColumnName="RetId" type="xs:int" />
+              <xs:element name="Descrip" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TradeClassId" msprop:Generator_ColumnVarNameInTable="columnTradeClassId" msprop:Generator_ColumnPropNameInRow="TradeClassId" msprop:Generator_ColumnPropNameInTable="TradeClassIdColumn" msprop:Generator_UserColumnName="TradeClassId" type="xs:int" minOccurs="0" />
+              <xs:element name="Priority" msprop:Generator_ColumnVarNameInTable="columnPriority" msprop:Generator_ColumnPropNameInRow="Priority" msprop:Generator_ColumnPropNameInTable="PriorityColumn" msprop:Generator_UserColumnName="Priority" type="xs:int" minOccurs="0" />
+              <xs:element name="LanguageId" msprop:Generator_ColumnVarNameInTable="columnLanguageId" msprop:Generator_ColumnPropNameInRow="LanguageId" msprop:Generator_ColumnPropNameInTable="LanguageIdColumn" msprop:Generator_UserColumnName="LanguageId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Media" msprop:Generator_UserTableName="Media" msprop:Generator_RowEvArgName="MediaRowChangeEvent" msprop:Generator_TableVarName="tableMedia" msprop:Generator_TablePropName="Media" msprop:Generator_RowDeletingName="MediaRowDeleting" msprop:Generator_RowChangingName="MediaRowChanging" msprop:Generator_RowDeletedName="MediaRowDeleted" msprop:Generator_RowEvHandlerName="MediaRowChangeEventHandler" msprop:Generator_TableClassName="MediaDataTable" msprop:Generator_RowChangedName="MediaRowChanged" msprop:Generator_RowClassName="MediaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MediaID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnMediaID" msprop:Generator_ColumnPropNameInRow="MediaID" msprop:Generator_ColumnPropNameInTable="MediaIDColumn" msprop:Generator_UserColumnName="MediaID" type="xs:int" />
+              <xs:element name="Descrip" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Mkt" msprop:Generator_UserTableName="Mkt" msprop:Generator_RowEvArgName="MktRowChangeEvent" msprop:Generator_TableVarName="tableMkt" msprop:Generator_TablePropName="Mkt" msprop:Generator_RowDeletingName="MktRowDeleting" msprop:Generator_RowChangingName="MktRowChanging" msprop:Generator_RowDeletedName="MktRowDeleted" msprop:Generator_RowEvHandlerName="MktRowChangeEventHandler" msprop:Generator_TableClassName="MktDataTable" msprop:Generator_RowChangedName="MktRowChanged" msprop:Generator_RowClassName="MktRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MktId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnMktId" msprop:Generator_ColumnPropNameInRow="MktId" msprop:Generator_ColumnPropNameInTable="MktIdColumn" msprop:Generator_UserColumnName="MktId" type="xs:int" />
+              <xs:element name="Descrip" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="StartDt" msprop:Generator_ColumnVarNameInTable="columnStartDt" msprop:Generator_ColumnPropNameInRow="StartDt" msprop:Generator_ColumnPropNameInTable="StartDtColumn" msprop:Generator_UserColumnName="StartDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EndDt" msprop:Generator_ColumnVarNameInTable="columnEndDt" msprop:Generator_ColumnPropNameInRow="EndDt" msprop:Generator_ColumnPropNameInTable="EndDtColumn" msprop:Generator_UserColumnName="EndDt" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Publication" msprop:Generator_UserTableName="Publication" msprop:Generator_RowEvArgName="PublicationRowChangeEvent" msprop:Generator_TableVarName="tablePublication" msprop:Generator_TablePropName="Publication" msprop:Generator_RowDeletingName="PublicationRowDeleting" msprop:Generator_RowChangingName="PublicationRowChanging" msprop:Generator_RowDeletedName="PublicationRowDeleted" msprop:Generator_RowEvHandlerName="PublicationRowChangeEventHandler" msprop:Generator_TableClassName="PublicationDataTable" msprop:Generator_RowChangedName="PublicationRowChanged" msprop:Generator_RowClassName="PublicationRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PublicationId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnPublicationId" msprop:Generator_ColumnPropNameInRow="PublicationId" msprop:Generator_ColumnPropNameInTable="PublicationIdColumn" msprop:Generator_UserColumnName="PublicationId" type="xs:int" />
+              <xs:element name="Descrip" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MktId" msprop:Generator_ColumnVarNameInTable="columnMktId" msprop:Generator_ColumnPropNameInRow="MktId" msprop:Generator_ColumnPropNameInTable="MktIdColumn" msprop:Generator_UserColumnName="MktId" type="xs:int" minOccurs="0" />
+              <xs:element name="LanguageID" msprop:Generator_ColumnVarNameInTable="columnLanguageID" msprop:Generator_ColumnPropNameInRow="LanguageID" msprop:Generator_ColumnPropNameInTable="LanguageIDColumn" msprop:Generator_UserColumnName="LanguageID" type="xs:int" minOccurs="0" />
+              <xs:element name="StartDt" msprop:Generator_ColumnVarNameInTable="columnStartDt" msprop:Generator_ColumnPropNameInRow="StartDt" msprop:Generator_ColumnPropNameInTable="StartDtColumn" msprop:Generator_UserColumnName="StartDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EndDt" msprop:Generator_ColumnVarNameInTable="columnEndDt" msprop:Generator_ColumnPropNameInRow="EndDt" msprop:Generator_ColumnPropNameInTable="EndDtColumn" msprop:Generator_UserColumnName="EndDt" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="vwExpectedRet" msprop:Generator_UserTableName="vwExpectedRet" msprop:Generator_RowEvArgName="vwExpectedRetRowChangeEvent" msprop:Generator_TableVarName="tablevwExpectedRet" msprop:Generator_TablePropName="vwExpectedRet" msprop:Generator_RowDeletingName="vwExpectedRetRowDeleting" msprop:Generator_RowChangingName="vwExpectedRetRowChanging" msprop:Generator_RowDeletedName="vwExpectedRetRowDeleted" msprop:Generator_RowEvHandlerName="vwExpectedRetRowChangeEventHandler" msprop:Generator_TableClassName="vwExpectedRetDataTable" msprop:Generator_RowChangedName="vwExpectedRetRowChanged" msprop:Generator_RowClassName="vwExpectedRetRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="RetId" msprop:Generator_ColumnVarNameInTable="columnRetId" msprop:Generator_ColumnPropNameInRow="RetId" msprop:Generator_ColumnPropNameInTable="RetIdColumn" msprop:Generator_UserColumnName="RetId" type="xs:int" minOccurs="0" />
+              <xs:element name="Descrip" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TradeClassId" msprop:Generator_ColumnVarNameInTable="columnTradeClassId" msprop:Generator_ColumnPropNameInRow="TradeClassId" msprop:Generator_ColumnPropNameInTable="TradeClassIdColumn" msprop:Generator_UserColumnName="TradeClassId" type="xs:int" minOccurs="0" />
+              <xs:element name="Priority" msprop:Generator_ColumnVarNameInTable="columnPriority" msprop:Generator_ColumnPropNameInRow="Priority" msprop:Generator_ColumnPropNameInTable="PriorityColumn" msprop:Generator_UserColumnName="Priority" type="xs:int" minOccurs="0" />
+              <xs:element name="Tradeclass" msprop:Generator_ColumnVarNameInTable="columnTradeclass" msprop:Generator_ColumnPropNameInRow="Tradeclass" msprop:Generator_ColumnPropNameInTable="TradeclassColumn" msprop:Generator_UserColumnName="Tradeclass" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Comments" msprop:Generator_ColumnVarNameInTable="columnComments" msprop:Generator_ColumnPropNameInRow="Comments" msprop:Generator_ColumnPropNameInTable="CommentsColumn" msprop:Generator_UserColumnName="Comments" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ExpectationId" msprop:Generator_ColumnVarNameInTable="columnExpectationId" msprop:Generator_ColumnPropNameInRow="ExpectationId" msprop:Generator_ColumnPropNameInTable="ExpectationIdColumn" msprop:Generator_UserColumnName="ExpectationId" type="xs:int" />
+              <xs:element name="MktId" msprop:Generator_ColumnVarNameInTable="columnMktId" msprop:Generator_ColumnPropNameInRow="MktId" msprop:Generator_ColumnPropNameInTable="MktIdColumn" msprop:Generator_UserColumnName="MktId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Language" msprop:Generator_UserTableName="Language" msprop:Generator_RowEvArgName="LanguageRowChangeEvent" msprop:Generator_TableVarName="tableLanguage" msprop:Generator_TablePropName="Language" msprop:Generator_RowDeletingName="LanguageRowDeleting" msprop:Generator_RowChangingName="LanguageRowChanging" msprop:Generator_RowDeletedName="LanguageRowDeleted" msprop:Generator_RowEvHandlerName="LanguageRowChangeEventHandler" msprop:Generator_TableClassName="LanguageDataTable" msprop:Generator_RowChangedName="LanguageRowChanged" msprop:Generator_RowClassName="LanguageRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="LanguageID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnLanguageID" msprop:Generator_ColumnPropNameInRow="LanguageID" msprop:Generator_ColumnPropNameInTable="LanguageIDColumn" msprop:Generator_UserColumnName="LanguageID" type="xs:int" />
+              <xs:element name="Descrip" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Errors" msprop:Generator_UserTableName="Errors" msprop:Generator_RowEvArgName="ErrorsRowChangeEvent" msprop:Generator_TableVarName="tableErrors" msprop:Generator_TablePropName="Errors" msprop:Generator_RowDeletingName="ErrorsRowDeleting" msprop:Generator_RowChangingName="ErrorsRowChanging" msprop:Generator_RowDeletedName="ErrorsRowDeleted" msprop:Generator_RowEvHandlerName="ErrorsRowChangeEventHandler" msprop:Generator_TableClassName="ErrorsDataTable" msprop:Generator_RowChangedName="ErrorsRowChanged" msprop:Generator_RowClassName="ErrorsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ErrorId" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnErrorId" msprop:Generator_ColumnPropNameInRow="ErrorId" msprop:Generator_ColumnPropNameInTable="ErrorIdColumn" msprop:Generator_UserColumnName="ErrorId" type="xs:int" />
+              <xs:element name="ColumnName" msprop:Generator_ColumnVarNameInTable="columnColumnName" msprop:Generator_ColumnPropNameInRow="ColumnName" msprop:Generator_ColumnPropNameInTable="ColumnNameColumn" msprop:Generator_UserColumnName="ColumnName" type="xs:string" />
+              <xs:element name="ColumnCaption" msprop:Generator_ColumnVarNameInTable="columnColumnCaption" msprop:Generator_ColumnPropNameInRow="ColumnCaption" msprop:Generator_ColumnPropNameInTable="ColumnCaptionColumn" msprop:Generator_UserColumnName="ColumnCaption" type="xs:string" />
+              <xs:element name="Message" msprop:Generator_ColumnVarNameInTable="columnMessage" msprop:Generator_ColumnPropNameInRow="Message" msprop:Generator_ColumnPropNameInTable="MessageColumn" msprop:Generator_UserColumnName="Message" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Warnings" msprop:Generator_UserTableName="Warnings" msprop:Generator_RowEvArgName="WarningsRowChangeEvent" msprop:Generator_TableVarName="tableWarnings" msprop:Generator_TablePropName="Warnings" msprop:Generator_RowDeletingName="WarningsRowDeleting" msprop:Generator_RowChangingName="WarningsRowChanging" msprop:Generator_RowDeletedName="WarningsRowDeleted" msprop:Generator_RowEvHandlerName="WarningsRowChangeEventHandler" msprop:Generator_TableClassName="WarningsDataTable" msprop:Generator_RowChangedName="WarningsRowChanged" msprop:Generator_RowClassName="WarningsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="WarningId" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnWarningId" msprop:Generator_ColumnPropNameInRow="WarningId" msprop:Generator_ColumnPropNameInTable="WarningIdColumn" msprop:Generator_UserColumnName="WarningId" type="xs:int" />
+              <xs:element name="ColumnName" msprop:Generator_ColumnVarNameInTable="columnColumnName" msprop:Generator_ColumnPropNameInRow="ColumnName" msprop:Generator_ColumnPropNameInTable="ColumnNameColumn" msprop:Generator_UserColumnName="ColumnName" type="xs:string" />
+              <xs:element name="ColumnCaption" msprop:Generator_ColumnVarNameInTable="columnColumnCaption" msprop:Generator_ColumnPropNameInRow="ColumnCaption" msprop:Generator_ColumnPropNameInTable="ColumnCaptionColumn" msprop:Generator_UserColumnName="ColumnCaption" type="xs:string" />
+              <xs:element name="Message" msprop:Generator_ColumnVarNameInTable="columnMessage" msprop:Generator_ColumnPropNameInRow="Message" msprop:Generator_ColumnPropNameInTable="MessageColumn" msprop:Generator_UserColumnName="Message" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="vwCircular" msprop:Generator_UserTableName="vwCircular" msprop:Generator_RowEvArgName="vwCircularRowChangeEvent" msprop:Generator_TableVarName="tablevwCircular" msprop:Generator_TablePropName="vwCircular" msprop:Generator_RowDeletingName="vwCircularRowDeleting" msprop:Generator_RowChangingName="vwCircularRowChanging" msprop:Generator_RowDeletedName="vwCircularRowDeleted" msprop:Generator_RowEvHandlerName="vwCircularRowChangeEventHandler" msprop:Generator_TableClassName="vwCircularDataTable" msprop:Generator_RowChangedName="vwCircularRowChanged" msprop:Generator_RowClassName="vwCircularRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="VehicleId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnVehicleId" msprop:Generator_ColumnPropNameInRow="VehicleId" msprop:Generator_ColumnPropNameInTable="VehicleIdColumn" msprop:Generator_UserColumnName="VehicleId" type="xs:int" />
+              <xs:element name="EnvelopeId" msprop:Generator_ColumnVarNameInTable="columnEnvelopeId" msprop:Generator_ColumnPropNameInRow="EnvelopeId" msprop:Generator_ColumnPropNameInTable="EnvelopeIdColumn" msprop:Generator_UserColumnName="EnvelopeId" type="xs:int" minOccurs="0" />
+              <xs:element name="RetId" msprop:Generator_ColumnVarNameInTable="columnRetId" msprop:Generator_ColumnPropNameInRow="RetId" msprop:Generator_ColumnPropNameInTable="RetIdColumn" msprop:Generator_UserColumnName="RetId" type="xs:int" minOccurs="0" />
+              <xs:element name="MktId" msprop:Generator_ColumnVarNameInTable="columnMktId" msprop:Generator_ColumnPropNameInRow="MktId" msprop:Generator_ColumnPropNameInTable="MktIdColumn" msprop:Generator_UserColumnName="MktId" type="xs:int" minOccurs="0" />
+              <xs:element name="BreakDt" msprop:Generator_ColumnVarNameInTable="columnBreakDt" msprop:Generator_ColumnPropNameInRow="BreakDt" msprop:Generator_ColumnPropNameInTable="BreakDtColumn" msprop:Generator_UserColumnName="BreakDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="StartDt" msprop:Generator_ColumnVarNameInTable="columnStartDt" msprop:Generator_ColumnPropNameInRow="StartDt" msprop:Generator_ColumnPropNameInTable="StartDtColumn" msprop:Generator_UserColumnName="StartDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EndDt" msprop:Generator_ColumnVarNameInTable="columnEndDt" msprop:Generator_ColumnPropNameInRow="EndDt" msprop:Generator_ColumnPropNameInTable="EndDtColumn" msprop:Generator_UserColumnName="EndDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="LanguageId" msprop:Generator_ColumnVarNameInTable="columnLanguageId" msprop:Generator_ColumnPropNameInRow="LanguageId" msprop:Generator_ColumnPropNameInTable="LanguageIdColumn" msprop:Generator_UserColumnName="LanguageId" type="xs:int" minOccurs="0" />
+              <xs:element name="EventId" msprop:Generator_ColumnVarNameInTable="columnEventId" msprop:Generator_ColumnPropNameInRow="EventId" msprop:Generator_ColumnPropNameInTable="EventIdColumn" msprop:Generator_UserColumnName="EventId" type="xs:int" minOccurs="0" />
+              <xs:element name="ThemeId" msprop:Generator_ColumnVarNameInTable="columnThemeId" msprop:Generator_ColumnPropNameInRow="ThemeId" msprop:Generator_ColumnPropNameInTable="ThemeIdColumn" msprop:Generator_UserColumnName="ThemeId" type="xs:int" minOccurs="0" />
+              <xs:element name="MediaId" msprop:Generator_ColumnVarNameInTable="columnMediaId" msprop:Generator_ColumnPropNameInRow="MediaId" msprop:Generator_ColumnPropNameInTable="MediaIdColumn" msprop:Generator_UserColumnName="MediaId" type="xs:int" minOccurs="0" />
+              <xs:element name="PublicationId" msprop:Generator_ColumnVarNameInTable="columnPublicationId" msprop:Generator_ColumnPropNameInRow="PublicationId" msprop:Generator_ColumnPropNameInTable="PublicationIdColumn" msprop:Generator_UserColumnName="PublicationId" type="xs:int" minOccurs="0" />
+              <xs:element name="FlashInd" msprop:Generator_ColumnVarNameInTable="columnFlashInd" msprop:Generator_ColumnPropNameInRow="FlashInd" msprop:Generator_ColumnPropNameInTable="FlashIndColumn" msprop:Generator_UserColumnName="FlashInd" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="CreateDt" msprop:Generator_ColumnVarNameInTable="columnCreateDt" msprop:Generator_ColumnPropNameInRow="CreateDt" msprop:Generator_ColumnPropNameInTable="CreateDtColumn" msprop:Generator_UserColumnName="CreateDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CreatedById" msprop:Generator_ColumnVarNameInTable="columnCreatedById" msprop:Generator_ColumnPropNameInRow="CreatedById" msprop:Generator_ColumnPropNameInTable="CreatedByIdColumn" msprop:Generator_UserColumnName="CreatedById" type="xs:int" minOccurs="0" />
+              <xs:element name="ScanDt" msprop:Generator_ColumnVarNameInTable="columnScanDt" msprop:Generator_ColumnPropNameInRow="ScanDt" msprop:Generator_ColumnPropNameInTable="ScanDtColumn" msprop:Generator_UserColumnName="ScanDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ScannedById" msprop:Generator_ColumnVarNameInTable="columnScannedById" msprop:Generator_ColumnPropNameInRow="ScannedById" msprop:Generator_ColumnPropNameInTable="ScannedByIdColumn" msprop:Generator_UserColumnName="ScannedById" type="xs:int" minOccurs="0" />
+              <xs:element name="QCDt" msprop:Generator_ColumnVarNameInTable="columnQCDt" msprop:Generator_ColumnPropNameInRow="QCDt" msprop:Generator_ColumnPropNameInTable="QCDtColumn" msprop:Generator_UserColumnName="QCDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="QCedById" msprop:Generator_ColumnVarNameInTable="columnQCedById" msprop:Generator_ColumnPropNameInRow="QCedById" msprop:Generator_ColumnPropNameInTable="QCedByIdColumn" msprop:Generator_UserColumnName="QCedById" type="xs:int" minOccurs="0" />
+              <xs:element name="FamilyId" msprop:Generator_ColumnVarNameInTable="columnFamilyId" msprop:Generator_ColumnPropNameInRow="FamilyId" msprop:Generator_ColumnPropNameInTable="FamilyIdColumn" msprop:Generator_UserColumnName="FamilyId" type="xs:int" minOccurs="0" />
+              <xs:element name="CouponInd" msprop:Generator_ColumnVarNameInTable="columnCouponInd" msprop:Generator_ColumnPropNameInRow="CouponInd" msprop:Generator_ColumnPropNameInTable="CouponIndColumn" msprop:Generator_UserColumnName="CouponInd" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="CreateSizedDt" msprop:Generator_ColumnVarNameInTable="columnCreateSizedDt" msprop:Generator_ColumnPropNameInRow="CreateSizedDt" msprop:Generator_ColumnPropNameInTable="CreateSizedDtColumn" msprop:Generator_UserColumnName="CreateSizedDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Priority" msprop:Generator_ColumnVarNameInTable="columnPriority" msprop:Generator_ColumnPropNameInRow="Priority" msprop:Generator_ColumnPropNameInTable="PriorityColumn" msprop:Generator_UserColumnName="Priority" type="xs:int" minOccurs="0" />
+              <xs:element name="CheckInPageCount" msprop:Generator_ColumnVarNameInTable="columnCheckInPageCount" msprop:Generator_ColumnPropNameInRow="CheckInPageCount" msprop:Generator_ColumnPropNameInTable="CheckInPageCountColumn" msprop:Generator_UserColumnName="CheckInPageCount" type="xs:int" minOccurs="0" />
+              <xs:element name="CheckInOccurrences" msprop:Generator_ColumnVarNameInTable="columnCheckInOccurrences" msprop:Generator_ColumnPropNameInRow="CheckInOccurrences" msprop:Generator_ColumnPropNameInTable="CheckInOccurrencesColumn" msprop:Generator_UserColumnName="CheckInOccurrences" type="xs:int" minOccurs="0" />
+              <xs:element name="StatusID" msprop:Generator_ColumnVarNameInTable="columnStatusID" msprop:Generator_ColumnPropNameInRow="StatusID" msprop:Generator_ColumnPropNameInTable="StatusIDColumn" msprop:Generator_UserColumnName="StatusID" type="xs:int" minOccurs="0" />
+              <xs:element name="FormName" msprop:Generator_ColumnVarNameInTable="columnFormName" msprop:Generator_ColumnPropNameInRow="FormName" msprop:Generator_ColumnPropNameInTable="FormNameColumn" msprop:Generator_UserColumnName="FormName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ActualPageCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnActualPageCount" msprop:Generator_ColumnPropNameInRow="ActualPageCount" msprop:Generator_ColumnPropNameInTable="ActualPageCountColumn" msprop:Generator_UserColumnName="ActualPageCount" type="xs:int" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IndexDt" msprop:Generator_ColumnVarNameInTable="columnIndexDt" msprop:Generator_ColumnPropNameInRow="IndexDt" msprop:Generator_ColumnPropNameInTable="IndexDtColumn" msprop:Generator_UserColumnName="IndexDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="IndexedById" msprop:Generator_ColumnVarNameInTable="columnIndexedById" msprop:Generator_ColumnPropNameInRow="IndexedById" msprop:Generator_ColumnPropNameInTable="IndexedByIdColumn" msprop:Generator_UserColumnName="IndexedById" type="xs:int" minOccurs="0" />
+              <xs:element name="NationalInd" msprop:Generator_ColumnVarNameInTable="columnNationalInd" msprop:Generator_ColumnPropNameInRow="NationalInd" msprop:Generator_ColumnPropNameInTable="NationalIndColumn" msprop:Generator_UserColumnName="NationalInd" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="SPReviewStatusId" msprop:Generator_ColumnVarNameInTable="columnSPReviewStatusId" msprop:Generator_ColumnPropNameInRow="SPReviewStatusId" msprop:Generator_ColumnPropNameInTable="SPReviewStatusIdColumn" msprop:Generator_UserColumnName="SPReviewStatusId" type="xs:int" minOccurs="0" />
+              <xs:element name="SPReviewStatus" msprop:Generator_ColumnVarNameInTable="columnSPReviewStatus" msprop:Generator_ColumnPropNameInRow="SPReviewStatus" msprop:Generator_ColumnPropNameInTable="SPReviewStatusColumn" msprop:Generator_UserColumnName="SPReviewStatus" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EntryInd" msprop:Generator_ColumnVarNameInTable="columnEntryInd" msprop:Generator_ColumnPropNameInRow="EntryInd" msprop:Generator_ColumnPropNameInTable="EntryIndColumn" msprop:Generator_UserColumnName="EntryInd" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="ParentVehicleId" msprop:Generator_ColumnVarNameInTable="columnParentVehicleId" msprop:Generator_ColumnPropNameInRow="ParentVehicleId" msprop:Generator_ColumnPropNameInTable="ParentVehicleIdColumn" msprop:Generator_UserColumnName="ParentVehicleId" type="xs:int" minOccurs="0" />
+              <xs:element name="Subject" msprop:Generator_ColumnVarNameInTable="columnSubject" msprop:Generator_ColumnPropNameInRow="Subject" msprop:Generator_ColumnPropNameInTable="SubjectColumn" msprop:Generator_UserColumnName="Subject" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SentFrom" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSentFrom" msprop:Generator_ColumnPropNameInRow="SentFrom" msprop:Generator_ColumnPropNameInTable="SentFromColumn" msprop:Generator_UserColumnName="SentFrom" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SentBy" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSentBy" msprop:Generator_ColumnPropNameInRow="SentBy" msprop:Generator_ColumnPropNameInTable="SentByColumn" msprop:Generator_UserColumnName="SentBy" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DistDt" msprop:Generator_ColumnVarNameInTable="columnDistDt" msprop:Generator_ColumnPropNameInRow="DistDt" msprop:Generator_ColumnPropNameInTable="DistDtColumn" msprop:Generator_UserColumnName="DistDt" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="User" msprop:Generator_UserTableName="User" msprop:Generator_RowEvArgName="UserRowChangeEvent" msprop:Generator_TableVarName="tableUser" msprop:Generator_TablePropName="User" msprop:Generator_RowDeletingName="UserRowDeleting" msprop:Generator_RowChangingName="UserRowChanging" msprop:Generator_RowDeletedName="UserRowDeleted" msprop:Generator_RowEvHandlerName="UserRowChangeEventHandler" msprop:Generator_TableClassName="UserDataTable" msprop:Generator_RowChangedName="UserRowChanged" msprop:Generator_RowClassName="UserRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="UserId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnUserId" msprop:Generator_ColumnPropNameInRow="UserId" msprop:Generator_ColumnPropNameInTable="UserIdColumn" msprop:Generator_UserColumnName="UserId" type="xs:int" />
+              <xs:element name="Username" msprop:Generator_ColumnVarNameInTable="columnUsername" msprop:Generator_ColumnPropNameInRow="Username" msprop:Generator_ColumnPropNameInTable="UsernameColumn" msprop:Generator_UserColumnName="Username" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FName" msprop:Generator_ColumnVarNameInTable="columnFName" msprop:Generator_ColumnPropNameInRow="FName" msprop:Generator_ColumnPropNameInTable="FNameColumn" msprop:Generator_UserColumnName="FName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LName" msprop:Generator_ColumnVarNameInTable="columnLName" msprop:Generator_ColumnPropNameInRow="LName" msprop:Generator_ColumnPropNameInTable="LNameColumn" msprop:Generator_UserColumnName="LName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LocationId" msprop:Generator_ColumnVarNameInTable="columnLocationId" msprop:Generator_ColumnPropNameInRow="LocationId" msprop:Generator_ColumnPropNameInTable="LocationIdColumn" msprop:Generator_UserColumnName="LocationId" type="xs:int" minOccurs="0" />
+              <xs:element name="FullName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFullName" msprop:Generator_ColumnPropNameInRow="FullName" msprop:Generator_ColumnPropNameInTable="FullNameColumn" msprop:Generator_UserColumnName="FullName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="101" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ShortName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnShortName" msprop:Generator_ColumnPropNameInRow="ShortName" msprop:Generator_ColumnPropNameInTable="ShortNameColumn" msprop:Generator_UserColumnName="ShortName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="51" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="vwUserScreensFunctionality" msprop:Generator_UserTableName="vwUserScreensFunctionality" msprop:Generator_RowEvArgName="vwUserScreensFunctionalityRowChangeEvent" msprop:Generator_TableVarName="tablevwUserScreensFunctionality" msprop:Generator_TablePropName="vwUserScreensFunctionality" msprop:Generator_RowDeletingName="vwUserScreensFunctionalityRowDeleting" msprop:Generator_RowChangingName="vwUserScreensFunctionalityRowChanging" msprop:Generator_RowDeletedName="vwUserScreensFunctionalityRowDeleted" msprop:Generator_RowEvHandlerName="vwUserScreensFunctionalityRowChangeEventHandler" msprop:Generator_TableClassName="vwUserScreensFunctionalityDataTable" msprop:Generator_RowChangedName="vwUserScreensFunctionalityRowChanged" msprop:Generator_RowClassName="vwUserScreensFunctionalityRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="UserId" msprop:Generator_ColumnVarNameInTable="columnUserId" msprop:Generator_ColumnPropNameInRow="UserId" msprop:Generator_ColumnPropNameInTable="UserIdColumn" msprop:Generator_UserColumnName="UserId" type="xs:int" />
+              <xs:element name="FormName" msprop:Generator_ColumnVarNameInTable="columnFormName" msprop:Generator_ColumnPropNameInRow="FormName" msprop:Generator_ColumnPropNameInTable="FormNameColumn" msprop:Generator_UserColumnName="FormName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Functionality" msprop:Generator_ColumnVarNameInTable="columnFunctionality" msprop:Generator_ColumnPropNameInRow="Functionality" msprop:Generator_ColumnPropNameInTable="FunctionalityColumn" msprop:Generator_UserColumnName="Functionality" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ObjectName" msprop:Generator_ColumnVarNameInTable="columnObjectName" msprop:Generator_ColumnPropNameInRow="ObjectName" msprop:Generator_ColumnPropNameInTable="ObjectNameColumn" msprop:Generator_UserColumnName="ObjectName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SenderExpectation" msprop:Generator_TableClassName="SenderExpectationDataTable" msprop:Generator_TableVarName="tableSenderExpectation" msprop:Generator_TablePropName="SenderExpectation" msprop:Generator_RowDeletingName="SenderExpectationRowDeleting" msprop:Generator_RowChangingName="SenderExpectationRowChanging" msprop:Generator_RowEvHandlerName="SenderExpectationRowChangeEventHandler" msprop:Generator_RowDeletedName="SenderExpectationRowDeleted" msprop:Generator_UserTableName="SenderExpectation" msprop:Generator_RowChangedName="SenderExpectationRowChanged" msprop:Generator_RowEvArgName="SenderExpectationRowChangeEvent" msprop:Generator_RowClassName="SenderExpectationRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SenderId" msprop:Generator_ColumnVarNameInTable="columnSenderId" msprop:Generator_ColumnPropNameInRow="SenderId" msprop:Generator_ColumnPropNameInTable="SenderIdColumn" msprop:Generator_UserColumnName="SenderId" type="xs:int" minOccurs="0" />
+              <xs:element name="ExpectationID" msprop:Generator_ColumnVarNameInTable="columnExpectationID" msprop:Generator_ColumnPropNameInRow="ExpectationID" msprop:Generator_ColumnPropNameInTable="ExpectationIDColumn" msprop:Generator_UserColumnName="ExpectationID" type="xs:int" />
+              <xs:element name="RetId" msprop:Generator_ColumnVarNameInTable="columnRetId" msprop:Generator_ColumnPropNameInRow="RetId" msprop:Generator_ColumnPropNameInTable="RetIdColumn" msprop:Generator_UserColumnName="RetId" type="xs:int" minOccurs="0" />
+              <xs:element name="MktId" msprop:Generator_ColumnVarNameInTable="columnMktId" msprop:Generator_ColumnPropNameInRow="MktId" msprop:Generator_ColumnPropNameInTable="MktIdColumn" msprop:Generator_UserColumnName="MktId" type="xs:int" minOccurs="0" />
+              <xs:element name="MediaId" msprop:Generator_ColumnVarNameInTable="columnMediaId" msprop:Generator_ColumnPropNameInRow="MediaId" msprop:Generator_ColumnPropNameInTable="MediaIdColumn" msprop:Generator_UserColumnName="MediaId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TempRet" msprop:Generator_TableClassName="TempRetDataTable" msprop:Generator_TableVarName="tableTempRet" msprop:Generator_RowChangedName="TempRetRowChanged" msprop:Generator_TablePropName="TempRet" msprop:Generator_RowDeletingName="TempRetRowDeleting" msprop:Generator_RowChangingName="TempRetRowChanging" msprop:Generator_RowEvHandlerName="TempRetRowChangeEventHandler" msprop:Generator_RowDeletedName="TempRetRowDeleted" msprop:Generator_RowClassName="TempRetRow" msprop:Generator_UserTableName="TempRet" msprop:Generator_RowEvArgName="TempRetRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TempRetID" msprop:Generator_ColumnVarNameInTable="columnTempRetID" msprop:Generator_ColumnPropNameInRow="TempRetID" msprop:Generator_ColumnPropNameInTable="TempRetIDColumn" msprop:Generator_UserColumnName="TempRetID" type="xs:int" />
+              <xs:element name="VehicleID" msprop:Generator_ColumnVarNameInTable="columnVehicleID" msprop:Generator_ColumnPropNameInRow="VehicleID" msprop:Generator_ColumnPropNameInTable="VehicleIDColumn" msprop:Generator_UserColumnName="VehicleID" type="xs:int" minOccurs="0" />
+              <xs:element name="Descrip" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:VehicleStatus" />
+      <xs:field xpath="mstns:CodeId" />
+    </xs:unique>
+    <xs:unique name="EnvelopeSender_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:EnvelopeSender" />
+      <xs:field xpath="mstns:SenderId" />
+    </xs:unique>
+    <xs:unique name="TradeClass_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:TradeClass" />
+      <xs:field xpath="mstns:TradeClassId" />
+    </xs:unique>
+    <xs:unique name="Ret_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Ret" />
+      <xs:field xpath="mstns:RetId" />
+    </xs:unique>
+    <xs:unique name="Media_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Media" />
+      <xs:field xpath="mstns:MediaID" />
+    </xs:unique>
+    <xs:unique name="Mkt_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Mkt" />
+      <xs:field xpath="mstns:MktId" />
+    </xs:unique>
+    <xs:unique name="Publication_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Publication" />
+      <xs:field xpath="mstns:PublicationId" />
+    </xs:unique>
+    <xs:unique name="vwExpectedRet_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:vwExpectedRet" />
+      <xs:field xpath="mstns:ExpectationId" />
+    </xs:unique>
+    <xs:unique name="Language_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Language" />
+      <xs:field xpath="mstns:LanguageID" />
+    </xs:unique>
+    <xs:unique name="Errors_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Errors" />
+      <xs:field xpath="mstns:ErrorId" />
+    </xs:unique>
+    <xs:unique name="Warnings_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Warnings" />
+      <xs:field xpath="mstns:WarningId" />
+    </xs:unique>
+    <xs:unique name="vwCircular_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:vwCircular" />
+      <xs:field xpath="mstns:VehicleId" />
+    </xs:unique>
+    <xs:unique name="User_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:User" />
+      <xs:field xpath="mstns:UserId" />
+    </xs:unique>
+    <xs:unique name="vwUserScreensFunctionality_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:vwUserScreensFunctionality" />
+      <xs:field xpath="mstns:UserId" />
+    </xs:unique>
+    <xs:unique name="SenderExpectation_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:SenderExpectation" />
+      <xs:field xpath="mstns:ExpectationID" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="FK_Ret_TradeClass" msdata:parent="TradeClass" msdata:child="Ret" msdata:parentkey="TradeClassId" msdata:childkey="TradeClassId" msprop:Generator_UserChildTable="Ret" msprop:Generator_ChildPropName="GetRetRows" msprop:Generator_UserRelationName="FK_Ret_TradeClass" msprop:Generator_RelationVarName="relationFK_Ret_TradeClass" msprop:Generator_UserParentTable="TradeClass" msprop:Generator_ParentPropName="TradeClassRow" />
+      <msdata:Relationship name="Mkt_Publication" msdata:parent="Mkt" msdata:child="Publication" msdata:parentkey="MktId" msdata:childkey="MktId" msprop:Generator_UserChildTable="Publication" msprop:Generator_ChildPropName="GetPublicationRows" msprop:Generator_UserRelationName="Mkt_Publication" msprop:Generator_RelationVarName="relationMkt_Publication" msprop:Generator_UserParentTable="Mkt" msprop:Generator_ParentPropName="MktRow" />
+      <msdata:Relationship name="Language_Publication" msdata:parent="Language" msdata:child="Publication" msdata:parentkey="LanguageID" msdata:childkey="LanguageID" msprop:Generator_UserChildTable="Publication" msprop:Generator_ChildPropName="GetPublicationRows" msprop:Generator_UserRelationName="Language_Publication" msprop:Generator_RelationVarName="relationLanguage_Publication" msprop:Generator_UserParentTable="Language" msprop:Generator_ParentPropName="LanguageRow" />
+      <msdata:Relationship name="FK_Ret_Language" msdata:parent="Language" msdata:child="Ret" msdata:parentkey="LanguageID" msdata:childkey="LanguageId" msprop:Generator_UserChildTable="Ret" msprop:Generator_ChildPropName="GetRetRows" msprop:Generator_UserRelationName="FK_Ret_Language" msprop:Generator_RelationVarName="relationFK_Ret_Language" msprop:Generator_UserParentTable="Language" msprop:Generator_ParentPropName="LanguageRow" />
+      <msdata:Relationship name="Ret_vwCircular" msdata:parent="Ret" msdata:child="vwCircular" msdata:parentkey="RetId" msdata:childkey="RetId" msprop:Generator_UserChildTable="vwCircular" msprop:Generator_ChildPropName="GetvwCircularRows" msprop:Generator_UserRelationName="Ret_vwCircular" msprop:Generator_RelationVarName="relationRet_vwCircular" msprop:Generator_UserParentTable="Ret" msprop:Generator_ParentPropName="RetRow" />
+      <msdata:Relationship name="Media_vwCircular" msdata:parent="Media" msdata:child="vwCircular" msdata:parentkey="MediaID" msdata:childkey="MediaId" msprop:Generator_UserChildTable="vwCircular" msprop:Generator_ChildPropName="GetvwCircularRows" msprop:Generator_UserRelationName="Media_vwCircular" msprop:Generator_RelationVarName="relationMedia_vwCircular" msprop:Generator_UserParentTable="Media" msprop:Generator_ParentPropName="MediaRow" />
+      <msdata:Relationship name="VehicleStatus_vwCircular" msdata:parent="VehicleStatus" msdata:child="vwCircular" msdata:parentkey="CodeId" msdata:childkey="StatusID" msprop:Generator_UserChildTable="vwCircular" msprop:Generator_ChildPropName="GetvwCircularRows" msprop:Generator_UserRelationName="VehicleStatus_vwCircular" msprop:Generator_RelationVarName="relationVehicleStatus_vwCircular" msprop:Generator_UserParentTable="VehicleStatus" msprop:Generator_ParentPropName="VehicleStatusRow" />
+      <msdata:Relationship name="Language_vwCircular" msdata:parent="Language" msdata:child="vwCircular" msdata:parentkey="LanguageID" msdata:childkey="LanguageId" msprop:Generator_UserChildTable="vwCircular" msprop:Generator_ChildPropName="GetvwCircularRows" msprop:Generator_UserRelationName="Language_vwCircular" msprop:Generator_RelationVarName="relationLanguage_vwCircular" msprop:Generator_UserParentTable="Language" msprop:Generator_ParentPropName="LanguageRow" />
+      <msdata:Relationship name="Publication_vwCircular" msdata:parent="Publication" msdata:child="vwCircular" msdata:parentkey="PublicationId" msdata:childkey="PublicationId" msprop:Generator_UserChildTable="vwCircular" msprop:Generator_ChildPropName="GetvwCircularRows" msprop:Generator_UserRelationName="Publication_vwCircular" msprop:Generator_RelationVarName="relationPublication_vwCircular" msprop:Generator_UserParentTable="Publication" msprop:Generator_ParentPropName="PublicationRow" />
+      <msdata:Relationship name="Mkt_vwCircular" msdata:parent="Mkt" msdata:child="vwCircular" msdata:parentkey="MktId" msdata:childkey="MktId" msprop:Generator_UserChildTable="vwCircular" msprop:Generator_ChildPropName="GetvwCircularRows" msprop:Generator_UserRelationName="Mkt_vwCircular" msprop:Generator_RelationVarName="relationMkt_vwCircular" msprop:Generator_UserParentTable="Mkt" msprop:Generator_ParentPropName="MktRow" />
+      <msdata:Relationship name="FK_Ret_TradeClass1" msdata:parent="vwExpectedRet" msdata:child="Ret" msdata:parentkey="TradeClassId" msdata:childkey="TradeClassId" msprop:Generator_UserChildTable="Ret" msprop:Generator_ChildPropName="GetRetRows" msprop:Generator_UserRelationName="FK_Ret_TradeClass1" msprop:Generator_RelationVarName="relationFK_Ret_TradeClass1" msprop:Generator_UserParentTable="vwExpectedRet" msprop:Generator_ParentPropName="vwExpectedRetRow" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

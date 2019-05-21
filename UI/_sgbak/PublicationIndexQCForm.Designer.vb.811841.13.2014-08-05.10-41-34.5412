@@ -1,0 +1,397 @@
+﻿Namespace UI
+
+    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+    Partial Class PublicationIndexQCForm
+        Inherits UI.VehicleImageFormBase
+
+        'Form overrides dispose to clean up the component list.
+        <System.Diagnostics.DebuggerNonUserCode()> _
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+            MyBase.Dispose(disposing)
+        End Sub
+
+        'Required by the Windows Form Designer
+        Private components As System.ComponentModel.IContainer
+
+        'NOTE: The following procedure is required by the Windows Form Designer
+        'It can be modified using the Windows Form Designer.  
+        'Do not modify it using the code editor.
+        <System.Diagnostics.DebuggerStepThrough()> _
+        Private Sub InitializeComponent()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PublicationIndexQCForm))
+            Me.indexingCompleteButton = New System.Windows.Forms.Button()
+            Me.sizeIdMediaLabel = New System.Windows.Forms.Label()
+            Me.pageCropLabel = New System.Windows.Forms.Label()
+            Me.pageCropValueLabel = New System.Windows.Forms.Label()
+            Me.pageSizeOptionGroupBox = New System.Windows.Forms.GroupBox()
+            Me.pageSizeROPButton = New System.Windows.Forms.Button()
+            Me.changeSizeToLabel = New System.Windows.Forms.Label()
+            Me.pageSizeMagazineButton = New System.Windows.Forms.Button()
+            Me.sizeIdMediaLabel2 = New System.Windows.Forms.Label()
+            Me.currentSizeLabel = New System.Windows.Forms.Label()
+            Me.adlertPageNameGroupBox = New System.Windows.Forms.GroupBox()
+            Me.adlertPageNameTextBox = New System.Windows.Forms.TextBox()
+            Me.infoManipGroupBox.SuspendLayout()
+            Me.rightPanel.SuspendLayout()
+            Me.imageNavigationGroupBox.SuspendLayout()
+            Me.leftPanel.SuspendLayout()
+            Me.vehicleGroupBox.SuspendLayout()
+            CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.pageSizeOptionGroupBox.SuspendLayout()
+            Me.adlertPageNameGroupBox.SuspendLayout()
+            Me.SuspendLayout()
+            '
+            'infoManipGroupBox
+            '
+            Me.infoManipGroupBox.Controls.Add(Me.indexingCompleteButton)
+            Me.infoManipGroupBox.Location = New System.Drawing.Point(30, 547)
+            Me.infoManipGroupBox.Size = New System.Drawing.Size(189, 165)
+            Me.infoManipGroupBox.Controls.SetChildIndex(Me.notpromotionalButton, 0)
+            Me.infoManipGroupBox.Controls.SetChildIndex(Me.qcCompletedButton, 0)
+            Me.infoManipGroupBox.Controls.SetChildIndex(Me.indexingCompleteButton, 0)
+            '
+            'rightPanel
+            '
+            Me.rightPanel.Controls.Add(Me.adlertPageNameGroupBox)
+            Me.rightPanel.Controls.Add(Me.pageSizeOptionGroupBox)
+            Me.rightPanel.Controls.SetChildIndex(Me.DrawRectangleButton, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.imageNavigationGroupBox, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.imageSearchGroupBox, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.imageRotationGroupBox, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.keepRectangleButton, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.zoomButton, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.removeRectangleButton, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.saveImageButton, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.refreshButton, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.deleteImageButton, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.resequenceButton, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.pageCropIdLabel, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.pageIdLabel, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.exitButton, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.pageSizeOptionGroupBox, 0)
+            Me.rightPanel.Controls.SetChildIndex(Me.adlertPageNameGroupBox, 0)
+            '
+            'qcCompletedButton
+            '
+            Me.qcCompletedButton.Location = New System.Drawing.Point(6, 131)
+            '
+            'exitButton
+            '
+            Me.exitButton.Location = New System.Drawing.Point(13, 682)
+            '
+            'imageNavigationGroupBox
+            '
+            Me.imageNavigationGroupBox.Controls.Add(Me.sizeIdMediaLabel)
+            Me.imageNavigationGroupBox.Controls.SetChildIndex(Me.PageDateLabel, 0)
+            Me.imageNavigationGroupBox.Controls.SetChildIndex(Me.sizeIdMediaLabel, 0)
+            Me.imageNavigationGroupBox.Controls.SetChildIndex(Me.firstImageButton, 0)
+            Me.imageNavigationGroupBox.Controls.SetChildIndex(Me.previousImageButton, 0)
+            Me.imageNavigationGroupBox.Controls.SetChildIndex(Me.lastImageButton, 0)
+            Me.imageNavigationGroupBox.Controls.SetChildIndex(Me.nextImageButton, 0)
+            Me.imageNavigationGroupBox.Controls.SetChildIndex(Me.pageSizeLabel, 0)
+            Me.imageNavigationGroupBox.Controls.SetChildIndex(Me.pageTypeValueLabel, 0)
+            '
+            'vehicleGroupBox
+            '
+            Me.vehicleGroupBox.Controls.Add(Me.pageCropValueLabel)
+            Me.vehicleGroupBox.Controls.Add(Me.pageCropLabel)
+            Me.vehicleGroupBox.Size = New System.Drawing.Size(241, 475)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.DistDateLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.DistDateTypeInDatePicker, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.qcStatusLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.qcStatusTextLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.publicationLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.publicationComboBox, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.retailerLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.retailerComboBox, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.tradeclassLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.tradeclassValueLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.eventLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.eventComboBox, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.themeLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.themeComboBox, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.startDateLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.marketComboBox, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.startDateTypeInDatePicker, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.endDateLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.endDateTypeInDatePicker, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.pagesLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.languageLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.languageComboBox, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.marketLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.mediaLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.mediaComboBox, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.pageCropLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.indexStatusTextLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.adDateLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.adDateTypeInDatePicker, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.couponCheckBox, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.definePagesButton, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.vehicleIdLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.indexStatusLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.vehicleIdValueLabel, 0)
+            Me.vehicleGroupBox.Controls.SetChildIndex(Me.pageCropValueLabel, 0)
+            '
+            'definePagesButton
+            '
+            Me.definePagesButton.Location = New System.Drawing.Point(66, 446)
+            '
+            'languageComboBox
+            '
+            Me.languageComboBox.Location = New System.Drawing.Point(66, 290)
+            '
+            'languageLabel
+            '
+            Me.languageLabel.Location = New System.Drawing.Point(7, 293)
+            '
+            'pagesLabel
+            '
+            Me.pagesLabel.Location = New System.Drawing.Point(7, 451)
+            '
+            'endDateTypeInDatePicker
+            '
+            Me.endDateTypeInDatePicker.Location = New System.Drawing.Point(66, 398)
+            '
+            'endDateLabel
+            '
+            Me.endDateLabel.Location = New System.Drawing.Point(7, 401)
+            '
+            'startDateTypeInDatePicker
+            '
+            Me.startDateTypeInDatePicker.Location = New System.Drawing.Point(66, 372)
+            '
+            'startDateLabel
+            '
+            Me.startDateLabel.Location = New System.Drawing.Point(7, 375)
+            '
+            'themeComboBox
+            '
+            Me.themeComboBox.Location = New System.Drawing.Point(66, 344)
+            '
+            'themeLabel
+            '
+            Me.themeLabel.Location = New System.Drawing.Point(7, 347)
+            '
+            'eventComboBox
+            '
+            Me.eventComboBox.Location = New System.Drawing.Point(66, 317)
+            '
+            'eventLabel
+            '
+            Me.eventLabel.Location = New System.Drawing.Point(7, 320)
+            '
+            'tradeclassValueLabel
+            '
+            Me.tradeclassValueLabel.Location = New System.Drawing.Point(63, 269)
+            '
+            'tradeclassLabel
+            '
+            Me.tradeclassLabel.Location = New System.Drawing.Point(7, 269)
+            '
+            'retailerComboBox
+            '
+            Me.retailerComboBox.Location = New System.Drawing.Point(66, 241)
+            '
+            'retailerLabel
+            '
+            Me.retailerLabel.Location = New System.Drawing.Point(7, 244)
+            '
+            'publicationComboBox
+            '
+            Me.publicationComboBox.Location = New System.Drawing.Point(66, 186)
+            '
+            'publicationLabel
+            '
+            Me.publicationLabel.Location = New System.Drawing.Point(7, 189)
+            '
+            'marketComboBox
+            '
+            Me.marketComboBox.Location = New System.Drawing.Point(66, 159)
+            '
+            'marketLabel
+            '
+            Me.marketLabel.Location = New System.Drawing.Point(7, 162)
+            '
+            'mediaComboBox
+            '
+            Me.mediaComboBox.Location = New System.Drawing.Point(66, 132)
+            '
+            'mediaLabel
+            '
+            Me.mediaLabel.Location = New System.Drawing.Point(7, 135)
+            '
+            'adDateTypeInDatePicker
+            '
+            Me.adDateTypeInDatePicker.Location = New System.Drawing.Point(66, 213)
+            '
+            'adDateLabel
+            '
+            Me.adDateLabel.Location = New System.Drawing.Point(7, 216)
+            '
+            'couponCheckBox
+            '
+            Me.couponCheckBox.Location = New System.Drawing.Point(7, 426)
+            '
+            'smalliconImageList
+            '
+            Me.smalliconImageList.ImageStream = CType(resources.GetObject("smalliconImageList.ImageStream"), System.Windows.Forms.ImageListStreamer)
+            Me.smalliconImageList.Images.SetKeyName(0, "Filter.ico")
+            Me.smalliconImageList.Images.SetKeyName(1, "printer.ico")
+            Me.smalliconImageList.Images.SetKeyName(2, "DefaultPrinter.ico")
+            '
+            'indexingCompleteButton
+            '
+            Me.indexingCompleteButton.Location = New System.Drawing.Point(6, 106)
+            Me.indexingCompleteButton.Name = "indexingCompleteButton"
+            Me.indexingCompleteButton.Size = New System.Drawing.Size(177, 23)
+            Me.indexingCompleteButton.TabIndex = 9
+            Me.indexingCompleteButton.Text = "Indexing Complete"
+            Me.indexingCompleteButton.UseVisualStyleBackColor = True
+            '
+            'sizeIdMediaLabel
+            '
+            Me.sizeIdMediaLabel.AutoSize = True
+            Me.sizeIdMediaLabel.Location = New System.Drawing.Point(117, 42)
+            Me.sizeIdMediaLabel.Name = "sizeIdMediaLabel"
+            Me.sizeIdMediaLabel.Size = New System.Drawing.Size(30, 13)
+            Me.sizeIdMediaLabel.TabIndex = 28
+            Me.sizeIdMediaLabel.Text = "ROP"
+            '
+            'pageCropLabel
+            '
+            Me.pageCropLabel.AutoSize = True
+            Me.pageCropLabel.Location = New System.Drawing.Point(6, 110)
+            Me.pageCropLabel.Name = "pageCropLabel"
+            Me.pageCropLabel.Size = New System.Drawing.Size(34, 13)
+            Me.pageCropLabel.TabIndex = 36
+            Me.pageCropLabel.Text = "Crops"
+            '
+            'pageCropValueLabel
+            '
+            Me.pageCropValueLabel.AutoSize = True
+            Me.pageCropValueLabel.Location = New System.Drawing.Point(63, 110)
+            Me.pageCropValueLabel.Name = "pageCropValueLabel"
+            Me.pageCropValueLabel.Size = New System.Drawing.Size(105, 13)
+            Me.pageCropValueLabel.TabIndex = 37
+            Me.pageCropValueLabel.Text = "<Page Crops Count>"
+            '
+            'pageSizeOptionGroupBox
+            '
+            Me.pageSizeOptionGroupBox.Controls.Add(Me.pageSizeROPButton)
+            Me.pageSizeOptionGroupBox.Controls.Add(Me.changeSizeToLabel)
+            Me.pageSizeOptionGroupBox.Controls.Add(Me.pageSizeMagazineButton)
+            Me.pageSizeOptionGroupBox.Controls.Add(Me.sizeIdMediaLabel2)
+            Me.pageSizeOptionGroupBox.Controls.Add(Me.currentSizeLabel)
+            Me.pageSizeOptionGroupBox.Location = New System.Drawing.Point(6, 557)
+            Me.pageSizeOptionGroupBox.Name = "pageSizeOptionGroupBox"
+            Me.pageSizeOptionGroupBox.Size = New System.Drawing.Size(155, 119)
+            Me.pageSizeOptionGroupBox.TabIndex = 11
+            Me.pageSizeOptionGroupBox.TabStop = False
+            Me.pageSizeOptionGroupBox.Text = "Page Size Option"
+            '
+            'pageSizeROPButton
+            '
+            Me.pageSizeROPButton.Location = New System.Drawing.Point(7, 61)
+            Me.pageSizeROPButton.Name = "pageSizeROPButton"
+            Me.pageSizeROPButton.Size = New System.Drawing.Size(141, 23)
+            Me.pageSizeROPButton.TabIndex = 3
+            Me.pageSizeROPButton.Text = "ROP"
+            Me.pageSizeROPButton.UseVisualStyleBackColor = True
+            '
+            'changeSizeToLabel
+            '
+            Me.changeSizeToLabel.AutoSize = True
+            Me.changeSizeToLabel.Location = New System.Drawing.Point(4, 39)
+            Me.changeSizeToLabel.Name = "changeSizeToLabel"
+            Me.changeSizeToLabel.Size = New System.Drawing.Size(86, 13)
+            Me.changeSizeToLabel.TabIndex = 2
+            Me.changeSizeToLabel.Text = "Change Size To:"
+            '
+            'pageSizeMagazineButton
+            '
+            Me.pageSizeMagazineButton.Location = New System.Drawing.Point(7, 90)
+            Me.pageSizeMagazineButton.Name = "pageSizeMagazineButton"
+            Me.pageSizeMagazineButton.Size = New System.Drawing.Size(141, 23)
+            Me.pageSizeMagazineButton.TabIndex = 4
+            Me.pageSizeMagazineButton.Text = "Magazine"
+            Me.pageSizeMagazineButton.UseVisualStyleBackColor = True
+            '
+            'sizeIdMediaLabel2
+            '
+            Me.sizeIdMediaLabel2.AutoSize = True
+            Me.sizeIdMediaLabel2.Location = New System.Drawing.Point(77, 18)
+            Me.sizeIdMediaLabel2.Name = "sizeIdMediaLabel2"
+            Me.sizeIdMediaLabel2.Size = New System.Drawing.Size(132, 13)
+            Me.sizeIdMediaLabel2.TabIndex = 1
+            Me.sizeIdMediaLabel2.Text = "<ROP/Mag/BLNK/Unkn>"
+            '
+            'currentSizeLabel
+            '
+            Me.currentSizeLabel.AutoSize = True
+            Me.currentSizeLabel.Location = New System.Drawing.Point(4, 18)
+            Me.currentSizeLabel.Name = "currentSizeLabel"
+            Me.currentSizeLabel.Size = New System.Drawing.Size(67, 13)
+            Me.currentSizeLabel.TabIndex = 0
+            Me.currentSizeLabel.Text = "Current Size:"
+            '
+            'adlertPageNameGroupBox
+            '
+            Me.adlertPageNameGroupBox.Controls.Add(Me.adlertPageNameTextBox)
+            Me.adlertPageNameGroupBox.Location = New System.Drawing.Point(6, 499)
+            Me.adlertPageNameGroupBox.Name = "adlertPageNameGroupBox"
+            Me.adlertPageNameGroupBox.Size = New System.Drawing.Size(155, 45)
+            Me.adlertPageNameGroupBox.TabIndex = 16
+            Me.adlertPageNameGroupBox.TabStop = False
+            Me.adlertPageNameGroupBox.Text = "ADlert Page Name"
+            Me.adlertPageNameGroupBox.Visible = False
+            '
+            'adlertPageNameTextBox
+            '
+            Me.adlertPageNameTextBox.Location = New System.Drawing.Point(6, 19)
+            Me.adlertPageNameTextBox.Name = "adlertPageNameTextBox"
+            Me.adlertPageNameTextBox.Size = New System.Drawing.Size(143, 20)
+            Me.adlertPageNameTextBox.TabIndex = 0
+            '
+            'PublicationIndexQCForm
+            '
+            Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+            Me.ClientSize = New System.Drawing.Size(1065, 778)
+            Me.Name = "PublicationIndexQCForm"
+            Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+            Me.Text = "Publication Index & QC"
+            Me.infoManipGroupBox.ResumeLayout(False)
+            Me.rightPanel.ResumeLayout(False)
+            Me.rightPanel.PerformLayout()
+            Me.imageNavigationGroupBox.ResumeLayout(False)
+            Me.imageNavigationGroupBox.PerformLayout()
+            Me.leftPanel.ResumeLayout(False)
+            Me.leftPanel.PerformLayout()
+            Me.vehicleGroupBox.ResumeLayout(False)
+            Me.vehicleGroupBox.PerformLayout()
+            CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).EndInit()
+            Me.pageSizeOptionGroupBox.ResumeLayout(False)
+            Me.pageSizeOptionGroupBox.PerformLayout()
+            Me.adlertPageNameGroupBox.ResumeLayout(False)
+            Me.adlertPageNameGroupBox.PerformLayout()
+            Me.ResumeLayout(False)
+
+        End Sub
+        Friend WithEvents indexingCompleteButton As System.Windows.Forms.Button
+        Friend WithEvents pageCropValueLabel As System.Windows.Forms.Label
+        Friend WithEvents pageCropLabel As System.Windows.Forms.Label
+        Friend WithEvents sizeIdMediaLabel As System.Windows.Forms.Label
+        Friend WithEvents pageSizeOptionGroupBox As System.Windows.Forms.GroupBox
+        Friend WithEvents pageSizeMagazineButton As System.Windows.Forms.Button
+        Friend WithEvents sizeIdMediaLabel2 As System.Windows.Forms.Label
+        Friend WithEvents currentSizeLabel As System.Windows.Forms.Label
+        Friend WithEvents pageSizeROPButton As System.Windows.Forms.Button
+        Friend WithEvents changeSizeToLabel As System.Windows.Forms.Label
+        Friend WithEvents adlertPageNameGroupBox As System.Windows.Forms.GroupBox
+        Friend WithEvents adlertPageNameTextBox As System.Windows.Forms.TextBox
+
+    End Class
+
+End Namespace

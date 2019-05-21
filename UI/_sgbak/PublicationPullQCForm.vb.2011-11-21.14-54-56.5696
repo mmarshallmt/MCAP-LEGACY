@@ -1,0 +1,564 @@
+﻿Namespace UI
+
+
+  Public Class PublicationPullQCForm
+    Implements IForm
+
+
+    Private Const FORM_NAME As String = "Publication Pulled QC"
+
+    Private WithEvents m_publicationPullQCProcessor As Processors.PublicationPullQC
+
+
+    ''' <summary>
+    ''' Processor for PublicationPullQC form.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private ReadOnly Property Processor() As Processors.PublicationPullQC
+      Get
+        Return m_publicationPullQCProcessor
+      End Get
+    End Property
+
+
+    Protected Overrides Sub ClearAllInputs()
+
+      publicationEditionIdTextBox.Clear()
+      checkedInByValueLabel.Text = String.Empty
+      checkedInDtValueLabel.Text = String.Empty
+      pulledByValueLabel.Text = String.Empty
+      pulledDtValueLabel.Text = String.Empty
+      QCByValueLabel.Text = Processor.UserFullName
+      marketComboBox.SelectedValue = DBNull.Value
+      newspaperComboBox.SelectedValue = DBNull.Value
+      languageComboBox.SelectedValue = DBNull.Value
+      breakDtMonthCalendar.SelectionStart = System.DateTime.Today
+      breakDtMonthCalendar.SelectionEnd = System.DateTime.Today
+      pageCountTextBox.Clear()
+      noAdsCheckBox.Checked = False
+      missingRetCheckedListBox.Items.Clear()
+
+    End Sub
+
+    Protected Overrides Sub EnableDisableControls(ByVal formStatus As FormStateEnum)
+
+      Select Case formStatus
+        Case FormStateEnum.Insert, FormStateEnum.Edit
+          publicationEditionIdTextBox.Enabled = True
+          marketComboBox.Enabled = True
+          newspaperComboBox.Enabled = True
+          languageComboBox.Enabled = True
+          breakDtMonthCalendar.Enabled = True
+          pageCountTextBox.Enabled = Not noAdsCheckBox.Checked
+          noAdsCheckBox.Enabled = True
+          missingRetCheckedListBox.Enabled = True
+          QCCompletedButton.Enabled = True
+        Case Else
+          publicationEditionIdTextBox.Enabled = True
+          marketComboBox.Enabled = False
+          newspaperComboBox.Enabled = False
+          languageComboBox.Enabled = False
+          breakDtMonthCalendar.Enabled = False
+          pageCountTextBox.Enabled = False
+          noAdsCheckBox.Enabled = False
+          missingRetCheckedListBox.Enabled = False
+          QCCompletedButton.Enabled = False
+      End Select
+
+    End Sub
+
+    ''' <summary>
+    ''' Makes valid publication dates bold, for selected publication.
+    ''' </summary>
+    ''' <param name="selectedDate"></param>
+    ''' <remarks></remarks>
+    Private Sub GiveClueForValidPublicationDates(ByVal selectedDate As DateTime, ByVal selectFirstValidDate As Boolean)
+      Dim tempDate As DateTime
+      Dim dateList As System.Collections.Generic.List(Of DateTime)
+
+
+      breakDtMonthCalendar.RemoveAllBoldedDates()
+
+      If newspaperComboBox.SelectedValue Is Nothing Then Exit Sub
+
+      tempDate = New DateTime(selectedDate.Year, selectedDate.Month, 1)
+      dateList = New System.Collections.Generic.List(Of DateTime)
+
+      For i As Integer = 0 To DateTime.DaysInMonth(selectedDate.Year, selectedDate.Month) - 1
+        If Processor.IsPublicationDayValid(tempDate) Then
+          dateList.Add(tempDate)
+        End If
+        tempDate = tempDate.AddDays(1)
+      Next
+
+      If dateList.Count > 0 Then
+        breakDtMonthCalendar.BoldedDates = dateList.ToArray()
+      End If
+
+      If selectFirstValidDate And dateList.Count > 0 Then breakDtMonthCalendar.SetDate(dateList(0))
+
+      dateList.Clear()
+      dateList = Nothing
+      tempDate = Nothing
+    End Sub
+
+
+
+#Region " IForm Implementation "
+
+
+    Public Event InitializingForm() Implements IForm.InitializingForm
+    Public Event FormInitialized() Implements IForm.FormInitialized
+
+    Public Event ApplyingUserCredentials() Implements IForm.ApplyingUserCredentials
+    Public Event UserCredentialsApplied() Implements IForm.UserCredentialsApplied
+
+    Public Sub ApplyUserCredentials() Implements IForm.ApplyUserCredentials
+
+    End Sub
+
+    Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+      RaiseEvent InitializingForm()
+
+      Me.SuspendLayout()
+
+      Me.FormState = formStatus
+
+      m_publicationPullQCProcessor = New Processors.PublicationPullQC
+      Processor.Initialize()
+      Processor.LoadDataSet()
+
+      marketComboBox.DisplayMember = "Descrip"
+      marketComboBox.ValueMember = "MktId"
+      marketComboBox.DataSource = Processor.Data.Mkt
+
+      newspaperComboBox.DisplayMember = "Descrip"
+      newspaperComboBox.ValueMember = "PublicationId"
+      newspaperComboBox.DataSource = Processor.Data.Publication
+
+      languageComboBox.DisplayMember = "Descrip"
+      languageComboBox.ValueMember = "LanguageId"
+      languageComboBox.DataSource = Processor.Data.Language
+
+      ClearAllInputs()
+      ShowHideControls(Me.FormState)
+      EnableDisableControls(Me.FormState)
+
+      Me.ResumeLayout()
+
+      RaiseEvent FormInitialized()
+
+    End Sub
+
+
+#End Region
+
+
+    Private Function AreInputsValid() As Boolean
+      Dim areAllValid As Boolean = True
+
+
+      If marketComboBox.SelectedValue Is Nothing Then
+        SetErrorProvider(marketComboBox, "Select market from drop down list.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(marketComboBox)
+      End If
+
+      If newspaperComboBox.SelectedValue Is Nothing Then
+        SetErrorProvider(newspaperComboBox, "Select publication from drop down list.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(newspaperComboBox)
+        If Processor.IsPublicationDayValid(breakDtMonthCalendar.SelectionStart) = False Then
+          SetErrorProvider(breakDtMonthCalendar, "Invalid publication date.")
+          areAllValid = False
+        Else
+          RemoveErrorProvider(breakDtMonthCalendar)
+        End If
+      End If
+
+      If languageComboBox.SelectedValue Is Nothing Then
+        SetErrorProvider(languageComboBox, "Select language from drop down list.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(languageComboBox)
+      End If
+
+      If noAdsCheckBox.Checked = False AndAlso pageCountTextBox.Text.Trim.Length = 0 Then
+        SetErrorProvider(pageCountTextBox, "Provide page counts.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(pageCountTextBox)
+      End If
+
+      Return areAllValid
+
+    End Function
+
+    ''' <summary>
+    ''' Returns full name of user by concatanating first and last name of user.
+    ''' </summary>
+    ''' <param name="userInfoRow"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function GetUserFullName(ByVal userInfoRow As PublicationPullDataSet.UserRow) As String
+
+      If userInfoRow Is Nothing Then
+        Return String.Empty
+      End If
+
+      Dim fullName As System.Text.StringBuilder = New System.Text.StringBuilder()
+
+      If userInfoRow.IsFNameNull() = False Then
+        fullName.Append(userInfoRow.FName)
+        fullName.Append(" ")
+      End If
+
+      If userInfoRow.IsLNameNull() = False Then fullName.Append(userInfoRow.LName)
+
+      Return fullName.ToString()
+
+    End Function
+
+    ''' <summary>
+    ''' Show information on screen.
+    ''' </summary>
+    ''' <param name="vehicleRow"></param>
+    ''' <remarks></remarks>
+    Private Sub ShowInformationOnForm(ByVal vehicleRow As PublicationPullDataSet.vwPublicationEditionRow)
+      Dim rowCounter, lstIndex As Integer
+      Dim linqQuery As System.Collections.Generic.IEnumerable(Of String)
+
+
+      checkedInByValueLabel.Text = GetUserFullName(vehicleRow.UserRowByUser_vwPublicationEdition)
+      checkedInDtValueLabel.Text = vehicleRow.CreateDt.ToString("MM/dd/yy")
+      pulledByValueLabel.Text = GetUserFullName(vehicleRow.UserRowByUser_vwPublicationEdition1)
+      pulledDtValueLabel.Text = vehicleRow.PullDt.ToString("MM/dd/yy")
+      QCByValueLabel.Text = Processor.UserFullName
+      marketComboBox.SelectedValue = vehicleRow.MktId
+      breakDtMonthCalendar.SelectionStart = vehicleRow.BreakDt
+      breakDtMonthCalendar.SelectionEnd = vehicleRow.BreakDt
+      Processor.LoadPublicationsFor(vehicleRow.MktId)
+      newspaperComboBox.SelectedValue = DBNull.Value
+      newspaperComboBox.SelectedValue = vehicleRow.PublicationId
+      languageComboBox.SelectedValue = vehicleRow.LanguageId
+      If vehicleRow.IsPullPageCountNull() Then
+        noAdsCheckBox.Checked = True
+        pageCountTextBox.Clear()
+        pageCountTextBox.Enabled = False
+      Else
+        noAdsCheckBox.Checked = False
+        pageCountTextBox.Text = vehicleRow.PullPageCount.ToString()
+        pageCountTextBox.Enabled = True
+      End If
+
+      missingRetCheckedListBox.ClearSelected()
+
+      linqQuery = From er In Processor.Data.Ret.Rows.Cast(Of PublicationPullDataSet.RetRow)() _
+                  Select er.Descrip
+      missingRetCheckedListBox.Items.AddRange(linqQuery.ToArray())
+      linqQuery = Nothing
+
+      linqQuery = From pqr In Processor.Data.PublicationPullQC.Rows.Cast(Of PublicationPullDataSet.PublicationPullQCRow)() _
+                  Select pqr.RetRow.Descrip
+      For rowCounter = 0 To linqQuery.Count - 1
+        lstIndex = missingRetCheckedListBox.FindStringExact(linqQuery(rowCounter))
+        missingRetCheckedListBox.SetItemChecked(lstIndex, True)
+      Next
+      linqQuery = Nothing
+
+    End Sub
+
+
+    Private Sub PublicationPullQCForm_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
+
+      publicationEditionIdTextBox.Focus()
+
+    End Sub
+
+    Private Sub closeButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles closeButton.Click
+
+      Me.Close()
+
+    End Sub
+
+    Private Sub publicationEditionIdTextBox_KeyPress _
+        (ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) _
+        Handles publicationEditionIdTextBox.KeyPress
+
+      '3 - Copy, 22 - Paste and 24 - Cut, 8 - Backspace
+      If Microsoft.VisualBasic.AscW(e.KeyChar) = 3 _
+        OrElse Microsoft.VisualBasic.AscW(e.KeyChar) = 22 _
+        OrElse Microsoft.VisualBasic.AscW(e.KeyChar) = 24 _
+        OrElse Microsoft.VisualBasic.AscW(e.KeyChar) = 8 _
+      Then
+        Exit Sub 'Process as it should.
+      End If
+
+      If Microsoft.VisualBasic.AscW(e.KeyChar) <> 13 Then Exit Sub
+
+      loadButton.PerformClick()
+
+    End Sub
+
+    Private Sub marketComboBox_SelectedValueChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles marketComboBox.SelectedValueChanged
+
+      If marketComboBox.SelectedValue Is Nothing Then Exit Sub
+
+      Dim marketId As Integer
+
+      marketId = CType(marketComboBox.SelectedValue, Integer)
+      Processor.LoadPublicationsFor(marketId)
+
+      newspaperComboBox.SelectedIndex = -1
+      newspaperComboBox.SelectedValue = DBNull.Value
+      newspaperComboBox.Text = String.Empty
+
+    End Sub
+
+    Private Sub newspaperComboBox_SelectedValueChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles newspaperComboBox.SelectedValueChanged
+      Dim isValidSelection As Boolean
+      Dim publicationId As Integer
+      Dim breakDate As DateTime
+      Dim pubRow As System.Data.EnumerableRowCollection(Of PublicationPullDataSet.PublicationRow)
+
+
+      If newspaperComboBox.SelectedValue Is Nothing _
+          OrElse Processor.Data.vwPublicationEdition.Count = 0 _
+      Then Exit Sub
+
+      breakDtMonthCalendar.RemoveAllBoldedDates()
+      breakDtMonthCalendar.UpdateBoldedDates()
+
+      If Integer.TryParse(newspaperComboBox.SelectedValue.ToString(), publicationId) = False Then
+        publicationId = 0
+      End If
+
+      pubRow = From p In Processor.Data.Publication _
+               Where p.PublicationId = publicationId _
+               Select p
+
+      If pubRow.Count() = 0 OrElse pubRow(0).IsCommentsNull Then
+        commentsTextBox.Text = String.Empty
+      Else
+        commentsTextBox.Text = pubRow(0).Comments
+      End If
+
+      pubRow = Nothing
+
+      Processor.LoadPublicationDays(publicationId)
+      breakDate = breakDtMonthCalendar.SelectionStart
+      isValidSelection = True
+
+      If Processor.IsPublicationDayValid(breakDate) = False Then
+        MessageBox.Show("Selected publication is not published on " + breakDate.ToString("MM/dd/yy") _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        breakDtMonthCalendar.SelectionStart = Processor.Data.vwPublicationEdition(0).BreakDt
+        isValidSelection = False
+      End If
+
+      GiveClueForValidPublicationDates(breakDtMonthCalendar.SelectionStart, False)  'Not isValidSelection)
+
+    End Sub
+
+    Private Sub breakDtMonthCalendar_DateChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DateRangeEventArgs) Handles breakDtMonthCalendar.DateChanged
+      Dim isValidSelection As Boolean
+
+
+      breakDtMonthCalendar.RemoveAllBoldedDates()
+      breakDtMonthCalendar.UpdateBoldedDates()
+
+      If newspaperComboBox.SelectedValue Is Nothing Then Exit Sub
+
+      isValidSelection = True
+
+      If e.Start <> e.End Then
+        MessageBox.Show("Multiple dates cannot be specified here.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        isValidSelection = False
+      ElseIf Processor.IsPublicationDayValid(e.Start) = False Then
+        MessageBox.Show("Selected publication is not published on " + e.Start.ToString("MM/dd/yy") _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        isValidSelection = False
+      End If
+
+      If isValidSelection = False Then
+        breakDtMonthCalendar.SelectionStart = Processor.Data.vwPublicationEdition(0).BreakDt
+      End If
+
+      GiveClueForValidPublicationDates(e.Start, False)
+
+    End Sub
+
+    Private Sub noAdsCheckBox_CheckedChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles noAdsCheckBox.CheckedChanged
+
+      pageCountTextBox.Clear()
+      pageCountTextBox.Enabled = Not noAdsCheckBox.Checked
+
+    End Sub
+
+    Private Sub loadButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles loadButton.Click
+      Dim vehicleId As Integer
+
+
+      If Integer.TryParse(publicationEditionIdTextBox.Text, vehicleId) Then
+        Processor.LoadVehicle(vehicleId, FORM_NAME)
+      Else
+        MessageBox.Show("Specify valid vehicle Id.", ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        publicationEditionIdTextBox.Focus()
+        publicationEditionIdTextBox.SelectAll()
+      End If
+
+    End Sub
+
+    Private Sub QCCompletedButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles QCCompletedButton.Click
+      Dim vehicleId, lstCounter As Integer
+      Dim linqQuery As System.Collections.Generic.IEnumerable(Of Integer)
+      Dim vehicleRow As PublicationPullDataSet.vwPublicationEditionRow
+      Dim pullRow As PublicationPullDataSet.PublicationPullQCRow
+
+
+      If AreInputsValid() = False Then Exit Sub
+
+      vehicleRow = Processor.Data.vwPublicationEdition(0)
+      vehicleId = vehicleRow.VehicleId
+
+      'Set vehicle informatino.
+      vehicleRow.BeginEdit()
+      vehicleRow.MktId = CType(marketComboBox.SelectedValue, Integer)
+      vehicleRow.PublicationId = CType(newspaperComboBox.SelectedValue, Integer)
+      vehicleRow.LanguageId = CType(languageComboBox.SelectedValue, Integer)
+      vehicleRow.BreakDt = breakDtMonthCalendar.SelectionStart
+      If noAdsCheckBox.Checked Then
+        vehicleRow.SetPullPageCountNull()
+      Else
+        vehicleRow.PullPageCount = CType(pageCountTextBox.Text, Integer)
+      End If
+      'vehicleRow.PullQCDt = System.DateTime.Now
+      vehicleRow.PullQCedById = Processor.UserID
+      vehicleRow.FormName = FORM_NAME
+      vehicleRow.EndEdit()
+      Processor.SetStatusIdAsQCed(vehicleRow)
+      vehicleRow = Nothing
+
+      'Set publication pull qc information.
+      linqQuery = From er In Processor.Data.Ret.Rows.Cast(Of PublicationPullDataSet.RetRow)() _
+                  Join li In missingRetCheckedListBox.CheckedItems.Cast(Of String)() On er.Descrip Equals li _
+                  Select ret = er.RetId
+
+      'Remove retailer which exist in datatable but not in current selection on screen.
+      For lstCounter = 0 To Processor.Data.PublicationPullQC.Rows.Count - 1
+        With Processor.Data.PublicationPullQC(lstCounter)
+          If linqQuery.Contains(.RetId) = False Then .Delete()
+        End With
+      Next
+
+      'Insert retailer which exist in current selection on screen but not in datatable.
+      For lstCounter = 0 To linqQuery.Count - 1
+        With Processor.Data.PublicationPullQC.DefaultView
+          .RowFilter = "RetId=" + linqQuery(lstCounter).ToString()
+          If .Count() = 0 Then
+            'Insert rows for new retailer, as per current selection.
+            pullRow = Processor.Data.PublicationPullQC.NewPublicationPullQCRow()
+            pullRow.BeginEdit()
+            pullRow.RetId = linqQuery(lstCounter)
+            pullRow.VehicleId = vehicleId
+            'pullRow.PullQCByDt = System.DateTime.Now
+            pullRow.PullQCById = Processor.UserID
+            pullRow.EndEdit()
+            Processor.Data.PublicationPullQC.AddPublicationPullQCRow(pullRow)
+            pullRow = Nothing
+          End If
+        End With
+      Next
+
+      linqQuery = Nothing
+
+      Processor.UpdateVehicle(FORM_NAME)
+
+      ClearAllInputs()
+      RemoveAllErrorProviders()
+      Me.FormState = FormStateEnum.View
+      ShowHideControls(Me.FormState)
+      EnableDisableControls(Me.FormState)
+      publicationEditionIdTextBox.Focus()
+      publicationEditionIdTextBox.SelectAll()
+
+    End Sub
+
+
+    Private Sub m_publicationPullQCProcessor_InvalidVehicleStatus(ByVal vehicleId As Integer, ByVal statusText As String) Handles m_publicationPullQCProcessor.InvalidVehicleStatus
+
+      Me.StatusMessage = String.Empty
+
+      MessageBox.Show("Vehicle cannot be loaded because it has the Status of: " + statusText _
+                      , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+      ClearAllInputs()
+      RemoveAllErrorProviders()
+
+      Me.FormState = FormStateEnum.View
+      ShowHideControls(Me.FormState)
+      EnableDisableControls(Me.FormState)
+
+      publicationEditionIdTextBox.Focus()
+
+    End Sub
+
+    Private Sub m_publicationPullQCProcessor_LoadingVehicle(ByVal vehicleId As Integer) Handles m_publicationPullQCProcessor.LoadingVehicle
+
+      Me.StatusMessage = "Loading vehicle information..."
+
+    End Sub
+
+    Private Sub m_publicationPullQCProcessor_VehicleLoaded(ByVal vehicleRow As PublicationPullDataSet.vwPublicationEditionRow) Handles m_publicationPullQCProcessor.VehicleLoaded
+
+      ClearAllInputs()
+      RemoveAllErrorProviders()
+
+      Processor.LoadExpectedRetailers(vehicleRow.PublicationId)
+      Processor.LoadMarkets(vehicleRow.SenderId)
+      Processor.LoadPublicationDays(vehicleRow.PublicationId)
+
+      publicationEditionIdTextBox.Text = vehicleRow.VehicleId.ToString()
+      ShowInformationOnForm(vehicleRow)
+
+      Me.FormState = FormStateEnum.Edit
+      ShowHideControls(Me.FormState)
+      EnableDisableControls(Me.FormState)
+
+    End Sub
+
+    Private Sub m_publicationPullQCProcessor_VehicleNotFound(ByVal vehicleId As Integer) Handles m_publicationPullQCProcessor.VehicleNotFound
+
+      MessageBox.Show("Vehicle " & CType(vehicleId, String) & " not found.", ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+      ClearAllInputs()
+      publicationEditionIdTextBox.Text = CType(vehicleId, String)
+      RemoveAllErrorProviders()
+
+      Me.FormState = FormStateEnum.View
+      ShowHideControls(Me.FormState)
+      EnableDisableControls(Me.FormState)
+
+      publicationEditionIdTextBox.SelectAll()
+      publicationEditionIdTextBox.Focus()
+
+    End Sub
+
+  End Class
+
+
+End Namespace

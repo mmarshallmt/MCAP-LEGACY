@@ -1,0 +1,237 @@
+﻿Namespace UI
+
+  Public Class FamilyBaseForm
+
+
+    Private m_showImagePathTooltip As Boolean
+
+
+
+    ''' <summary>
+    ''' Gets or sets flag indicating whether to show image path as tooltip for 
+    ''' cells showing front and back page images.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Property ShowImagePathAsTooltip() As Boolean
+      Get
+        Return m_showImagePathTooltip
+      End Get
+      Set(ByVal value As Boolean)
+        m_showImagePathTooltip = value
+      End Set
+    End Property
+
+
+    ''' <summary>
+    ''' Gets current(selected) row in grid.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns>FamilyDataSet.DisplayFamilyInformationRow</returns>
+    ''' <remarks>If no rows are selected, returns Nothing.</remarks>
+    Public ReadOnly Property CurrentRow() As FamilyDataSet.DisplayFamilyInformationRow
+      Get
+        Return GetCurrentRow()
+      End Get
+    End Property
+
+
+
+    ''' <summary>
+    ''' Returns DataRow representing currently selected row in data grid view.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function GetCurrentRow() As FamilyDataSet.DisplayFamilyInformationRow
+      Dim bmb As BindingManagerBase
+      Dim currentRow As FamilyDataSet.DisplayFamilyInformationRow
+
+
+      If familyDataGridView.Rows.Count = 0 Then Return Nothing
+
+      bmb = Me.BindingContext(familyDataGridView.DataSource)
+      currentRow = CType(CType(bmb.Current, Data.DataRowView).Row, FamilyDataSet.DisplayFamilyInformationRow)
+      bmb = Nothing
+
+      Return currentRow
+
+    End Function
+
+
+    ''' <summary>
+    ''' If image file path is correct, returns object containing resized image. 
+    ''' This does not affect actual image file.
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    ''' <param name="imageWidth"></param>
+    ''' <param name="imageHeight"></param>
+    ''' <param name="resizeOnlyIfWider"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' If file does not exist, returns Nothing.
+    ''' Reference URL = http://www.codeproject.com/KB/grid/ImagePreviewDataGridView.aspx
+    ''' </remarks>
+    Public Function GetResizedImage(ByVal filePath As String, ByVal imageWidth As Integer, ByVal imageHeight As Integer, ByVal resizeOnlyIfWider As Boolean) As System.Drawing.Image
+
+      If System.IO.File.Exists(filePath) = False Then Return Nothing
+
+      Using image As System.Drawing.Image = System.Drawing.Image.FromFile(filePath)
+        'Prevent using images internal thumbnail
+        image.RotateFlip(RotateFlipType.Rotate180FlipNone)
+        image.RotateFlip(RotateFlipType.Rotate180FlipNone)
+
+        If resizeOnlyIfWider Then
+          If image.Width <= imageWidth Then imageWidth = image.Width
+        End If
+
+        Dim resizedImage As System.Drawing.Image
+
+        resizedImage = image.GetThumbnailImage(imageWidth, imageHeight, Nothing, IntPtr.Zero)
+
+        Return resizedImage
+      End Using
+
+    End Function
+
+    ''' <summary>
+    ''' Gets resized image object to display image in data grid. It takes care 
+    ''' of maintaining image's width:height ratio based on application parameters.
+    ''' </summary>
+    ''' <param name="imagePath">Path to image file, which is to be displayed on grid.</param>
+    ''' <returns></returns>
+    ''' <remarks>If image file does not exist, returns Nothing.</remarks>
+    Private Function GetResizedImageForGrid(ByVal imagePath As String) As System.Drawing.Image
+      Dim resizeWidth, resizeHeight, widthDiff, heightDiff As Integer
+      Dim displayImage As System.Drawing.Image
+
+
+      If System.IO.File.Exists(imagePath) = False Then Return Nothing
+
+      displayImage = System.Drawing.Image.FromFile(imagePath)
+
+      If MaintainAspectRatioInGrid = False Then  'If resize with same scale
+        resizeWidth = ImageWidthInGrid
+        resizeHeight = ImageHeightInGrid
+      Else
+        widthDiff = Math.Abs(displayImage.Width - ImageWidthInGrid)
+        heightDiff = Math.Abs(displayImage.Height - ImageHeightInGrid)
+
+        If widthDiff > heightDiff Then
+          resizeWidth = ImageWidthInGrid
+          resizeHeight = CType(displayImage.Height * (resizeWidth / displayImage.Width), Integer)
+        Else
+          resizeHeight = ImageHeightInGrid
+          resizeWidth = CType(displayImage.Width * (resizeHeight / displayImage.Height), Integer)
+        End If
+      End If
+
+      displayImage.Dispose()
+
+      displayImage = GetResizedImage(imagePath, resizeWidth, resizeHeight, Not MaintainAspectRatioInGrid)
+
+      Return displayImage
+
+    End Function
+
+    ''' <summary>
+    ''' Returns vehicle page image name from ImageName column in Page table.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <param name="pageNumber"></param>
+    ''' <returns></returns>
+    ''' <remarks>Derived classes must override this function to return vehicle page image name.</remarks>
+    Protected Overridable Function GetVehiclePageImageName(ByVal vehicleId As Integer, ByVal pageNumber As Integer) As String
+      Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' Loads Page image in DataGridViewImageCell.
+    ''' </summary>
+    ''' <param name="createDate"></param>
+    ''' <param name="vehicleId"></param>
+    ''' <param name="pageNumber"></param>
+    ''' <param name="pageImageCell"></param>
+    ''' <remarks></remarks>
+    Private Sub LoadPageImageInCell(ByVal createDate As DateTime, ByVal vehicleId As Integer, ByVal pageNumber As Integer, ByVal pageImageCell As DataGridViewImageCell)
+      Dim imageName As String
+      Dim imagePath As System.Text.StringBuilder
+
+
+      imagePath = New System.Text.StringBuilder
+      imageName = GetVehiclePageImageName(vehicleId, pageNumber)
+
+      imagePath.Append(VehicleImageFolderPath)
+      imagePath.Append("\")
+      imagePath.Append(createDate.ToString("yyyyMM"))
+      imagePath.Append("\")
+      imagePath.Append(vehicleId.ToString())
+      imagePath.Append("\")
+      imagePath.Append(ThumbSizedPageImageFolderName)
+      imagePath.Append("\")
+      imagePath.Append(imageName)
+      imagePath.Append(".jpg")
+
+      If System.IO.File.Exists(imagePath.ToString()) = False Then
+        imagePath = imagePath.Replace("\" + ThumbSizedPageImageFolderName + "\" + imageName + ".jpg" _
+                                      , "\" + UnsizedPageImageFolderName + "\" + imageName + ".jpg")
+      End If
+
+      pageImageCell.ToolTipText = imagePath.ToString()
+
+      Try
+        pageImageCell.Value = GetResizedImageForGrid(imagePath.ToString())
+      Catch ex As ArgumentException
+        Throw New ApplicationException("Page image not found at " + imagePath.ToString(), ex)
+      Finally
+        imagePath = Nothing
+        imageName = Nothing
+      End Try
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads image in grid. While displaying image in grid, it is resized as 
+    ''' per the application parameters. If thumbnail image is not available, 
+    ''' unsized scanned image is used.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Protected Sub LoadPageImagesInDataGrid()
+      Dim rowCounter, vehicleId, pageCount As Integer
+      Dim createDt As DateTime
+      Dim frontPageImageCell, backPageImageCell As DataGridViewImageCell
+
+
+      For rowCounter = 0 To familyDataGridView.RowCount - 1
+        vehicleId = CType(familyDataGridView.Rows(rowCounter).Cells("VehicleIdDataGridViewTextBoxColumn").Value, Integer)
+        pageCount = CType(familyDataGridView.Rows(rowCounter).Cells("ActualPageCountDataGridViewTextBoxColumn").Value, Integer)
+        createDt = CType(familyDataGridView.Rows(rowCounter).Cells("CreateDtDataGridViewTextBoxColumn").Value, DateTime)
+
+        frontPageImageCell = CType(familyDataGridView.Rows(rowCounter).Cells("FrontPageDataGridViewImageColumn") _
+                                  , DataGridViewImageCell)
+        Try
+          LoadPageImageInCell(createDt, vehicleId, 1, frontPageImageCell)
+        Catch ex As Exception
+          'TODO: IMPORTANT - Log this exception.
+          My.Application.Log.WriteException(ex)
+        Finally
+          frontPageImageCell = Nothing
+        End Try
+
+        backPageImageCell = CType(familyDataGridView.Rows(rowCounter).Cells("BackPageDataGridViewImageColumn") _
+                                  , DataGridViewImageCell)
+        Try
+          LoadPageImageInCell(createDt, vehicleId, pageCount, backPageImageCell)
+        Catch ex As Exception
+          'TODO: IMPORTANT - Log this exception.
+          My.Application.Log.WriteException(ex)
+        Finally
+          backPageImageCell = Nothing
+        End Try
+      Next
+
+    End Sub
+
+  End Class
+
+End Namespace

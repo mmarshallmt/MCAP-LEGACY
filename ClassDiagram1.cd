@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MCAP.UI.BaseForm" Collapsed="true">
+    <Position X="3.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAUACQQAAEAAACAAAACAAAAAAQgAAAQAAAAAAA=</HashCode>
+      <FileName>UI\BaseForm.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.PageDefinitionsForm" Collapsed="true">
+    <Position X="3.25" Y="9.25" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="8.875" />
+        <Point X="4.062" Y="8.875" />
+        <Point X="4.062" Y="9.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>YNvHgkHEgHMyASACAJCjgQAiRCVApQGBBAUqUgEQCA4=</HashCode>
+      <FileName>UI\PageDefinitionsForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.19" />
+  </Class>
+  <Class Name="MCAP.UI.MDIChildFormBase" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAQCAAAACAAAAgIEAAAAAAoAAAAA=</HashCode>
+      <FileName>UI\MDIChildFormBase.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.DupCheckForm" Collapsed="true">
+    <Position X="1.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAjWSIFjUKuCiARFpASjAQACABAIAIBwBIM2hASAYgI=</HashCode>
+      <FileName>UI\DupCheckForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.EnvelopeCheckInForm" Collapsed="true">
+    <Position X="1.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gGwCAAJcCDLQoENgADLCBYgmyCADAECkKLEThCIOB1c=</HashCode>
+      <FileName>UI\EnvelopeCheckInForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.EnvelopeContentCheckInForm" Collapsed="true">
+    <Position X="3.25" Y="12.25" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="11.875" />
+        <Point X="4.562" Y="11.875" />
+        <Point X="4.562" Y="12.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>MI8qayrH1SLWQHVpMjXmEwnCxACTQxSoNBHGwGqUB1c=</HashCode>
+      <FileName>UI\EnvelopeContentCheckInForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.FamilyCheckInForm" Collapsed="true">
+    <Position X="1.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>dIogGHJO0SPURHBgFAXuEQ1DARALASH6IiMGQwiEAsQ=</HashCode>
+      <FileName>UI\FamilyCheckInForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.FamilyCreationForm" Collapsed="true">
+    <Position X="2.25" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAKgmZAAmbhwAABEMyGAQYjQAAAkWCwICMTQIAGwWA=</HashCode>
+      <FileName>UI\FamilyCreationForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.FamilyReviewForm" Collapsed="true">
+    <Position X="5.75" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACiJAACKEQBAAEASCkQACIAACoCCAAAEDAAIGQxA=</HashCode>
+      <FileName>UI\FamilyReviewForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.FamilyViewForm" Collapsed="true">
+    <Position X="4" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAACBAgCKASABDAASCEQQCAAAABCAAAAEDQAAGABA=</HashCode>
+      <FileName>UI\FamilyViewForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.IndexBaseForm" Collapsed="true">
+    <Position X="0.5" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAgqCXACgSBEQHBAUQWkEChKsAAjARCyAEQERApEAgI=</HashCode>
+      <FileName>UI\IndexBaseForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.IndexForm" Collapsed="true">
+    <Position X="2.25" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AMg2gRpVBGKUSEFCKACGkYAiEgAAAQBgQEOKBQBEAgc=</HashCode>
+      <FileName>UI\IndexForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.MDIForm" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>aEDKgWFAACNIYABOEOzGkboDBDAsaERYWgWKQQCTAQI=</HashCode>
+      <FileName>UI\MDIForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.PublicationCheckInForm" Collapsed="true">
+    <Position X="5" Y="12.25" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="11.875" />
+        <Point X="5.875" Y="11.875" />
+        <Point X="5.875" Y="12.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AQgAIohEISLQUEMxsj2OAVlakAjIEDAkIANCixAEklA=</HashCode>
+      <FileName>UI\PublicationCheckInForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.PublicationPullForm" Collapsed="true">
+    <Position X="6.75" Y="12.25" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="11.875" />
+        <Point X="7.562" Y="11.875" />
+        <Point X="7.562" Y="12.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AKgCA4jEcCLQSEBUHBGGAUAiAACCICQwARFCQHAEEpE=</HashCode>
+      <FileName>UI\PublicationPullForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.QCForm" Collapsed="true">
+    <Position X="1.5" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UOk2oTx1BmbVGSNBeoiGEeUnUk3iIUBgTDEGJLBWgkk=</HashCode>
+      <FileName>UI\QCForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.ResequenceForm" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wAASAARCgCYAgEEgAECSgQAKAAIgEIgACIGDAAAUAgQ=</HashCode>
+      <FileName>UI\ResequenceForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.ScanTrackerForm" Collapsed="true">
+    <Position X="1.5" Y="7.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="7.375" />
+        <Point X="2.25" Y="7.375" />
+        <Point X="2.25" Y="7.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>oAIEAABAEjKYAEEAAJSCAUJGEABASAAkBIkCAkgkgBA=</HashCode>
+      <FileName>UI\ScanTrackerForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.VehicleImageFormBase" Collapsed="true">
+    <Position X="0.5" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>0Jk0RL5QlGTQvWOUM6TVEMUyAhnKvcbCrruy0IEjxnU=</HashCode>
+      <FileName>UI\VehicleImageFormBase.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.WebBrowserForm" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAQCAABAIAAACAAAQGEAAAAAEAAAAQAAAAAEA=</HashCode>
+      <FileName>UI\WebBrowserForm.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.FamilyBaseForm" Collapsed="true">
+    <Position X="1.5" Y="15.25" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="14.875" />
+        <Point X="2.25" Y="14.875" />
+        <Point X="2.25" Y="15.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>IIEQhBAACiAKwAAABAzJBgBORAAGIAAAAIAAwMiCFCI=</HashCode>
+      <FileName>UI\FamilyBaseForm.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.ShowReportForm" Collapsed="true">
+    <Position X="1.5" Y="10.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="10.375" />
+        <Point X="2.25" Y="10.375" />
+        <Point X="2.25" Y="10.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAICoAACAMAEAIACCAAAQCAAAADAAAAIAECAAAEIA=</HashCode>
+      <FileName>UI\ShowReportForm.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.ScanTrackerReviewForm" Collapsed="true">
+    <Position X="3.25" Y="7.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="7.375" />
+        <Point X="4" Y="7.375" />
+        <Point X="4" Y="7.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAABAECJAAAACAACCIQACAAAAAAAQAAECAAAAAgA=</HashCode>
+      <FileName>UI\ScanTrackerReviewForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.PublicationPullQCForm" Collapsed="true">
+    <Position X="8.5" Y="12.25" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="11.875" />
+        <Point X="9.312" Y="11.875" />
+        <Point X="9.312" Y="12.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>QCgCA4BEICLgUEDYmAHGARAiBQGBKBQAAQFDUBAEgxA=</HashCode>
+      <FileName>UI\PublicationPullQCForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.PublicationIndexQCForm" Collapsed="true">
+    <Position X="3.25" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QCkUAFx2ACbVCWNCFYiGEcUmSgnDIUAgCCXKDoQGpkA=</HashCode>
+      <FileName>UI\PublicationIndexQCForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.PackageExpectationReportForm" Collapsed="true">
+    <Position X="3.25" Y="10.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="10.375" />
+        <Point X="4.125" Y="10.375" />
+        <Point X="4.125" Y="10.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>EEAgKoVAEGIQEAAFQECGAQgDEHAAMUQIAAkCAAEEQRA=</HashCode>
+      <FileName>UI\PackageExpectationReportForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.NewspaperLogReportForm" Collapsed="true">
+    <Position X="5" Y="10.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="5.505" />
+        <Point X="5.812" Y="5.505" />
+        <Point X="5.812" Y="10.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>oACQACFIBGIAAAAAIAKCAQQCEAAhgAABAQECAAFEAhA=</HashCode>
+      <FileName>UI\NewspaperLogReportForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.MaintenanceForm" Collapsed="true">
+    <Position X="3.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AXY2K9L5CHf1/xH0e+z265I78r7mFFVrs2l2o6mVZR4=</HashCode>
+      <FileName>UI\MaintenanceForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.FamilyExpectationReportForm" Collapsed="true">
+    <Position X="6.75" Y="10.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="5.505" />
+        <Point X="7.688" Y="5.505" />
+        <Point X="7.688" Y="10.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>EEBhKKdAAGNQMEAFAECGAQgDMFACEWAIEAsCAAEEQlI=</HashCode>
+      <FileName>UI\FamilyExpectationReportForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.ErrorsCorrectedReportForm" Collapsed="true">
+    <Position X="8.5" Y="10.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.MDIChildFormBase" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="5.13" />
+        <Point X="1.25" Y="10.375" />
+        <Point X="5.729" Y="10.375" Type="JumpStart" />
+        <Point X="5.895" Y="10.375" Type="JumpEnd" />
+        <Point X="7.605" Y="10.375" Type="JumpStart" />
+        <Point X="7.771" Y="10.375" Type="JumpEnd" />
+        <Point X="9.438" Y="10.375" />
+        <Point X="9.438" Y="10.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>EEAgKqVCACIQEAAFIACGAQgDEFAAEWAIAAkCAAEEQhA=</HashCode>
+      <FileName>UI\ErrorsCorrectedReportForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.PermissionForm" Collapsed="true">
+    <Position X="1.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YQhAVSTGJ+KQ8Ck4eSCztfgCKEZC8MeQdAUCRBMCDhE=</HashCode>
+      <FileName>UI\PermissionForm.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.PrintBase" Collapsed="true">
+    <Position X="2.5" Y="22.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAIAQAAAAAAAEAAAAEAAAQA0AEAAA=</HashCode>
+      <FileName>UIProcess\PrintBase.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.EnvelopeLabelPrint" Collapsed="true">
+    <Position X="0.5" Y="23.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAEAAAAAAAAIwAAAAICQAAAAAAEAABAAAAgAAA=</HashCode>
+      <FileName>UIProcess\EnvelopeLabelPrint.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.PublicationLabelPrint" Collapsed="true">
+    <Position X="2.5" Y="23.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAACAAAAAAAAIAAIAAAAAAAAAABkAAEACgAMEACKAA=</HashCode>
+      <FileName>UIProcess\PublicationLabelPrint.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.VehicleLabelPrint" Collapsed="true">
+    <Position X="4.5" Y="23.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAACEAAAMAAAIAEIAAAAQABCABAgAAEAEAAAAAACAE=</HashCode>
+      <FileName>UIProcess\VehicleLabelPrint.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="MCAP.UI.SearchCriteria" Collapsed="true">
+    <Position X="5.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAICAAAAEAAAAAAIAAAAAQEEAAEAAABCAAAA=</HashCode>
+      <FileName>UI\FamilyReviewForm.vb</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="MCAP.UI.IForm" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAIAAAAAAAACAQAAAAAAAAAAAAECAAAAAAA=</HashCode>
+      <FileName>UI\IForm.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MCAP.UI.IDuplicateCheck" Collapsed="true">
+    <Position X="0.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAEAAAEAAA=</HashCode>
+      <FileName>UI\IDuplicateCheck.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MCAP.UI.FormStateEnum" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAABAAACAAAAAAAAAAA=</HashCode>
+      <FileName>UI\FormStateEnum.vb</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MCAP.UI.DuplicateCheckUserResponse" Collapsed="true">
+    <Position X="2.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAQAAAAAAAAAAACAAACAABA=</HashCode>
+      <FileName>UI\IDuplicateCheck.vb</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

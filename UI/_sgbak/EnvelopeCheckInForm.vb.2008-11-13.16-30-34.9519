@@ -1,0 +1,677 @@
+Namespace UI
+
+
+  Public Class EnvelopeCheckInForm
+    Implements IForm
+
+
+    Private m_barcodePrinter As String
+    Private WithEvents m_envelopeProcessor As UI.Processors.Envelope
+
+
+
+    Private ReadOnly Property Processor() As UI.Processors.Envelope
+      Get
+        Return m_envelopeProcessor
+      End Get
+    End Property
+
+
+
+    ''' <summary>
+    ''' Clears all inputs on form.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Protected Overrides Sub ClearAllInputs()
+
+      envelopeIDValueLabel.Text = String.Empty
+      senderComboBox.SelectedValue = DBNull.Value
+      senderComboBox.Text = String.Empty
+      shippingCompanyComboBox.SelectedValue = DBNull.Value
+      shippingCompanyComboBox.Text = String.Empty
+      shippingMethodComboBox.SelectedValue = DBNull.Value
+      shippingMethodComboBox.Text = String.Empty
+      trackNumberTextBox.Clear()
+      printedWeightTextBox.Clear()
+      actualWeightTextBox.Clear()
+      packageTypeComboBox.SelectedValue = DBNull.Value
+      packageTypeComboBox.Text = String.Empty
+      packageAssignmentComboBox.SelectedValue = DBNull.Value
+      packageAssignmentComboBox.Text = String.Empty
+      receivedDateValueLabel.Text = System.DateTime.Today.ToString("MM/dd/yy")
+      receivedByValueLabel.Text = Processor.UserFirstName + " " + Processor.UserLastName
+      searchEnvelopeIDTextBox.Clear()
+
+    End Sub
+
+    ''' <summary>
+    ''' EnableDisables input controls based on supplied value of formStatus.
+    ''' </summary>
+    ''' <param name="formStatus"></param>
+    Protected Overrides Sub EnableDisableControls(ByVal formStatus As FormStateEnum)
+      MyBase.EnableDisableControls(formStatus)
+
+      Select Case formStatus
+        Case FormStateEnum.View, FormStateEnum.Edit, FormStateEnum.Insert
+          Me.senderComboBox.Enabled = True
+          Me.shippingCompanyComboBox.Enabled = True
+          Me.shippingMethodComboBox.Enabled = True
+          Me.trackNumberTextBox.Enabled = True
+          Me.printedWeightTextBox.Enabled = True
+          Me.actualWeightTextBox.Enabled = True
+          Me.packageTypeComboBox.Enabled = True
+          Me.packageAssignmentComboBox.Enabled = True
+
+      End Select
+
+    End Sub
+
+    ''' <summary>
+    ''' Clears all inputs on form.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Protected Overrides Sub RemoveAllErrorProviders()
+      MyBase.RemoveAllErrorProviders()
+
+      Me.RemoveErrorProvider(senderComboBox)
+      Me.RemoveErrorProvider(shippingCompanyComboBox)
+      Me.RemoveErrorProvider(shippingMethodComboBox)
+      Me.RemoveErrorProvider(trackNumberTextBox)
+      Me.RemoveErrorProvider(printedWeightTextBox)
+      Me.RemoveErrorProvider(actualWeightTextBox)
+      Me.RemoveErrorProvider(packageTypeComboBox)
+      Me.RemoveErrorProvider(packageAssignmentComboBox)
+
+    End Sub
+
+    ''' <summary>
+    ''' Showing error popup to user based on error texts assigned to each column.
+    ''' </summary>
+    ''' <param name="envelopeRow"></param>
+    ''' <remarks></remarks>
+    Private Sub ShowErrors(ByVal envelopeRow As MCAP.EnvelopeDataSet.EnvelopeRow)
+      Dim columnCounter As Integer
+      Dim errorMessage As System.Text.StringBuilder
+      Dim errorCols() As Data.DataColumn
+
+
+      If envelopeRow.HasErrors = False Then Exit Sub
+
+      errorMessage = New System.Text.StringBuilder
+
+      If String.IsNullOrEmpty(envelopeRow.RowError) = False Then
+        errorMessage.Append(envelopeRow.RowError)
+      Else
+        errorCols = envelopeRow.GetColumnsInError()
+
+        errorMessage.Append("Invalid inputs found.")
+        errorMessage.Append(Environment.NewLine)
+        For columnCounter = 0 To errorCols.Length - 1
+          errorMessage.Append(Environment.NewLine)
+          errorMessage.Append(errorCols(columnCounter).Caption)
+          errorMessage.Append(" - ")
+          errorMessage.Append(envelopeRow.GetColumnError(errorCols(columnCounter)))
+        Next
+
+        System.Array.Clear(errorCols, 0, errorCols.Length)
+      End If
+
+      MessageBox.Show(errorMessage.ToString(), Application.ProductName, _
+                      MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+      errorMessage = Nothing
+      errorCols = Nothing
+
+    End Sub
+
+
+#Region " IForm Implementation "
+
+
+    Public Event FormInitialized() Implements IForm.FormInitialized
+    Public Event InitializingForm() Implements IForm.InitializingForm
+
+    Public Event ApplyingUserCredentials() Implements IForm.ApplyingUserCredentials
+    Public Event UserCredentialsApplied() Implements IForm.UserCredentialsApplied
+
+
+    Public Sub ApplyUserCredentials() Implements IForm.ApplyUserCredentials
+      Dim rowCounter As Integer
+      Dim appUser As Processors.ApplicationUser
+
+
+      RaiseEvent ApplyingUserCredentials()
+
+      appUser = New Processors.ApplicationUser
+      appUser.Initialize()
+      appUser.GetFunctionalityListFor(appUser.UserID, Me.Name)
+
+      With appUser.UserDataSet.UserScreensFunctionalityView
+        For rowCounter = 0 To .Rows.Count - 1
+          If .Item(rowCounter).IsNull("Functionality") Then
+            checkInButton.Visible = True
+            searchEnvelopeIDGroupBox.Visible = True
+          ElseIf .Item(rowCounter).Functionality.ToUpper() = "VIEWONLY" Then
+            checkInButton.Visible = False
+          ElseIf .Item(rowCounter).Functionality.ToUpper() = "EDITONLY" Then
+            checkInButton.Visible = True
+            searchEnvelopeIDGroupBox.Visible = True
+          ElseIf .Item(rowCounter).Functionality.ToUpper() = "NEWONLY" Then
+            searchEnvelopeIDGroupBox.Visible = False
+          End If
+        Next
+      End With
+
+      appUser = Nothing
+
+      RaiseEvent UserCredentialsApplied()
+
+    End Sub
+
+    Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+      RaiseEvent InitializingForm()
+
+      Me.SuspendLayout()
+
+      Me.FormState = formStatus
+
+      m_envelopeProcessor = New Processors.Envelope
+      Processor.Initialize()
+      Processor.LoadDataSet()
+
+      Me.StatusMessage = "Information loaded, preparing to show loaded information on window."
+
+      senderComboBox.DataSource = Processor.Data.Sender
+      senderComboBox.DisplayMember = "Name"
+      senderComboBox.ValueMember = "SenderId"
+      senderComboBox.AutoCompleteSource = AutoCompleteSource.ListItems
+
+      shippingCompanyComboBox.DataSource = Processor.Data.Shipper
+      shippingCompanyComboBox.DisplayMember = "Descrip"
+      shippingCompanyComboBox.ValueMember = "ShipperId"
+
+      shippingMethodComboBox.DataSource = Processor.Data.vwShippingMethod
+      shippingMethodComboBox.DisplayMember = "Descrip"
+      shippingMethodComboBox.ValueMember = "CodeId"
+
+      packageTypeComboBox.DataSource = Processor.Data.vwPackageType
+      packageTypeComboBox.DisplayMember = "Descrip"
+      packageTypeComboBox.ValueMember = "CodeId"
+
+      packageAssignmentComboBox.DataSource = Processor.Data.User
+      packageAssignmentComboBox.DisplayMember = "FullName"
+      packageAssignmentComboBox.ValueMember = "UserId"
+
+      ClearAllInputs()
+      EnableDisableControls(formStatus)
+      ShowHideControls(formStatus)
+
+      Me.ResumeLayout(False)
+
+      RaiseEvent FormInitialized()
+
+    End Sub
+
+
+#End Region
+
+
+    ''' <summary>
+    ''' Validates user inputs. 
+    ''' </summary>
+    ''' <returns>True if all inputs are valid, false otherwise.</returns>
+    ''' <remarks>
+    ''' This method validates user inputs for its values only and not against 
+    ''' any kind of business rules or anything else. For example, if date
+    ''' value is expected, it checks whether its valid date or not. But does 
+    ''' not check whether its within valid range or not.
+    ''' </remarks>
+    Private Function AreInputsValid() As Boolean
+      Dim areAllValid As Boolean
+      Dim tempWeight As Double
+
+
+      areAllValid = True
+
+      If senderComboBox.SelectedValue Is Nothing _
+        OrElse senderComboBox.SelectedIndex < 0 _
+        OrElse senderComboBox.Text.Length = 0 _
+      Then
+        SetErrorProvider(senderComboBox, "Select sender.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(senderComboBox)
+      End If
+
+      If shippingCompanyComboBox.SelectedValue Is Nothing _
+        OrElse shippingCompanyComboBox.SelectedIndex < 0 _
+        OrElse shippingCompanyComboBox.Text.Length = 0 _
+      Then
+        SetErrorProvider(shippingCompanyComboBox, "Select shipping company.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(shippingCompanyComboBox)
+      End If
+
+      If shippingMethodComboBox.SelectedValue Is Nothing _
+        OrElse shippingMethodComboBox.SelectedIndex < 0 _
+        OrElse shippingMethodComboBox.Text.Length = 0 _
+      Then
+        SetErrorProvider(shippingMethodComboBox, "Select shipping method.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(shippingMethodComboBox)
+      End If
+
+      If trackNumberTextBox.Text.Trim().Length = 0 Then
+        SetErrorProvider(trackNumberTextBox, "Provide shipping tracking number.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(trackNumberTextBox)
+      End If
+
+      If Double.TryParse("0" + printedWeightTextBox.Text.Trim(), tempWeight) = False Then
+        SetErrorProvider(printedWeightTextBox, "Provide printed weight in required format.")
+        areAllValid = False
+      ElseIf tempWeight < 0.1 Then
+        SetErrorProvider(printedWeightTextBox, "Printed weight can not be zero.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(printedWeightTextBox)
+      End If
+
+      If Double.TryParse("0" + actualWeightTextBox.Text.Trim(), tempWeight) = False Then
+        SetErrorProvider(actualWeightTextBox, "Provide actual weight in required format.")
+        areAllValid = False
+      ElseIf tempWeight < 0.1 Then
+        SetErrorProvider(actualWeightTextBox, "Actual weight can not be zero.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(actualWeightTextBox)
+      End If
+
+      If packageTypeComboBox.SelectedValue Is Nothing _
+        OrElse packageTypeComboBox.SelectedIndex < 0 _
+        OrElse packageTypeComboBox.Text.Length = 0 _
+      Then
+        SetErrorProvider(packageTypeComboBox, "Select package type.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(packageTypeComboBox)
+      End If
+
+      If packageAssignmentComboBox.SelectedValue Is Nothing _
+        OrElse packageAssignmentComboBox.SelectedIndex < 0 _
+        OrElse packageAssignmentComboBox.Text.Length = 0 _
+      Then
+        SetErrorProvider(packageAssignmentComboBox, "Select package assignment.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(packageAssignmentComboBox)
+      End If
+
+
+      Return areAllValid
+
+    End Function
+
+
+
+    Private Sub closeButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles closeButton.Click
+
+      Me.Close()
+
+    End Sub
+
+    Private Sub clearButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles clearButton.Click
+
+      ClearAllInputs()
+      RemoveAllErrorProviders()
+
+      Me.FormState = FormStateEnum.Insert
+
+      ShowHideControls(Me.FormState)
+      EnableDisableControls(Me.FormState)
+
+    End Sub
+
+    Private Sub shippingCompanyComboBox_SelectedValueChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles shippingCompanyComboBox.SelectedValueChanged
+      Dim shipperId As Integer
+
+
+      If shippingCompanyComboBox.SelectedValue IsNot Nothing Then
+        If Integer.TryParse(shippingCompanyComboBox.SelectedValue.ToString(), shipperId) = False Then
+          shipperId = 0
+        End If
+
+        Processor.LoadShippingMethod(shipperId)
+      End If
+
+      If shippingMethodComboBox.Items.Count = 1 Then
+        shippingMethodComboBox.Text = String.Empty
+        shippingMethodComboBox.SelectedIndex = -1
+        shippingMethodComboBox.SelectedValue = DBNull.Value
+        shippingMethodComboBox.SelectedItem = shippingMethodComboBox.Items(0)
+      Else
+        shippingMethodComboBox.Text = String.Empty
+        shippingMethodComboBox.SelectedIndex = -1
+        shippingMethodComboBox.SelectedValue = DBNull.Value
+      End If
+
+    End Sub
+
+    Private Sub shippingMethodComboBox_SelectedValueChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles shippingMethodComboBox.SelectedValueChanged
+      Dim shipperId, shippingMethodId As Integer
+
+
+      If shippingCompanyComboBox.SelectedValue IsNot Nothing _
+        AndAlso shippingMethodComboBox.SelectedValue IsNot Nothing _
+      Then
+        If Integer.TryParse(shippingCompanyComboBox.SelectedValue.ToString(), shipperId) = False Then
+          shipperId = 0
+        End If
+
+        If Integer.TryParse(shippingMethodComboBox.SelectedValue.ToString(), shippingMethodId) = False Then
+          shipperId = 0
+        End If
+
+        Processor.LoadPackageType(shipperId, shippingMethodId)
+      End If
+
+      If shippingMethodComboBox.SelectedValue IsNot Nothing AndAlso packageTypeComboBox.Items.Count = 1 Then
+        packageTypeComboBox.Text = String.Empty
+        packageTypeComboBox.SelectedIndex = -1
+        packageTypeComboBox.SelectedValue = DBNull.Value
+        packageTypeComboBox.SelectedItem = packageTypeComboBox.Items(0)
+      Else
+        packageTypeComboBox.Text = String.Empty
+        packageTypeComboBox.SelectedIndex = -1
+        packageTypeComboBox.SelectedValue = DBNull.Value
+      End If
+
+    End Sub
+
+    Private Sub trackNumberTextBox_Validating _
+        (ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) _
+        Handles trackNumberTextBox.Validating
+      Dim messageText As System.Text.StringBuilder
+      Dim trackNumberRow As EnvelopeDataSet.EnvelopeRow
+
+
+      If String.IsNullOrEmpty(trackNumberTextBox.Text) = False Then
+        messageText = New System.Text.StringBuilder
+
+        If Me.FormState = FormStateEnum.Insert Then
+          trackNumberRow = Processor.LoadByTrackNumber(trackNumberTextBox.Text)
+        Else
+          Dim envelopeId As Integer = CType("0" + envelopeIDValueLabel.Text, Integer)
+          trackNumberRow = Processor.LoadByTrackNumber(trackNumberTextBox.Text, envelopeId)
+        End If
+
+        If trackNumberRow IsNot Nothing Then
+          messageText.Append("Tracking number ")
+          messageText.Append(trackNumberTextBox.Text)
+          messageText.Append(" was used previously for envelope ")
+          messageText.Append(trackNumberRow.EnvelopeId.ToString())
+          messageText.Append(" on ")
+          messageText.Append(trackNumberRow.ReceivedDt.ToString("MM/dd/yy"))
+          messageText.Append(". Please double check the Tracking number.")
+
+          MessageBox.Show(messageText.ToString(), ProductName, _
+                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+          messageText = Nothing
+
+          trackNumberTextBox.SelectAll()
+          e.Cancel = True
+        End If
+      End If
+
+    End Sub
+
+    Private Sub weightTextBox_Validated _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles printedWeightTextBox.Validated, actualWeightTextBox.Validated
+      Dim weight As Double
+      Dim regExp As String = "^\d{0,3}\.\d$" 'Format: 999.9
+      Dim regExpression As System.Text.RegularExpressions.Regex
+      Dim tempTextbox As TextBox
+
+
+      tempTextbox = CType(sender, TextBox)
+      RemoveErrorProvider(tempTextbox)
+
+      If tempTextbox.Text.Trim().Length = 0 Then Exit Sub
+
+      regExpression = New System.Text.RegularExpressions.Regex(regExp)
+
+      If Double.TryParse(tempTextbox.Text, weight) = False Then
+        SetErrorProvider(tempTextbox, "Provide valid weight.")
+      ElseIf weight < 0.0 Then
+        SetErrorProvider(tempTextbox, "Weight can not be negative.")
+      ElseIf weight > 999.9 Then
+        SetErrorProvider(tempTextbox, "Maximum allowed value is 999.9.")
+      Else
+        tempTextbox.Text = weight.ToString("0.0")
+
+        If regExpression.IsMatch(tempTextbox.Text) = False Then
+          SetErrorProvider(tempTextbox, "Provide weight in valid format.")
+        End If
+      End If
+
+      If m_ErrorProvider.GetError(tempTextbox).Length > 0 Then
+        tempTextbox.Focus()
+        tempTextbox.SelectAll()
+      End If
+
+      tempTextbox = Nothing
+      regExpression = Nothing
+      regExp = Nothing
+
+    End Sub
+
+    Private Sub checkInButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles checkInButton.Click
+      Dim envelopeID As Integer
+      Dim tempRow As EnvelopeDataSet.EnvelopeRow
+
+
+      If AreInputsValid() = False Then Exit Sub
+
+      If FormState = FormStateEnum.Insert Then
+        tempRow = Processor.CreateNew()
+      Else
+        envelopeID = CType(envelopeIDValueLabel.Text, Integer)
+        tempRow = Processor.Load(envelopeID)
+      End If
+
+      tempRow.BeginEdit()
+      tempRow.SenderId = CType(senderComboBox.SelectedValue, Integer)
+      tempRow.ShipperId = CType(shippingCompanyComboBox.SelectedValue, Integer)
+      tempRow.ShippingMethodId = CType(shippingMethodComboBox.SelectedValue, Integer)
+      tempRow.TrackingNo = trackNumberTextBox.Text
+      tempRow.ListedWeight = CType(printedWeightTextBox.Text, Double)
+      tempRow.ActualWeight = CType(actualWeightTextBox.Text, Double)
+      tempRow.PackageTypeId = CType(packageTypeComboBox.SelectedValue, Integer)
+      tempRow.PackageAssignmentId = CType(packageAssignmentComboBox.SelectedValue, Integer)
+      tempRow.FormName = "Envelope Check-In"
+      If Me.FormState = FormStateEnum.Insert Then
+        tempRow.ReceivedDt = CType(receivedDateValueLabel.Text, DateTime)
+        tempRow.ReceivedById = Processor.UserID
+      End If
+      tempRow.EndEdit()
+
+      If Processor.AreInputsValid(tempRow) = False Then
+        ShowErrors(tempRow)
+        Exit Sub
+      End If
+
+      If Me.FormState = FormStateEnum.Insert Then Processor.Add(tempRow)
+
+      Processor.Save()
+      envelopeIDValueLabel.Text = tempRow.EnvelopeId.ToString()
+
+      Processor.PrintBarcodeLabel(tempRow)
+
+      ClearAllInputs()
+      Me.FormState = FormStateEnum.Insert
+      EnableDisableControls(Me.FormState)
+
+      tempRow = Nothing
+
+    End Sub
+
+    Private Sub searchEnvelopeIDTextBox_KeyPress _
+        (ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) _
+        Handles searchEnvelopeIDTextBox.KeyPress
+
+      If Microsoft.VisualBasic.AscW(e.KeyChar) = 13 Then
+        gotoButton.PerformClick()
+      End If
+
+    End Sub
+
+    Private Sub gotoButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles gotoButton.Click
+      Dim envelopeID As Integer
+      Dim vehicleCount As Object
+      Dim tempRow As EnvelopeDataSet.EnvelopeRow
+
+
+      If Me.searchEnvelopeIDTextBox.Text.Length = 0 Then Exit Sub
+
+      envelopeID = CType(searchEnvelopeIDTextBox.Text, Integer)
+      tempRow = Processor.Load(envelopeID)
+
+      If tempRow Is Nothing Then
+        MessageBox.Show("Specified envelope not found.", ProductName, _
+                        MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      End If
+
+      ClearAllInputs()
+      RemoveAllErrorProviders()
+
+      Me.SuspendLayout()
+      envelopeIDValueLabel.Text = tempRow.EnvelopeId.ToString()
+      senderComboBox.SelectedValue = tempRow.SenderId
+      shippingCompanyComboBox.SelectedValue = tempRow.ShipperId
+      Processor.LoadShippingMethod(tempRow.ShipperId)
+      shippingMethodComboBox.SelectedValue = tempRow.ShippingMethodId
+      trackNumberTextBox.Text = tempRow.TrackingNo
+      printedWeightTextBox.Text = tempRow.ListedWeight.ToString("0.0")
+      actualWeightTextBox.Text = tempRow.ActualWeight.ToString("0.0")
+      Processor.LoadPackageType(tempRow.ShipperId, tempRow.ShippingMethodId)
+      packageTypeComboBox.SelectedValue = tempRow.PackageTypeId
+      packageAssignmentComboBox.SelectedValue = tempRow.PackageAssignmentId
+      receivedDateValueLabel.Text = tempRow.ReceivedDt.ToString("MM/dd/yy")
+      receivedByValueLabel.Text = Processor.GetUserFullName(tempRow.ReceivedById)
+      Me.ResumeLayout(False)
+
+      Me.FormState = FormStateEnum.Edit
+      EnableDisableControls(Me.FormState)
+      ShowHideControls(Me.FormState)
+
+      vehicleCount = Processor.GetVehicleCount(envelopeID)
+      If vehicleCount Is Nothing _
+        OrElse vehicleCount Is DBNull.Value _
+        OrElse vehicleCount.ToString = "0" _
+      Then
+        senderComboBox.Enabled = True
+      Else
+        senderComboBox.Enabled = False
+      End If
+
+      If senderComboBox.SelectedValue Is Nothing Then senderComboBox.Enabled = False
+
+    End Sub
+
+    Private Sub printLabelButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles printLabelButton.Click
+      Dim envelopeId As Integer
+      Dim envelopeRow As EnvelopeDataSet.EnvelopeRow
+
+
+      envelopeId = CType("0" + envelopeIDValueLabel.Text, Integer)
+      If envelopeId < 1 Then
+        MessageBox.Show("Please load envelope information.", ProductName, _
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        Exit Sub
+      End If
+
+      envelopeRow = Processor.Load(envelopeId)
+      If envelopeRow Is Nothing Then
+        MessageBox.Show("Unable to find information about envelope " + envelopeId.ToString(), _
+                        ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        Exit Sub
+      End If
+
+      Processor.PrintBarcodeLabel(envelopeRow)
+
+    End Sub
+
+
+    Private Sub m_envelopeProcessor_BarcodePrinted() Handles m_envelopeProcessor.BarcodePrinted
+
+      Me.StatusMessage = String.Empty
+
+    End Sub
+
+    Private Sub m_envelopeProcessor_EnvelopLoaded() Handles m_envelopeProcessor.EnvelopeLoaded, m_envelopeProcessor.EnvelopeNotFound
+
+      Me.StatusMessage = String.Empty
+
+    End Sub
+
+    Private Sub EnvelopeCheckInForm_FormInitialized() Handles Me.FormInitialized
+
+      Me.StatusMessage = String.Empty
+
+    End Sub
+
+    Private Sub EnvelopeCheckInForm_InitializingForm() Handles Me.InitializingForm
+
+      Me.StatusMessage = "Loading information, this may take some time. Please wait..."
+
+    End Sub
+
+    Private Sub m_envelopeProcessor_LoadingEnvelop() Handles m_envelopeProcessor.LoadingEnvelope
+
+      Me.StatusMessage = "Please wait, loading envelope information."
+
+    End Sub
+
+    Private Sub m_envelopeProcessor_PrintingBarcode() Handles m_envelopeProcessor.PrintingBarcode
+
+      Me.StatusMessage = "Printing barcode label for envelope."
+
+    End Sub
+
+    Private Sub m_envelopeProcessor_SynchronizingEnvelope() Handles m_envelopeProcessor.SynchronizingEnvelope
+
+      Me.StatusMessage = "Saving envelope information. This may take some time, please wait..."
+
+    End Sub
+
+    Private Sub m_envelopeProcessor_EnvelopeSynchronized() Handles m_envelopeProcessor.EnvelopeSynchronized
+
+      Me.StatusMessage = String.Empty
+
+    End Sub
+
+  End Class
+
+
+End Namespace

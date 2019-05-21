@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MCAP.UI.Processors.BaseClass" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EEAAAAAAASAAAQgBAQACACgGABAIEAAFAIAAAhoAAAA=</HashCode>
+      <FileName>UIProcess\BaseClass.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.Processors.Envelope" Collapsed="true">
+    <Position X="1.5" Y="9.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+      <Compartment Name="Events" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQIBkJAASjCAEQFEBDCMAgAIAAASYBMhQQAAAAEAAgg=</HashCode>
+      <FileName>UIProcess\Envelope.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.Processors.Role" Collapsed="true">
+    <Position X="1.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAIAEIEAwAABAUgggGJgpgAAQAAgIAAAAIAEEoCQQkg=</HashCode>
+      <FileName>UIProcess\Role.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.User" Collapsed="true">
+    <Position X="2.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAEMAAyQCAAcAAAQYsjAAICAAEUAAgIAAEFBAACwA=</HashCode>
+      <FileName>UIProcess\User.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.UserBase" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.Processors.BaseClass" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="2.259" />
+        <Point X="1.25" Y="4.375" />
+        <Point X="3.938" Y="4.375" />
+        <Point X="3.938" Y="4.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>iAQAAAAAICAAAAQAAAIAIARAAQFABAABEAFAAIAAAgA=</HashCode>
+      <FileName>UIProcess\UserBase.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.ApplicationUser" Collapsed="true">
+    <Position X="4.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAwAAAgQAAAAMAoAAAACAAAAACAAAAABgAAAA=</HashCode>
+      <FileName>UIProcess\ApplicationUser.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.DupCheck" Collapsed="true">
+    <Position X="5" Y="4.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.Processors.BaseClass" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="2.259" />
+        <Point X="1.25" Y="4.375" />
+        <Point X="6" Y="4.375" />
+        <Point X="6" Y="4.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AQgEEIAAyBAAAQBEEAAMgAAIAGAAIBGACABCSAECAQE=</HashCode>
+      <FileName>UIProcess\DupCheck.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.Processors.Vehicle" Collapsed="true">
+    <Position X="3.25" Y="9.25" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.Processors.BaseClass" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="2.259" />
+        <Point X="1.25" Y="8.875" />
+        <Point X="4.25" Y="8.875" />
+        <Point X="4.25" Y="9.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AJYIkICCWJJAAQBSRBhoS0BKAEhIDhkiZEAhgAAAAkA=</HashCode>
+      <FileName>UIProcess\Vehicle.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.Processors.FamilyCheckIn" Collapsed="true">
+    <Position X="5" Y="9.25" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.Processors.BaseClass" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="2.259" />
+        <Point X="1.25" Y="8.875" />
+        <Point X="5.75" Y="8.875" />
+        <Point X="5.75" Y="9.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AIEIkECKSgBAAQQCBBpIaABKAECADhsiACAsBAhACgA=</HashCode>
+      <FileName>UIProcess\FamilyCheckIn.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.FamilyCreation" Collapsed="true">
+    <Position X="1.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIJkIAQyAIAAQAhACAYikAAAkAAABAAAiCABAAAACA=</HashCode>
+      <FileName>UIProcess\FamilyCreation.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.FamilyReview" Collapsed="true">
+    <Position X="3.25" Y="7.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.Processors.BaseClass" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="2.259" />
+        <Point X="1.25" Y="7.375" />
+        <Point X="4" Y="7.375" />
+        <Point X="4" Y="7.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAACkAIETgIAAQEAAAAIQEMCAUAAKFAiAiYQAAAACAA=</HashCode>
+      <FileName>UIProcess\FamilyReview.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.FamilyView" Collapsed="true">
+    <Position X="5" Y="7.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.Processors.BaseClass" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="2.259" />
+        <Point X="1.25" Y="7.375" />
+        <Point X="5.75" Y="7.375" />
+        <Point X="5.75" Y="7.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAACkEIESgIAAQACAAAICAMAMUAgCBAgAiIQAAAACAA=</HashCode>
+      <FileName>UIProcess\FamilyView.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.ImageCountWorker" Collapsed="true">
+    <Position X="3.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAQIAAAAIAAgAAAAABAAAAAAAAACAgAA=</HashCode>
+      <FileName>UIProcess\ImageCountWorker.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.Processors.Index" Collapsed="true">
+    <Position X="1.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBAIkICAyBAAAQgCAAhIiEACAEBCBgsgBAAAABAACoA=</HashCode>
+      <FileName>UIProcess\Index.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.MoveWorker" Collapsed="true">
+    <Position X="5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBgAAAAACAAEQIAEAAIAAgAAAABBAACEAAAAAAggAA=</HashCode>
+      <FileName>UIProcess\MoveWorker.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.Processors.PublicationCheckIn" Collapsed="true">
+    <Position X="1.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhICmECCyxAAAQBAgBhIDkBKAFBCA1FgZAggEAABAkA=</HashCode>
+      <FileName>UIProcess\PublicationCheckIn.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.Processors.PublicationPull" Collapsed="true">
+    <Position X="3.25" Y="10.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.Processors.BaseClass" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="2.259" />
+        <Point X="1.25" Y="10.375" />
+        <Point X="4.062" Y="10.375" />
+        <Point X="4.062" Y="10.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAgACAQAAAAQACAAhASAAKQAAAQnAgIABAAAABAAA=</HashCode>
+      <FileName>UIProcess\PublicationPull.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.QCVehicleImages" Collapsed="true">
+    <Position X="1.5" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>OBAIkIiASBgAAQgCAAgICEAKAAFCBgkgBAAAAhAAAoA=</HashCode>
+      <FileName>UIProcess\QCVehicleImages.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.VehicleImageBase" Collapsed="true">
+    <Position X="0.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ISAARAEAAAAANFCECgCSMAIhqMEEQggkAGhECAIIEgA=</HashCode>
+      <FileName>UIProcess\VehicleImageBase.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.IndexBase" Collapsed="true">
+    <Position X="0.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIEAkAASQBAAQABCAFBARABqEEAACBEiACAqFAgAAIA=</HashCode>
+      <FileName>UIProcess\IndexBase.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCAP.UI.Processors.PublicationPullQC" Collapsed="true">
+    <Position X="5" Y="10.75" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.Processors.BaseClass" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="2.259" />
+        <Point X="1.25" Y="10.375" />
+        <Point X="5.75" Y="10.375" />
+        <Point X="5.75" Y="10.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AIAIAACAEIAAgQACAAgADAACAAAAAjAgBAAAAABBAAQ=</HashCode>
+      <FileName>UIProcess\PublicationPullQC.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.PublicationIndexQC" Collapsed="true">
+    <Position X="3.25" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBAAkIKAQBAAAQgCAAgACEACAABiBgEhBAAAABAAAAA=</HashCode>
+      <FileName>UIProcess\PublicationIndexQC.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.ScanTracker" Collapsed="true">
+    <Position X="1.5" Y="3.25" Width="1.5" />
+    <InheritanceLine Type="MCAP.UI.Processors.BaseClass" FixedToPoint="true">
+      <Path>
+        <Point X="1.25" Y="2.259" />
+        <Point X="1.25" Y="2.875" />
+        <Point X="2.25" Y="2.875" />
+        <Point X="2.25" Y="3.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AIF8EBhCQgECQYCWQRwAS6wAbhAEYBUkEEHQABgpoQo=</HashCode>
+      <FileName>UIProcess\ScanTracker.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.NewspaperLogReport" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAQAIABAAQAAAAAAAABAgAAAAAAAAAAA=</HashCode>
+      <FileName>UIProcess\NewspaperLogReport.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.Maintenance" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>rL/VXrPa7vq5//Z7j23o/8pTX2/v9/+ubJnnvLnuN98=</HashCode>
+      <FileName>UIProcess\Maintenance.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.FamilyExpectationReport" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAMAgZAAAIAEAAAAAAAAADwgAAACAEAAADA=</HashCode>
+      <FileName>UIProcess\FamilyExpectationReport.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.ErrorsCorrectedReport" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAQAAAIAAAAAAAAAAABQgAACCAAAAACA=</HashCode>
+      <FileName>UIProcess\ErrorsCorrectedReport.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.PageDefinitions" Collapsed="true">
+    <Position X="8.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>dBWdQOEQEAAAAYIUggoAQSABFGAIkAAAICAAQACQAAA=</HashCode>
+      <FileName>UIProcess\PageDefinitions.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MCAP.UI.Processors.Resequence" Collapsed="true">
+    <Position X="6.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAwAQAAQgAAhAQgRAAgAAAAQAgAAAEAgCBAAA=</HashCode>
+      <FileName>UIProcess\Resequence.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MCAP.IBarcode" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAIAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>UIProcess\IBarcode.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MCAP.BackgroundThreading.IClient" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAIAAAAAAQAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>BackgroundThreading\IClient.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MCAP.BackgroundThreading.IController" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAIAAAACAQAAAAAAABAIABAAAAAAAEQ=</HashCode>
+      <FileName>BackgroundThreading\IController.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MCAP.BackgroundThreading.IWorker" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BackgroundThreading\IWorker.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MCAP.UI.Processors.VehicleImageSizeEnum" Collapsed="true">
+    <Position X="2.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAgAAAIAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>UIProcess\VehicleImageBase.vb</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

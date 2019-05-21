@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MCAPDev" Class="CHubDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=MT4SQL06;Initial Catalog=MCAPDev;Integrated Security=True" SettingsObjectName="MCAP.My.MySettings" SettingsPropertyName="MCAPConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.chubFlyerAddress" Member="chubFlyerAddresses">
+    <Type Name="chubFlyerAddress">
+      <Column Name="FlyerId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AddressId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="VehicleId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="chubFlyer_chubFlyerAddress" Member="chubFlyer" ThisKey="FlyerId" OtherKey="FlyerId" Type="chubFlyer" IsForeignKey="true" />
+      <Association Name="Vehicle_chubFlyerAddress" Member="Vehicle" ThisKey="VehicleId" OtherKey="VehicleId" Type="Vehicle" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chubFlyer" Member="chubFlyers">
+    <Type Name="chubFlyer">
+      <Column Name="FlyerId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RetId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WishabiId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FlyerRunId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FlyerTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MerchantId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Pages" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Width" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Height" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FlyerTypeName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="NameIdentifier" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Path" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="BreakDt" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ValidFrom" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ValidTo" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ImageHost" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="EnvelopeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="chubFlyer_chubFlyerAddress" Member="chubFlyerAddresses" ThisKey="FlyerId" OtherKey="FlyerId" Type="chubFlyerAddress" />
+      <Association Name="chubFlyer_chubFlyerTile" Member="chubFlyerTiles" ThisKey="FlyerId" OtherKey="FlyerId" Type="chubFlyerTile" />
+      <Association Name="chubFlyer_chubFlyerPage" Member="chubFlyerPages" ThisKey="FlyerId" OtherKey="FlyerId" Type="chubFlyerPage" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chubFlyerTile" Member="chubFlyerTiles">
+    <Type Name="chubFlyerTile">
+      <Column Name="FlyerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TileId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PositionTop" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PositionLeft" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ArbitraryId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="chubFlyer_chubFlyerTile" Member="chubFlyer" ThisKey="FlyerId" OtherKey="FlyerId" Type="chubFlyer" IsForeignKey="true" />
+      <Association Name="chubTile_chubFlyerTile" Member="chubTile" ThisKey="TileId" OtherKey="TileId" Type="chubTile" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chubTile" Member="chubTiles">
+    <Type Name="chubTile">
+      <Column Name="TileId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Url" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Sha1Hash" Type="System.String" DbType="Char(40) NOT NULL" CanBeNull="false" />
+      <Column Name="Height" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Width" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RetrievedDt" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Etag" Type="System.String" DbType="VarChar(42)" CanBeNull="true" />
+      <Association Name="chubTile_chubFlyerTile" Member="chubFlyerTiles" ThisKey="TileId" OtherKey="TileId" Type="chubFlyerTile" />
+      <Association Name="chubTile_chubPageTile" Member="chubPageTiles" ThisKey="TileId" OtherKey="TileId" Type="chubPageTile" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Page" Member="Pages">
+    <Type Name="Page">
+      <Column Name="PageId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="VehicleId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ImageName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PageTypeId" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ReceivedOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PageName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="PixelHieght" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PixelWidth" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SizeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FormName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="Page_chubPageTile" Member="chubPageTiles" ThisKey="PageId" OtherKey="PageId" Type="chubPageTile" />
+      <Association Name="Page_chubFlyerPage" Member="chubFlyerPages" ThisKey="PageId" OtherKey="PageId" Type="chubFlyerPage" />
+      <Association Name="Vehicle_Page" Member="Vehicle" ThisKey="VehicleId" OtherKey="VehicleId" Type="Vehicle" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Vehicle" Member="Vehicles">
+    <Type Name="Vehicle">
+      <Column Name="VehicleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EnvelopeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RetId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MktId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BreakDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="StartDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TypeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LanguageId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EventId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ThemeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MediaId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PublicationId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FlashInd" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="CreateDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CreatedById" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ScanDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ScannedById" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="QCDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="QCedById" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FamilyId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CouponInd" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="CreateSizedDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Priority" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CheckInPageCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StatusID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SenderId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PullDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="PulledById" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PullPageCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Weight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="PullQCedById" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PullQCDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FormName" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="CheckInOccurrences" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NationalInd" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="ftpStatusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ftpDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IndexDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IndexedById" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RemoteEntryImageFTPStatusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RemoteEntryImageFTPDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="RemoteEntryImageForceFTPRetransfer" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="RemoteEntryImageFTPQueueInsertDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="SPReviewStatusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EntryInd" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="ParentVehicleId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BodyText" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="BodyHTML" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="SiteId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Subject" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ReQCDt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ReQCedById" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FilterMatches" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="Vehicle_chubFlyerAddress" Member="chubFlyerAddresses" ThisKey="VehicleId" OtherKey="VehicleId" Type="chubFlyerAddress" />
+      <Association Name="Vehicle_Page" Member="Pages" ThisKey="VehicleId" OtherKey="VehicleId" Type="Page" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chubPageTile" Member="chubPageTiles">
+    <Type Name="chubPageTile">
+      <Column Name="PageId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TileId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PositionLeft" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PositionTop" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="arbitraryId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="Page_chubPageTile" Member="Page" ThisKey="PageId" OtherKey="PageId" Type="Page" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="chubTile_chubPageTile" Member="chubTile" ThisKey="TileId" OtherKey="TileId" Type="chubTile" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.chubFlyerPage" Member="chubFlyerPages">
+    <Type Name="chubFlyerPage">
+      <Column Name="FlyerId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PageId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PageNum" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PageName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="chubFlyer_chubFlyerPage" Member="chubFlyer" ThisKey="FlyerId" OtherKey="FlyerId" Type="chubFlyer" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Page_chubFlyerPage" Member="Page" ThisKey="PageId" OtherKey="PageId" Type="Page" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.mt_proc_GetNewId" Method="mt_proc_GetNewId">
+    <Parameter Name="Field" Parameter="field" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Rv" Parameter="rv" Type="System.String" DbType="VarChar(15)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

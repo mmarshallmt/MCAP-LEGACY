@@ -1,0 +1,617 @@
+﻿Imports System.Collections.Generic
+Imports System.Windows.Controls
+Namespace UI
+
+    Public Class ReviewRetailerForm
+
+        Inherits MDIChildFormBase
+        Implements IForm
+
+        ''' <summary>
+        ''' This constant is used to assigning value to FormName column.
+        ''' </summary>
+        Private Const FORM_NAME As String = "Required Form"
+
+
+        Private m_previousSelection As SearchCriteria
+
+        Private WithEvents m_RequiredProcessor As Processors.RequiredProcess
+
+        Private ReadOnly Property Processor() As Processors.RequiredProcess
+            Get
+                Return m_RequiredProcessor
+            End Get
+        End Property
+
+#Region " IForm Implementation "
+
+
+        Public Event ApplyingUserCredentials() Implements IForm.ApplyingUserCredentials
+        Public Event UserCredentialsApplied() Implements IForm.UserCredentialsApplied
+
+        Public Event InitializingForm() Implements IForm.InitializingForm
+        Public Event FormInitialized() Implements IForm.FormInitialized
+
+
+        Public Sub ApplyUserCredentials() Implements IForm.ApplyUserCredentials
+
+        End Sub
+
+        Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+            RaiseEvent InitializingForm()
+
+            ' Me.FormState = formStatus
+            m_RequiredProcessor = New Processors.RequiredProcess
+            Processor.Initialize()
+
+
+            Processor.TempRetAdapter.Fill(Processor.Data.TempRet)
+            Dim MediaView As DataView = New DataView(Processor.Data.TempRet)
+            Processor.RetailerAdapter.Fill(Processor.Data.Ret)
+            Processor.MarketAdapter.FillAllData(Processor.Data.Mkt)
+            Processor.MediaAdapter.Fill(Processor.Data.Media)
+            Processor.CodeAdapter.Fill(Processor.Data.Code)
+            Processor.UnregisteredRetTableAdapter.Fill(Processor.Data.UnregisteredRet)
+
+            Processor.TradeClassAdapter.Fill(Processor.Data.TradeClassList)
+            Processor.DisplayVehicleAdapter.FillByUnprocessedVehicle(Processor.Data.Vehicle)
+
+            newRetailerListBox.DisplayMember = "Descrip"
+            newRetailerListBox.ValueMember = "vehicleid"
+            newRetailerListBox.DataSource = MediaView
+            reviewDataGridView.DataSource = Processor.Data.Vehicle
+
+
+            With RetailerComboBox
+                .DisplayMember = "Descrip"
+                .ValueMember = "retid"
+                .DataSource = Processor.Data.Ret
+                .SelectedValue = -1
+            End With
+            With MediaComboBox
+                .DisplayMember = "Descrip"
+                .ValueMember = "mediaid"
+                .DataSource = Processor.Data.Media
+                .SelectedValue = -1
+            End With
+
+            With marketComboBox
+                .DisplayMember = "Descrip"
+                .ValueMember = "mktid"
+                .DataSource = Processor.Data.Mkt
+                .SelectedValue = -1
+            End With
+
+            With tradeClassComboBox
+                .DisplayMember = "descrip"
+                .ValueMember = "tradeclassid"
+                .DataSource = Processor.Data.TradeClassList
+                .SelectedValue = -1
+            End With
+
+            With statusListBox
+                .DisplayMember = "descrip"
+                .ValueMember = "codeid"
+                .DataSource = Processor.Data.Code
+
+            End With
+            With retMktStatusDataGridViewComboBoxColumn
+                .DataPropertyName = "statusid"
+                .DisplayMember = "descrip"
+                .ValueMember = "codeid"
+                .DataSource = Processor.Data.Code
+                .DefaultCellStyle.NullValue = "Not Reviewed"
+            End With
+
+            unregisteredStartdateTypeInDatePicker.Value = System.DateTime.Today.AddMonths(-1)
+            unregisteredEnddateTypeInDatePicker.Value = System.DateTime.Today.AddDays(1)
+            Dim startDate As DateTime = unregisteredStartdateTypeInDatePicker.Value.Value
+            Dim endDate As DateTime = unregisteredEnddateTypeInDatePicker.Value.Value
+
+            Call fillUnRetMktDataGrid(startDate, endDate)
+            'Me.retMktDataGridView.Columns("statusid").Visible = False
+            retMktDataGridView.Columns("MediaTextBoxColumn").DisplayIndex = 0
+            retMktDataGridView.Columns("marketTextBox").DisplayIndex = 1
+            retMktDataGridView.Columns("RetailseTextBoxColumn").DisplayIndex = 2
+            'retMktDataGridView.Columns("media").DisplayIndex = 3
+            'retMktDataGridView.Columns("mktid").DisplayIndex = 4
+            'retMktDataGridView.Columns("retid").DisplayIndex = 5
+            'retMktDataGridView.Columns("Status").DisplayIndex = 6
+            statusListBox.SelectedValue = -1
+            startdateTypeInDatePicker.Value = System.DateTime.Today.AddMonths(-1)
+            enddateTypeInDatePicker.Value = System.DateTime.Today.AddDays(1)
+
+         
+            RaiseEvent FormInitialized()
+
+        End Sub
+
+        Private Sub loadUnprocessVehicle(ByVal startDate As DateTime, ByVal endDate As DateTime)
+
+            Processor.DisplayVehicleAdapter.FillByUnprocessedVehicleDate(Processor.Data.Vehicle, startDate, endDate)
+            reviewDataGridView.DataSource = Processor.Data.Vehicle
+        End Sub
+
+#End Region
+        Private Sub fillUnRetMktDataGrid(ByVal startDate As DateTime, ByVal endDate As DateTime)
+            Processor.UnregisteredRetMktTableAdapter.Fill(Processor.Data.unRegisteredRetMkt, startDate, endDate)
+            retMktDataGridView.DataSource = Processor.Data.unRegisteredRetMkt
+        End Sub
+        Private Sub clearAllInput()
+            selectRetailerListbox.Items.Clear()
+            searchTextBox.Text = ""
+            searchRetailTextBox.Text = ""
+            Processor.FillTempRet()
+            newRetailerListBox.Refresh()
+            similarRetailerListBox.Visible = False
+            RetailerLabel.Visible = False
+        End Sub
+
+        Private Sub cleallAllunregisteredRetInput()
+            RetailerComboBox.SelectedValue = -1
+            'searchUnregisteredTextBox.Text = ""
+            'reviewDataGridView.DataSource = Processor.Data.UnregisteredRet
+        End Sub
+
+        Private Sub MoveAllRightButton_Click(sender As Object, e As EventArgs) Handles MoveAllRightButton.Click
+            selectRetailerListbox.Items.AddRange(newRetailerListBox.Items)
+        End Sub
+
+        Private Sub MoveRightButton_Click(sender As Object, e As EventArgs) Handles MoveRightButton.Click
+         
+            For Each Item As DataRowView In newRetailerListBox.SelectedItems
+                selectRetailerListbox.Items.Add(Item.Item("Descrip"))
+            Next
+
+        End Sub
+
+        Private Sub MoveLeftButton_Click(sender As Object, e As EventArgs) Handles MoveLeftButton.Click
+            
+            For i As Integer = 0 To selectRetailerListbox.SelectedIndices.Count - 1
+                selectRetailerListbox.Items.RemoveAt(selectRetailerListbox.SelectedIndex)
+            Next
+            searchRetMktTextBox.Text = ""
+            similarRetailerListBox.Visible = False
+            RetailerLabel.Visible = False
+        End Sub
+
+        Private Sub MoveAllLeftButton_Click(sender As Object, e As EventArgs) Handles MoveAllLeftButton.Click
+            selectRetailerListbox.Items.Clear()
+        End Sub
+
+
+
+        Private Function AreInputsValid() As Boolean
+
+            If selectRetailerListbox.SelectedIndex = -1 Then
+                SetErrorProvider(selectRetailerListbox, "Select Unregistered Retailers to Process")
+                Return False
+            Else
+                RemoveErrorProvider(selectRetailerListbox)
+            End If
+
+            If String.IsNullOrEmpty(searchRetailTextBox.Text) = True Then
+                SetErrorProvider(searchRetailTextBox, "Provide New Retailer Name.")
+                Return False
+            Else
+                RemoveErrorProvider(searchRetailTextBox)
+            End If
+
+            If similarRetailerListBox.SelectedIndex = -1 And tradeClassComboBox.SelectedIndex = -1 Then
+                SetErrorProvider(tradeClassComboBox, "Select Unregistered Retailers to Process")
+                Return False
+            Else
+                RemoveErrorProvider(tradeClassComboBox)
+            End If
+
+
+            Return True
+
+        End Function
+        Public Function getTempText() As String()
+            Dim VehicleIDArray As String() = New String(selectRetailerListbox.Items.Count - 1) {}
+            selectRetailerListbox.Items.CopyTo(VehicleIDArray, 0)
+
+            Return VehicleIDArray
+        End Function
+        Public Function getVehicleIdList() As String()
+            Dim vehicleIdArray() As String
+            Dim desc As String
+            Dim vehicleIdArrayProcess() As String
+            vehicleIdArray = getTempText()
+            ReDim vehicleIdArrayProcess(vehicleIdArray.Length - 1)
+            For i As Integer = 0 To vehicleIdArray.Length - 1
+                desc = GetFieldValue("select vehicleid from UnregisteredRetailers where descrip ='" + vehicleIdArray(i).ToString.Replace("'", "''") + "'", "vehicleid")
+                vehicleIdArrayProcess(i) = desc
+            Next
+            Return vehicleIdArrayProcess
+        End Function
+
+        Public Sub selectAllListBoxITem()
+
+            selectRetailerListbox.SelectionMode = Windows.Forms.SelectionMode.MultiSimple
+            For i As Integer = 0 To selectRetailerListbox.Items.Count - 1
+                selectRetailerListbox.SetSelected(i, True)
+            Next
+        End Sub
+
+
+        ''' <summary>
+        ''' Marks vehicles in array with status as Checked In. Removes DataRows from DataTable.
+        ''' </summary>
+        ''' <param name="vehicleIdArray"></param>
+        ''' <remarks></remarks>
+        Private Sub MarkVehiclesAsCheckIn(ByVal vehicleIdArray() As Integer)
+            Dim tempAdapter As MCAP.ReportsDataSetTableAdapters.VehicleTableAdapter
+            Dim tempTable As MCAP.ReportsDataSet.VehicleDataTable
+            Dim tempRow As MCAP.ReportsDataSet.VehicleRow
+
+            tempAdapter = New MCAP.ReportsDataSetTableAdapters.VehicleTableAdapter()
+            tempAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            tempTable = CType(reviewDataGridView.DataSource, ReportsDataSet.VehicleDataTable)
+
+            For i As Integer = 0 To vehicleIdArray.Length - 1
+                tempAdapter.UpdateVehicleStatus(FORM_NAME, vehicleIdArray(i), Nothing)
+                tempRow = tempTable.FindByVehicleId(vehicleIdArray(i))
+                tempRow.Delete()
+            Next
+            tempTable.AcceptChanges()
+
+            tempAdapter.Dispose()
+            tempAdapter = Nothing
+            tempTable = Nothing
+            tempRow = Nothing
+
+        End Sub
+
+        Private Sub clearButton_Click(sender As Object, e As EventArgs) Handles clearButton.Click
+            clearAllInput()
+        End Sub
+
+
+        Private Sub saveButton_Click_1(sender As Object, e As EventArgs) Handles saveButton.Click
+            If AreInputsValid() = False Then Exit Sub
+
+            Dim Retid As Integer = 0
+            Dim descrip As String
+            Dim tradeclass As Integer
+
+            Dim vehicleIdArray() As String
+
+            descrip = searchRetailTextBox.Text
+
+            tradeclass = CInt(tradeClassComboBox.SelectedValue)
+
+            similarRetailerListBox.GetItemText(similarRetailerListBox.SelectedValue)
+            vehicleIdArray = getVehicleIdList()
+            If Not similarRetailerListBox.SelectedValue Is Nothing Then
+                Dim text As String = TryCast(similarRetailerListBox.SelectedItem, DataRowView)("retid").ToString()
+                Retid = CInt(text)
+            End If
+
+
+
+            If Retid = 0 Then
+                If (MessageBox.Show("New Retailer will be created. All values in the merge retailers list will be Removed. Continue ?", "MCAP", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No) Then
+
+                    Exit Sub
+                End If
+                Retid = Processor.InsertRetailer(descrip, tradeclass)
+            Else
+                If (MessageBox.Show("Existing Retailer found, Current RetId will be used. All values in the merge retailers list will be Removed. Continue ?", "MCAP", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No) Then
+
+                    Exit Sub
+                End If
+            End If
+
+            For i As Integer = 0 To vehicleIdArray.Length - 1
+                Processor.UpdateVehicleRetailer(vehicleIdArray(i), Retid)
+                Processor.DeleteTempRetailer(vehicleIdArray(i))
+            Next
+            clearAllInput()
+            MessageBox.Show("All Records were Updated", "MCAP", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End Sub
+
+        Private Sub searchRetailTextBox_KeyUp(sender As Object, e As KeyEventArgs) Handles searchRetailTextBox.KeyUp
+            If searchRetailTextBox.Text = "" Then
+                similarRetailerListBox.Visible = False
+                RetailerLabel.Visible = False
+            End If
+        End Sub
+
+       
+        Private Sub searchRetailTextBox_TextChanged(sender As Object, e As EventArgs) Handles searchRetailTextBox.TextChanged
+            Dim MediaView As DataView = New DataView(Processor.Data.Ret)
+
+            MediaView.Sort = "Descrip"
+            MediaView.RowFilter = "descrip like '%" + searchRetailTextBox.Text.Replace("'", "''") + "%'"
+            If MediaView.Count > 0 Then
+                similarRetailerListBox.Visible = True
+                RetailerLabel.Visible = True
+                similarRetailerListBox.DisplayMember = "Descrip"
+                similarRetailerListBox.ValueMember = "retid"
+                similarRetailerListBox.DataSource = MediaView
+                similarRetailerListBox.SelectedValue = DBNull.Value
+            ElseIf searchRetailTextBox.Text = "" Then
+                similarRetailerListBox.Visible = False
+                RetailerLabel.Visible = False
+            Else
+                similarRetailerListBox.Visible = False
+                RetailerLabel.Visible = False
+            End If
+        End Sub
+
+      
+        Private Sub searchTextBox_TextChanged(sender As Object, e As EventArgs) Handles searchTextBox.TextChanged
+            Dim MediaView As DataView = New DataView(Processor.Data.TempRet)
+
+            MediaView.Sort = "Descrip"
+            MediaView.RowFilter = "descrip like '%" + searchTextBox.Text + "%'"
+
+            newRetailerListBox.DisplayMember = "Descrip"
+            newRetailerListBox.ValueMember = "vehicleId"
+            newRetailerListBox.DataSource = MediaView
+            newRetailerListBox.SelectedValue = DBNull.Value
+        End Sub
+
+        Private Sub selectRetailerListbox_SelectedValueChanged(sender As Object, e As EventArgs) Handles selectRetailerListbox.SelectedValueChanged
+            If selectRetailerListbox.SelectedIndex >= 0 Then
+                searchRetailTextBox.Text = selectRetailerListbox.SelectedItem.ToString
+            Else
+                searchRetailTextBox.Text = ""
+            End If
+        End Sub
+
+        'Private Sub saveRetStatButton_Click(sender As Object, e As EventArgs)
+        '    Dim row As DataGridViewRow
+        '    For i As Integer = 0 To reviewDataGridView.Rows.Count - 1
+        '        row = reviewDataGridView.Rows(i)
+
+        '        If IsDBNull(row.Cells("teststatusComboboxcolumn").Value) = False Then
+        '            If Processor.ifRetailerExist(CType(reviewDataGridView.Rows(i).Cells("RetidTextBoxColumn").Value, Integer)) Then
+        '                Processor.UpdateUnregisterRetailerStatus(CType(reviewDataGridView.Rows(i).Cells("teststatusComboboxcolumn").Value, Integer), CType(reviewDataGridView.Rows(i).Cells("RetidTextBoxColumn").Value, Integer))
+        '            Else
+        '                Processor.InsertUnregisterRetailerStatus(CType(reviewDataGridView.Rows(i).Cells("teststatusComboboxcolumn").Value, Integer), CType(reviewDataGridView.Rows(i).Cells("RetidTextBoxColumn").Value, Integer))
+        '            End If
+        '        End If
+
+
+        '    Next
+        'End Sub
+
+        'Private Sub searchUnregisteredTextBox_TextChanged(sender As Object, e As EventArgs)
+        '    Dim MediaView As DataView = New DataView(Processor.Data.UnregisteredRet)
+
+        '    MediaView.Sort = "retailer"
+        '    MediaView.RowFilter = "retailer like '%" + searchUnregisteredTextBox.Text + "%'"
+
+        '    reviewDataGridView.DataSource = MediaView
+        'End Sub
+
+
+        'Private Sub searchRetailerButton_Click(sender As Object, e As EventArgs)
+        '    Dim MediaView As DataView = New DataView(Processor.Data.UnregisteredRet)
+
+
+        '    MediaView.RowFilter = "retid =" + RetailerComboBox.SelectedValue.ToString
+
+        '    reviewDataGridView.DataSource = MediaView
+        'End Sub
+
+        Private Sub Button2_Click(sender As Object, e As EventArgs)
+            cleallAllunregisteredRetInput()
+        End Sub
+
+        Private Sub retMktSaveButton_Click(sender As Object, e As EventArgs) Handles retMktSaveButton.Click
+            Dim row As DataGridViewRow
+            For i As Integer = 0 To retMktDataGridView.Rows.Count - 1
+                row = retMktDataGridView.Rows(i)
+
+                If IsDBNull(row.Cells("retMktStatusDataGridViewComboBoxColumn").Value) = False Then
+                    If Processor.ifRetailerExist(CType(retMktDataGridView.Rows(i).Cells("RetidTextBoxTextBoxColumn").Value, Integer), CType(retMktDataGridView.Rows(i).Cells("MktidTextBoxTextBoxColumn").Value, Integer)) Then
+                        Processor.UpdateUnregisterRetailerStatus(CType(retMktDataGridView.Rows(i).Cells("retMktStatusDataGridViewComboBoxColumn").Value, Integer), CType(retMktDataGridView.Rows(i).Cells("RetidTextBoxTextBoxColumn").Value, Integer), CType(retMktDataGridView.Rows(i).Cells("MktidTextBoxTextBoxColumn").Value, Integer))
+                    Else
+                        Processor.InsertUnregisterRetailerStatus(CType(retMktDataGridView.Rows(i).Cells("retMktStatusDataGridViewComboBoxColumn").Value, Integer), CType(retMktDataGridView.Rows(i).Cells("RetidTextBoxTextBoxColumn").Value, Integer), CType(retMktDataGridView.Rows(i).Cells("MktidTextBoxTextBoxColumn").Value, Integer))
+                    End If
+                End If
+
+            Next
+            reviewDataGridView.DataSource = Processor.Data.Vehicle
+        End Sub
+
+        Private Sub searchRetMktTextBox_TextChanged(sender As Object, e As EventArgs) Handles searchRetMktTextBox.TextChanged
+            Dim MediaView As DataView = New DataView(Processor.Data.unRegisteredRetMkt)
+
+            MediaView.Sort = "retailer"
+            MediaView.RowFilter = "retailer like '%" + searchRetMktTextBox.Text + "%' or market like '%" + searchRetMktTextBox.Text + "%'"
+
+            retMktDataGridView.DataSource = MediaView
+        End Sub
+
+        Private Sub clearRetMkt()
+            MediaComboBox.SelectedValue = -1
+            marketComboBox.SelectedValue = -1
+            RetailerComboBox.SelectedValue = -1
+            statusListBox.SelectedValue = -1
+            retMktDataGridView.DataSource = Processor.Data.unRegisteredRetMkt
+        End Sub
+        Private Sub SearchButton_Click(sender As Object, e As EventArgs) Handles SearchButton.Click
+            Dim RetMktView As DataView = New DataView(Processor.Data.unRegisteredRetMkt)
+            Dim elements() As String
+            Dim i As Integer = 0
+            Dim mediaid As Integer
+            Dim retid As Integer
+            Dim mktid As Integer
+            Dim startDate As DateTime
+            Dim endDate As DateTime
+
+            ReDim elements(statusListBox.SelectedItems.Count - 1)
+
+            For Each Item As DataRowView In statusListBox.SelectedItems
+                elements(i) = Item.Item("codeid").ToString
+                i = i + 1
+            Next
+            Dim codeId As String = String.Join(",", elements)
+
+            If MediaComboBox.SelectedValue Is Nothing OrElse MediaComboBox.SelectedValue Is DBNull.Value Then
+                mediaId = Nothing
+            Else
+                mediaId = CType(MediaComboBox.SelectedValue, Integer)
+            End If
+
+            If marketComboBox.SelectedValue Is Nothing OrElse marketComboBox.SelectedValue Is DBNull.Value Then
+                mktid = Nothing
+            Else
+                mktid = CType(marketComboBox.SelectedValue, Integer)
+            End If
+
+            If RetailerComboBox.SelectedValue Is Nothing OrElse RetailerComboBox.SelectedValue Is DBNull.Value Then
+                retId = Nothing
+            Else
+                retId = CType(RetailerComboBox.SelectedValue, Integer)
+            End If
+
+            startDate = unregisteredStartdateTypeInDatePicker.Value.Value
+            endDate = unregisteredEnddateTypeInDatePicker.Value.Value
+
+            If statusListBox.SelectedValue Is Nothing And statusListBox.SelectedIndex = -1 Then
+              
+
+                If retid = 0 And mktid = 0 And mediaid > 0 Then
+
+                    RetMktView.RowFilter = "mediaid =" + mediaid.ToString
+
+                ElseIf retid > 0 And mktid = 0 And mediaid = 0 Then
+
+                    RetMktView.RowFilter = "retid =" + retid.ToString
+
+                ElseIf retid = 0 And mktid > 0 And mediaid = 0 Then
+
+                    RetMktView.RowFilter = "mktid =" + mktid.ToString
+
+                ElseIf retid = 0 And mktid > 0 And mediaid > 0 Then
+
+                    RetMktView.RowFilter = "mediaid =" + mediaid.ToString + " and mktid=" + mktid.ToString
+
+                ElseIf retid > 0 And mktid > 0 And mediaid > 0 Then
+
+                    RetMktView.RowFilter = "mediaid =" + mediaid.ToString + " and mktid=" + mktid.ToString + " and retid=" + retid.ToString
+
+                Else
+
+                    If codeId = "" Then
+                        fillUnRetMktDataGrid(startDate, endDate)
+                    Else
+
+                        RetMktView.RowFilter = "mktid =" + mktid.ToString + " and mediaid=" + mediaid.ToString + " and retid=" + retid.ToString + " and statusid in (" + codeId + ")"
+                    End If
+                End If
+
+                retMktDataGridView.DataSource = RetMktView
+            Else
+                DetailSearch(startDate, endDate, mediaid, mktid, retid)
+                RetMktView = New DataView(Processor.Data.unRegisteredRetMkt)
+                RetMktView.RowFilter = "statusid in (" + codeId + ")"
+                retMktDataGridView.DataSource = RetMktView
+            End If
+        End Sub
+
+        Private Sub DetailSearch(ByVal startDate As DateTime, ByVal endDate As DateTime, ByVal mediaid As Integer, ByVal mktid As Integer, ByVal retid As Integer)
+            Dim tempAdapter As MCAP.ReportsDataSetTableAdapters.unRegisteredRetMktTableAdapter
+
+            tempAdapter = New MCAP.ReportsDataSetTableAdapters.unRegisteredRetMktTableAdapter
+            tempAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            tempAdapter.FillByDetailSearch(Processor.Data.unRegisteredRetMkt, startDate, endDate, mediaid, mktid, retid)
+
+            tempAdapter.Dispose()
+            tempAdapter = Nothing
+
+        End Sub
+
+        Private Sub vehicletoIndexButton_Click(sender As Object, e As EventArgs) Handles vehicletoIndexButton.Click
+            Dim vehicleId, selectedRowIndex As Integer
+            Dim myIndexForm As New IndexForm
+            Dim userResponse As DialogResult
+            Dim selectedVehicleQuery As System.Collections.Generic.IEnumerable(Of Integer)
+
+
+            If Me.reviewDataGridView.SelectedRows.Count <> 1 Then
+                MessageBox.Show("Select a row to mark vehicle as Check-In.", ProductName _
+                                , MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            Else
+                userResponse = MessageBox.Show("Are you sure, you want to mark selected vehicle as Check-In?" _
+                                               , ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            End If
+
+            If userResponse = Windows.Forms.DialogResult.No Then Exit Sub
+
+            selectedVehicleQuery = From r In reviewDataGridView.SelectedRows.Cast(Of DataGridViewRow)() _
+                                   Select CType(r.Cells("VehicleId").Value, Integer)
+
+
+            MarkVehiclesAsCheckIn(selectedVehicleQuery.ToArray())
+
+            selectedVehicleQuery = Nothing
+        End Sub
+
+        Private Sub closeButton_Click(sender As Object, e As EventArgs) Handles closeButton.Click
+            Me.Close()
+        End Sub
+
+        Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+            Dim startDate As DateTime
+            Dim endDate As DateTime
+            Dim MediaView As DataView = New DataView(Processor.Data.Vehicle)
+
+            startDate = startdateTypeInDatePicker.Value.Value
+            endDate = enddateTypeInDatePicker.Value.Value
+            loadUnprocessVehicle(startDate, endDate)
+
+            'MediaView.RowFilter = "Ad_Date >= '" + startDate.ToString + "' AND  Ad_Date <= '" + endDate.ToString + "'"
+
+            'reviewDataGridView.DataSource = MediaView
+        End Sub
+
+      
+        Private Sub unProcessClearButton_Click(sender As Object, e As EventArgs) Handles unProcessClearButton.Click
+
+            startdateTypeInDatePicker.Value = System.DateTime.Today.AddMonths(-1)
+            enddateTypeInDatePicker.Value = System.DateTime.Today.AddDays(1)
+            reviewDataGridView.DataSource = Processor.Data.Vehicle
+        End Sub
+
+        Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+            clearRetMkt()
+            fillUnRetMktDataGrid(unregisteredStartdateTypeInDatePicker.Value.Value, unregisteredEnddateTypeInDatePicker.Value.Value)
+        End Sub
+
+        Private Sub ButtonRefresh_Click(sender As Object, e As EventArgs) Handles ButtonRefresh.Click
+            clearRetMkt()
+            fillUnRetMktDataGrid(unregisteredStartdateTypeInDatePicker.Value.Value, unregisteredEnddateTypeInDatePicker.Value.Value)
+        End Sub
+
+        Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles Button2.Click
+            Dim startdate, endDate As DateTime
+            startdateTypeInDatePicker.Value = System.DateTime.Today.AddMonths(-1)
+            enddateTypeInDatePicker.Value = System.DateTime.Today.AddDays(1)
+            startdate = startdateTypeInDatePicker.Value.Value
+            endDate = enddateTypeInDatePicker.Value.Value
+            loadUnprocessVehicle(startdate, endDate)
+        End Sub
+
+        Private Sub ReviewTabControl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ReviewTabControl.SelectedIndexChanged
+            If ReviewTabControl.SelectedIndex = 2 Then
+                Dim startdate, endDate As DateTime
+                startdateTypeInDatePicker.Value = System.DateTime.Today.AddMonths(-1)
+                enddateTypeInDatePicker.Value = System.DateTime.Today.AddDays(1)
+                startdate = startdateTypeInDatePicker.Value.Value
+                endDate = enddateTypeInDatePicker.Value.Value
+                loadUnprocessVehicle(startdate, endDate)
+            End If
+        End Sub
+    End Class
+
+End Namespace

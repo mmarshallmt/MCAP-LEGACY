@@ -1,0 +1,180 @@
+﻿Namespace UI
+
+  Public Class FamilyViewForm
+    Implements IForm
+
+
+    Private WithEvents m_familyViewProcessor As Processors.FamilyView
+
+
+    Public ReadOnly Property FamilyViewProcessor() As Processors.FamilyView
+      Get
+        Return m_familyViewProcessor
+      End Get
+    End Property
+
+
+
+    Private Sub LoadImagesInDataGrid()
+      Dim rowCount, vehicleId, pageCount As Integer
+      Dim imagePath As System.Text.StringBuilder
+      Dim frontPage, backPage As DataGridViewImageCell
+
+
+      imagePath = New System.Text.StringBuilder
+
+      For rowCount = 0 To familyDataGridView.RowCount - 1
+        imagePath.Remove(0, imagePath.Length)
+
+        frontPage = CType(familyDataGridView.Rows(rowCount).Cells("FrontPageDataGridViewImageColumn"), DataGridViewImageCell)
+        vehicleId = CType(familyDataGridView.Rows(rowCount).Cells("VehicleIdDataGridViewTextBoxColumn").Value, Integer)
+        pageCount = CType(familyDataGridView.Rows(rowCount).Cells("CheckInPageCountDataGridViewTextBoxColumn").Value, Integer)
+
+        imagePath.Append(VehicleImageFolderPath)
+        imagePath.Append(vehicleId.ToString())
+        imagePath.Append("\4\")
+        imagePath.Append(FamilyViewProcessor.GetVehicleImageFileName(vehicleId, 1))
+        imagePath.Append(".jpg")
+        frontPage.Value = New System.Drawing.Bitmap(imagePath.ToString())
+
+        imagePath.Remove(0, imagePath.Length)
+        backPage = CType(familyDataGridView.Rows(rowCount).Cells("BackPageDataGridViewImageColumn"), DataGridViewImageCell)
+
+        imagePath.Append(VehicleImageFolderPath)
+        imagePath.Append(vehicleId.ToString())
+        imagePath.Append("\4\")
+        imagePath.Append(FamilyViewProcessor.GetVehicleImageFileName(vehicleId, pageCount))
+        imagePath.Append(".jpg")
+        backPage.Value = New System.Drawing.Bitmap(imagePath.ToString())
+
+        frontPage = Nothing
+        backPage = Nothing
+      Next
+
+      imagePath = Nothing
+
+    End Sub
+
+
+#Region " IForm Implementation "
+
+    Public Event InitializingForm() Implements IForm.InitializingForm
+    Public Event FormInitialized() Implements IForm.FormInitialized
+
+    Public Event ApplyingUserCredentials() Implements IForm.ApplyingUserCredentials
+    Public Event UserCredentialsApplied() Implements IForm.UserCredentialsApplied
+
+    Public Sub ApplyUserCredentials() Implements IForm.ApplyUserCredentials
+
+    End Sub
+
+    Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+      RaiseEvent InitializingForm()
+
+      Me.FormState = formStatus
+
+      m_familyViewProcessor = New Processors.FamilyView
+      FamilyViewProcessor.Initialize()
+
+      familyDataGridView.DataSource = FamilyViewProcessor.FamilyDataSet.DisplayFamily
+
+      RaiseEvent FormInitialized()
+
+    End Sub
+
+#End Region
+
+
+    Public Sub LoadVehicles()
+
+      loadButton_Click(Me, New System.EventArgs)
+
+    End Sub
+
+
+    Private Sub closeButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles closeButton.Click
+
+      Me.Close()
+
+    End Sub
+
+
+    Private Sub loadButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles loadButton.Click
+      Dim vehicleId As Integer
+
+
+      If vehicleIdTextBox.Text.Trim().Length = 0 Then
+        MessageBox.Show("Specify vehicle to see all the vehicles in its family.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        vehicleIdTextBox.Focus()
+        Exit Sub
+
+      ElseIf Integer.TryParse(vehicleIdTextBox.Text, vehicleId) = False Then
+        MessageBox.Show("Vehicle Id should be numeric value.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        vehicleIdTextBox.Focus()
+        vehicleIdTextBox.SelectAll()
+        Exit Sub
+      End If
+
+      FamilyViewProcessor.Load(vehicleId)
+
+      If FamilyViewProcessor.FamilyDataSet.DisplayFamily.Count = 0 Then
+        MessageBox.Show("Vehicle Id not found.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+
+      Else
+        retailerNameLabel.Text = FamilyViewProcessor.GetRetailerName(vehicleId)
+        LoadImagesInDataGrid()
+      End If
+
+    End Sub
+
+
+    Private Sub familyButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles familyButton.Click
+      Dim familyId As Integer
+
+
+      If familyDataGridView.RowCount = 0 Then Exit Sub
+
+      familyId = CType(familyDataGridView.Rows(0).Cells("FamilyIDDataGridViewTextBoxColumn").Value, Integer)
+
+      FamilyViewProcessor.MarkFamilyAsReviewed(familyId)
+
+    End Sub
+
+
+    Private Sub splitFamilyButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles splitFamilyButton.Click
+      Dim rowCounter, familyId, vehicleId() As Integer
+
+
+      If familyDataGridView.RowCount < 2 Then
+        MessageBox.Show("There should be at least 2 vehicles to split them into separate families." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      ElseIf familyDataGridView.SelectedRows.Count = familyDataGridView.RowCount Then
+        MessageBox.Show("Can not assign new family to all vehicles falling into same family." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      End If
+
+      familyId = FamilyViewProcessor.GetNewFamily()
+
+      ReDim vehicleId(familyDataGridView.SelectedRows.Count - 1)
+
+      For rowCounter = 0 To familyDataGridView.SelectedRows.Count - 1
+        vehicleId(rowCounter) = CType(familyDataGridView.SelectedRows(rowCounter).Cells("VehicleIdDataGridViewTextBoxColumn").Value, Integer)
+      Next
+
+      FamilyViewProcessor.SplitFamily(familyId, vehicleId)
+
+      loadButton_Click(sender, e)
+
+    End Sub
+
+
+  End Class
+
+End Namespace

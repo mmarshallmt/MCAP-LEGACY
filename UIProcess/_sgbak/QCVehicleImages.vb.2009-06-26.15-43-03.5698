@@ -1,0 +1,659 @@
+﻿Namespace UI.Processors
+
+  Public Class QCVehicleImages
+    Inherits VehicleImageBase
+
+
+#Region " Events "
+
+
+    'Events can be extended to supply necessary information to consumer along with events.
+    'Information passed into event can be useful to consumer while processing the event.
+
+    Public Event Initializing()
+    Public Event Initialized()
+
+    Public Event LoadingData()
+    Public Event DataLoaded()
+
+    Public Event LoadingVehicle(ByVal vehicleId As Integer)
+    Public Event VehicleLoaded(ByVal vehicleRow As QCDataSet.vwCircularRow)
+    Public Event VehicleNotFound(ByVal vehicleId As Integer)
+    Public Event InvalidVehicleStatus(ByVal statusText As String)
+
+    Public Event LoadingMarkets()
+    Public Event MarketsLoaded()
+
+    Public Event LoadingPublications()
+    Public Event PublicationsLoaded()
+
+    Public Event LoadingRetailers()
+    Public Event RetailersLoaded()
+
+    Public Event ValidatingInputs()
+    Public Event InputsValidated()
+
+    Public Event SynchronizingVehicleInformation()
+    Public Event VehicleInformationSynchronized()
+
+    Public Event LoadingFamilyThumbnailPagesInformation()
+    Public Event FamilyThumbnailPagesInformationLoaded()
+
+
+#End Region
+
+
+    Private m_vehicleAdapter As QCDataSetTableAdapters.vwCircularTableAdapter
+    Private m_familyThumbnailAdapter As QCDataSetTableAdapters.FamilyThumbnailTableAdapter
+
+
+
+    Protected ReadOnly Property VehicleAdapter() As QCDataSetTableAdapters.vwCircularTableAdapter
+      Get
+        Return m_vehicleAdapter
+      End Get
+    End Property
+
+    Public ReadOnly Property FamilyThumbnailAdapter() As QCDataSetTableAdapters.FamilyThumbnailTableAdapter
+      Get
+        Return m_familyThumbnailAdapter
+      End Get
+    End Property
+
+
+
+    Sub New()
+      MyBase.new()
+
+      m_vehicleAdapter = New QCDataSetTableAdapters.vwCircularTableAdapter
+      m_familyThumbnailAdapter = New QCDataSetTableAdapters.FamilyThumbnailTableAdapter
+
+    End Sub
+
+    Public Sub Initialize()
+
+      'RaiseEvent Initializing()
+
+      SetAdaptersConnectionString()
+
+      'PageAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      'SizeAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      'PageCropAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      FamilyThumbnailAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      VehicleAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      'RaiseEvent Initialized()
+
+    End Sub
+
+
+
+    ''' <summary>
+    ''' Returns user name from user table based on supplied parameters.
+    ''' </summary>
+    ''' <param name="userId"></param>
+    ''' <remarks></remarks>
+    Public Function GetUserFullName(ByVal userId As Integer) As String
+      Dim userName As String
+      Dim tempAdapter As QCDataSetTableAdapters.UserTableAdapter
+
+
+      tempAdapter = New QCDataSetTableAdapters.UserTableAdapter()
+      tempAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      userName = tempAdapter.GetUserFullName(userId)
+      tempAdapter.Dispose()
+      tempAdapter = Nothing
+
+      Return userName
+
+    End Function
+
+    ''' <summary>
+    ''' Loads market based on sender of the supplied envelope.
+    ''' </summary>
+    ''' <param name="envelopeId"></param>
+    ''' <remarks></remarks>
+    Public Sub LoadMarket(ByVal envelopeId As Integer)
+
+      RaiseEvent LoadingMarkets()
+
+      LoadMarkets(envelopeId)
+
+      RaiseEvent MarketsLoaded()
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads market for media type Catalog.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadMarketsForCatalog()
+
+      RaiseEvent LoadingMarkets()
+
+      MarketAdapter.FillForCatalog(Data.Mkt)
+
+      RaiseEvent MarketsLoaded()
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Loads publication based on supplied market id.
+    ''' </summary>
+    ''' <param name="marketId"></param>
+    ''' <remarks></remarks>
+    Public Sub LoadPublication(ByVal marketId As Integer)
+
+      RaiseEvent LoadingPublications()
+
+      LoadPublications(marketId)
+
+      RaiseEvent PublicationsLoaded()
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads publication based on supplied market id.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadNAPublicationForQC()
+
+      RaiseEvent LoadingPublications()
+
+      PublicationAdapter.FillNA(Data.Publication)
+
+      RaiseEvent PublicationsLoaded()
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads retailer based on expectation table by filtering on supplied mediaId and marketId values.
+    ''' </summary>
+    ''' <param name="mediaId"></param>
+    ''' <param name="marketId"></param>
+    ''' <remarks></remarks>
+    Public Sub LoadRetailer(ByVal mediaId As Integer, ByVal marketId As Integer)
+
+      RaiseEvent LoadingRetailers()
+
+      LoadRetailers(mediaId, marketId)
+
+      RaiseEvent RetailersLoaded()
+
+    End Sub
+
+    ''' <summary>
+    ''' Copy page information between vehicles.
+    ''' </summary>
+    ''' <param name="sourceVehicleId">Use page information of this Vehicle to copy.</param>
+    ''' <param name="vehicleId">Copy page information for this vehicle.</param>
+    ''' <param name="formName">Name of the form used to copy page information.</param>
+    ''' <remarks></remarks>
+    Public Sub CopyPageInformation(ByVal sourceVehicleId As Integer, ByVal vehicleId As Integer, ByVal formName As String)
+      Dim pageAdapter As QCDataSetTableAdapters.PageTableAdapter
+      Dim vehicleIdList As String
+
+
+      pageAdapter = New QCDataSetTableAdapters.PageTableAdapter
+      pageAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      vehicleIdList = "<VehicleIdList><VehicleId>" + vehicleId.ToString() + "</VehicleId></VehicleIdList>"
+      pageAdapter.CopyVehiclePageInformation(sourceVehicleId, vehicleIdList, formName)
+
+      pageAdapter.Dispose()
+      pageAdapter = Nothing
+      vehicleIdList = Nothing
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads Page information from pages table based on supplied parameters.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <param name="familyId"></param>
+    ''' <remarks></remarks>
+    Public Sub LoadPagesInformationForFamilyThumbnail(ByVal vehicleId As Integer, ByVal familyId As Integer, ByVal pageNumber As Integer)
+
+      RaiseEvent LoadingFamilyThumbnailPagesInformation()
+
+      FamilyThumbnailAdapter.Fill(Data.FamilyThumbnail, pageNumber, familyId, vehicleId)
+
+      RaiseEvent FamilyThumbnailPagesInformationLoaded()
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Renames vehicle page images based on rows in Page data table. Looks for files in all page 
+    ''' image folders(1=Unsized, 2=Large, 3=Normal, 4=Thumbnail). 
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <remarks>
+    ''' Displays a messagebox is vehicle page image folder is not found.
+    ''' </remarks>
+    Public Sub RenameVehiclePageImageFiles(ByVal vehicleId As Integer)
+      Dim pageImageFolderCounter, pageImageFileCounter As Integer
+      Dim pageImageFolderPath As String
+      Dim pageImageFilePath As System.Text.StringBuilder
+
+
+      pageImageFilePath = New System.Text.StringBuilder()
+
+      For pageImageFolderCounter = 1 To 4
+        pageImageFolderPath = Nothing
+        If pageImageFolderCounter = 1 Then
+          pageImageFolderPath = GetVehicleImageFolderPath(vehicleId, VehicleImageSizeEnum.Unsized)
+        ElseIf pageImageFolderCounter = 2 Then
+          pageImageFolderPath = GetVehicleImageFolderPath(vehicleId, VehicleImageSizeEnum.Large)
+        ElseIf pageImageFolderCounter = 3 Then
+          pageImageFolderPath = GetVehicleImageFolderPath(vehicleId, VehicleImageSizeEnum.Normal)
+        Else
+          pageImageFolderPath = GetVehicleImageFolderPath(vehicleId, VehicleImageSizeEnum.Thumbnail)
+        End If
+
+        If My.Computer.FileSystem.DirectoryExists(pageImageFolderPath) = False Then
+          'MessageBox.Show("Unable to find page image folder for vehicle " + vehicleId.ToString() _
+          '                + " at " + Environment.NewLine + pageImageFolderPath _
+          '                , My.Application.Info.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+          Continue For
+        End If
+
+        For pageImageFileCounter = 0 To Data.Page.Count - 1
+          pageImageFilePath.Append(pageImageFolderPath)
+          pageImageFilePath.Append("\")
+          pageImageFilePath.Append(Data.Page(pageImageFileCounter).ReceivedOrder.ToString("000"))
+          pageImageFilePath.Append(ImageFileExtension)
+
+          If My.Computer.FileSystem.FileExists(pageImageFilePath.ToString()) Then
+            Dim newImageFileName As String
+            newImageFileName = Data.Page(pageImageFileCounter).ImageName + ImageFileExtension
+            My.Computer.FileSystem.RenameFile(pageImageFilePath.ToString(), newImageFileName)
+            newImageFileName = Nothing
+          End If
+
+          pageImageFilePath.Remove(0, pageImageFilePath.Length)
+        Next
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Updates vehicle status as QCed. Also updates QCDt and QCedBy columns of vehicle table.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <param name="formName"></param>
+    ''' <exception cref="System.ApplicationException">
+    ''' Throws exception if vehicleId mismatch occurs or status id not found for QC Completed status.
+    ''' </exception>
+    ''' <remarks></remarks>
+    Public Sub MarkVehicleAsQCed(ByVal vehicleId As Integer, ByVal formName As String)
+      Dim statusId As Nullable(Of Integer)
+
+
+      If Data.vwCircular(0).VehicleId <> vehicleId Then
+        Throw New System.ApplicationException("Vehicle information not found.")
+      End If
+
+      PageAdapter.mt_proc_UpdateVehiclePageImagesName(vehicleId, ImageNameGenerationField, formName)
+      LoadVehiclePagesInformation(vehicleId)
+
+      RenameVehiclePageImageFiles(vehicleId)
+
+      statusId = VehicleStatusAdapter.GetStatusId("QC Completed")
+      If statusId Is Nothing Then
+        Throw New System.ApplicationException("Vehicle status value not found.")
+      End If
+
+      Data.vwCircular(0).BeginEdit()
+      Data.vwCircular(0).QCDt = DateTime.Now
+      Data.vwCircular(0).QCedById = UserID
+      Data.vwCircular(0).StatusID = CType(statusId, Integer)
+      Data.vwCircular(0).FormName = formName
+      Data.vwCircular(0).EndEdit()
+
+      'VehicleAdapter.Update(Data.vwCircular)
+      Dim checkInPageCount, priority As Integer?
+      Dim startDt, endDt As DateTime?
+
+      If Data.vwCircular(0).IsStartDtNull() = False Then startDt = Data.vwCircular(0).StartDt
+      If Data.vwCircular(0).IsEndDtNull() = False Then endDt = Data.vwCircular(0).EndDt
+      If Data.vwCircular(0).IsCheckInPageCountNull() = False Then checkInPageCount = Data.vwCircular(0).CheckInPageCount
+      If Data.vwCircular(0).IsPriorityNull() = False Then priority = Data.vwCircular(0).Priority
+
+      With Data.vwCircular(0)
+        VehicleAdapter.UpdateQCedVehicle(.RetId, .MktId, .BreakDt, startDt, endDt, .LanguageId, .EventId, .ThemeId, .MediaId, .PublicationId, .FlashInd, .QCedById, .FamilyId, .CouponInd, Priority, checkInPageCount, .CheckInOccurrences, .StatusID, .FormName, .VehicleId)
+      End With
+
+    End Sub
+
+    ''' <summary>
+    ''' Returns index status text to display below qc status label on left top corner of the QC screen.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Overrides Function GetIndexStatusText(ByVal vehicleId As Integer) As String
+
+      Return VehicleAdapter.GetIndexStatusText(vehicleId).ToString()
+
+    End Function
+
+    ''' <summary>
+    ''' Returns qc status text to display below vehicleid label on left top corner of the QC screen.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetQCStatusText(ByVal vehicleId As Integer) As String
+
+      Return VehicleAdapter.GetQCStatusText(vehicleId).ToString()
+
+    End Function
+
+
+    Public Overrides Sub LoadDataSet()
+
+      RaiseEvent LoadingData()
+
+      MyBase.LoadDataSet()
+      SizeAdapter.Fill(Data.Size)
+
+      RaiseEvent DataLoaded()
+
+    End Sub
+
+    Public Overrides Sub LoadVehicle(ByVal vehicleId As Integer, ByVal formName As String)
+      Dim errorMessage As String
+
+
+      RaiseEvent LoadingVehicle(vehicleId)
+
+      VehicleAdapter.FillByVehicleId(Data.vwCircular, vehicleId, formName, errorMessage)
+
+      If Data.vwCircular.Count = 0 AndAlso errorMessage Is Nothing Then
+        RaiseEvent VehicleNotFound(vehicleId)
+      ElseIf Data.vwCircular.Count = 0 AndAlso errorMessage IsNot Nothing Then
+        RaiseEvent InvalidVehicleStatus(errorMessage)
+      Else
+        RaiseEvent VehicleLoaded(Data.vwCircular(0))
+      End If
+
+    End Sub
+
+
+#Region " Validation related methods "
+
+
+#Region " Business Logic related validation methods "
+
+
+    ''' <summary>
+    ''' Validates all columns of supplied DataRow.
+    ''' </summary>
+    ''' <param name="validateRow"></param>
+    ''' <returns>
+    ''' True if all columns contains valid inforamtion. False otherwise.
+    ''' </returns>
+    ''' <remarks></remarks>
+    Public Function AreDatesValid(ByVal validateRow As QCDataSet.vwCircularRow) As Boolean
+
+      If validateRow.RetRow IsNot Nothing Then
+        If validateRow.MediaRow.Descrip.ToUpper() = "ROP" _
+          AndAlso validateRow.RetRow.Descrip.ToUpper() = "WALMART" _
+          AndAlso validateRow.IsStartDtNull() = False _
+          AndAlso validateRow.StartDt.Subtract(validateRow.BreakDt).Days > 0 _
+          AndAlso validateRow.StartDt.Subtract(DateTime.Today).Days > 0 _
+        Then
+          AddErrorInformation(Data.Errors, "StartDt", "Start Date", "Sale Start date is greater than Ad date," _
+                              + " this is not allowed for a Walmart Ad. Please review and re-index.")
+          Return False
+        Else
+          RemoveErrorInformation(Data.Errors, "StartDt")
+        End If
+      End If
+
+      'If validateRow.HasErrors = False Then
+      '  ValidateRequiredRetailerInputs(validateRow)
+      '  IsStartDateValid(validateRow)
+      '  IsEndDateValid(validateRow)
+      'End If
+
+      If Data.Errors.Count = 0 AndAlso validateRow.IsPriorityNull() = False Then
+        If validateRow.Priority >= 0 Then
+          RemoveErrorInformation(Data.Errors, "Priority")
+          validateRow.SetColumnError("Priority", String.Empty)
+        Else
+          AddErrorInformation(Data.Errors, "Priority", "Priority", "Unexpected Market-Media-Retailer combination.")
+          validateRow.SetColumnError("Priority", "Unexpected Market-Media-Retailer combination.")
+          validateRow.SetPriorityNull()
+        End If
+      End If
+
+
+      Return (Not validateRow.HasErrors)
+
+    End Function
+
+
+    '''' <summary>
+    '''' Validates start date for its duration from Ad date. 
+    '''' </summary>
+    '''' <param name="validateRow"></param>
+    '''' <returns></returns>
+    '''' <remarks></remarks>
+    'Protected Function IsStartDateValid(ByVal validateRow As VehicleDataSet.vwCircularRow) As Boolean
+    '  Dim isDateValid As Boolean
+    '  Dim dateDifference As Integer
+
+
+    '  If validateRow.IsStartDtNull() Then
+    '    validateRow.SetColumnError("StartDt", "")
+    '    Return True
+    '  End If
+
+    '  isDateValid = True
+    '  dateDifference = validateRow.StartDt.Subtract(validateRow.BreakDt).Days
+
+    '  If (validateRow.MediaRow.Descrip.ToUpper() = "MAILER" _
+    '    Or validateRow.MediaRow.Descrip.ToUpper() = "CATALOG") _
+    '    And (dateDifference < -7 Or dateDifference > 7) _
+    '  Then
+    '    isDateValid = False
+    '    validateRow.SetColumnError("StartDt", "Start Date needs to be within 7 days of Ad Date.")
+
+    '  ElseIf validateRow.RetRow.TradeClassRow.Descrip.ToUpper() = "DEPT" _
+    '    And (dateDifference < -14 Or dateDifference > 14) _
+    '  Then
+    '    isDateValid = False
+    '    validateRow.SetColumnError("StartDt", "Start Date needs to be within 14 days of Ad Date.")
+
+    '  ElseIf dateDifference < -28 Or dateDifference > 28 Then
+    '    isDateValid = False
+    '    validateRow.SetColumnError("StartDt", "Start Date needs to be within 28 days of Ad Date.")
+
+    '  ElseIf dateDifference < -3 Or dateDifference > 3 Then
+    '    isDateValid = False
+    '    validateRow.SetColumnError("StartDt", "Start Date is not within 3 days of Ad Date.")
+    '  End If
+
+
+    '  Return isDateValid
+
+    'End Function
+
+    '''' <summary>
+    '''' Validates end date for its duration from start date and ad date.
+    '''' </summary>
+    '''' <param name="validateRow"></param>
+    '''' <returns></returns>
+    '''' <remarks></remarks>
+    'Public Function IsEndDateValid(ByVal validateRow As VehicleDataSet.vwCircularRow) As Boolean
+    '  Dim isDateValid As Boolean
+
+
+    '  If validateRow.IsEndDtNull() Then
+    '    validateRow.SetColumnError("EndDt", "")
+    '    Return True
+    '  End If
+
+    '  isDateValid = True
+
+    '  If validateRow.EndDt.Subtract(validateRow.StartDt).Days < 0 Then
+    '    validateRow.SetColumnError("EndDt", "End date cannot be prior to Start date.")
+    '    isDateValid = False
+    '  ElseIf validateRow.EndDt.Subtract(validateRow.StartDt).Days > 30 Then
+    '    validateRow.SetColumnError("EndDt", "End date is not within 30 days of Start date.")
+    '    isDateValid = False
+    '  ElseIf validateRow.BreakDt.Subtract(validateRow.EndDt).Days > 35 Then
+    '    validateRow.SetColumnError("EndDt", "End date is not within 35 days of Ad date.")
+    '    isDateValid = False
+    '  End If
+
+
+    '  Return isDateValid
+
+    'End Function
+
+
+#End Region
+
+
+    ''' <summary>
+    ''' Checks whether all columns contain valid values or not. Returns false if not, true otherwise.
+    ''' </summary>
+    ''' <param name="validateRow"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Overloads Function AreInputsValid(ByVal validateRow As QCDataSet.vwCircularRow) As Boolean
+      Dim areAllValid As Boolean
+
+
+      RaiseEvent ValidatingInputs()
+
+      areAllValid = True
+
+      'If validateRow.IsBreakDtNull() Then
+      '  validateRow.SetColumnError("BreakDt", "Ad date cannot be blank.")
+      '  areAllValid = False
+      'End If
+
+      'If validateRow.IsNull("EnvelopeId") Then
+      '  validateRow.SetColumnError("EnvelopeId", "Envelope is missing.")
+      'Else
+      '  validateRow.SetColumnError("EnvelopeId", "")
+      'End If
+
+      'If validateRow.IsNull("BreakDt") Then
+      '  validateRow.SetColumnError("BreakDt", "Ad date is not specified.")
+      'Else
+      '  validateRow.SetColumnError("BreakDt", "")
+      'End If
+
+      'If validateRow.IsNull("RetId") Then
+      '  validateRow.SetColumnError("RetId", "Retailer is not specified.")
+      'Else
+      '  validateRow.SetColumnError("RetId", "")
+      'End If
+
+      'If validateRow.IsNull("MktId") Then
+      '  validateRow.SetColumnError("MktId", "Market is not specified.")
+      'Else
+      '  validateRow.SetColumnError("MktId", "")
+      'End If
+
+      'If validateRow.IsNull("MediaId") Then
+      '  validateRow.SetColumnError("MediaId", "Media is not specified.")
+      'Else
+      '  validateRow.SetColumnError("MediaId", "")
+      'End If
+
+
+      If areAllValid Then areAllValid = AreDatesValid(validateRow)
+
+
+      RaiseEvent InputsValidated()
+
+      Return areAllValid
+
+    End Function
+
+
+#End Region
+
+
+    Public Overrides Sub SynchronizeVehicleInformation()
+
+      RaiseEvent SynchronizingVehicleInformation()
+
+      VehicleAdapter.Update(Data.vwCircular)
+
+      RaiseEvent VehicleInformationSynchronized()
+
+    End Sub
+
+
+    Public Function GetVehiclePageImageBackupFilePath(ByVal vehicleId As Integer, ByVal pageNumber As Integer) As String
+      Dim fileCounter As Integer
+      Dim imageFileFilter, imageFiles() As String
+      Dim pageImageBackupFilePath As System.Text.StringBuilder
+
+
+      pageImageBackupFilePath = New System.Text.StringBuilder
+      pageImageBackupFilePath.Append(VehicleImageBackupPath)
+      pageImageBackupFilePath.Append(vehicleId.ToString())
+
+      If System.IO.Directory.Exists(pageImageBackupFilePath.ToString()) = False Then
+        System.IO.Directory.CreateDirectory(pageImageBackupFilePath.ToString())
+        pageImageBackupFilePath.Append("\")
+        pageImageBackupFilePath.Append(pageNumber.ToString("000"))
+        pageImageBackupFilePath.Append("_a")
+        pageImageBackupFilePath.Append(ImageFileExtension)
+
+        Return pageImageBackupFilePath.ToString()
+      End If
+
+Retry:
+      imageFileFilter = pageNumber.ToString("000") + "_?" + ImageFileExtension
+      imageFiles = System.IO.Directory.GetFiles(pageImageBackupFilePath.ToString(), imageFileFilter)
+      pageImageBackupFilePath.Append("\")
+
+      For fileCounter = 0 To 26
+        pageImageBackupFilePath.Append(imageFileFilter)
+        pageImageBackupFilePath.Replace("?", Microsoft.VisualBasic.ChrW(97 + fileCounter))
+
+        If imageFiles.Contains(pageImageBackupFilePath.ToString()) = False Then
+          Exit For
+        End If
+
+        pageImageBackupFilePath.Remove(pageImageBackupFilePath.Length - imageFileFilter.Length, imageFileFilter.Length)
+      Next
+
+      If fileCounter = 26 Then
+        Dim userResponse As DialogResult
+
+        userResponse = MessageBox.Show("Unable to create backup file. To create backup file, remove some of the " _
+                                       + "existing files and click Retry button. To proceed without saving " _
+                                       + "image for backup, click Cancel button.", Application.ProductName _
+                                       , MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning)
+        If userResponse = DialogResult.Retry Then
+          pageImageBackupFilePath.Replace(imageFileFilter, "")
+          GoTo Retry
+        Else
+          pageImageBackupFilePath.Remove(0, pageImageBackupFilePath.Length)
+        End If
+      End If
+
+      Array.Clear(imageFiles, 0, imageFiles.Length)
+      imageFiles = Nothing
+      imageFileFilter = Nothing
+
+      Return pageImageBackupFilePath.ToString()
+
+    End Function
+
+
+  End Class
+
+
+End Namespace

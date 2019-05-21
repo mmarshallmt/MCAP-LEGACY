@@ -1,0 +1,423 @@
+﻿Imports System.Text
+Imports System.Data
+Imports System.Data.SqlClient
+
+Namespace UI.Processors
+    Public Class RequiredProcess
+        Inherits BaseClass
+
+        Public Event Initializing()
+        Public Event Initialized()
+        Public Event LoadingvehicleInformation()
+        Public Event vehicleInformationLoaded()
+
+        Private m_ReportDataSet As ReportsDataSet
+        Private m_retailerAdapter As ReportsDataSetTableAdapters.RetTableAdapter
+        Private m_marketAdapter As ReportsDataSetTableAdapters.MktTableAdapter
+        Private m_codeAdapter As ReportsDataSetTableAdapters.CodeTableAdapter
+        Private m_mediaAdapter As ReportsDataSetTableAdapters.MediaTableAdapter
+        Private m_tradeclassAdapter As ReportsDataSetTableAdapters.TradeClassListTableAdapter
+        Private m_languageAdapter As ReportsDataSetTableAdapters.LanguageTableAdapter
+        Private m_TempRetAdapter As ReportsDataSetTableAdapters.TempRetTableAdapter
+        Private m_displayVehicleAdapter As ReportsDataSetTableAdapters.VehicleTableAdapter
+        Private m_VehicleTable As ReportsDataset.VehicleDataTable
+        Private m_UnregisteredRetTableAdapter As ReportsDataSetTableAdapters.UnregisteredRetTableAdapter
+        Private m_UnregisteredRetMktTableAdapter As ReportsDataSetTableAdapters.unRegisteredRetMktTableAdapter
+
+        Sub New()
+            m_ReportDataSet = New ReportsDataSet
+            m_retailerAdapter = New ReportsDataSetTableAdapters.RetTableAdapter
+            m_marketAdapter = New ReportsDataSetTableAdapters.MktTableAdapter
+            m_mediaAdapter = New ReportsDataSetTableAdapters.MediaTableAdapter
+            m_tradeclassAdapter = New ReportsDataSetTableAdapters.TradeClassListTableAdapter
+            m_languageAdapter = New ReportsDataSetTableAdapters.LanguageTableAdapter
+            m_TempRetAdapter = New ReportsDataSetTableAdapters.TempRetTableAdapter
+            m_displayVehicleAdapter = New ReportsDataSetTableAdapters.VehicleTableAdapter
+            m_codeAdapter = New ReportsDataSetTableAdapters.CodeTableAdapter
+
+            m_VehicleTable = New ReportsDataSet.VehicleDataTable
+            m_UnregisteredRetTableAdapter = New ReportsDataSetTableAdapters.UnregisteredRetTableAdapter
+            m_UnregisteredRetMktTableAdapter = New ReportsDataSetTableAdapters.unRegisteredRetMktTableAdapter
+        End Sub
+
+        Public ReadOnly Property Data() As ReportsDataSet
+            Get
+                Return m_ReportDataSet
+            End Get
+        End Property
+
+        Public ReadOnly Property MediaAdapter() As ReportsDataSetTableAdapters.MediaTableAdapter
+            Get
+                Return m_mediaAdapter
+            End Get
+        End Property
+        Public ReadOnly Property TradeClassAdapter() As ReportsDataSetTableAdapters.TradeClassListTableAdapter
+            Get
+                Return m_tradeclassAdapter
+            End Get
+        End Property
+
+        Public ReadOnly Property LanguageAdapter() As ReportsDataSetTableAdapters.LanguageTableAdapter
+            Get
+                Return m_languageAdapter
+            End Get
+        End Property
+
+        Public ReadOnly Property CodeAdapter() As ReportsDataSetTableAdapters.CodeTableAdapter
+            Get
+                Return m_codeAdapter
+            End Get
+        End Property
+
+        Public ReadOnly Property RetailerAdapter() As ReportsDataSetTableAdapters.RetTableAdapter
+            Get
+                Return m_retailerAdapter
+            End Get
+        End Property
+        Public ReadOnly Property MarketAdapter() As ReportsDataSetTableAdapters.MktTableAdapter
+            Get
+                Return m_marketAdapter
+            End Get
+        End Property
+
+        Public ReadOnly Property TempRetAdapter() As ReportsDataSetTableAdapters.TempRetTableAdapter
+            Get
+                Return m_TempRetAdapter
+            End Get
+        End Property
+        Public ReadOnly Property UnregisteredRetTableAdapter() As ReportsDatasetTableAdapters.UnregisteredRetTableAdapter
+            Get
+                Return m_UnregisteredRetTableAdapter
+            End Get
+        End Property
+
+        Public ReadOnly Property UnregisteredRetMktTableAdapter() As ReportsDataSetTableAdapters.unRegisteredRetMktTableAdapter
+            Get
+                Return m_UnregisteredRetMktTableAdapter
+            End Get
+        End Property
+
+        Public ReadOnly Property DisplayVehicleAdapter() As ReportsDataSetTableAdapters.VehicleTableAdapter
+            Get
+                Return m_displayVehicleAdapter
+            End Get
+        End Property
+
+        Public ReadOnly Property VehicleTable() As ReportsDataSet.VehicleDataTable
+            Get
+                Return m_VehicleTable
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Initializes object of this class.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public Sub Initialize()
+
+            RaiseEvent Initializing()
+
+            UnregisteredRetTableAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            UnregisteredRetMktTableAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            MediaAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            TempRetAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            LanguageAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            TradeClassAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            TempRetAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            CodeAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            RetailerAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            MarketAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+            DisplayVehicleAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+            RaiseEvent Initialized()
+
+        End Sub
+
+        Public Sub FillMedia()
+            Dim tempRow As ReportsDataSet.MediaRow
+
+            MediaAdapter.Fill(Data.Media)
+
+            tempRow = Data.Media.NewMediaRow()
+            tempRow.SetMediaIDNull()
+            tempRow.Descrip = "All"
+
+            Data.Media.AddMediaRow(tempRow)
+            Data.Media.AcceptChanges()
+
+            tempRow = Nothing
+        End Sub
+
+        ''' <summary>
+        ''' Clears Ret DataTable and fills in retailer records having NULL in EndDt column.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public Sub FillRetailers()
+
+            RetailerAdapter.Fill(Data.Ret)
+
+        End Sub
+        Public Sub FillTradeClass()
+            TradeClassAdapter.Fill(Data.TradeClassList)
+        End Sub
+
+        Public Sub FillTempRet()
+            TempRetAdapter.Fill(Data.TempRet)
+        End Sub
+
+        ''' <summary>
+        ''' Loads records satisfying supplied parameters.
+        ''' </summary>
+        ''' <param name="retId"></param>
+        ''' <param name="mediaId"></param>
+        ''' <param name="breakDate"></param>
+        ''' <param name="dayRange"></param>
+        ''' <param name="showReviewed"></param>
+        ''' <remarks></remarks>
+        Public Sub Load(ByVal retId As Integer, ByVal mediaId As Integer, ByVal StartDate As DateTime, ByVal EndDate As DateTime)
+
+            RaiseEvent LoadingvehicleInformation()
+
+            If retId = 0 And mediaId = 0 Then
+
+                DisplayVehicleAdapter.GetTableVehicleData(Data.Vehicle, StartDate, EndDate)
+
+            ElseIf retId = 0 And mediaId > 0 Then
+
+                DisplayVehicleAdapter.GetTableVehicleDataByMediaId(Data.Vehicle, StartDate, EndDate, mediaId)
+
+            ElseIf retId > 0 And mediaId = 0 Then
+
+                DisplayVehicleAdapter.GetTableVehicleDataByRetId(Data.Vehicle, StartDate, EndDate, retId)
+
+            Else
+
+                DisplayVehicleAdapter.GetTableVehicleDataByAll(Data.Vehicle, StartDate, EndDate, mediaId, retId)
+            End If
+
+
+            RaiseEvent vehicleInformationLoaded()
+
+        End Sub
+
+
+
+        Public Sub UpdateVehicleRetailer(ByVal vehicleId As Object, ByVal retid As Integer)
+            Dim cmd As System.Data.SqlClient.SqlCommand
+            Dim obj As Object
+
+            cmd = New System.Data.SqlClient.SqlCommand
+
+            Try
+                With cmd
+                    .CommandText = "UPDATE Vehicle SET Retid = " + retid.ToString + " where Vehicleid = '" + vehicleId.ToString + "'"
+                    .CommandType = CommandType.Text
+                    .Connection = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+                    .Connection.Open()
+                    .ExecuteNonQuery()
+                End With
+            Catch ex As Exception
+                My.Application.Log.WriteException(ex)
+            Finally
+                If cmd.Connection.State <> ConnectionState.Closed Then cmd.Connection.Close()
+            End Try
+
+        End Sub
+
+        Public Sub UpdateUnregisterRetailerStatus(ByVal status As Object, ByVal retid As Integer)
+            Dim cmd As System.Data.SqlClient.SqlCommand
+            Dim obj As Object
+
+            cmd = New System.Data.SqlClient.SqlCommand
+
+            Try
+                With cmd
+                    .CommandText = "UPDATE RetStatus SET statusid = " + status.ToString + " where retid = '" + retid.ToString + "'"
+                    .CommandType = CommandType.Text
+                    .Connection = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+                    .Connection.Open()
+                    .ExecuteNonQuery()
+                End With
+            Catch ex As Exception
+                My.Application.Log.WriteException(ex)
+            Finally
+                If cmd.Connection.State <> ConnectionState.Closed Then cmd.Connection.Close()
+            End Try
+
+        End Sub
+
+        Public Sub InsertUnregisterRetailerStatus(ByVal status As Object, ByVal retid As Integer)
+            Dim cmd As System.Data.SqlClient.SqlCommand
+            Dim obj As Object
+
+            cmd = New System.Data.SqlClient.SqlCommand
+
+            Try
+                With cmd
+                    .CommandText = "insert into RetStatus (retid,statusid) values(" + retid.ToString + "," + status.ToString + ")"
+                    .CommandType = CommandType.Text
+                    .Connection = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+                    .Connection.Open()
+                    .ExecuteNonQuery()
+                End With
+            Catch ex As Exception
+                My.Application.Log.WriteException(ex)
+            Finally
+                If cmd.Connection.State <> ConnectionState.Closed Then cmd.Connection.Close()
+            End Try
+
+        End Sub
+        Public Function ifRetailerExist(ByVal retid As Integer) As Boolean
+            Dim stringvalue As String
+            Dim exist As Boolean = True
+
+            stringvalue = GetFieldValue("select retid from retStatus where retid=" + retid.ToString, "retid")
+            If String.IsNullOrEmpty(stringvalue) Then
+                exist = False
+            End If
+            Return exist
+        End Function
+
+
+        Public Sub UpdateUnregisterRetailerStatus(ByVal status As Object, ByVal retid As Integer, ByVal mktid As Integer)
+            Dim cmd As System.Data.SqlClient.SqlCommand
+            Dim obj As Object
+
+            cmd = New System.Data.SqlClient.SqlCommand
+
+            Try
+                With cmd
+                    .CommandText = "UPDATE RetMktStatus SET statusid = " + status.ToString + " where retid = '" + retid.ToString + "' and mktid='" + mktid.ToString() + "'"
+                    .CommandType = CommandType.Text
+                    .Connection = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+                    .Connection.Open()
+                    .ExecuteNonQuery()
+                End With
+            Catch ex As Exception
+                My.Application.Log.WriteException(ex)
+            Finally
+                If cmd.Connection.State <> ConnectionState.Closed Then cmd.Connection.Close()
+            End Try
+
+        End Sub
+
+        Public Sub InsertUnregisterRetailerStatus(ByVal status As Object, ByVal retid As Integer, ByVal mktid As Integer)
+            Dim cmd As System.Data.SqlClient.SqlCommand
+            Dim obj As Object
+
+            cmd = New System.Data.SqlClient.SqlCommand
+
+            Try
+                With cmd
+                    .CommandText = "insert into RetMktStatus (retid,mktid,statusid) values(" + retid.ToString + "," + mktid.ToString + "," + status.ToString + ")"
+                    .CommandType = CommandType.Text
+                    .Connection = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+                    .Connection.Open()
+                    .ExecuteNonQuery()
+                End With
+            Catch ex As Exception
+                My.Application.Log.WriteException(ex)
+            Finally
+                If cmd.Connection.State <> ConnectionState.Closed Then cmd.Connection.Close()
+            End Try
+
+        End Sub
+
+        Public Sub InsertBypassSenderVehicleHistory(ByVal vehicleId As Integer)
+            Dim cmd As System.Data.SqlClient.SqlCommand
+            Dim obj As Object
+
+            cmd = New System.Data.SqlClient.SqlCommand
+
+            Try
+                With cmd
+                    .CommandText = "insert into BypassSenderVehicleIndex (vehicleId,SentDt) values(" + vehicleId.ToString + ",'" + Now().ToString + "')"
+                    .CommandType = CommandType.Text
+                    .Connection = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+                    .Connection.Open()
+                    .ExecuteNonQuery()
+                End With
+            Catch ex As Exception
+                My.Application.Log.WriteException(ex)
+            Finally
+                If cmd.Connection.State <> ConnectionState.Closed Then cmd.Connection.Close()
+            End Try
+
+        End Sub
+
+        Public Function ifRetailerExist(ByVal retid As Integer, ByVal mktid As Integer) As Boolean
+            Dim stringvalues As String
+            Dim exist As Boolean = True
+
+            stringvalues = GetFieldValue("select retid from retMktStatus where retid=" + retid.ToString + " and mktid=" + mktid.ToString, "retid")
+            If String.IsNullOrEmpty(stringvalues) Then
+                exist = False
+            End If
+            Return exist
+        End Function
+
+
+        Public Sub DeleteTempRetailer(ByVal vehicleId As Object)
+            Dim cmd As System.Data.SqlClient.SqlCommand
+            Dim obj As Object
+
+            cmd = New System.Data.SqlClient.SqlCommand
+
+            Try
+                With cmd
+                    .CommandText = "delete from UnRegisteredRetailers where Vehicleid = '" + vehicleId.ToString + "'"
+                    .CommandType = CommandType.Text
+                    .Connection = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+                    .Connection.Open()
+                    .ExecuteNonQuery()
+                End With
+            Catch ex As Exception
+                My.Application.Log.WriteException(ex)
+            Finally
+                If cmd.Connection.State <> ConnectionState.Closed Then cmd.Connection.Close()
+            End Try
+
+        End Sub
+
+
+        Public Function InsertRetailer(ByVal Descrip As String, ByVal tradeclass As Integer) As Integer
+
+            Dim con As New SqlConnection
+            Dim cmd As New SqlCommand
+            Dim cm As New SqlCommand
+            Dim insQry As String = ""
+            Dim retid As Integer
+
+            Try
+
+                insQry = "INSERT INTO [Ret]([Descrip])"
+                insQry = insQry & "VALUES (@Descrip);"
+                insQry = insQry & "SELECT @newPkId = retid FROM [Ret] WHERE retid=SCOPE_IDENTITY()"
+                con.ConnectionString = GetConnectionStringForAppDB()
+                con.Open()
+                cmd.Connection = con
+                cmd.CommandType = CommandType.Text
+                cmd.CommandText = insQry
+                cmd.Parameters.AddWithValue("@Descrip", Descrip)
+                cmd.Parameters.AddWithValue("@tradeclassid", tradeclass)
+                cmd.Parameters.AddWithValue("@StartDt", Now())
+                cmd.Parameters.AddWithValue("@Priority", 5)
+                cmd.Parameters.AddWithValue("@Languageid", 1)
+                Dim param As New SqlParameter("@newPkId", SqlDbType.Int)
+                param.Direction = ParameterDirection.Output
+                cmd.Parameters.Add(param)
+                cmd.ExecuteNonQuery()
+                retid = CInt(cmd.Parameters.Item("@newPkId").Value)
+
+            Catch ex As SqlException
+                Throw New Exception(ex.Message)
+            End Try
+
+            Return retid
+
+        End Function
+
+    End Class
+
+
+End Namespace

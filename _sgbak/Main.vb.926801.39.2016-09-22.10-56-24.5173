@@ -1,0 +1,927 @@
+﻿Module Main
+
+
+#Region " Member Variables "
+
+  Private m_barcodePrinterName As String
+  Private m_appParams As System.Collections.Specialized.StringDictionary
+  Private m_appUserInfo As MCAP.UserRolesDataSet.UserRow
+
+#End Region
+
+
+#Region " Properties for Application User "
+
+  Public ReadOnly Property User() As MCAP.UserRolesDataSet.UserRow
+    Get
+      Return m_appUserInfo
+    End Get
+  End Property
+
+#End Region
+
+#Region " Properties for Application Parameters "
+
+  ''' <summary>
+  ''' Gets collection of application parameters.
+  ''' </summary>
+  ''' <value>System.Collections.Specialized.NameValueCollection</value>
+  ''' <returns>Collection containing application parameters.</returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property AppParams() As System.Collections.Specialized.StringDictionary
+    Get
+      Return m_appParams
+    End Get
+  End Property
+    ''' <summary>
+    ''' Gets database server ImageBorderColor for application database.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property ImageBorderColor() As String
+        Get
+            Return AppParams.Item("ImageBorderColor")
+        End Get
+    End Property
+  ''' <summary>
+  ''' Gets database server name/IP for application database.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property AppDatabaseServer() As String
+    Get
+      Return AppParams.Item("Database_SQLServer")
+    End Get
+    End Property
+
+    Public ReadOnly Property ACServerName() As String 'LE
+        Get
+            Return AppParams.Item("ACDatabase_SQLServer") ' name before underscore is what is in the appparameters table 
+        End Get
+    End Property
+
+  ''' <summary>
+  ''' Gets application database name.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property AppDatabaseName() As String
+    Get
+      Return AppParams.Item("Database_SQLDatabase")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets database server name/IP for application log database.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property LogDatabaseServer() As String
+    Get
+      Return AppParams.Item("LogDatabase_SQLServer")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets application log database name.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property LogDatabaseName() As String
+    Get
+      Return AppParams.Item("LogDatabase_SQLDatabase")
+    End Get
+    End Property
+
+
+  ''' <summary>
+  ''' Gets barcode printer name.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks>
+  ''' If user settings contains information about barcode printer, that value is returned.
+  ''' Otherwise value stored in database will be returned.
+  ''' </remarks>
+  Public ReadOnly Property BarcodePrinterName() As String
+    Get
+      If m_barcodePrinterName Is Nothing OrElse m_barcodePrinterName.Trim().Length = 0 Then
+        Return AppParams.Item("BarcodePrinterName")
+      Else
+        Return m_barcodePrinterName
+      End If
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets web domain name to view published records with images.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property WebDomainName() As String
+    Get
+      Return AppParams.Item("WebDomainName")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets user name to login on website to view published records with images.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property WebDomainUser() As String
+    Get
+      Return AppParams.Item("WebDomainUser")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets password to login on website to view published records with images.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property WebDomainPassword() As String
+    Get
+      Return AppParams.Item("WebDomainUser")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets path to vehicle image folder.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property VehicleImageFolderPath() As String
+    Get
+      Return AppParams.Item("VehicleImageFolder")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets maximum number of non filtered rows allowed on screen.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks>Created for Maintenance screen.</remarks>
+  Public ReadOnly Property MaximumNonFilteredRowsAllowed() As Integer
+    Get
+      Dim rowCount As Integer
+
+      If Integer.TryParse(AppParams.Item("MaximumNonFilteredRows"), rowCount) = False Then
+        rowCount = 0
+      End If
+
+      Return rowCount
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets image rotation angle. This is used while rotating image using L or R button.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property ImageRotationAngle() As Integer
+    Get
+      Dim rotationAngle As Integer
+
+      If Integer.TryParse(AppParams.Item("ImageRotationAngle"), rotationAngle) = False Then
+        rotationAngle = 0
+      End If
+
+      Return rotationAngle
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets extention for page image file.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property ImageFileExtension() As String
+    Get
+      Return AppParams.Item("ImageFileExtension")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets background color for page image.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks>&amp;HFFFFFF same as 16777215 same as RGB(255, 255, 255).</remarks>
+  Public ReadOnly Property ImageBackgroundColor() As UInteger
+    Get
+      Dim bgColor As UInteger
+
+      If UInteger.TryParse(AppParams.Item("ImageBackgroundColor"), bgColor) = False Then
+        bgColor = 0
+      End If
+
+      Return bgColor
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets color to be filled into the area to be removed from page image. 
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property ImageDeleteColor() As UInteger
+    Get
+      Dim deleteColor As UInteger
+
+      If UInteger.TryParse(AppParams.Item("ImageDeleteColor"), deleteColor) = False Then
+        deleteColor = 0
+      End If
+
+      Return deleteColor
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets image compression value, used while saving image.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property ImageCompression() As Short
+    Get
+      Dim compression As Short
+
+      If Short.TryParse(AppParams.Item("ImageCompression"), compression) = False Then
+        compression = 0
+      End If
+
+      Return compression
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets flag whether to ask user for resequencing images or not.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property AskToResequenceImages() As Boolean
+    Get
+      Dim askToResequence As Boolean
+
+      If Boolean.TryParse(AppParams.Item("AskToResequenceImages"), askToResequence) = False Then
+        askToResequence = False
+      End If
+
+      Return askToResequence
+    End Get
+  End Property
+
+  '''' <summary>
+  '''' Gets flag indicating that once image is saved successfully, whether 
+  '''' application should load next page automatically or not.
+  '''' </summary>
+  '''' <value></value>
+  '''' <returns></returns>
+  '''' <remarks></remarks>
+  'Public ReadOnly Property AutoForwardOnSave() As Boolean
+  '  Get
+  '    Dim autoForward As Boolean
+
+  '    If Boolean.TryParse(AppParams.Item("AutoForwardOnSave"), autoForward) = False Then
+  '      autoForward = False
+  '    End If
+
+  '    Return autoForward
+  '  End Get
+  'End Property
+
+  ''' <summary>
+  ''' Gets Scan Tracker Destination for images
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property ScanTrackerDestination() As String
+    Get
+      Return AppParams.Item("ScanTrackerDestination")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets image file format value. Used while saving image file.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks>
+  ''' Values should belong to LEADLib.FileConstants enum. Default value used 
+  ''' is 10, that is LEADLib.FileConstants.FILE_JFIF
+  ''' </remarks>
+  Public ReadOnly Property ImageFileFormat() As Short
+    Get
+      Dim fileFormat As Short
+
+      If Short.TryParse(AppParams.Item("ImageFileFormat"), fileFormat) = False Then
+        fileFormat = 0
+      End If
+
+      Return fileFormat
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets value for bits per pixel, which is used while saving image file.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property BITsPerPixel() As Short
+    Get
+      Dim bits As Short
+
+      If Short.TryParse(AppParams.Item("BITsPerPixel"), bits) = False Then
+        bits = 0
+      End If
+
+      Return bits
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets path to root folder used to store page image before overwriting with its manipulated version from screen.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property VehicleImageBackupPath() As String
+    Get
+      Return AppParams.Item("ImageBackupRootFolderPath")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets height of the image in grid.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property ImageHeightInGrid() As Integer
+    Get
+      Dim height As Integer
+
+      If Integer.TryParse(AppParams.Item("ImageHeightInGrid"), height) = False Then
+        height = 0
+      End If
+
+      Return height
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets width of the image in grid.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property ImageWidthInGrid() As Integer
+    Get
+      Dim width As Integer
+
+      If Integer.TryParse(AppParams.Item("ImageWidthInGrid"), width) = False Then
+        width = 0
+      End If
+
+      Return width
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets flag value indicating, while displaying resized image in grid, should its scale be maintained or not.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property MaintainAspectRatioInGrid() As Boolean
+    Get
+      Dim maintainScale As Boolean
+
+      If Boolean.TryParse(AppParams.Item("MaintainAspectRatioInGrid"), maintainScale) = False Then
+        maintainScale = False
+      End If
+
+      Return maintainScale
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets field column value to be used while generating image name. 
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property ImageNameGenerationField() As String
+    Get
+      Return AppParams.Item("ImageNameGenerationField")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets folder name used to store unsized(scanned) page image.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property UnsizedPageImageFolderName() As String
+    Get
+      Return AppParams.Item("UnsizedPageImageFolder")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets folder name used to store large sized page image.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property FullSizedPageImageFolderName() As String
+    Get
+      Return AppParams.Item("FullSizedPageImageFolder")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets folder name used to store normal sized page image.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property MidSizedPageImageFolderName() As String
+    Get
+      Return AppParams.Item("MidSizedPageImageFolder")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets folder name used to store small sized page image.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property ThumbSizedPageImageFolderName() As String
+    Get
+      Return AppParams.Item("ThumbSizedPageImageFolder")
+    End Get
+  End Property
+
+  ''' <summary>
+  ''' Gets Server name or IP, where the MTIDE database is hosted.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property MTIDEDBServerName() As String
+    Get
+      Return AppParams.Item("MTIDEDBServerName")
+    End Get
+    End Property
+
+
+    
+
+    ''' <summary>
+    ''' Gets application MTIDE database name.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property MTIDEDatabaseName() As String
+        Get
+            Return AppParams.Item("MTIDEDatabase")
+        End Get
+    End Property
+
+
+    ''' <summary>
+    ''' Gets Server name or IP, where the Social Media database is hosted.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property SocialDBServerName() As String
+        Get
+            Return AppParams.Item("SocialDBServerName")
+        End Get
+    End Property
+
+
+
+
+    ''' <summary>
+    ''' Gets application Social Media database name.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property SocialDatabaseName() As String
+        Get
+            Return AppParams.Item("SocialDatabase")
+        End Get
+    End Property
+
+  ''' <summary>
+  ''' Gets installation path for winzip commandline utility.
+  ''' </summary>
+  ''' <value></value>
+  ''' <returns></returns>
+  ''' <remarks></remarks>
+  Public ReadOnly Property WinZipInstallationPath() As String
+    Get
+      Return AppParams.Item("WinZipInstallationPath")
+    End Get
+    End Property
+
+    Public ReadOnly Property RemoteFolder() As String
+        Get
+            Return AppParams.Item("RemoteFolder")
+        End Get
+    End Property
+
+
+
+    ''' <summary>
+    ''' Gets Server name or IP, where Adcomparison database is hosted.//LE
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property ADCBServerName() As String
+        Get
+            Return AppParams.Item("BATMAN")
+        End Get
+    End Property
+
+
+    ''' <summary>
+    ''' Gets application database name.//LE
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property ADCDatabaseName() As String
+        Get
+            Return AppParams.Item("ACDatabase_SQLDatabase")
+        End Get
+    End Property
+
+  '''' <summary>
+  '''' Gets path to ErrorsCorrectedReport.rdlc file relative to application.
+  '''' </summary>
+  '''' <value></value>
+  '''' <returns></returns>
+  '''' <remarks></remarks>
+  'Public ReadOnly Property ErrorsCorrectedReportFilePath() As String
+  '  Get
+  '    Return My.Settings.ErrorsCorrectedReport
+  '  End Get
+  'End Property
+
+  '''' <summary>
+  '''' Gets path to FamilyExpectationReport.rdlc file relative to application.
+  '''' </summary>
+  '''' <value></value>
+  '''' <returns></returns>
+  '''' <remarks></remarks>
+  'Public ReadOnly Property FamilyExpectationReportFilePath() As String
+  '  Get
+  '    Return My.Settings.FamilyExpectationReport
+  '  End Get
+  'End Property
+
+  '''' <summary>
+  '''' Gets path to DropFamilyReport.rdlc file relative to application.
+  '''' </summary>
+  '''' <value></value>
+  '''' <returns></returns>
+  '''' <remarks></remarks>
+  'Public ReadOnly Property DropExpectationReportFilePath() As String
+  '  Get
+  '    Return My.Settings.DropExpectationReport
+  '  End Get
+  'End Property
+
+  '''' <summary>
+  '''' Gets path to PackageExpectation_ReceivedReport.rdlc file relative to application.
+  '''' </summary>
+  '''' <value></value>
+  '''' <returns></returns>
+  '''' <remarks></remarks>
+  'Public ReadOnly Property PackageExpectationReceivedReportFilePath() As String
+  '  Get
+  '    Return My.Settings.PackageExpectationReceivedReport
+  '  End Get
+  'End Property
+
+  '''' <summary>
+  '''' Gets path to PackageExpectation_NotReceivedReport.rdlc file relative to application.
+  '''' </summary>
+  '''' <value></value>
+  '''' <returns></returns>
+  '''' <remarks></remarks>
+  'Public ReadOnly Property PackageExpectationNotReceivedReportFilePath() As String
+  '  Get
+  '    Return My.Settings.PackageExpectationNotReceivedReport
+  '  End Get
+  'End Property
+
+#End Region
+
+
+
+  Public Sub SetBarcodePrinterName(ByVal printerName As String)
+    m_barcodePrinterName = printerName
+  End Sub
+
+  Public Sub LoadUserSettings()
+    Dim userResponse As DialogResult
+    Dim appVarStorage As ApplicationVariableStorage = New ApplicationVariableStorage
+
+
+    appVarStorage.ReadFromFile()
+    m_barcodePrinterName = appVarStorage.LoadValue("BarcodePrinterName", BarcodePrinterName)
+
+    If m_barcodePrinterName Is Nothing OrElse m_barcodePrinterName.Trim().Length = 0 Then
+      Dim printerList As UI.PrinterSelectionForm
+
+
+      MessageBox.Show("There isn't any printer specified for printing barcode label. You must" _
+                      + " select one to continue with this application." _
+                      , Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+      printerList = New UI.PrinterSelectionForm()
+      printerList.Show()
+      printerList.LoadPrinterList()
+      printerList.Hide()
+      userResponse = printerList.ShowDialog()
+      printerList.Dispose()
+      printerList = Nothing
+    End If
+
+  End Sub
+
+
+#Region " Functions "
+
+
+  ''' <summary>
+  ''' Sets user row to a property.
+  ''' </summary>
+  ''' <param name="userInformation"></param>
+  ''' <remarks></remarks>
+  Public Sub SetApplicationUserInformation(ByVal userInformation As MCAP.UserRolesDataSet.UserRow)
+    m_appUserInfo = userInformation
+  End Sub
+
+
+  ''' <summary>
+    ''' Prepares database connection string for MCAPConfig database.
+  ''' </summary>
+  ''' <remarks></remarks>
+  Private Function GetConnectionStringForConfigDB() As String
+    Dim connectionString As String
+    Dim connectionStringBuilder As System.Text.StringBuilder
+
+
+    connectionStringBuilder = New System.Text.StringBuilder
+    connectionStringBuilder.Append(My.Settings.ConnectionString)
+    connectionStringBuilder.Replace("#ServerName#", My.Settings.ServerName)
+    connectionStringBuilder.Replace("#DatabaseName#", My.Settings.DatabaseName)
+
+    connectionString = connectionStringBuilder.ToString()
+
+    connectionStringBuilder = Nothing
+
+    Return connectionString
+
+  End Function
+
+  ''' <summary>
+  ''' Prepares application parameters collection based on fetched application 
+  ''' parameters. Application parameters are stored in AppParams.
+  ''' </summary>
+  ''' <returns>True, if application parameters are loaded successfully, false 
+  ''' otherwise</returns>
+  Public Function PrepareAppParamsCollection() As Boolean
+    Dim isCollectionPrepared As Boolean
+    Dim configDBConn As System.Data.SqlClient.SqlConnection
+    Dim readerCommand As System.Data.SqlClient.SqlCommand
+    Dim parameterReader As System.Data.SqlClient.SqlDataReader
+
+
+    isCollectionPrepared = False
+    configDBConn = New System.Data.SqlClient.SqlConnection
+    readerCommand = New System.Data.SqlClient.SqlCommand
+
+    If m_appParams Is Nothing Then
+      m_appParams = New System.Collections.Specialized.StringDictionary
+    Else
+      m_appParams.Clear()
+    End If
+
+    configDBConn.ConnectionString = GetConnectionStringForConfigDB()
+    Trace.WriteLine("Main.PrepareAppParamsCollection():Config DB Connection String = " + configDBConn.ConnectionString)
+    readerCommand.Connection = configDBConn
+    readerCommand.CommandText = "SELECT ParamName, ParamValue, DatabaseParameterId, SQLServer, SQLDatabase " _
+                                + "FROM AppParamView " _
+                                + "WHERE AppName='" + My.Settings.ApplicationName + "' " _
+                                + "ORDER BY ParamName"
+
+    Try
+      configDBConn.Open()
+      parameterReader = readerCommand.ExecuteReader(CommandBehavior.CloseConnection)
+
+      If parameterReader.HasRows() = False Then
+        parameterReader.Close()
+        Exit Function
+      End If
+
+      While parameterReader.Read()
+        'If DatabaseParameterID is NULL 
+        If parameterReader.IsDBNull(parameterReader.GetOrdinal("DatabaseParameterId")) Then
+          AppParams.Add(parameterReader.GetString(parameterReader.GetOrdinal("ParamName")), parameterReader.GetString(parameterReader.GetOrdinal("ParamValue")))
+        Else
+          AppParams.Add(parameterReader.GetString(parameterReader.GetOrdinal("ParamName")) + "_SQLServer", parameterReader.GetString(parameterReader.GetOrdinal("SQLServer")))
+          AppParams.Add(parameterReader.GetString(parameterReader.GetOrdinal("ParamName")) + "_SQLDatabase", parameterReader.GetString(parameterReader.GetOrdinal("SQLDatabase")))
+        End If
+      End While
+
+      parameterReader.Close()
+      If configDBConn.State <> ConnectionState.Closed Then configDBConn.Close()
+      readerCommand.Dispose()
+
+      isCollectionPrepared = True
+
+    Catch ex As SqlClient.SqlException When configDBConn.State <> ConnectionState.Open
+      isCollectionPrepared = False
+      Trace.TraceError("Main.PrepareAppParamsCollection():Unable to open database connection. Message=" + ex.Message, New Object() {configDBConn.ConnectionString, "ConnectionState=", configDBConn.State, "ErrorClass=", ex.Class, "Procedure=", ex.Procedure, "LineNumber=", ex.LineNumber, "SQLErrorNumber=", ex.State, "ErrorNumber=", ex.Number, "Source=", ex.Source})
+      MessageBox.Show("Unable to connect with database.", _
+                      Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+    Catch ex As SqlClient.SqlException When parameterReader Is Nothing
+      isCollectionPrepared = False
+      Trace.TraceError("Main.PrepareAppParamsCollection():Unable to load application settings into reader. Message=" + ex.Message, New Object() {configDBConn.ConnectionString, "ConnectionState=", configDBConn.State, "CommandText=", readerCommand.CommandText, "ErrorClass=", ex.Class, "Procedure=", ex.Procedure, "LineNumber=", ex.LineNumber, "SQLErrorNumber=", ex.State, "ErrorNumber=", ex.Number, "Source=", ex.Source})
+      MessageBox.Show("Unable to load application settings.", _
+                      Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+    Catch ex As SqlClient.SqlException
+      isCollectionPrepared = False
+      parameterReader.Close()
+      Trace.TraceError("Main.PrepareAppParamsCollection():Unable to load parameters into collection. Message=" + ex.Message, New Object() {"ErrorClass=", ex.Class, "Procedure=", ex.Procedure, "LineNumber=", ex.LineNumber, "SQLErrorNumber=", ex.State, "ErrorNumber=", ex.Number, "Source=", ex.Source})
+      MessageBox.Show("Error has occured while loading application settings. Unable to load all application settings.", _
+                      Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+    Catch ex As Exception
+      isCollectionPrepared = False
+      Trace.TraceError(String.Format("Main.PrepareAppParamsCollection():Unknown exception. Message={0}", ex.Message), New Object() {configDBConn.ConnectionString, "ConnectionState=", configDBConn.State, "CommandText=", readerCommand.CommandText, "AppParams.Count=", AppParams.Count})
+      MessageBox.Show("Error has occured while loading application settings. Unable to load application settings.", _
+                      Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+    Finally
+      If configDBConn.State <> ConnectionState.Closed Then configDBConn.Close()
+      readerCommand.Dispose()
+      configDBConn.Dispose()
+
+      parameterReader = Nothing
+      readerCommand = Nothing
+      configDBConn = Nothing
+
+    End Try
+
+    Return isCollectionPrepared
+
+  End Function
+
+  ''' <summary>
+    ''' Returns database connection string for application database.
+  ''' </summary>
+  ''' <remarks></remarks>
+  Public Function GetConnectionStringForAppDB() As String
+    Dim connectionString As String
+    Dim connectionStringBuilder As System.Text.StringBuilder
+
+
+    connectionStringBuilder = New System.Text.StringBuilder
+    connectionStringBuilder.Append(My.Settings.ConnectionString)
+    connectionStringBuilder.Replace("#ServerName#", AppDatabaseServer)
+    connectionStringBuilder.Replace("#DatabaseName#", AppDatabaseName)
+
+    connectionString = connectionStringBuilder.ToString()
+    connectionStringBuilder = Nothing
+
+    Return connectionString
+
+    End Function
+
+
+  ''' <summary>
+  ''' Prepares database connection sring for MCAPLog database.
+  ''' </summary>
+  ''' <remarks></remarks>
+  Public Function GetConnectionStringForLogDB() As String
+    Dim connectionString As String
+    Dim connectionStringBuilder As System.Text.StringBuilder
+
+
+    connectionStringBuilder = New System.Text.StringBuilder
+    connectionStringBuilder.Append(My.Settings.ConnectionString)
+    connectionStringBuilder.Replace("#ServerName#", LogDatabaseServer)
+    connectionStringBuilder.Replace("#DatabaseName#", LogDatabaseName)
+    connectionString = connectionStringBuilder.ToString()
+
+    connectionStringBuilder = Nothing
+
+    Return connectionString
+
+    End Function
+
+
+    ''' <summary>
+    ''' Prepares database connection string for MCAPIde database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Function GetConnectionStringForMtideDB() As String
+        Dim connectionString As String
+        Dim connectionStringBuilder As System.Text.StringBuilder
+
+
+        connectionStringBuilder = New System.Text.StringBuilder
+        connectionStringBuilder.Append(My.Settings.ConnectionString)
+        connectionStringBuilder.Replace("#ServerName#", MTIDEDBServerName)
+        connectionStringBuilder.Replace("#DatabaseName#", MTIDEDatabaseName)
+        connectionString = connectionStringBuilder.ToString()
+
+        connectionStringBuilder = Nothing
+
+        Return connectionString
+
+    End Function
+
+
+    ''' <summary>
+    ''' Prepares database connection string for SocialMedia database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Function GetConnectionStringForSocialDB() As String
+        Dim connectionString As String
+        Dim connectionStringBuilder As System.Text.StringBuilder
+
+        connectionStringBuilder = New System.Text.StringBuilder
+        connectionStringBuilder.Append(My.Settings.ConnectionString)
+        connectionStringBuilder.Replace("#ServerName#", SocialDBServerName)
+        connectionStringBuilder.Replace("#DatabaseName#", SocialDatabaseName)
+
+        connectionString = connectionStringBuilder.ToString()
+        connectionStringBuilder = Nothing
+
+        Return connectionString
+
+    End Function
+
+
+    ''' <summary>
+    ''' Prepares database connection string for AdComparison database. //LE
+    ''' </summary>
+    ''' <remarks></remarks>
+    ''' 
+    Public Function GetADCEntryConnectionString() As String
+        Dim connectionString As String
+        Dim connectionStringBuilder As System.Text.StringBuilder
+
+        connectionStringBuilder = New System.Text.StringBuilder
+        connectionStringBuilder.Append(My.Settings.ConnectionString) ''Using ConnectionString instead of direct conn in case of DB changes to read from config db
+        connectionStringBuilder.Replace("#ServerName#", ACServerName)
+        connectionStringBuilder.Replace("#DatabaseName#", ADCDatabaseName)
+        connectionStringBuilder.Replace("SSPI", "True")
+
+        connectionString = connectionStringBuilder.ToString()
+        connectionStringBuilder = Nothing
+
+        Return connectionString
+
+    End Function
+
+
+#End Region
+
+
+
+
+End Module

@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="BypassVehicleDataSet" targetNamespace="http://tempuri.org/BypassVehicleDataSet.xsd" xmlns:mstns="http://tempuri.org/BypassVehicleDataSet.xsd" xmlns="http://tempuri.org/BypassVehicleDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="MCAPConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="MCAPConnectionString (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.MCAP.My.MySettings.GlobalReference.Default.MCAPConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vwLocationTableAdapter" GeneratorDataComponentClassName="vwLocationTableAdapter" Name="vwLocation" UserDataComponentName="vwLocationTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTesting.dbo.vwLocation" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     CodeId, Descrip
+FROM         vwLocation
+ORDER BY Descrip</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CodeId" DataSetColumn="CodeId" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="BypassVehicleTableAdapter" GeneratorDataComponentClassName="BypassVehicleTableAdapter" Name="BypassVehicle" UserDataComponentName="BypassVehicleTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select vehicle.VehicleId, Sender.Name SenderName, Ret.Descrip Retailer, Mkt.Descrip Market, Media.Descrip Media, Vehicle.BreakDt  Ad_Date, u.username, CreateDt Checked_in_Date, Vehicle.EnvelopeId, Sender.SenderId, Ex.ExpectationId 
+
+from Vehicle
+inner join Envelope on Envelope.EnvelopeId = Vehicle.EnvelopeId
+inner join Sender on Sender.SenderId = Envelope.SenderId
+inner join Ret on Ret.RetId = Vehicle.RetId
+inner join Mkt on Mkt.MktId = Vehicle.MktId
+inner join MEdia on Media.MediaId = Vehicle.MediaId
+inner join Expectation Ex on Ex.MktId = Vehicle.MktId and EX.RetId = Vehicle.RetId and Ex.MediaId = Vehicle.MediaId
+inner join [user] u on u.UserId = CreatedById
+left outer join SenderExpectation se on se.SenderId = Envelope.SenderId and se.expectationId = Ex.ExpectationId
+where Envelope.SenderId in (Select SenderId from SenderExpectation where SenderId is not null)
+and se.SenderId is null
+and Vehicle.CreateDt &gt; dateadd(month, -1, getdate())
+and Media.MediaId not in (9, 12, 16)
+and Vehicle.StatusId in (27, 22)
+Order by 2, 3, 4, 5</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="VehicleId" DataSetColumn="VehicleId" />
+              <Mapping SourceColumn="username" DataSetColumn="username" />
+              <Mapping SourceColumn="EnvelopeId" DataSetColumn="EnvelopeId" />
+              <Mapping SourceColumn="SenderId" DataSetColumn="SenderId" />
+              <Mapping SourceColumn="ExpectationId" DataSetColumn="ExpectationId" />
+              <Mapping SourceColumn="SenderName" DataSetColumn="SenderName" />
+              <Mapping SourceColumn="Retailer" DataSetColumn="Retailer" />
+              <Mapping SourceColumn="Market" DataSetColumn="Market" />
+              <Mapping SourceColumn="Media" DataSetColumn="Media" />
+              <Mapping SourceColumn="Ad_Date" DataSetColumn="Ad_Date" />
+              <Mapping SourceColumn="Checked_in_Date" DataSetColumn="Checked_in_Date" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillByDateRange" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillByDateRange" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillByDateRange">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select vehicle.VehicleId, Sender.Name SenderName, Ret.Descrip Retailer, Mkt.Descrip Market, Media.Descrip Media, Vehicle.BreakDt  Ad_Date, u.username, CreateDt Checked_in_Date, Vehicle.EnvelopeId, Sender.SenderId, Ex.ExpectationId 
+
+from Vehicle
+inner join Envelope on Envelope.EnvelopeId = Vehicle.EnvelopeId
+inner join Sender on Sender.SenderId = Envelope.SenderId
+inner join Ret on Ret.RetId = Vehicle.RetId
+inner join Mkt on Mkt.MktId = Vehicle.MktId
+inner join MEdia on Media.MediaId = Vehicle.MediaId
+inner join Expectation Ex on Ex.MktId = Vehicle.MktId and EX.RetId = Vehicle.RetId and Ex.MediaId = Vehicle.MediaId
+inner join [user] u on u.UserId = CreatedById
+left outer join SenderExpectation se on se.SenderId = Envelope.SenderId and se.expectationId = Ex.ExpectationId
+where Envelope.SenderId in (Select SenderId from SenderExpectation where SenderId is not null)
+and se.SenderId is null
+and Media.MediaId not in (9, 12, 16)
+and Vehicle.StatusId in (27, 22)
+AND (Vehicle.CreateDt BETWEEN  @CreateDtFrom AND @CreateDtTo)
+Order by 2, 3, 4, 5</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="CreateDtFrom" ColumnName="CreateDt" DataSourceName="MCAPTesting.dbo.Vehicle" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@CreateDtFrom" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="Checked_in_Date" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="CreateDtTo" ColumnName="CreateDt" DataSourceName="MCAPTesting.dbo.Vehicle" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@CreateDtTo" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="Checked_in_Date" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillByDateRangeLoication" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorSourceName="FillByDateRangeLoication" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="FillByDateRangeLoication">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>select vehicle.VehicleId, Sender.Name SenderName, Ret.Descrip Retailer, Mkt.Descrip Market, Media.Descrip Media, Vehicle.BreakDt  Ad_Date, u.username, CreateDt Checked_in_Date, Vehicle.EnvelopeId, Sender.SenderId, Ex.ExpectationId 
+
+from Vehicle
+inner join Envelope on Envelope.EnvelopeId = Vehicle.EnvelopeId
+inner join Sender on Sender.SenderId = Envelope.SenderId
+inner join Ret on Ret.RetId = Vehicle.RetId
+inner join Mkt on Mkt.MktId = Vehicle.MktId
+inner join MEdia on Media.MediaId = Vehicle.MediaId
+inner join Expectation Ex on Ex.MktId = Vehicle.MktId and EX.RetId = Vehicle.RetId and Ex.MediaId = Vehicle.MediaId
+inner join [user] u on u.UserId = CreatedById
+left outer join SenderExpectation se on se.SenderId = Envelope.SenderId and se.expectationId = Ex.ExpectationId
+where Envelope.SenderId in (Select SenderId from SenderExpectation where SenderId is not null)
+and se.SenderId is null
+and Media.MediaId not in (9, 12, 16)
+and Vehicle.StatusId in (27, 22)
+AND (Vehicle.CreateDt BETWEEN  @CreateDtFrom AND @CreateDtTo)
+AND  U.LocationId = @LocationId  
+Order by 2, 3, 4, 5</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="CreateDtFrom" ColumnName="CreateDt" DataSourceName="MCAPTesting.dbo.Vehicle" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@CreateDtFrom" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="Checked_in_Date" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="CreateDtTo" ColumnName="CreateDt" DataSourceName="MCAPTesting.dbo.Vehicle" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@CreateDtTo" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="Checked_in_Date" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="LocationId" ColumnName="LocationId" DataSourceName="MCAPTesting.dbo.[User]" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@LocationId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="LocationId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="BypassVehicleDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="BypassVehicleDataSet" msprop:Generator_UserDSName="BypassVehicleDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vwLocation" msprop:Generator_TableClassName="vwLocationDataTable" msprop:Generator_TableVarName="tablevwLocation" msprop:Generator_RowChangedName="vwLocationRowChanged" msprop:Generator_TablePropName="vwLocation" msprop:Generator_RowDeletingName="vwLocationRowDeleting" msprop:Generator_RowChangingName="vwLocationRowChanging" msprop:Generator_RowEvHandlerName="vwLocationRowChangeEventHandler" msprop:Generator_RowDeletedName="vwLocationRowDeleted" msprop:Generator_RowClassName="vwLocationRow" msprop:Generator_UserTableName="vwLocation" msprop:Generator_RowEvArgName="vwLocationRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CodeId" msprop:Generator_ColumnVarNameInTable="columnCodeId" msprop:Generator_ColumnPropNameInRow="CodeId" msprop:Generator_ColumnPropNameInTable="CodeIdColumn" msprop:Generator_UserColumnName="CodeId" type="xs:int" />
+              <xs:element name="Descrip" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="BypassVehicle" msprop:Generator_TableClassName="BypassVehicleDataTable" msprop:Generator_TableVarName="tableBypassVehicle" msprop:Generator_RowChangedName="BypassVehicleRowChanged" msprop:Generator_TablePropName="BypassVehicle" msprop:Generator_RowDeletingName="BypassVehicleRowDeleting" msprop:Generator_RowChangingName="BypassVehicleRowChanging" msprop:Generator_RowEvHandlerName="BypassVehicleRowChangeEventHandler" msprop:Generator_RowDeletedName="BypassVehicleRowDeleted" msprop:Generator_RowClassName="BypassVehicleRow" msprop:Generator_UserTableName="BypassVehicle" msprop:Generator_RowEvArgName="BypassVehicleRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="VehicleId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnVehicleId" msprop:Generator_ColumnPropNameInRow="VehicleId" msprop:Generator_ColumnPropNameInTable="VehicleIdColumn" msprop:Generator_UserColumnName="VehicleId" type="xs:int" />
+              <xs:element name="username" msprop:Generator_ColumnVarNameInTable="columnusername" msprop:Generator_ColumnPropNameInRow="username" msprop:Generator_ColumnPropNameInTable="usernameColumn" msprop:Generator_UserColumnName="username" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EnvelopeId" msprop:Generator_ColumnVarNameInTable="columnEnvelopeId" msprop:Generator_ColumnPropNameInRow="EnvelopeId" msprop:Generator_ColumnPropNameInTable="EnvelopeIdColumn" msprop:Generator_UserColumnName="EnvelopeId" type="xs:int" minOccurs="0" />
+              <xs:element name="SenderId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnSenderId" msprop:Generator_ColumnPropNameInRow="SenderId" msprop:Generator_ColumnPropNameInTable="SenderIdColumn" msprop:Generator_UserColumnName="SenderId" type="xs:int" />
+              <xs:element name="ExpectationId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnExpectationId" msprop:Generator_ColumnPropNameInRow="ExpectationId" msprop:Generator_ColumnPropNameInTable="ExpectationIdColumn" msprop:Generator_UserColumnName="ExpectationId" type="xs:int" />
+              <xs:element name="SenderName" msprop:Generator_ColumnVarNameInTable="columnSenderName" msprop:Generator_ColumnPropNameInRow="SenderName" msprop:Generator_ColumnPropNameInTable="SenderNameColumn" msprop:Generator_UserColumnName="SenderName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Retailer" msprop:Generator_ColumnVarNameInTable="columnRetailer" msprop:Generator_ColumnPropNameInRow="Retailer" msprop:Generator_ColumnPropNameInTable="RetailerColumn" msprop:Generator_UserColumnName="Retailer" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Market" msprop:Generator_ColumnVarNameInTable="columnMarket" msprop:Generator_ColumnPropNameInRow="Market" msprop:Generator_ColumnPropNameInTable="MarketColumn" msprop:Generator_UserColumnName="Market" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Media" msprop:Generator_ColumnVarNameInTable="columnMedia" msprop:Generator_ColumnPropNameInRow="Media" msprop:Generator_ColumnPropNameInTable="MediaColumn" msprop:Generator_UserColumnName="Media" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Ad_Date" msprop:Generator_ColumnVarNameInTable="columnAd_Date" msprop:Generator_ColumnPropNameInRow="Ad_Date" msprop:Generator_ColumnPropNameInTable="Ad_DateColumn" msprop:Generator_UserColumnName="Ad_Date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Checked_in_Date" msprop:Generator_ColumnVarNameInTable="columnChecked_in_Date" msprop:Generator_ColumnPropNameInRow="Checked_in_Date" msprop:Generator_ColumnPropNameInTable="Checked_in_DateColumn" msprop:Generator_UserColumnName="Checked_in_Date" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:vwLocation" />
+      <xs:field xpath="mstns:CodeId" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

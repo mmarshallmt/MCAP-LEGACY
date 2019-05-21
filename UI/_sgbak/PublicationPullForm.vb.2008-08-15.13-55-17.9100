@@ -1,0 +1,453 @@
+﻿Namespace UI
+
+  Public Class PublicationPullForm
+    Implements IForm
+
+
+
+    Private WithEvents m_publicationPullProcessor As Processors.PublicationPull
+
+
+
+    Private ReadOnly Property Processor() As Processors.PublicationPull
+      Get
+        Return m_publicationPullProcessor
+      End Get
+    End Property
+
+
+    ''' <summary>
+    ''' Clears all input controls on form.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Protected Overrides Sub ClearAllInputs()
+      MyBase.ClearAllInputs()
+
+      publicationEditionIdTextBox.Clear()
+      marketComboBox.SelectedValue = DBNull.Value
+      newspaperComboBox.SelectedValue = DBNull.Value
+      languageComboBox.SelectedValue = DBNull.Value
+      breakDtMonthCalendar.SetDate(DateTime.Today)
+      noAdsCheckBox.Checked = False
+      pageCountTextBox.Clear()
+      pt1RetailersGroupBox.Visible = False
+      pt1RetailersGroupBox.Tag = "PT1"
+      showLowPriorityButton.ResetText() ' = "Show Low Priority"
+
+    End Sub
+
+    ''' <summary>
+    ''' Enables/disables input controls on form based on parameter value.
+    ''' </summary>
+    ''' <param name="formStatus"></param>
+    ''' <remarks></remarks>
+    Protected Overrides Sub EnableDisableControls(ByVal formStatus As FormStateEnum)
+      MyBase.EnableDisableControls(formStatus)
+
+      Select Case formStatus
+        Case FormStateEnum.Insert
+          marketComboBox.Enabled = True
+          newspaperComboBox.Enabled = True
+          languageComboBox.Enabled = True
+          breakDtMonthCalendar.Enabled = True
+          pageCountTextBox.Enabled = Not noAdsCheckBox.Checked
+          noAdsCheckBox.Enabled = True
+          checkInButton.Enabled = True
+
+        Case FormStateEnum.Edit
+          marketComboBox.Enabled = False
+          newspaperComboBox.Enabled = False
+          languageComboBox.Enabled = True
+          breakDtMonthCalendar.Enabled = True
+          pageCountTextBox.Enabled = Not noAdsCheckBox.Checked
+          noAdsCheckBox.Enabled = True
+          checkInButton.Enabled = True
+
+        Case Else
+          marketComboBox.Enabled = False
+          newspaperComboBox.Enabled = False
+          languageComboBox.Enabled = False
+          breakDtMonthCalendar.Enabled = False
+          pageCountTextBox.Enabled = False
+          noAdsCheckBox.Enabled = False
+          checkInButton.Enabled = False
+      End Select
+
+    End Sub
+
+    ''' <summary>
+    ''' Removes error providers from all input controls.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Protected Overrides Sub RemoveAllErrorProviders()
+      MyBase.RemoveAllErrorProviders()
+
+      RemoveErrorProvider(marketComboBox)
+      RemoveErrorProvider(newspaperComboBox)
+      RemoveErrorProvider(breakDtMonthCalendar)
+      RemoveErrorProvider(pageCountTextBox)
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads list of retailers from expectation table having priority 1, based on supplied market and media.
+    ''' </summary>
+    ''' <param name="marketId"></param>
+    ''' <param name="mediaId"></param>
+    ''' <remarks></remarks>
+    Private Sub ShowPriority1Retailers(ByVal marketId As Integer, ByVal mediaId As Integer)
+
+      Me.Cursor = Cursors.WaitCursor
+      Me.StatusMessage = "Loading Priority one retailers. This may take some time. Please wait..."
+
+      Processor.LoadPriority1Retailers(marketId, mediaId)
+      showLowPriorityButton.Text = "Sho&w Low Priority"
+      pt1RetailersGroupBox.Text = "PT1 Retailers"
+      pt1RetailersGroupBox.Tag = "PT1"
+
+      Me.StatusMessage = String.Empty
+      Me.Cursor = Cursors.Default
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads list of retailers from expectation table having non-priority 1, based on supplied market and media.
+    ''' </summary>
+    ''' <param name="marketId"></param>
+    ''' <param name="mediaId"></param>
+    ''' <remarks></remarks>
+    Private Sub ShowNonPriority1Retailers(ByVal marketId As Integer, ByVal mediaId As Integer)
+
+      Me.Cursor = Cursors.WaitCursor
+      Me.StatusMessage = "Loading non-Priority one retailers. This may take some time. Please wait..."
+
+      Processor.LoadNonPriorityRetailers(marketId, mediaId)
+      showLowPriorityButton.Text = "Sho&w Priority 1"
+      pt1RetailersGroupBox.Text = "NonPT1 Retailers"
+      pt1RetailersGroupBox.Tag = "NonPT1"
+
+      Me.StatusMessage = String.Empty
+      Me.Cursor = Cursors.Default
+
+    End Sub
+
+    ''' <summary>
+    ''' Shows column values into controls.
+    ''' </summary>
+    ''' <param name="viewRow"></param>
+    ''' <remarks></remarks>
+    Private Sub ShowColumnValues(ByVal viewRow As PublicationPullDataSet.vwPublicationEditionRow)
+      Dim receivedStatusId As Integer
+
+
+      receivedStatusId = Processor.GetVehicleStatusId("Received")
+
+      marketComboBox.SelectedValue = viewRow.MktId
+      newspaperComboBox.SelectedValue = viewRow.PublicationId
+      ShowPriority1Retailers(viewRow.MktId, viewRow.MediaId)
+      If viewRow.IsLanguageIdNull() Then
+        languageComboBox.SelectedValue = DBNull.Value
+      Else
+        languageComboBox.SelectedValue = viewRow.LanguageId
+      End If
+      breakDtMonthCalendar.SetDate(viewRow.BreakDt)
+      If viewRow.IsPullPageCountNull() AndAlso (viewRow.StatusID = receivedStatusId) Then
+        noAdsCheckBox.Checked = False
+        noAdsCheckBox_CheckedChanged(noAdsCheckBox, New System.EventArgs)
+      ElseIf viewRow.IsPullPageCountNull() AndAlso (viewRow.StatusID <> receivedStatusId) Then
+        noAdsCheckBox.Checked = True
+        noAdsCheckBox_CheckedChanged(noAdsCheckBox, New System.EventArgs)
+      Else
+        noAdsCheckBox.Checked = False
+        noAdsCheckBox_CheckedChanged(noAdsCheckBox, New System.EventArgs)
+        pageCountTextBox.Text = viewRow.PullPageCount.ToString()
+      End If
+      pt1RetailersGroupBox.Visible = Not (Processor.IsMediaMagazine(viewRow.MediaId))
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads supplied vehicle information in vwPublicationEdition datatable 
+    ''' and related market, publication and PT1 Retailers.
+    ''' </summary>
+    ''' <param name="vehicleIdText"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function LoadVehicleInformation(ByVal vehicleIdText As String) As Boolean
+      Dim isVehicleLoaded As Boolean
+      Dim vehicleId As Integer
+
+
+      isVehicleLoaded = True
+
+      If Integer.TryParse(vehicleIdText, vehicleId) = False Then
+        MessageBox.Show("Provide proper vehicle Id.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        isVehicleLoaded = False
+      Else
+        Processor.LoadVehicle(vehicleId)
+
+        If Processor.Data.vwPublicationEdition.Count = 0 Then
+          MessageBox.Show("Vehicle not found.", ProductName _
+                          , MessageBoxButtons.OK, MessageBoxIcon.Information)
+          isVehicleLoaded = False
+        End If
+      End If
+
+      Return isVehicleLoaded
+
+    End Function
+
+
+#Region " IForm Implementation "
+
+    Public Event ApplyingUserCredentials() Implements IForm.ApplyingUserCredentials
+    Public Event UserCredentialsApplied() Implements IForm.UserCredentialsApplied
+
+    Public Event InitializingForm() Implements IForm.InitializingForm
+    Public Event FormInitialized() Implements IForm.FormInitialized
+
+
+    Public Sub ApplyUserCredentials() Implements IForm.ApplyUserCredentials
+
+    End Sub
+
+    Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+      RaiseEvent InitializingForm()
+
+      SuspendLayout()
+
+      Me.FormState = formStatus
+
+      m_publicationPullProcessor = New Processors.PublicationPull()
+      Processor.Initialize()
+      Processor.LoadDataSet()
+
+      Me.StatusMessage = "Information loaded, preparing to show loaded information on window."
+
+      checkedInByValueLabel.Text = Processor.UserFullName
+
+      languageComboBox.DisplayMember = "Descrip"
+      languageComboBox.ValueMember = "LanguageId"
+      languageComboBox.DataSource = Processor.Data.Language
+      languageComboBox.SelectedValue = DBNull.Value
+
+      marketComboBox.DisplayMember = "Descrip"
+      marketComboBox.ValueMember = "MktId"
+      marketComboBox.DataSource = Processor.Data.Mkt
+
+      newspaperComboBox.DisplayMember = "Descrip"
+      newspaperComboBox.ValueMember = "PublicationId"
+      newspaperComboBox.DataSource = Processor.Data.Publication
+
+      pt1RetailersListBox.DisplayMember = "Descrip"
+      pt1RetailersListBox.ValueMember = "RetId"
+      pt1RetailersListBox.DataSource = Processor.Data.Ret
+
+      ClearAllInputs()
+      RemoveAllErrorProviders()
+      ShowHideControls(Me.FormState)
+      EnableDisableControls(Me.FormState)
+
+      Me.ResumeLayout(False)
+
+      RaiseEvent FormInitialized()
+
+    End Sub
+
+#End Region
+
+
+    ''' <summary>
+    ''' Validates inputs.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function AreInputsValid() As Boolean
+      Dim areAllValid As Boolean
+      Dim pageCount As Integer
+
+
+      areAllValid = True
+
+      If marketComboBox.SelectedValue Is Nothing Then
+        SetErrorProvider(marketComboBox, "Select market from drop down list.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(marketComboBox)
+      End If
+
+      If newspaperComboBox.SelectedValue Is Nothing Then
+        SetErrorProvider(newspaperComboBox, "Select newspaper from drop down list.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(newspaperComboBox)
+      End If
+
+      If languageComboBox.SelectedValue Is Nothing Then
+        SetErrorProvider(languageComboBox, "Select language from drop down list.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(languageComboBox)
+      End If
+
+      If breakDtMonthCalendar.SelectionRange.Start <> breakDtMonthCalendar.SelectionRange.End Then
+        SetErrorProvider(adDateLabel, "Provide one ad date.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(adDateLabel)
+      End If
+
+      If noAdsCheckBox.Checked Then
+        RemoveErrorProvider(pageCountTextBox)
+      Else
+        If Integer.TryParse("0" + pageCountTextBox.Text, pageCount) = False Then
+          SetErrorProvider(pageCountTextBox, "Provide page count.")
+          areAllValid = False
+        ElseIf pageCount <= 0 Then
+          SetErrorProvider(pageCountTextBox, "Specify valid number of pages.")
+          areAllValid = False
+        Else
+          RemoveErrorProvider(pageCountTextBox)
+        End If
+      End If
+
+      Return areAllValid
+
+    End Function
+
+    Private Sub newspaperComboBox_SelectedValueChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles newspaperComboBox.SelectedValueChanged
+      Dim bmb As BindingManagerBase
+      Dim tempRow As PublicationPullDataSet.PublicationRow
+
+
+      If newspaperComboBox.SelectedValue Is Nothing Then Exit Sub
+
+      bmb = Me.BindingContext(newspaperComboBox.DataSource)
+      tempRow = CType(CType(bmb.Current, System.Data.DataRowView).Row, PublicationPullDataSet.PublicationRow)
+
+      If tempRow.IsLanguageIDNull() Then
+        'languageComboBox.SelectedValue = DBNull.Value 
+      Else
+        languageComboBox.SelectedValue = tempRow.LanguageID
+      End If
+
+      tempRow = Nothing
+      bmb = Nothing
+
+    End Sub
+
+    Private Sub pageCountTextBox_KeyPress _
+        (ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) _
+        Handles pageCountTextBox.KeyPress
+
+      If Not (System.Char.IsDigit(e.KeyChar) Or Microsoft.VisualBasic.AscW(e.KeyChar) = 8) Then
+        e.Handled = True
+      End If
+
+    End Sub
+
+    Private Sub noAdsCheckBox_CheckedChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles noAdsCheckBox.CheckedChanged
+
+      pageCountTextBox.Clear()
+      pageCountTextBox.Enabled = Not noAdsCheckBox.Checked
+
+    End Sub
+
+    Private Sub publicationEditionIdTextBox_KeyPress _
+        (ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) _
+        Handles publicationEditionIdTextBox.KeyPress
+            If Microsoft.VisualBasic.AscW(e.KeyChar) = 13 Then
+                If LoadVehicleInformation(publicationEditionIdTextBox.Text) Then
+                    ClearAllInputs()
+                    RemoveAllErrorProviders()
+                    ShowColumnValues(Processor.Data.vwPublicationEdition(0))
+                    Me.FormState = FormStateEnum.Edit
+                    ShowHideControls(Me.FormState)
+                    EnableDisableControls(Me.FormState)
+                Else
+                    publicationEditionIdTextBox.Focus()
+                    publicationEditionIdTextBox.SelectAll()
+                End If
+                e.Handled = True
+            ElseIf Not (System.Char.IsDigit(e.KeyChar) Or Microsoft.VisualBasic.AscW(e.KeyChar) = 8) Then
+                e.Handled = True
+            End If
+        End Sub
+        Private Sub showLowPriorityButton_Click _
+            (ByVal sender As Object, ByVal e As System.EventArgs) _
+            Handles showLowPriorityButton.Click
+            Dim currentRow As PublicationPullDataSet.vwPublicationEditionRow
+
+
+            currentRow = Processor.Data.vwPublicationEdition(0)
+
+            'Load non PT1 retailers.
+            If pt1RetailersGroupBox.Tag.ToString() = "PT1" Then
+                ShowNonPriority1Retailers(currentRow.MktId, currentRow.MediaId)
+            Else  'Load PT1 retailers.
+                ShowPriority1Retailers(currentRow.MktId, currentRow.MediaId)
+            End If
+
+        End Sub
+
+    Private Sub checkInButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles checkInButton.Click
+      Dim pullStatusId As Integer
+      Dim updateRow As PublicationPullDataSet.vwPublicationEditionRow
+
+
+      If AreInputsValid() = False Then Exit Sub
+
+      pullStatusId = Processor.GetVehicleStatusId("Pulled")
+      updateRow = Processor.Data.vwPublicationEdition(0)
+
+      updateRow.BeginEdit()
+      updateRow.LanguageId = CType(languageComboBox.SelectedValue, Integer)
+      updateRow.BreakDt = breakDtMonthCalendar.SelectionRange.Start
+      If noAdsCheckBox.Checked Then
+        updateRow.SetPullPageCountNull()
+      Else
+        updateRow.PullPageCount = CType(pageCountTextBox.Text, Integer)
+      End If
+      updateRow.PulledById = Processor.UserID
+      updateRow.PullDt = System.DateTime.Now
+      updateRow.StatusID = pullStatusId
+      updateRow.EndEdit()
+
+      Processor.Synchronize()
+
+      ClearAllInputs()
+      Me.FormState = FormStateEnum.Insert
+      EnableDisableControls(Me.FormState)
+      publicationEditionIdTextBox.Focus()
+
+    End Sub
+
+    Private Sub closeButton_Click _
+      (ByVal sender As Object, ByVal e As System.EventArgs) _
+      Handles closeButton.Click
+
+      Me.Close()
+
+    End Sub
+
+
+    Private Sub PublicationPullForm_FormInitialized() Handles Me.FormInitialized
+      Me.StatusMessage = "Loading information, this may take some time. Please wait..."
+    End Sub
+
+    Private Sub PublicationPullForm_InitializingForm() Handles Me.InitializingForm
+      Me.StatusMessage = String.Empty
+        End Sub
+
+
+    End Class
+
+End Namespace

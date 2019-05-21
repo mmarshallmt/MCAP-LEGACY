@@ -1,0 +1,250 @@
+﻿Namespace UI
+
+
+  <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+  Partial Class IndexForm
+    Inherits UI.IndexBaseForm
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+      If disposing AndAlso components IsNot Nothing Then
+        components.Dispose()
+      End If
+      MyBase.Dispose(disposing)
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+      Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(IndexForm))
+      Me.infoManipGroupBox = New System.Windows.Forms.GroupBox
+      Me.exitButton = New System.Windows.Forms.Button
+      Me.editButton = New System.Windows.Forms.Button
+      Me.printButton = New System.Windows.Forms.Button
+      Me.enterButton = New System.Windows.Forms.Button
+      Me.flashCheckBox = New System.Windows.Forms.CheckBox
+      Me.leftPanel.SuspendLayout()
+      Me.vehicleGroupBox.SuspendLayout()
+      CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
+      Me.infoManipGroupBox.SuspendLayout()
+      Me.SuspendLayout()
+      '
+      'leftPanel
+      '
+      Me.leftPanel.Controls.Add(Me.infoManipGroupBox)
+      Me.leftPanel.Size = New System.Drawing.Size(248, 522)
+      Me.leftPanel.Controls.SetChildIndex(Me.vehicleGroupBox, 0)
+      Me.leftPanel.Controls.SetChildIndex(Me.infoManipGroupBox, 0)
+      '
+      'vehicleGroupBox
+      '
+      Me.vehicleGroupBox.Controls.Add(Me.flashCheckBox)
+      Me.vehicleGroupBox.Size = New System.Drawing.Size(241, 389)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.vehicleIdLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.vehicleIdValueLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.mediaLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.mediaComboBox, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.marketLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.marketComboBox, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.publicationLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.publicationComboBox, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.retailerLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.retailerComboBox, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.tradeclassLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.tradeclassValueLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.eventLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.eventComboBox, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.themeLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.themeComboBox, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.startDateLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.startDateTypeInDatePicker, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.endDateLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.endDateTypeInDatePicker, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.pagesLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.languageLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.languageComboBox, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.definePagesButton, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.adDateLabel, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.adDateTypeInDatePicker, 0)
+      Me.vehicleGroupBox.Controls.SetChildIndex(Me.flashCheckBox, 0)
+      '
+      'definePagesButton
+      '
+      Me.definePagesButton.TabIndex = 25
+      '
+      'languageComboBox
+      '
+      Me.languageComboBox.TabIndex = 15
+      '
+      'languageLabel
+      '
+      Me.languageLabel.TabIndex = 14
+      '
+      'pagesLabel
+      '
+      Me.pagesLabel.TabIndex = 24
+      '
+      'endDateTypeInDatePicker
+      '
+      Me.endDateTypeInDatePicker.TabIndex = 23
+      '
+      'endDateLabel
+      '
+      Me.endDateLabel.TabIndex = 22
+      '
+      'startDateTypeInDatePicker
+      '
+      Me.startDateTypeInDatePicker.TabIndex = 21
+      '
+      'startDateLabel
+      '
+      Me.startDateLabel.TabIndex = 20
+      '
+      'themeComboBox
+      '
+      Me.themeComboBox.TabIndex = 19
+      '
+      'themeLabel
+      '
+      Me.themeLabel.TabIndex = 18
+      '
+      'eventComboBox
+      '
+      Me.eventComboBox.TabIndex = 17
+      '
+      'eventLabel
+      '
+      Me.eventLabel.TabIndex = 16
+      '
+      'publicationComboBox
+      '
+      Me.publicationComboBox.TabIndex = 7
+      '
+      'publicationLabel
+      '
+      Me.publicationLabel.TabIndex = 6
+      '
+      'marketComboBox
+      '
+      Me.marketComboBox.TabIndex = 5
+      '
+      'marketLabel
+      '
+      Me.marketLabel.TabIndex = 4
+      '
+      'mediaComboBox
+      '
+      Me.mediaComboBox.TabIndex = 3
+      '
+      'mediaLabel
+      '
+      Me.mediaLabel.TabIndex = 2
+      '
+      'adDateTypeInDatePicker
+      '
+      Me.adDateTypeInDatePicker.TabIndex = 9
+      '
+      'adDateLabel
+      '
+      Me.adDateLabel.TabIndex = 8
+      '
+      'smalliconImageList
+      '
+      Me.smalliconImageList.ImageStream = CType(resources.GetObject("smalliconImageList.ImageStream"), System.Windows.Forms.ImageListStreamer)
+      Me.smalliconImageList.Images.SetKeyName(0, "Filter.ico")
+      Me.smalliconImageList.Images.SetKeyName(1, "Printer.ico")
+      Me.smalliconImageList.Images.SetKeyName(2, "DefaultPrinter.ico")
+      '
+      'infoManipGroupBox
+      '
+      Me.infoManipGroupBox.Controls.Add(Me.exitButton)
+      Me.infoManipGroupBox.Controls.Add(Me.editButton)
+      Me.infoManipGroupBox.Controls.Add(Me.printButton)
+      Me.infoManipGroupBox.Controls.Add(Me.enterButton)
+      Me.infoManipGroupBox.Location = New System.Drawing.Point(30, 461)
+      Me.infoManipGroupBox.Name = "infoManipGroupBox"
+      Me.infoManipGroupBox.Size = New System.Drawing.Size(189, 49)
+      Me.infoManipGroupBox.TabIndex = 3
+      Me.infoManipGroupBox.TabStop = False
+      '
+      'exitButton
+      '
+      Me.exitButton.Location = New System.Drawing.Point(128, 19)
+      Me.exitButton.Name = "exitButton"
+      Me.exitButton.Size = New System.Drawing.Size(55, 23)
+      Me.exitButton.TabIndex = 4
+      Me.exitButton.Text = "Exit"
+      Me.exitButton.UseVisualStyleBackColor = True
+      '
+      'editButton
+      '
+      Me.editButton.Location = New System.Drawing.Point(67, 19)
+      Me.editButton.Name = "editButton"
+      Me.editButton.Size = New System.Drawing.Size(55, 23)
+      Me.editButton.TabIndex = 3
+      Me.editButton.Text = "Edit"
+      Me.editButton.UseVisualStyleBackColor = True
+      '
+      'printButton
+      '
+      Me.printButton.Location = New System.Drawing.Point(6, 19)
+      Me.printButton.Name = "printButton"
+      Me.printButton.Size = New System.Drawing.Size(55, 23)
+      Me.printButton.TabIndex = 1
+      Me.printButton.Text = "Print"
+      Me.printButton.UseVisualStyleBackColor = True
+      '
+      'enterButton
+      '
+      Me.enterButton.Location = New System.Drawing.Point(67, 19)
+      Me.enterButton.Name = "enterButton"
+      Me.enterButton.Size = New System.Drawing.Size(55, 23)
+      Me.enterButton.TabIndex = 2
+      Me.enterButton.Text = "Enter"
+      Me.enterButton.UseVisualStyleBackColor = True
+      '
+      'flashCheckBox
+      '
+      Me.flashCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+      Me.flashCheckBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.flashCheckBox.Location = New System.Drawing.Point(6, 366)
+      Me.flashCheckBox.Name = "flashCheckBox"
+      Me.flashCheckBox.Size = New System.Drawing.Size(75, 17)
+      Me.flashCheckBox.TabIndex = 26
+      Me.flashCheckBox.Text = "&FLASH"
+      Me.flashCheckBox.UseVisualStyleBackColor = True
+      '
+      'IndexForm
+      '
+      Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+      Me.ClientSize = New System.Drawing.Size(247, 522)
+      Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+      Me.MaximizeBox = False
+      Me.MinimizeBox = False
+      Me.Name = "IndexForm"
+      Me.Text = "Index"
+      Me.leftPanel.ResumeLayout(False)
+      Me.vehicleGroupBox.ResumeLayout(False)
+      Me.vehicleGroupBox.PerformLayout()
+      CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).EndInit()
+      Me.infoManipGroupBox.ResumeLayout(False)
+      Me.ResumeLayout(False)
+
+    End Sub
+    Protected WithEvents infoManipGroupBox As System.Windows.Forms.GroupBox
+    Private WithEvents exitButton As System.Windows.Forms.Button
+    Private WithEvents editButton As System.Windows.Forms.Button
+    Private WithEvents printButton As System.Windows.Forms.Button
+    Private WithEvents enterButton As System.Windows.Forms.Button
+    Friend WithEvents flashCheckBox As System.Windows.Forms.CheckBox
+
+  End Class
+
+
+End Namespace

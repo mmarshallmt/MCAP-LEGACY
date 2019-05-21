@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ErrorCorrectedReportDataSet" targetNamespace="http://tempuri.org/ErrorCorrectedReportDataSet.xsd" xmlns:mstns="http://tempuri.org/ErrorCorrectedReportDataSet.xsd" xmlns="http://tempuri.org/ErrorCorrectedReportDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="MCAPLogConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="MCAPLogConnectionString (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.MCAP.My.MySettings.GlobalReference.Default.MCAPLogConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="MCAPConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="MCAPConnectionString (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.MCAP.My.MySettings.GlobalReference.Default.MCAPConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="UserTableAdapter" GeneratorDataComponentClassName="UserTableAdapter" Name="User" UserDataComponentName="UserTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.[User]" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     UserID, Username, FName + ' ' + LName AS FullName
+FROM         [User]
+WHERE     (ActiveInd = 1) AND (IndHideUser = 0)
+ORDER BY FName, LName, Username</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="UserID" DataSetColumn="UserID" />
+              <Mapping SourceColumn="FullName" DataSetColumn="FullName" />
+              <Mapping SourceColumn="Username" DataSetColumn="Username" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="EnvelopeErrorsCorrectedAdapter" GeneratorDataComponentClassName="EnvelopeErrorsCorrectedAdapter" Name="EnvelopeErrorsCorrected" UserDataComponentName="EnvelopeErrorsCorrectedAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPLogConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT U.FullName [User], E.EnvelopeId EnvelopeId,
+	SEI.ReceivedDt, SEI.ReceivedById, 
+	CASE WHEN E.SenderId &lt;&gt; SEI.SenderId THEN
+		'Updated: ' + (Select [Name] from  MCAP.dbo.Sender where SenderId = SEI.SenderId) + 
+		' to: ' + (Select [Name] from MCAP.dbo.Sender where SenderId = E.SenderId)
+	ELSE 'Sender OK' END AS SenderChange,
+	CASE WHEN E.ShipperId &lt;&gt; SEI.ShipperId THEN
+		'Updated: ' + (Select Descrip from  MCAP.dbo.Shipper where ShipperId = SEI.ShipperId) + 
+		' to: ' + (Select Descrip from MCAP.dbo.Shipper where ShipperId = E.ShipperId)
+	ELSE 'Shipper OK' END AS ShipperChange,
+	CASE WHEN E.ShippingMethodId &lt;&gt; SEI.ShippingMethodId THEN
+		'Updated: ' + CONVERT(VARCHAR(10), SEI.ShippingMethodId, 101) + 
+		' to: ' + CONVERT(VARCHAR(10), E.ShippingMethodId, 101)
+	ELSE 'ShippingMethodId OK' END AS ShippingMethodIdChange,
+	CASE WHEN E.TrackingNo &lt;&gt; SEI.TrackingNo THEN
+		'Updated: ' + SEI.TrackingNo + ' to: ' + E.TrackingNo
+	ELSE 'TrackingNo OK' END AS TrackingNoChange,
+	CASE WHEN E.ActualWeight &lt;&gt; SEI.ActualWeight THEN
+		'Updated: ' + CONVERT(VARCHAR(10), SEI.ActualWeight, 101) + 
+		' to: ' + CONVERT(VARCHAR(10), E.ActualWeight, 101)
+	ELSE 'ActualWeight OK' END AS ActualWeightChange,
+	CASE WHEN E.ListedWeight &lt;&gt; SEI.ListedWeight THEN
+		'Updated: ' + CONVERT(VARCHAR(10), SEI.ListedWeight, 101) + 
+		' to: ' + CONVERT(VARCHAR(10), E.ListedWeight, 101)
+	ELSE 'ListedWeight OK' END AS ListedWeightChange,
+	CASE WHEN E.PackageTypeId &lt;&gt; SEI.PackageTypeId THEN
+		'Updated: ' + CONVERT(VARCHAR(10), SEI.PackageTypeId, 101) + 
+		' to: ' + CONVERT(VARCHAR(10), E.PackageTypeId, 101)
+	ELSE 'PackageTypeId OK' END AS PackageTypeIdChange,
+	CASE WHEN E.PackageAssignmentId &lt;&gt; SEI.PackageAssignmentId THEN
+		'Updated: ' + CONVERT(VARCHAR(10), SEI.PackageAssignmentId, 101) + 
+		' to: ' + CONVERT(VARCHAR(10), E.PackageAssignmentId, 101)
+	ELSE 'PackageAssignmentId OK' END AS PackageAssignmentIdChange
+	, SEI.LogTimeStamp DOE, SEI.FormName AOE, CB.FullName [Corrected By], E.LogTimeStamp [Corrected Date]
+FROM
+	(
+		SELECT LogTimeStamp, LogDMLOperation, LoginUser, EnvelopeId
+			, ReceivedDt, SenderId, ReceivedById
+			, ShipperId, ShippingMethodId, TrackingNo
+			, ActualWeight, ListedWeight, PackageTypeId
+			, PackageAssignmentId, FormName
+		FROM EnvelopeLog
+		WHERE OldValue_EnvelopeId IS NULL
+			AND OldValue_ReceivedDt IS NULL
+			AND OldValue_SenderId IS NULL
+			AND OldValue_ReceivedById IS NULL
+			AND OldValue_ShipperId IS NULL
+			AND OldValue_ShippingMethodId IS NULL
+			AND OldValue_TrackingNo IS NULL
+			AND OldValue_ActualWeight IS NULL
+			AND OldValue_ListedWeight IS NULL
+			AND OldValue_PackageTypeId IS NULL
+			AND OldValue_PackageAssignmentId IS NULL
+			AND OldValue_FormName IS NULL
+			AND LoginUser = @UserName
+			AND ReceivedDt BETWEEN @FromDt AND @ToDt
+	) SEI INNER JOIN 
+	(
+		SELECT LogTimeStamp, LogDMLOperation, LoginUser, EnvelopeId, OldValue_EnvelopeId
+			, ReceivedDt, OldValue_ReceivedDt, SenderId, OldValue_SenderId, ReceivedById, OldValue_ReceivedById
+			, ShipperId, OldValue_ShipperId, ShippingMethodId, OldValue_ShippingMethodId, TrackingNo, OldValue_TrackingNo
+			, ActualWeight, OldValue_ActualWeight, ListedWeight, OldValue_ListedWeight, PackageTypeId, OldValue_PackageTypeId
+			, PackageAssignmentId, OldValue_PackageAssignmentId, FormName, OldValue_FormName
+		FROM EnvelopeLog
+		WHERE OldValue_EnvelopeId IS NOT NULL
+			AND OldValue_ReceivedDt IS NOT NULL
+			AND OldValue_SenderId IS NOT NULL
+			AND OldValue_ReceivedById IS NOT NULL
+			AND OldValue_ShipperId IS NOT NULL
+			AND OldValue_ShippingMethodId IS NOT NULL
+			AND OldValue_TrackingNo IS NOT NULL
+			AND OldValue_ActualWeight IS NOT NULL
+			AND OldValue_ListedWeight IS NOT NULL
+			AND OldValue_PackageTypeId IS NOT NULL
+			AND OldValue_PackageAssignmentId IS NOT NULL
+			AND OldValue_FormName IS NOT NULL
+	) E
+	ON E.OldValue_EnvelopeId = SEI.EnvelopeId
+	LEFT JOIN (SELECT UserName, FName + ' ' + ISNULL(LName, '') FullName FROM MCAP.dbo.[User]) U 
+	ON SEI.LoginUser = U.UserName
+	LEFT JOIN (SELECT UserName, FName + ' ' + ISNULL(LName, '') FullName FROM MCAP.dbo.[User]) CB 
+	ON E.LoginUser = CB.UserName
+WHERE (E.LogTimeStamp &lt;&gt; SEI.LogTimeStamp )
+</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="UserName" ColumnName="" DataSourceName="" DataTypeServer="varchar(32)" DbType="AnsiString" Direction="Input" ParameterName="@UserName" Precision="0" Scale="0" Size="32" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="FromDt" ColumnName="" DataSourceName="" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@FromDt" Precision="0" Scale="0" Size="8" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="ToDt" ColumnName="" DataSourceName="" DataTypeServer="datetime" DbType="DateTime" Direction="Input" ParameterName="@ToDt" Precision="0" Scale="0" Size="8" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="AOE" DataSetColumn="AOE" />
+              <Mapping SourceColumn="Corrected By" DataSetColumn="Corrected By" />
+              <Mapping SourceColumn="Corrected Date" DataSetColumn="Corrected Date" />
+              <Mapping SourceColumn="User" DataSetColumn="User" />
+              <Mapping SourceColumn="DOE" DataSetColumn="DOE" />
+              <Mapping SourceColumn="EnvelopeId" DataSetColumn="EnvelopeId" />
+              <Mapping SourceColumn="ReceivedDt" DataSetColumn="ReceivedDt" />
+              <Mapping SourceColumn="ReceivedById" DataSetColumn="ReceivedById" />
+              <Mapping SourceColumn="SenderChange" DataSetColumn="SenderChange" />
+              <Mapping SourceColumn="ShipperChange" DataSetColumn="ShipperChange" />
+              <Mapping SourceColumn="ShippingMethodIdChange" DataSetColumn="ShippingMethodIdChange" />
+              <Mapping SourceColumn="TrackingNoChange" DataSetColumn="TrackingNoChange" />
+              <Mapping SourceColumn="ActualWeightChange" DataSetColumn="ActualWeightChange" />
+              <Mapping SourceColumn="ListedWeightChange" DataSetColumn="ListedWeightChange" />
+              <Mapping SourceColumn="PackageTypeIdChange" DataSetColumn="PackageTypeIdChange" />
+              <Mapping SourceColumn="PackageAssignmentIdChange" DataSetColumn="PackageAssignmentIdChange" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPLogConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillByWeekNumber" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByWeekNumber" GeneratorSourceName="FillByWeekNumber" GetMethodModifier="Public" GetMethodName="GetDataByWeekNumber" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByWeekNumber" UserSourceName="FillByWeekNumber">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT U.FullName [User], E.EnvelopeId EnvelopeId, SEI.ReceivedDt, SEI.ReceivedById, 
+	CASE WHEN E.SenderId &lt;&gt; SEI.SenderId THEN
+		'Updated: ' + (Select [Name] from  MCAP.dbo.Sender where SenderId = SEI.SenderId) + 
+		' to: ' + (Select [Name] from MCAP.dbo.Sender where SenderId = E.SenderId)
+	ELSE 'Sender OK' END AS SenderChange,
+	CASE WHEN E.ShipperId &lt;&gt; SEI.ShipperId THEN
+		'Updated: ' + (Select Descrip from  MCAP.dbo.Shipper where ShipperId = SEI.ShipperId) + 
+		' to: ' + (Select Descrip from MCAP.dbo.Shipper where ShipperId = E.ShipperId)
+	ELSE 'Shipper OK' END AS ShipperChange,
+	CASE WHEN E.ShippingMethodId &lt;&gt; SEI.ShippingMethodId THEN
+		'Updated: ' + CONVERT(VARCHAR(10), SEI.ShippingMethodId, 101) + 
+		' to: ' + CONVERT(VARCHAR(10), E.ShippingMethodId, 101)
+	ELSE 'ShippingMethodId OK' END AS ShippingMethodIdChange,
+	CASE WHEN E.TrackingNo &lt;&gt; SEI.TrackingNo THEN
+		'Updated: ' + SEI.TrackingNo + ' to: ' + E.TrackingNo
+	ELSE 'TrackingNo OK' END AS TrackingNoChange,
+	CASE WHEN E.ActualWeight &lt;&gt; SEI.ActualWeight THEN
+		'Updated: ' + CONVERT(VARCHAR(10), SEI.ActualWeight, 101) + 
+		' to: ' + CONVERT(VARCHAR(10), E.ActualWeight, 101)
+	ELSE 'ActualWeight OK' END AS ActualWeightChange,
+	CASE WHEN E.ListedWeight &lt;&gt; SEI.ListedWeight THEN
+		'Updated: ' + CONVERT(VARCHAR(10), SEI.ListedWeight, 101) + 
+		' to: ' + CONVERT(VARCHAR(10), E.ListedWeight, 101)
+	ELSE 'ListedWeight OK' END AS ListedWeightChange,
+	CASE WHEN E.PackageTypeId &lt;&gt; SEI.PackageTypeId THEN
+		'Updated: ' + CONVERT(VARCHAR(10), SEI.PackageTypeId, 101) + 
+		' to: ' + CONVERT(VARCHAR(10), E.PackageTypeId, 101)
+	ELSE 'PackageTypeId OK' END AS PackageTypeIdChange,
+	CASE WHEN E.PackageAssignmentId &lt;&gt; SEI.PackageAssignmentId THEN
+		'Updated: ' + CONVERT(VARCHAR(10), SEI.PackageAssignmentId, 101) + 
+		' to: ' + CONVERT(VARCHAR(10), E.PackageAssignmentId, 101)
+	ELSE 'PackageAssignmentId OK' END AS PackageAssignmentIdChange
+	, SEI.LogTimeStamp DOE, SEI.FormName AOE, CB.FullName [Corrected By], E.LogTimeStamp [Corrected Date]
+FROM
+	(
+		SELECT LogTimeStamp, LogDMLOperation, LoginUser, EnvelopeId
+			, ReceivedDt, SenderId, ReceivedById
+			, ShipperId, ShippingMethodId, TrackingNo
+			, ActualWeight, ListedWeight, PackageTypeId
+			, PackageAssignmentId, FormName
+		FROM EnvelopeLog
+		WHERE OldValue_EnvelopeId IS NULL
+			AND OldValue_ReceivedDt IS NULL
+			AND OldValue_SenderId IS NULL
+			AND OldValue_ReceivedById IS NULL
+			AND OldValue_ShipperId IS NULL
+			AND OldValue_ShippingMethodId IS NULL
+			AND OldValue_TrackingNo IS NULL
+			AND OldValue_ActualWeight IS NULL
+			AND OldValue_ListedWeight IS NULL
+			AND OldValue_PackageTypeId IS NULL
+			AND OldValue_PackageAssignmentId IS NULL
+			AND OldValue_FormName IS NULL
+			AND LoginUser = @UserName
+			AND (DATEPART(wk, ReceivedDt) &gt;= @FromWkNo AND YEAR(ReceivedDt) &gt;= @FromYear)
+			AND (DATEPART(wk, ReceivedDt) &lt;= @ToWkNo AND YEAR(ReceivedDt) &lt;= @ToYear)
+	) SEI INNER JOIN 
+	(
+		SELECT LogTimeStamp, LogDMLOperation, LoginUser, EnvelopeId, OldValue_EnvelopeId
+			, ReceivedDt, OldValue_ReceivedDt, SenderId, OldValue_SenderId, ReceivedById, OldValue_ReceivedById
+			, ShipperId, OldValue_ShipperId, ShippingMethodId, OldValue_ShippingMethodId, TrackingNo, OldValue_TrackingNo
+			, ActualWeight, OldValue_ActualWeight, ListedWeight, OldValue_ListedWeight, PackageTypeId, OldValue_PackageTypeId
+			, PackageAssignmentId, OldValue_PackageAssignmentId, FormName, OldValue_FormName
+		FROM EnvelopeLog
+		WHERE OldValue_EnvelopeId IS NOT NULL
+			AND OldValue_ReceivedDt IS NOT NULL
+			AND OldValue_SenderId IS NOT NULL
+			AND OldValue_ReceivedById IS NOT NULL
+			AND OldValue_ShipperId IS NOT NULL
+			AND OldValue_ShippingMethodId IS NOT NULL
+			AND OldValue_TrackingNo IS NOT NULL
+			AND OldValue_ActualWeight IS NOT NULL
+			AND OldValue_ListedWeight IS NOT NULL
+			AND OldValue_PackageTypeId IS NOT NULL
+			AND OldValue_PackageAssignmentId IS NOT NULL
+			AND OldValue_FormName IS NOT NULL
+	) E
+	ON E.OldValue_EnvelopeId = SEI.EnvelopeId
+	LEFT JOIN (SELECT UserName, FName + ' ' + ISNULL(LName, '') FullName FROM MCAP.dbo.[User]) U 
+	ON SEI.LoginUser = U.UserName
+	LEFT JOIN (SELECT UserName, FName + ' ' + ISNULL(LName, '') FullName FROM MCAP.dbo.[User]) CB 
+	ON E.LoginUser = CB.UserName
+WHERE (E.LogTimeStamp &lt;&gt; SEI.LogTimeStamp)
+</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="UserName" ColumnName="" DataSourceName="" DataTypeServer="varchar(32)" DbType="AnsiString" Direction="Input" ParameterName="@UserName" Precision="0" Scale="0" Size="32" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="FromWkNo" ColumnName="" DataSourceName="" DataTypeServer="unknown" DbType="Decimal" Direction="Input" ParameterName="@FromWkNo" Precision="0" Scale="0" Size="0" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="FromYear" ColumnName="" DataSourceName="" DataTypeServer="unknown" DbType="Decimal" Direction="Input" ParameterName="@FromYear" Precision="0" Scale="0" Size="0" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="ToWkNo" ColumnName="" DataSourceName="" DataTypeServer="unknown" DbType="Decimal" Direction="Input" ParameterName="@ToWkNo" Precision="0" Scale="0" Size="0" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="ToYear" ColumnName="" DataSourceName="" DataTypeServer="unknown" DbType="Decimal" Direction="Input" ParameterName="@ToYear" Precision="0" Scale="0" Size="0" SourceColumn="" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ErrorCorrectedReportDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="ErrorCorrectedReportDataSet" msprop:Generator_DataSetName="ErrorCorrectedReportDataSet" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="User" msprop:Generator_UserTableName="User" msprop:Generator_RowDeletedName="UserRowDeleted" msprop:Generator_RowChangedName="UserRowChanged" msprop:Generator_RowClassName="UserRow" msprop:Generator_RowChangingName="UserRowChanging" msprop:Generator_RowEvArgName="UserRowChangeEvent" msprop:Generator_RowEvHandlerName="UserRowChangeEventHandler" msprop:Generator_TableClassName="UserDataTable" msprop:Generator_TableVarName="tableUser" msprop:Generator_RowDeletingName="UserRowDeleting" msprop:Generator_TablePropName="User">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="UserID" msprop:Generator_UserColumnName="UserID" msprop:Generator_ColumnVarNameInTable="columnUserID" msprop:Generator_ColumnPropNameInRow="UserID" msprop:Generator_ColumnPropNameInTable="UserIDColumn" type="xs:int" />
+              <xs:element name="FullName" msdata:ReadOnly="true" msprop:Generator_UserColumnName="FullName" msprop:Generator_ColumnVarNameInTable="columnFullName" msprop:Generator_ColumnPropNameInRow="FullName" msprop:Generator_ColumnPropNameInTable="FullNameColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="101" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Username" msprop:Generator_UserColumnName="Username" msprop:Generator_ColumnVarNameInTable="columnUsername" msprop:Generator_ColumnPropNameInRow="Username" msprop:Generator_ColumnPropNameInTable="UsernameColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EnvelopeErrorsCorrected" msprop:Generator_UserTableName="EnvelopeErrorsCorrected" msprop:Generator_RowDeletedName="EnvelopeErrorsCorrectedRowDeleted" msprop:Generator_RowChangedName="EnvelopeErrorsCorrectedRowChanged" msprop:Generator_RowClassName="EnvelopeErrorsCorrectedRow" msprop:Generator_RowChangingName="EnvelopeErrorsCorrectedRowChanging" msprop:Generator_RowEvArgName="EnvelopeErrorsCorrectedRowChangeEvent" msprop:Generator_RowEvHandlerName="EnvelopeErrorsCorrectedRowChangeEventHandler" msprop:Generator_TableClassName="EnvelopeErrorsCorrectedDataTable" msprop:Generator_TableVarName="tableEnvelopeErrorsCorrected" msprop:Generator_RowDeletingName="EnvelopeErrorsCorrectedRowDeleting" msprop:Generator_TablePropName="EnvelopeErrorsCorrected">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AOE" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AOE" msprop:Generator_ColumnPropNameInRow="AOE" msprop:Generator_ColumnVarNameInTable="columnAOE" msprop:Generator_ColumnPropNameInTable="AOEColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Corrected_x0020_By" msdata:ReadOnly="true" msprop:Generator_UserColumnName="Corrected By" msprop:Generator_ColumnPropNameInRow="Corrected_By" msprop:Generator_ColumnVarNameInTable="columnCorrected_By" msprop:Generator_ColumnPropNameInTable="Corrected_ByColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Corrected_x0020_Date" msdata:ReadOnly="true" msprop:Generator_UserColumnName="Corrected Date" msprop:Generator_ColumnPropNameInRow="Corrected_Date" msprop:Generator_ColumnVarNameInTable="columnCorrected_Date" msprop:Generator_ColumnPropNameInTable="Corrected_DateColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="User" msprop:Generator_UserColumnName="User" msprop:Generator_ColumnVarNameInTable="columnUser" msprop:Generator_ColumnPropNameInRow="User" msprop:Generator_ColumnPropNameInTable="UserColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DOE" msprop:Generator_UserColumnName="DOE" msprop:Generator_ColumnVarNameInTable="columnDOE" msprop:Generator_ColumnPropNameInRow="DOE" msprop:Generator_ColumnPropNameInTable="DOEColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EnvelopeId" msprop:Generator_UserColumnName="EnvelopeId" msprop:Generator_ColumnPropNameInRow="EnvelopeId" msprop:Generator_ColumnVarNameInTable="columnEnvelopeId" msprop:Generator_ColumnPropNameInTable="EnvelopeIdColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="ReceivedDt" msprop:Generator_UserColumnName="ReceivedDt" msprop:Generator_ColumnPropNameInRow="ReceivedDt" msprop:Generator_ColumnVarNameInTable="columnReceivedDt" msprop:Generator_ColumnPropNameInTable="ReceivedDtColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ReceivedById" msprop:Generator_UserColumnName="ReceivedById" msprop:Generator_ColumnPropNameInRow="ReceivedById" msprop:Generator_ColumnVarNameInTable="columnReceivedById" msprop:Generator_ColumnPropNameInTable="ReceivedByIdColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="SenderChange" msdata:ReadOnly="true" msprop:Generator_UserColumnName="SenderChange" msprop:Generator_ColumnPropNameInRow="SenderChange" msprop:Generator_ColumnVarNameInTable="columnSenderChange" msprop:Generator_ColumnPropNameInTable="SenderChangeColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="114" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ShipperChange" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ShipperChange" msprop:Generator_ColumnPropNameInRow="ShipperChange" msprop:Generator_ColumnVarNameInTable="columnShipperChange" msprop:Generator_ColumnPropNameInTable="ShipperChangeColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="114" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ShippingMethodIdChange" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ShippingMethodIdChange" msprop:Generator_ColumnPropNameInRow="ShippingMethodIdChange" msprop:Generator_ColumnVarNameInTable="columnShippingMethodIdChange" msprop:Generator_ColumnPropNameInTable="ShippingMethodIdChangeColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="34" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TrackingNoChange" msdata:ReadOnly="true" msprop:Generator_UserColumnName="TrackingNoChange" msprop:Generator_ColumnPropNameInRow="TrackingNoChange" msprop:Generator_ColumnVarNameInTable="columnTrackingNoChange" msprop:Generator_ColumnPropNameInTable="TrackingNoChangeColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="214" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ActualWeightChange" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ActualWeightChange" msprop:Generator_ColumnPropNameInRow="ActualWeightChange" msprop:Generator_ColumnVarNameInTable="columnActualWeightChange" msprop:Generator_ColumnPropNameInTable="ActualWeightChangeColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="34" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ListedWeightChange" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ListedWeightChange" msprop:Generator_ColumnPropNameInRow="ListedWeightChange" msprop:Generator_ColumnVarNameInTable="columnListedWeightChange" msprop:Generator_ColumnPropNameInTable="ListedWeightChangeColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="34" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PackageTypeIdChange" msdata:ReadOnly="true" msprop:Generator_UserColumnName="PackageTypeIdChange" msprop:Generator_ColumnPropNameInRow="PackageTypeIdChange" msprop:Generator_ColumnVarNameInTable="columnPackageTypeIdChange" msprop:Generator_ColumnPropNameInTable="PackageTypeIdChangeColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="34" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PackageAssignmentIdChange" msdata:ReadOnly="true" msprop:Generator_UserColumnName="PackageAssignmentIdChange" msprop:Generator_ColumnPropNameInRow="PackageAssignmentIdChange" msprop:Generator_ColumnVarNameInTable="columnPackageAssignmentIdChange" msprop:Generator_ColumnPropNameInTable="PackageAssignmentIdChangeColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="34" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:User" />
+      <xs:field xpath="mstns:UserID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

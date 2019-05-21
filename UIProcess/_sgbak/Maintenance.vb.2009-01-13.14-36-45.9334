@@ -1,0 +1,3660 @@
+﻿Namespace UI.Processors
+
+  ''' <summary>
+  ''' This class is suppose to take care of business rules, fetch data from database and supply it 
+  ''' as and when needed by screen.  This class is least concern with how data is going to be 
+  ''' displayed and how its going to be stored into/synchronize with database.
+  ''' </summary>
+  ''' <remarks></remarks>
+  Public Class Maintenance 
+    Inherits BaseClass
+
+
+#Region " Events "
+
+    Public Event LoadingMarkets()
+    Public Event MarketsLoaded()
+    Public Event LoadingPackageTypes()
+    Public Event PackageTypesLoaded()
+    Public Event LoadingPublications()
+    Public Event PublicationsLoaded()
+    Public Event LoadingShippingMethods()
+    Public Event ShippingMethodsLoaded()
+    Public Event LoadingUserList()
+    Public Event UserListLoaded()
+    Public Event LoadingFrequency()
+    Public Event FrequencyLoaded()
+    Public Event LoadingSenderTypes()
+    Public Event SenderTypesLoaded()
+    Public Event LoadingLocations()
+    Public Event LocationsLoaded()
+    Public Event LoadingSenderList()
+    Public Event SenderListLoaded()
+
+    Public Event LoadingColumnConstraints()
+    Public Event ColumnConstraintsLoaded()
+
+#End Region
+
+
+    Private WithEvents m_maintenanceData As MaintenanceDataSet
+    Private m_expectationAdapter As MaintenanceDataSetTableAdapters.ExpectationTableAdapter
+    Private m_languageAdapter As MaintenanceDataSetTableAdapters.LanguageTableAdapter
+    Private m_mediaAdapter As MaintenanceDataSetTableAdapters.MediaTableAdapter
+    Private m_retAdapter As MaintenanceDataSetTableAdapters.RetTableAdapter
+    Private m_retmktCustomDescrip As MaintenanceDataSetTableAdapters.RetMktCustomDescripTableAdapter
+    Private m_retpublicationCoverageAdapter As MaintenanceDataSetTableAdapters.RetPublicationCoverageTableAdapter
+    Private m_senderAdapter As MaintenanceDataSetTableAdapters.SenderTableAdapter
+    Private m_senderMktAssocAdapter As MaintenanceDataSetTableAdapters.SenderMktAssocTableAdapter
+    Private m_shipperAdapter As MaintenanceDataSetTableAdapters.ShipperTableAdapter
+        Private m_sizeAdapter As MaintenanceDataSetTableAdapters.SizeTableAdapter
+    Private m_tradeclassAdapter As MaintenanceDataSetTableAdapters.TradeClassTableAdapter
+
+
+
+    Private ReadOnly Property ExpectationAdapter() As MaintenanceDataSetTableAdapters.ExpectationTableAdapter
+      Get
+        Return m_expectationAdapter
+      End Get
+    End Property
+
+    Private ReadOnly Property LanguageAdapter() As MaintenanceDataSetTableAdapters.LanguageTableAdapter
+      Get
+        Return m_languageAdapter
+      End Get
+    End Property
+
+    Private ReadOnly Property MediaAdapter() As MaintenanceDataSetTableAdapters.MediaTableAdapter
+      Get
+        Return m_mediaAdapter
+      End Get
+    End Property
+
+    Private ReadOnly Property RetAdapter() As MaintenanceDataSetTableAdapters.RetTableAdapter
+      Get
+        Return m_retAdapter
+      End Get
+    End Property
+
+    Private ReadOnly Property RetMktCustomDescripAdapter() As MaintenanceDataSetTableAdapters.RetMktCustomDescripTableAdapter
+      Get
+        Return m_retmktCustomDescrip
+      End Get
+    End Property
+
+    Private ReadOnly Property RetPublicationCoverageAdapter() As MaintenanceDataSetTableAdapters.RetPublicationCoverageTableAdapter
+      Get
+        Return m_retpublicationCoverageAdapter
+      End Get
+    End Property
+
+    Private ReadOnly Property SenderAdapter() As MaintenanceDataSetTableAdapters.SenderTableAdapter
+      Get
+        Return m_senderAdapter
+      End Get
+    End Property
+
+    Private ReadOnly Property SenderMktAssocAdapter() As MaintenanceDataSetTableAdapters.SenderMktAssocTableAdapter
+      Get
+        Return m_senderMktAssocAdapter
+      End Get
+    End Property
+
+    Private ReadOnly Property ShipperAdapter() As MaintenanceDataSetTableAdapters.ShipperTableAdapter
+      Get
+        Return m_shipperAdapter
+      End Get
+    End Property
+
+    Private ReadOnly Property SizeAdapter() As MaintenanceDataSetTableAdapters.SizeTableAdapter
+      Get
+        Return m_sizeAdapter
+      End Get
+    End Property
+
+    Private ReadOnly Property TradeclassAdapter() As MaintenanceDataSetTableAdapters.TradeClassTableAdapter
+      Get
+        Return m_tradeclassAdapter
+      End Get
+    End Property
+
+    Public ReadOnly Property Data() As MaintenanceDataSet
+      Get
+        Return m_maintenanceData
+      End Get
+    End Property
+
+
+
+    Public Sub New()
+
+      m_expectationAdapter = New MaintenanceDataSetTableAdapters.ExpectationTableAdapter()
+      m_languageAdapter = New MaintenanceDataSetTableAdapters.LanguageTableAdapter()
+      m_mediaAdapter = New MaintenanceDataSetTableAdapters.MediaTableAdapter()
+      m_retAdapter = New MaintenanceDataSetTableAdapters.RetTableAdapter()
+      m_retmktCustomDescrip = New MaintenanceDataSetTableAdapters.RetMktCustomDescripTableAdapter()
+      m_retpublicationCoverageAdapter = New MaintenanceDataSetTableAdapters.RetPublicationCoverageTableAdapter()
+      m_senderAdapter = New MaintenanceDataSetTableAdapters.SenderTableAdapter()
+      m_senderMktAssocAdapter = New MaintenanceDataSetTableAdapters.SenderMktAssocTableAdapter()
+      m_shipperAdapter = New MaintenanceDataSetTableAdapters.ShipperTableAdapter()
+      m_sizeAdapter = New MaintenanceDataSetTableAdapters.SizeTableAdapter()
+      m_tradeclassAdapter = New MaintenanceDataSetTableAdapters.TradeClassTableAdapter()
+
+      m_maintenanceData = New MaintenanceDataSet()
+
+    End Sub
+
+
+
+    Public Sub Initialize()
+
+      m_expectationAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      m_languageAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      m_mediaAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      m_retAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      m_retmktCustomDescrip.Connection.ConnectionString = GetConnectionStringForAppDB()
+      m_retpublicationCoverageAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      m_senderAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      m_senderMktAssocAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      m_shipperAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      m_sizeAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      m_tradeclassAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+    End Sub
+
+
+#Region " Loading independent master tables "
+
+
+    Private Sub LoadMarkets()
+      Dim marketAdapter As MaintenanceDataSetTableAdapters.MktTableAdapter
+
+
+      RaiseEvent LoadingMarkets()
+
+      marketAdapter = New MaintenanceDataSetTableAdapters.MktTableAdapter()
+      marketAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      Data.Mkt.BeginLoadData()
+      marketAdapter.Fill(Data.Mkt)
+      Data.Mkt.EndLoadData()
+
+      marketAdapter.Dispose()
+      marketAdapter = Nothing
+
+      RaiseEvent MarketsLoaded()
+
+    End Sub
+
+    Private Sub LoadMediaList()
+      Dim mediaAdapter As MaintenanceDataSetTableAdapters.MediaListTableAdapter
+
+
+      mediaAdapter = New MaintenanceDataSetTableAdapters.MediaListTableAdapter
+      mediaAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      mediaAdapter.Fill(Data.MediaList)
+
+      mediaAdapter.Dispose()
+      mediaAdapter = Nothing
+
+    End Sub
+
+    Private Sub LoadRetailerList()
+      Dim RetailerAdapter As MaintenanceDataSetTableAdapters.RetailerListTableAdapter
+
+
+      RetailerAdapter = New MaintenanceDataSetTableAdapters.RetailerListTableAdapter
+      RetailerAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      RetailerAdapter.Fill(Data.RetailerList)
+
+      RetailerAdapter.Dispose()
+      RetailerAdapter = Nothing
+
+    End Sub
+
+    Private Sub LoadTradeClassList()
+      Dim tradeClassAdapter As MaintenanceDataSetTableAdapters.TradeClassListTableAdapter
+
+
+      tradeClassAdapter = New MaintenanceDataSetTableAdapters.TradeClassListTableAdapter
+      tradeClassAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      tradeClassAdapter.Fill(Data.TradeClassList)
+
+      tradeClassAdapter.Dispose()
+      tradeClassAdapter = Nothing
+
+    End Sub
+
+    Private Sub LoadPublications()
+      Dim publicationAdapter As MaintenanceDataSetTableAdapters.PublicationTableAdapter
+
+
+      RaiseEvent LoadingPublications()
+
+      publicationAdapter = New MaintenanceDataSetTableAdapters.PublicationTableAdapter()
+      publicationAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      Data.Publication.BeginLoadData()
+      publicationAdapter.Fill(Data.Publication)
+      Data.Publication.EndLoadData()
+
+      publicationAdapter.Dispose()
+      publicationAdapter = Nothing
+
+      RaiseEvent PublicationsLoaded()
+
+    End Sub
+
+    Private Sub LoadFrequencies()
+      Dim frequencyAdapter As MaintenanceDataSetTableAdapters.vwFrequencyTableAdapter
+
+
+      RaiseEvent LoadingFrequency()
+
+      frequencyAdapter = New MaintenanceDataSetTableAdapters.vwFrequencyTableAdapter()
+      frequencyAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      Data.vwFrequency.BeginLoadData()
+      frequencyAdapter.Fill(Data.vwFrequency)
+      Data.vwFrequency.EndLoadData()
+
+      frequencyAdapter.Dispose()
+      frequencyAdapter = Nothing
+
+      RaiseEvent FrequencyLoaded()
+
+    End Sub
+
+    Private Sub LoadSenderTypes()
+      Dim senderTypeAdapter As MaintenanceDataSetTableAdapters.vwSenderTypeTableAdapter
+
+
+      RaiseEvent LoadingSenderTypes()
+
+      senderTypeAdapter = New MaintenanceDataSetTableAdapters.vwSenderTypeTableAdapter()
+      senderTypeAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      Data.vwSenderType.BeginLoadData()
+      senderTypeAdapter.Fill(Data.vwSenderType)
+      Data.vwSenderType.EndLoadData()
+
+      senderTypeAdapter.Dispose()
+      senderTypeAdapter = Nothing
+
+      RaiseEvent SenderTypesLoaded()
+
+    End Sub
+
+    Private Sub LoadLocations()
+      Dim locationAdapter As MaintenanceDataSetTableAdapters.vwLocationTableAdapter
+
+
+      RaiseEvent LoadingLocations()
+
+      locationAdapter = New MaintenanceDataSetTableAdapters.vwLocationTableAdapter()
+      locationAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      Data.vwLocation.BeginLoadData()
+      locationAdapter.Fill(Data.vwLocation)
+      Data.vwLocation.EndLoadData()
+
+      locationAdapter.Dispose()
+      locationAdapter = Nothing
+
+      RaiseEvent LocationsLoaded()
+
+    End Sub
+
+    Private Sub LoadSenderList()
+      Dim senderListAdapter As MaintenanceDataSetTableAdapters.SenderListTableAdapter
+
+
+      RaiseEvent LoadingSenderList()
+
+      senderListAdapter = New MaintenanceDataSetTableAdapters.SenderListTableAdapter()
+      senderListAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      Data.SenderList.BeginLoadData()
+      senderListAdapter.Fill(Data.SenderList, UserLocationId)
+      Data.SenderList.EndLoadData()
+
+      senderListAdapter.Dispose()
+      senderListAdapter = Nothing
+
+      RaiseEvent SenderListLoaded()
+
+    End Sub
+
+    Private Sub LoadUserList()
+      Dim userAdapter As MaintenanceDataSetTableAdapters.UserTableAdapter
+
+
+      RaiseEvent LoadingUserList()
+
+      userAdapter = New MaintenanceDataSetTableAdapters.UserTableAdapter()
+      userAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      Data.User.BeginLoadData()
+      userAdapter.Fill(Data.User)
+      Data.User.EndLoadData()
+
+      userAdapter.Dispose()
+      userAdapter = Nothing
+
+      RaiseEvent UserListLoaded()
+
+    End Sub
+
+    Private Sub LoadWeekdays()
+      Dim weekdayArray(6) As String
+      Dim tempRow As MaintenanceDataSet.WeekdaysRow
+
+
+      weekdayArray = New String() {"Sunday", "Monday", "Tuesday", "Wednesday", "Thrusday", "Friday", "Saturday"}
+      Data.Weekdays.BeginLoadData()
+
+      For i As Integer = 0 To weekdayArray.Length - 1
+        tempRow = Data.Weekdays.NewWeekdaysRow()
+        tempRow.BeginEdit()
+        tempRow.Weekday = weekdayArray(i)
+        tempRow.EndEdit()
+        Data.Weekdays.AddWeekdaysRow(tempRow)
+        tempRow = Nothing
+      Next
+
+      Data.Weekdays.EndLoadData()
+      Data.Weekdays.AcceptChanges()
+
+      System.Array.Clear(weekdayArray, 0, weekdayArray.Length)
+      weekdayArray = Nothing
+
+    End Sub
+
+    Private Sub LoadNeedTrackingNoOptions()
+      Dim optionsArray(6) As String
+      Dim tempRow As MaintenanceDataSet.NeedTrackingNoRow
+
+
+      optionsArray = New String() {"No", "Yes"}
+      Data.NeedTrackingNo.BeginLoadData()
+
+      For i As Integer = 0 To optionsArray.Length - 1
+        tempRow = Data.NeedTrackingNo.NewNeedTrackingNoRow()
+        tempRow.BeginEdit()
+        tempRow.CodeId = CType(i, Byte)
+        tempRow.Descrip = optionsArray(i)
+        tempRow.EndEdit()
+        Data.NeedTrackingNo.AddNeedTrackingNoRow(tempRow)
+        tempRow = Nothing
+      Next
+
+      Data.NeedTrackingNo.EndLoadData()
+      Data.NeedTrackingNo.AcceptChanges()
+
+      System.Array.Clear(optionsArray, 0, optionsArray.Length)
+      optionsArray = Nothing
+
+    End Sub
+
+    Private Sub LoadShippingOptions()
+      Dim optionsArray(6) As String
+      Dim tempRow As MaintenanceDataSet.ShippingRow
+
+
+      optionsArray = New String() {"Yes", "No"}
+      Data.Shipping.BeginLoadData()
+
+      For i As Integer = 0 To optionsArray.Length - 1
+        tempRow = Data.Shipping.NewShippingRow()
+        tempRow.BeginEdit()
+        tempRow.CodeId = CType(i, Byte)
+        tempRow.Descrip = optionsArray(i)
+        tempRow.EndEdit()
+        Data.Shipping.AddShippingRow(tempRow)
+        tempRow = Nothing
+      Next
+
+      Data.Shipping.EndLoadData()
+      Data.Shipping.AcceptChanges()
+
+      System.Array.Clear(optionsArray, 0, optionsArray.Length)
+      optionsArray = Nothing
+
+    End Sub
+
+    Public Sub LoadDataSet()
+
+      LoadWeekdays()
+      LoadNeedTrackingNoOptions()
+      LoadShippingOptions()
+
+      'LoadMediaList()
+      'LoadTradeClassList()
+      'LoadRetailerList()
+      'LoadMarkets()
+      'LoadPublications()
+      'LoadShippingMethods()
+      'LoadPackageTypes()
+      'LoadFrequency()
+
+    End Sub
+
+
+#End Region
+
+
+    ''' <summary>
+    ''' Loads column information for table name.
+    ''' </summary>
+    ''' <param name="tableName">Column information will be fetched for table.</param>
+    ''' <remarks></remarks>
+    Public Sub LoadColumnConstraintsForTable(ByVal tableName As String)
+      Dim columnsAdapter As MaintenanceDataSetTableAdapters.COLUMNSTableAdapter
+
+
+      RaiseEvent LoadingColumnConstraints()
+
+      columnsAdapter = New MaintenanceDataSetTableAdapters.COLUMNSTableAdapter
+      columnsAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      columnsAdapter.ClearBeforeFill = True
+      columnsAdapter.Fill(Data.COLUMNS, tableName)
+
+      columnsAdapter.Dispose()
+      columnsAdapter = Nothing
+
+      RaiseEvent ColumnConstraintsLoaded()
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates column values against database schema.
+    ''' </summary>
+    ''' <param name="validateTable">DataTable to validate column values.</param>
+    ''' <param name="action">Action performed on the supplied row.</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function ValidateColumnValues _
+        (ByVal validateTable As System.Data.DataTable, ByVal action As DataRowAction) _
+        As Boolean
+      Dim areAllValid, returnStatus As Boolean
+      Dim columnName As String
+      Dim tempRow As System.Data.DataRow
+
+
+      areAllValid = True
+      For i As Integer = 0 To validateTable.Rows.Count - 1
+        tempRow = validateTable(i)
+
+        For j As Integer = 0 To validateTable.Columns.Count - 1
+          columnName = validateTable.Columns(j).ColumnName
+          returnStatus = Me.Data.ValidateColumnValueAgainstDatabaseSchema(columnName, tempRow(columnName), tempRow, True)
+          columnName = Nothing
+
+          If areAllValid Then areAllValid = returnStatus
+        Next
+
+        tempRow = Nothing
+      Next
+
+      Return areAllValid
+
+    End Function
+
+
+
+#Region " Methods for Expectation table. "
+
+
+    Public Event LoadingExpectations As MCAPCancellableEventHandler
+    Public Event ExpectationExceedsNonFilteredRowsLimit As MCAPEventHandler
+    Public Event ExpectationsLoaded As MCAPEventHandler
+
+    Public Event ValidatingExpectation As MCAPCancellableEventHandler
+    Public Event InvalidExpectationFound As MCAPEventHandler
+    Public Event ExpectationValidated As MCAPEventHandler
+
+    Public Event InsertingExpectation As MCAPCancellableEventHandler
+    Public Event ExpectationInserted As MCAPEventHandler
+
+    Public Event UpdatingExpectation As MCAPCancellableEventHandler
+    Public Event ExpectationUpdated As MCAPEventHandler
+
+    Public Event DeletingExpectation As MCAPCancellableEventHandler
+    Public Event ExpectationDeleted As MCAPEventHandler
+
+
+    ''' <summary>
+    ''' Gets total number of rows in expectation table.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetExpectationTableRowCount() As Integer
+      Dim rowCount As Nullable(Of Integer)
+
+
+      rowCount = ExpectationAdapter.GetRowCount()
+      If rowCount.HasValue Then
+        Return rowCount.Value
+      Else
+        Return 0
+      End If
+
+    End Function
+
+    ''' <summary>
+    ''' Loads all expectations from database, sorted by Expectation Id.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub LoadAllExpectations()
+
+      Data.Expectation.LoadingTable = True
+      Data.Expectation.BeginLoadData()
+      ExpectationAdapter.Fill(Data.Expectation)
+      Data.Expectation.EndLoadData()
+      Data.Expectation.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads expectations from database satisfying specified filter condition.
+    ''' </summary>
+    ''' <param name="filterCondition"></param>
+    ''' <remarks></remarks>
+    Private Sub LoadFilteredExpectations(ByVal filterCondition As String)
+
+      Data.Expectation.LoadingTable = True
+      Data.Expectation.BeginLoadData()
+      ExpectationAdapter.FillByWhereClause(Data.Expectation, "E." + filterCondition)
+      Data.Expectation.EndLoadData()
+      Data.Expectation.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads expectation information from database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadExpectations(Optional ByVal filterCondition As String = Nothing)
+      Dim rowFilter As String = Nothing
+
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Cancel = False
+        e.Data.Add("Filter", filterCondition)
+
+        RaiseEvent LoadingExpectations(Me, e)
+
+        If e.Cancel Then
+          e.Dispose()
+          Exit Sub
+        ElseIf e.Data.Contains("Filter") AndAlso e.Data("Filter") IsNot Nothing Then
+          rowFilter = e.Data("Filter").ToString()
+        End If
+      End Using
+
+      If Data.MediaList.Count = 0 Then LoadMediaList()
+      If Data.RetailerList.Count = 0 Then LoadRetailerList()
+      If Data.Mkt.Count = 0 Then LoadMarkets()
+      If Data.vwFrequency.Count = 0 Then LoadFrequencies()
+
+      If rowFilter Is Nothing AndAlso GetExpectationTableRowCount() > MaximumNonFilteredRowsAllowed Then
+        Using e As Processors.EventArgs = New Processors.EventArgs()
+          Data.Expectation.Clear()
+          RaiseEvent ExpectationExceedsNonFilteredRowsLimit(Me, e)
+          Exit Sub
+        End Using
+      End If
+
+      If rowFilter Is Nothing Then
+        LoadAllExpectations()
+      Else
+        LoadFilteredExpectations(rowFilter)
+      End If
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        RaiseEvent ExpectationsLoaded(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateExpectationTable(ByVal validateTable As MaintenanceDataSet.ExpectationDataTable)
+      Dim tempRow As MaintenanceDataSet.ExpectationRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = Data.Expectation.FindByExpectationID(validateTable(i).ExpectationID)
+
+        If tempRow Is Nothing Then Continue For
+
+        'ExpectationAdapter.
+        ''tempRow.RowError
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates row values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateExpectationRows(ByVal validateTable As MaintenanceDataSet.ExpectationDataTable)
+      Dim tempRow As MaintenanceDataSet.ExpectationRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = Data.Expectation.FindByExpectationID(validateTable(i).ExpectationID)
+
+        If tempRow Is Nothing Then Continue For
+
+        If tempRow.IsRetIdNull() Then
+          tempRow.SetColumnError("RetId", "Specify retailer.")
+        Else
+          tempRow.SetColumnError("RetId", String.Empty)
+        End If
+
+        If tempRow.IsMktIdNull() Then
+          tempRow.SetColumnError("MktId", "Specify market.")
+        Else
+          tempRow.SetColumnError("MktId", String.Empty)
+        End If
+
+        If tempRow.IsMediaIdNull() Then
+          tempRow.SetColumnError("MediaId", "Specify media.")
+        Else
+          tempRow.SetColumnError("MediaId", String.Empty)
+        End If
+
+        If tempRow.IsPriorityNull() Then
+          tempRow.SetColumnError("Priority", "Specify priority.")
+        Else
+          tempRow.SetColumnError("Priority", String.Empty)
+        End If
+
+        If tempRow.IsStartDtNull() Then
+          tempRow.SetColumnError("StartDt", "Specify start date.")
+        Else
+          tempRow.SetColumnError("StartDt", String.Empty)
+        End If
+
+        If tempRow.IsFrequencyIdNull() Then
+          tempRow.SetColumnError("FrequencyId", "Specify frequency.")
+        Else
+          tempRow.SetColumnError("FrequencyId", String.Empty)
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates Sender information.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Public Sub ValidateExpectationInformation(ByVal validateTable As MaintenanceDataSet.ExpectationDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ValidateRows", validateTable)
+        RaiseEvent ValidatingExpectation(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Dim tempTable As MaintenanceDataSet.ExpectationDataTable
+      tempTable = CType(validateTable.GetChanges(), MaintenanceDataSet.ExpectationDataTable)
+
+      'Row level validations are done here. e.g. value is not null, value should fall within certain range, etc.
+      ValidateExpectationRows(tempTable)
+
+      'Table level validations here. e.g. name is unique in table, etc.
+      ValidateExpectationTable(tempTable)
+
+      tempTable = Nothing
+
+      If validateTable.HasErrors Then
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent InvalidExpectationFound(Me, e)
+        End Using
+      Else
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent ExpectationValidated(Me, e)
+        End Using
+      End If
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes new row(s) added into DataTable.
+    ''' </summary>
+    ''' <param name="newrowsTable">Expectation table containing only new row(s)</param>
+    ''' <remarks></remarks>
+    Public Sub InsertExpectation(ByVal newrowsTable As MaintenanceDataSet.ExpectationDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent InsertingExpectation(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        ExpectationAdapter.Update(newrowsTable)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to insert new expectation.", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent ExpectationInserted(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes modified row(s) in expectation data table with database.
+    ''' </summary>
+    ''' <param name="modifiedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub UpdateExpectations(ByVal modifiedRows As MaintenanceDataSet.ExpectationDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent UpdatingExpectation(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        ExpectationAdapter.Update(modifiedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to update expectation(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent ExpectationUpdated(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes deleted row(s) in expectation data table with database.
+    ''' </summary>
+    ''' <param name="deletedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub DeleteExpectations(ByVal deletedRows As MaintenanceDataSet.ExpectationDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("DeletedRows", deletedRows)
+        RaiseEvent DeletingExpectation(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        ExpectationAdapter.Update(deletedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to delete expectation(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        RaiseEvent ExpectationDeleted(Me, e)
+      End Using
+
+    End Sub
+
+
+#End Region
+
+
+#Region " Methods for Language table. "
+
+
+    Public Event LoadingLanguages As MCAPCancellableEventHandler
+    Public Event LanguagesLoaded As MCAPEventHandler
+
+    Public Event ValidatingLanguage As MCAPCancellableEventHandler
+    Public Event InvalidLanguageInformationFound As MCAPEventHandler
+    Public Event LanguageValidated As MCAPEventHandler
+
+    Public Event InsertingLanguage As MCAPCancellableEventHandler
+    Public Event LanguageInserted As MCAPEventHandler
+
+    Public Event UpdatingLanguage As MCAPCancellableEventHandler
+    Public Event LanguageUpdated As MCAPEventHandler
+
+    Public Event DeletingLanguage As MCAPCancellableEventHandler
+    Public Event LanguageDeleted As MCAPEventHandler
+
+
+    ''' <summary>
+    ''' Loads all languages from database, sorted by language name.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub LoadAllLanguages()
+
+      Data.Language.LoadingTable = True
+      Data.Language.BeginLoadData()
+      LanguageAdapter.Fill(Data.Language)
+      Data.Language.EndLoadData()
+      Data.Language.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads expectation information from database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadLanguages()
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Cancel = False
+
+        RaiseEvent LoadingLanguages(Me, e)
+
+        If e.Cancel Then
+          e.Dispose()
+          Exit Sub
+        End If
+      End Using
+
+      LoadAllLanguages()
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        RaiseEvent LanguagesLoaded(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateLanguageTable(ByVal validateTable As MaintenanceDataSet.LanguageDataTable)
+      Dim tempRow As MaintenanceDataSet.LanguageRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = Data.Language.FindByLanguageID(validateTable(i).LanguageID)
+
+        If tempRow Is Nothing Then Continue For
+
+        If tempRow.IsDescripNull() = False Then
+          Dim datarowQuery As System.Collections.Generic.IEnumerable(Of MaintenanceDataSet.LanguageRow)
+
+          If tempRow.RowState = DataRowState.Added Then
+            datarowQuery = From row In Data.Language _
+                           Select row _
+                           Where row.Descrip = tempRow.Descrip
+          Else 'If tempRow.RowState = DataRowState.Modified Then
+            datarowQuery = From row In Data.Language _
+                           Select row _
+                           Where row.Descrip = tempRow.Descrip And row.LanguageID <> row.LanguageID
+          End If
+
+          If datarowQuery.Count > 0 Then
+            tempRow.RowError = "Language name must be unique."
+          End If
+
+          datarowQuery = Nothing
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates row values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateLanguageRows(ByVal validateTable As MaintenanceDataSet.LanguageDataTable)
+      Dim tempRow As MaintenanceDataSet.LanguageRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = Data.Language.FindByLanguageID(validateTable(i).LanguageID)
+
+        If tempRow Is Nothing Then Continue For
+
+        If tempRow.IsDescripNull() OrElse tempRow.Descrip.Length = 0 Then
+          tempRow.SetColumnError("Descrip", "Specify language name. Name can not have blank value.")
+        Else
+          tempRow.SetColumnError("Descrip", String.Empty)
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates language information.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Public Sub ValidateLanguageInformation(ByVal validateTable As MaintenanceDataSet.LanguageDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ValidateRows", validateTable)
+        RaiseEvent ValidatingLanguage(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Dim tempTable As MaintenanceDataSet.LanguageDataTable
+      tempTable = CType(validateTable.GetChanges(DataRowState.Modified), MaintenanceDataSet.LanguageDataTable)
+
+      'Row level validations are done here. e.g. value is not null, value should fall within certain range, etc.
+      ValidateLanguageRows(tempTable)
+
+      'Table level validations here. e.g. name is unique in table, etc.
+      ValidateLanguageTable(tempTable)
+
+      tempTable = Nothing
+
+      If validateTable.HasErrors Then
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent InvalidLanguageInformationFound(Me, e)
+        End Using
+      Else
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent LanguageValidated(Me, e)
+        End Using
+      End If
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes new row(s) added into DataTable.
+    ''' </summary>
+    ''' <param name="newrowsTable">Language table containing only new row(s)</param>
+    ''' <remarks></remarks>
+    Public Sub InsertLanguage(ByVal newrowsTable As MaintenanceDataSet.LanguageDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent InsertingLanguage(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        LanguageAdapter.Update(newrowsTable)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to insert new Language.", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent LanguageInserted(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes modified row(s) in Language data table with database.
+    ''' </summary>
+    ''' <param name="modifiedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub UpdateLanguages(ByVal modifiedRows As MaintenanceDataSet.LanguageDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent UpdatingLanguage(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        LanguageAdapter.Update(modifiedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to update Language(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent LanguageUpdated(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes deleted row(s) in Language data table with database.
+    ''' </summary>
+    ''' <param name="deletedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub DeleteLanguages(ByVal deletedRows As MaintenanceDataSet.LanguageDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("DeletedRows", deletedRows)
+        RaiseEvent DeletingLanguage(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        LanguageAdapter.Update(deletedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to delete Language(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        RaiseEvent LanguageDeleted(Me, e)
+      End Using
+
+    End Sub
+
+
+#End Region
+
+
+#Region " Methods for Media table. "
+
+
+    Public Event LoadingMediaTypes As MCAPCancellableEventHandler
+    Public Event MediaTypesLoaded As MCAPEventHandler
+
+    Public Event ValidatingMediaType As MCAPCancellableEventHandler
+    Public Event InvalidMediaTypeFound As MCAPEventHandler
+    Public Event MediaTypeValidated As MCAPEventHandler
+
+    Public Event InsertingMediaType As MCAPCancellableEventHandler
+    Public Event MediaTypeInserted As MCAPEventHandler
+
+    Public Event UpdatingMediaType As MCAPCancellableEventHandler
+    Public Event MediaTypeUpdated As MCAPEventHandler
+
+    Public Event DeletingMediaType As MCAPCancellableEventHandler
+    Public Event MediaTypeDeleted As MCAPEventHandler
+
+
+    ''' <summary>
+    ''' Loads all media from database, sorted by media name.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub LoadAllMediaTypes()
+
+      Data.Media.LoadingTable = True
+      Data.Media.BeginLoadData()
+      MediaAdapter.Fill(Data.Media)
+      Data.Media.EndLoadData()
+      Data.Media.LoadingTable = False
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Loads media types from database, sorted by media name.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadMediaTypeList()
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Cancel = False
+
+        RaiseEvent LoadingMediaTypes(Me, e)
+
+        If e.Cancel Then
+          e.Dispose()
+          Exit Sub
+        End If
+      End Using
+
+      LoadAllMediaTypes()
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        RaiseEvent MediaTypesLoaded(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateMediaTable(ByVal validateTable As MaintenanceDataSet.MediaDataTable)
+      Dim tempRow As MaintenanceDataSet.MediaRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = Data.Media.FindByMediaID(validateTable(i).MediaID)
+
+        If tempRow Is Nothing Then Continue For
+
+        If tempRow.IsDescripNull() = False Then
+          Dim datarowQuery As System.Collections.Generic.IEnumerable(Of MaintenanceDataSet.MediaRow)
+
+          If tempRow.RowState = DataRowState.Added Then
+            datarowQuery = From row In Data.Media _
+                           Select row _
+                           Where row.Descrip = tempRow.Descrip
+          Else 'If tempRow.RowState = DataRowState.Modified Then
+            datarowQuery = From row In Data.Media _
+                           Select row _
+                           Where row.Descrip = tempRow.Descrip And row.MediaID <> row.MediaID
+          End If
+
+          If datarowQuery.Count > 0 Then
+            tempRow.RowError = "Media name must be unique."
+          End If
+
+          datarowQuery = Nothing
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates row values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateMediaRows(ByVal validateTable As MaintenanceDataSet.MediaDataTable)
+      Dim tempRow As MaintenanceDataSet.MediaRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = Data.Media.FindByMediaID(validateTable(i).MediaID)
+
+        If tempRow Is Nothing Then Continue For
+
+        If tempRow.IsDescripNull() OrElse tempRow.Descrip.Length = 0 Then
+          tempRow.SetColumnError("Descrip", "Specify media name. It can not have blank value.")
+        Else
+          tempRow.SetColumnError("Descrip", String.Empty)
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates media type information.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Public Sub ValidateMediaInformation(ByVal validateTable As MaintenanceDataSet.MediaDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ValidateRows", validateTable)
+        RaiseEvent ValidatingMediaType(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Dim tempTable As MaintenanceDataSet.MediaDataTable
+      tempTable = CType(validateTable.GetChanges(DataRowState.Modified), MaintenanceDataSet.MediaDataTable)
+
+      'Row level validations are done here. e.g. value is not null, value should fall within certain range, etc.
+      ValidateMediaRows(tempTable)
+
+      'Table level validations here. e.g. name is unique in table, etc.
+      ValidateMediaTable(tempTable)
+
+      tempTable = Nothing
+
+      If validateTable.HasErrors Then
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent InvalidMediaTypeFound(Me, e)
+        End Using
+      Else
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent MediaTypeValidated(Me, e)
+        End Using
+      End If
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes new row(s) added into DataTable.
+    ''' </summary>
+    ''' <param name="newrowsTable">Media table containing only new row(s)</param>
+    ''' <remarks></remarks>
+    Public Sub InsertMedia(ByVal newrowsTable As MaintenanceDataSet.MediaDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent InsertingMediaType(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        MediaAdapter.Update(newrowsTable)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to insert new Media.", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent MediaTypeInserted(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes modified row(s) in Media data table with database.
+    ''' </summary>
+    ''' <param name="modifiedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub UpdateMedia(ByVal modifiedRows As MaintenanceDataSet.MediaDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent UpdatingMediaType(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        MediaAdapter.Update(modifiedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to update Media(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent MediaTypeUpdated(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes deleted row(s) in Media data table with database.
+    ''' </summary>
+    ''' <param name="deletedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub DeleteMedia(ByVal deletedRows As MaintenanceDataSet.MediaDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("DeletedRows", deletedRows)
+        RaiseEvent DeletingMediaType(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        MediaAdapter.Update(deletedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to delete Media(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        RaiseEvent MediaTypeDeleted(Me, e)
+      End Using
+
+    End Sub
+
+
+#End Region
+
+
+#Region " Methods for Retailer table. "
+
+
+    Public Event LoadingRetailers As MCAPCancellableEventHandler
+    Public Event RetailersExceedsNonFilteredRowsLimit As MCAPEventHandler
+    Public Event RetailersLoaded As MCAPEventHandler
+
+    Public Event ValidatingRetailerInformation As MCAPCancellableEventHandler
+    Public Event InvalidRetailerInformationFound As MCAPEventHandler
+    Public Event RetailerInformationValidated As MCAPEventHandler
+
+    Public Event InsertingRetailer As MCAPCancellableEventHandler
+    Public Event RetailerInserted As MCAPEventHandler
+
+    Public Event UpdatingRetailer As MCAPCancellableEventHandler
+    Public Event RetailerUpdated As MCAPEventHandler
+
+    Public Event DeletingRetailer As MCAPCancellableEventHandler
+    Public Event RetailerDeleted As MCAPEventHandler
+
+
+
+    ''' <summary>
+    ''' Gets total number of rows in expectation table.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetRetailerTableRowCount() As Integer
+      Dim rowCount As Nullable(Of Integer)
+
+
+      rowCount = RetAdapter.GetRowCount()
+      If rowCount.HasValue Then
+        Return rowCount.Value
+      Else
+        Return 0
+      End If
+
+    End Function
+
+    ''' <summary>
+    ''' Loads all retailers from database, sorted by retailer name.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub LoadAllRetailers()
+
+      Data.Ret.LoadingTable = True
+      Data.Ret.BeginLoadData()
+      RetAdapter.Fill(Data.Ret)
+      Data.Ret.EndLoadData()
+      Data.Ret.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads expectations from database satisfying specified filter condition.
+    ''' </summary>
+    ''' <param name="filterCondition"></param>
+    ''' <remarks></remarks>
+    Private Sub LoadFilteredRetailers(ByVal filterCondition As String)
+
+      Data.Ret.LoadingTable = True
+      Data.Ret.BeginLoadData()
+      RetAdapter.FillByWhereClause(Data.Ret, filterCondition)
+      Data.Ret.EndLoadData()
+      Data.Ret.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads retailers from database, sorted by retailer name.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadRetailers(Optional ByVal filterCondition As String = Nothing)
+      Dim rowFilter As String = Nothing
+
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Cancel = False
+        e.Data.Add("Filter", filterCondition)
+
+        RaiseEvent LoadingRetailers(Me, e)
+
+        If e.Cancel Then
+          e.Dispose()
+          Exit Sub
+        ElseIf e.Data.Contains("Filter") AndAlso e.Data("Filter") IsNot Nothing Then
+          rowFilter = e.Data("Filter").ToString()
+        End If
+      End Using
+
+      If Data.TradeClassList.Count = 0 Then LoadTradeClassList()
+      If Data.RetailerList.Count = 0 Then LoadRetailerList()
+
+      If rowFilter Is Nothing AndAlso GetRetailerTableRowCount() > MaximumNonFilteredRowsAllowed Then
+        Using e As Processors.EventArgs = New Processors.EventArgs()
+          Data.Ret.Clear()
+          RaiseEvent RetailersExceedsNonFilteredRowsLimit(Me, e)
+          Exit Sub
+        End Using
+      End If
+
+      If rowFilter Is Nothing Then
+        LoadAllRetailers()
+      Else
+        LoadFilteredRetailers(rowFilter)
+      End If
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        RaiseEvent RetailersLoaded(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateRetailerTable(ByVal validateTable As MaintenanceDataSet.RetDataTable)
+      Dim tempRow As MaintenanceDataSet.RetRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = Data.Ret.FindByRetId(validateTable(i).RetId)
+
+        If tempRow Is Nothing Then Continue For
+
+        If tempRow.IsDescripNull() = False Then
+          Dim datarowQuery As System.Collections.Generic.IEnumerable(Of MaintenanceDataSet.RetRow)
+
+          datarowQuery = From row In Data.Ret _
+                           Select row _
+                           Where row.Descrip = tempRow.Descrip And row.RetId <> row.RetId
+
+          If datarowQuery.Count > 0 Then
+            tempRow.RowError = "Retailer name must be unique."
+          Else
+            Dim rowCount As Integer
+
+            If tempRow.RowState = DataRowState.Modified Then
+              RetAdapter.IsRetailerExist(tempRow.Descrip, tempRow.RetId, rowCount)
+            Else
+              RetAdapter.IsRetailerExist(tempRow.Descrip, Nothing, rowCount)
+            End If
+
+            If rowCount > 0 Then tempRow.RowError = "Retaler name must be unique."
+          End If
+
+          datarowQuery = Nothing
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates rows values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateRetailerRows(ByVal validateTable As MaintenanceDataSet.RetDataTable)
+      Dim tempRow As MaintenanceDataSet.RetRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = Data.Ret.FindByRetId(validateTable(i).RetId)
+
+        If tempRow Is Nothing Then Continue For
+
+        If tempRow.IsDescripNull() Then
+          tempRow.SetColumnError("Descrip", "Specify retailer name.")
+        Else
+          tempRow.SetColumnError("Descrip", String.Empty)
+        End If
+
+        If tempRow.IsTradeClassIdNull() Then
+          tempRow.SetColumnError("TradeclassId", "Specify tradeclass for retailer.")
+        Else
+          tempRow.SetColumnError("TradeclassId", String.Empty)
+        End If
+
+        If tempRow.IsStartDtNull() Then
+          tempRow.SetColumnError("StartDt", "Specify start date.")
+        Else
+          tempRow.SetColumnError("StartDt", String.Empty)
+        End If
+
+        If tempRow.IsPriorityNull() Then
+          tempRow.SetColumnError("Priority", "Specify Priority.")
+        Else
+          tempRow.SetColumnError("Priority", String.Empty)
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates Sender information.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Public Sub ValidateRetailerInformation(ByVal validateTable As MaintenanceDataSet.RetDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ValidateRows", validateTable)
+        RaiseEvent ValidatingRetailerInformation(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Dim tempTable As MaintenanceDataSet.RetDataTable
+      tempTable = CType(validateTable.GetChanges(), MaintenanceDataSet.RetDataTable)
+
+      'Row level validations are done here. e.g. value is not null, value should fall within certain range, etc.
+      ValidateRetailerRows(tempTable)
+
+      'Table level validations here. e.g. name is unique in table, etc.
+      ValidateRetailerTable(tempTable)
+
+      tempTable = Nothing
+
+      If validateTable.HasErrors Then
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent InvalidRetailerInformationFound(Me, e)
+        End Using
+      Else
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent RetailerInformationValidated(Me, e)
+        End Using
+      End If
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes new row(s) added into DataTable.
+    ''' </summary>
+    ''' <param name="newrowsTable">Ret table containing only new row(s)</param>
+    ''' <remarks></remarks>
+    Public Sub InsertRet(ByVal newrowsTable As MaintenanceDataSet.RetDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent InsertingRetailer(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        RetAdapter.Update(newrowsTable)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to insert new Retailer(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent RetailerInserted(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes modified row(s) in Ret data table with database.
+    ''' </summary>
+    ''' <param name="modifiedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub UpdateRet(ByVal modifiedRows As MaintenanceDataSet.RetDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent UpdatingRetailer(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        RetAdapter.Update(modifiedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to update Retailer(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent RetailerUpdated(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes deleted row(s) in Ret data table with database.
+    ''' </summary>
+    ''' <param name="deletedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub DeleteRet(ByVal deletedRows As MaintenanceDataSet.RetDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("DeletedRows", deletedRows)
+        RaiseEvent DeletingRetailer(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        RetAdapter.Update(deletedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to delete Retailer(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        RaiseEvent RetailerDeleted(Me, e)
+      End Using
+
+    End Sub
+
+
+#End Region
+
+
+#Region " Methods for Tradeclass table. "
+
+
+    Public Event LoadingTradeclass As MCAPCancellableEventHandler
+    Public Event TradeclassLoaded As MCAPEventHandler
+
+    Public Event ValidatingTradeclass As MCAPCancellableEventHandler
+    Public Event InvalidTradeclassInformationFound As MCAPEventHandler
+    Public Event TradeclassValidated As MCAPEventHandler
+
+    Public Event InsertingTradeclass As MCAPCancellableEventHandler
+    Public Event TradeclassInserted As MCAPEventHandler
+
+    Public Event UpdatingTradeclass As MCAPCancellableEventHandler
+    Public Event TradeclassUpdated As MCAPEventHandler
+
+    Public Event DeletingTradeclass As MCAPCancellableEventHandler
+    Public Event TradeclassDeleted As MCAPEventHandler
+
+
+    ''' <summary>
+    ''' Returns total number of rows in tradeclass table.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetTradeclassTableRowCount() As Integer
+      Dim rowCount As Nullable(Of Integer)
+
+
+      rowCount = TradeclassAdapter.GetRowCount()
+      If rowCount.HasValue Then
+        Return rowCount.Value
+      Else
+        Return 0
+      End If
+
+    End Function
+
+    ''' <summary>
+    ''' Loads all tradeclass from database, sorted by tradeclass name.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub LoadAllTradeclasses()
+
+      Data.TradeClass.LoadingTable = True
+      Data.TradeClass.BeginLoadData()
+      TradeclassAdapter.Fill(Data.TradeClass)
+      Data.TradeClass.EndLoadData()
+      Data.TradeClass.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads Tradeclasses from database satisfying specified filter condition.
+    ''' </summary>
+    ''' <param name="filterCondition"></param>
+    ''' <remarks></remarks>
+    Private Sub LoadFilteredTradeclasses(ByVal filterCondition As String)
+
+      Data.TradeClass.LoadingTable = True
+      Data.TradeClass.BeginLoadData()
+      TradeclassAdapter.FillByWhereClause(Data.TradeClass, filterCondition)
+      Data.TradeClass.EndLoadData()
+      Data.TradeClass.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads tradeclass from database, sorted by tradeclass name.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadTradeclasses()
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Cancel = False
+
+        RaiseEvent LoadingLanguages(Me, e)
+
+        If e.Cancel Then
+          e.Dispose()
+          Exit Sub
+        End If
+      End Using
+
+      LoadAllTradeclasses()
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        RaiseEvent TradeclassLoaded(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateTradeclassTable(ByVal validateTable As MaintenanceDataSet.TradeClassDataTable)
+      Dim tempRow As MaintenanceDataSet.TradeClassRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+        If tempRow.IsDescripNull() OrElse tempRow.Descrip.Length = 0 Then
+          tempRow.SetColumnError("Descrip", "Specify language name. It can not have blank value.")
+        Else
+          tempRow.SetColumnError("Descrip", "")
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates rows values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateTradeclassRows(ByVal validateTable As MaintenanceDataSet.TradeClassDataTable)
+      Dim tempRow As MaintenanceDataSet.TradeClassRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = Data.TradeClass.FindByTradeClassId(validateTable(i).TradeClassId)
+
+        If tempRow Is Nothing Then Continue For
+
+        If tempRow.IsDescripNull() = False Then
+          Dim datarowQuery As System.Collections.Generic.IEnumerable(Of MaintenanceDataSet.TradeClassRow)
+
+          If tempRow.RowState = DataRowState.Added Then
+            datarowQuery = From row In Data.TradeClass _
+                           Select row _
+                           Where row.Descrip = tempRow.Descrip
+          Else 'If tempRow.RowState = DataRowState.Modified Then
+            datarowQuery = From row In Data.TradeClass _
+                           Select row _
+                           Where row.Descrip = tempRow.Descrip And row.TradeClassId <> row.TradeClassId
+          End If
+
+          If datarowQuery.Count > 0 Then
+            tempRow.RowError = "Tradeclass name must be unique."
+          End If
+
+          datarowQuery = Nothing
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates tradeclass information.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Public Sub ValidateTradeclassInformation(ByVal validateTable As MaintenanceDataSet.TradeClassDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ValidateRows", validateTable)
+        RaiseEvent ValidatingTradeclass(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Dim tempTable As MaintenanceDataSet.TradeClassDataTable
+      tempTable = CType(validateTable.GetChanges(DataRowState.Modified), MaintenanceDataSet.TradeClassDataTable)
+
+      'Row level validations are done here. e.g. value is not null, value should fall within certain range, etc.
+      ValidateTradeclassRows(tempTable)
+
+      'Table level validations here. e.g. name is unique in table, etc.
+      ValidateTradeclassTable(tempTable)
+
+      tempTable = Nothing
+
+      If validateTable.HasErrors Then
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent InvalidTradeclassInformationFound(Me, e)
+        End Using
+      Else
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent TradeclassValidated(Me, e)
+        End Using
+      End If
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes new row(s) added into DataTable.
+    ''' </summary>
+    ''' <param name="newrowsTable">Tradeclass table containing only new row(s)</param>
+    ''' <remarks></remarks>
+    Public Sub InsertTradeclass(ByVal newrowsTable As MaintenanceDataSet.TradeClassDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent InsertingTradeclass(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        TradeclassAdapter.Update(newrowsTable)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to insert new tradeclass.", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent TradeclassInserted(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes modified row(s) in Tradeclass data table with database.
+    ''' </summary>
+    ''' <param name="modifiedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub UpdateTradeclass(ByVal modifiedRows As MaintenanceDataSet.TradeClassDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent UpdatingTradeclass(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        TradeclassAdapter.Update(modifiedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to update tradeclass(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent TradeclassUpdated(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes deleted row(s) in Tradeclass data table with database.
+    ''' </summary>
+    ''' <param name="deletedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub DeleteTradeclass(ByVal deletedRows As MaintenanceDataSet.TradeClassDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("DeletedRows", deletedRows)
+        RaiseEvent DeletingTradeclass(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        TradeclassAdapter.Update(deletedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to delete tradeclass(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        RaiseEvent TradeclassDeleted(Me, e)
+      End Using
+
+    End Sub
+
+
+#End Region
+
+
+#Region " Methods for RetMktCustomDescrip table. "
+
+
+    Public Event LoadingRetMktCustomDescrip As MCAPCancellableEventHandler
+    Public Event RetMktCustomDescripExceedsNonFilteredRowsLimit As MCAPEventHandler
+    Public Event RetMktCustomDescripLoaded As MCAPEventHandler
+
+    Public Event ValidatingRetMktCustomDescrip As MCAPCancellableEventHandler
+    Public Event InvalidRetMktCustomDescripFound As MCAPEventHandler
+    Public Event RetMktCustomDescripValidated As MCAPEventHandler
+
+    Public Event InsertingRetMktCustomDescrip As MCAPCancellableEventHandler
+    Public Event RetMktCustomDescripInserted As MCAPEventHandler
+
+    Public Event UpdatingRetMktCustomDescrip As MCAPCancellableEventHandler
+    Public Event RetMktCustomDescripUpdated As MCAPEventHandler
+
+    Public Event DeletingRetMktCustomDescrip As MCAPCancellableEventHandler
+    Public Event RetMktCustomDescripDeleted As MCAPEventHandler
+
+
+
+    ''' <summary>
+    ''' Gets total number of rows in RetMktCustomDescrip table.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetRetMktCustomDescripTableRowCount() As Integer
+      Dim rowCount As Nullable(Of Integer)
+
+
+      rowCount = RetMktCustomDescripAdapter.GetRowCount()
+      If rowCount.HasValue Then
+        Return rowCount.Value
+      Else
+        Return 0
+      End If
+
+    End Function
+
+    ''' <summary>
+    ''' Loads all retailer market custom description from database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub LoadAllRetMktCustomDescrip()
+
+      Data.RetMktCustomDescrip.LoadingTable = True
+      Data.RetMktCustomDescrip.BeginLoadData()
+      RetMktCustomDescripAdapter.Fill(Data.RetMktCustomDescrip)
+      Data.RetMktCustomDescrip.EndLoadData()
+      Data.RetMktCustomDescrip.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads RetMktCustomDescrip from database satisfying specified filter condition.
+    ''' </summary>
+    ''' <param name="filterCondition"></param>
+    ''' <remarks></remarks>
+    Private Sub LoadFilteredRetMktCustomDescrip(ByVal filterCondition As String)
+
+      Data.RetMktCustomDescrip.LoadingTable = True
+      Data.RetMktCustomDescrip.BeginLoadData()
+      RetMktCustomDescripAdapter.FillByWhereClause(Data.RetMktCustomDescrip, "RMCD." + filterCondition)
+      Data.RetMktCustomDescrip.EndLoadData()
+      Data.RetMktCustomDescrip.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads retailer market custom description from database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadRetMktCustomDescrip(Optional ByVal filterCondition As String = Nothing)
+      Dim rowFilter As String = Nothing
+
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Cancel = False
+
+        RaiseEvent LoadingRetMktCustomDescrip(Me, e)
+
+        If e.Cancel Then
+          e.Dispose()
+          Exit Sub
+        ElseIf e.Data.Contains("Filter") AndAlso e.Data("Filter") IsNot Nothing Then
+          rowFilter = e.Data("Filter").ToString()
+        End If
+      End Using
+
+      If Data.RetailerList.Count = 0 Then LoadRetailerList()
+      If Data.Mkt.Count = 0 Then LoadMarkets()
+
+      If rowFilter Is Nothing AndAlso GetRetMktCustomDescripTableRowCount() > MaximumNonFilteredRowsAllowed Then
+        Using e As Processors.EventArgs = New Processors.EventArgs()
+          Data.RetMktCustomDescrip.Clear()
+          RaiseEvent RetMktCustomDescripExceedsNonFilteredRowsLimit(Me, e)
+          Exit Sub
+        End Using
+      End If
+
+      If rowFilter Is Nothing Then
+        LoadAllRetMktCustomDescrip()
+      Else
+        LoadFilteredRetMktCustomDescrip(rowFilter)
+      End If
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        RaiseEvent RetMktCustomDescripLoaded(Me, e)
+      End Using
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateRetMktCustomDescripTable(ByVal validateTable As MaintenanceDataSet.RetMktCustomDescripDataTable)
+      Dim tempRow As MaintenanceDataSet.RetMktCustomDescripRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates row values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateRetMktCustomDescripRows(ByVal validateTable As MaintenanceDataSet.RetMktCustomDescripDataTable)
+      Dim tempRow As MaintenanceDataSet.RetMktCustomDescripRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+        If tempRow.IsCustomMktDescripNull() Then
+          tempRow.SetColumnError("CustomMktDescrip", "Specify custom market description.")
+        Else
+          tempRow.SetColumnError("CustomMktDescrip", "")
+        End If
+
+        If tempRow.IsCustomRetDescripNull Then
+          tempRow.SetColumnError("CustomRetDescrip", "Specify custom retailer description.")
+        Else
+          tempRow.SetColumnError("CustomRetDescrip", "")
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates RetMktCustomDescrip information.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Public Sub ValidateRetMktCustomDescripInformation(ByVal validateTable As MaintenanceDataSet.RetMktCustomDescripDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ValidateRows", validateTable)
+        RaiseEvent ValidatingRetMktCustomDescrip(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Dim tempTable As MaintenanceDataSet.RetMktCustomDescripDataTable
+      tempTable = CType(validateTable.GetChanges(), MaintenanceDataSet.RetMktCustomDescripDataTable)
+
+      ValidateRetMktCustomDescripRows(tempTable)
+      ValidateRetMktCustomDescripTable(tempTable)
+
+      tempTable = Nothing
+
+      If validateTable.HasErrors Then
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent InvalidRetMktCustomDescripFound(Me, e)
+        End Using
+      Else
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent RetMktCustomDescripValidated(Me, e)
+        End Using
+      End If
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Synchronizes new row(s) added into DataTable.
+    ''' </summary>
+    ''' <param name="newrowsTable">RetMktCustomDescrip table containing only new row(s)</param>
+    ''' <remarks></remarks>
+    Public Sub InsertRetMktCustomDescrip(ByVal newrowsTable As MaintenanceDataSet.RetMktCustomDescripDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent InsertingRetMktCustomDescrip(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        RetMktCustomDescripAdapter.Update(newrowsTable)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to insert new custom description(s) for Retailer-Market.", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent RetMktCustomDescripInserted(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes modified row(s) in RetMktCustomDescrip data table with database.
+    ''' </summary>
+    ''' <param name="modifiedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub UpdateRetMktCustomDescrip(ByVal modifiedRows As MaintenanceDataSet.RetMktCustomDescripDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent UpdatingRetMktCustomDescrip(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        RetMktCustomDescripAdapter.Update(modifiedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to update custom description(s) for Retailer-Market.", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent RetMktCustomDescripUpdated(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes deleted row(s) in RetMktCustomDescrip data table with database.
+    ''' </summary>
+    ''' <param name="deletedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub DeleteRetMktCustomDescrip(ByVal deletedRows As MaintenanceDataSet.RetMktCustomDescripDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("DeletedRows", deletedRows)
+        RaiseEvent DeletingRetMktCustomDescrip(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        RetMktCustomDescripAdapter.Update(deletedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to delete custom description(s) for Retailer-Market.", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        RaiseEvent RetMktCustomDescripDeleted(Me, e)
+      End Using
+
+    End Sub
+
+
+#End Region
+
+
+#Region " Methods for RetPublicationCoverage table. "
+
+
+    Public Event LoadingRetPublicationCoverage As MCAPCancellableEventHandler
+    Public Event RetPublicationCoverageExceedsNonFilteredRowsLimit As MCAPEventHandler
+    Public Event RetPublicationCoverageLoaded As MCAPEventHandler
+
+    Public Event ValidatingRetPublicationCoverage As MCAPCancellableEventHandler
+    Public Event InvalidRetPublicationCoverageFound As MCAPEventHandler
+    Public Event RetPublicationCoverageValidated As MCAPEventHandler
+
+    Public Event InsertingRetPublicationCoverage As MCAPCancellableEventHandler
+    Public Event RetPublicationCoverageInserted As MCAPEventHandler
+
+    Public Event UpdatingRetPublicationCoverage As MCAPCancellableEventHandler
+    Public Event RetPublicationCoverageUpdated As MCAPEventHandler
+
+    Public Event DeletingRetPublicationCoverage As MCAPCancellableEventHandler
+    Public Event RetPublicationCoverageDeleted As MCAPEventHandler
+
+
+
+    ''' <summary>
+    ''' Gets total number of rows in expectation table.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetRetPublicationCoverageTableRowCount() As Integer
+      Dim rowCount As Nullable(Of Integer)
+
+
+      rowCount = RetPublicationCoverageAdapter.GetRowCount()
+      If rowCount.HasValue Then
+        Return rowCount.Value
+      Else
+        Return 0
+      End If
+
+    End Function
+
+    ''' <summary>
+    ''' Loads all retailer publication coverage from database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub LoadAllRetPublicationCoverage()
+
+      Data.RetPublicationCoverage.LoadingTable = True
+      Data.RetPublicationCoverage.BeginLoadData()
+      RetPublicationCoverageAdapter.Fill(Data.RetPublicationCoverage)
+      Data.RetPublicationCoverage.EndLoadData()
+      Data.RetPublicationCoverage.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads retailer publication coverages from database satisfying specified filter condition.
+    ''' </summary>
+    ''' <param name="filterCondition"></param>
+    ''' <remarks></remarks>
+    Private Sub LoadFilteredRetPublicationCoverage(ByVal filterCondition As String)
+
+      Data.RetPublicationCoverage.LoadingTable = True
+      Data.RetPublicationCoverage.BeginLoadData()
+      RetPublicationCoverageAdapter.FillByWhereClause(Data.RetPublicationCoverage, "RPC." + filterCondition)
+      Data.RetPublicationCoverage.EndLoadData()
+      Data.RetPublicationCoverage.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads retailer publication coverage from database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadRetPublicationCoverage(Optional ByVal filterCondition As String = Nothing)
+      Dim rowFilter As String = Nothing
+
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Cancel = False
+        e.Data.Add("Filter", filterCondition)
+
+        RaiseEvent LoadingRetPublicationCoverage(Me, e)
+
+        If e.Cancel Then
+          e.Dispose()
+          Exit Sub
+        ElseIf e.Data.Contains("Filter") AndAlso e.Data("Filter") IsNot Nothing Then
+          rowFilter = e.Data("Filter").ToString()
+        End If
+      End Using
+
+      If Data.RetailerList.Count = 0 Then LoadRetailerList()
+      If Data.Publication.Count = 0 Then LoadPublications()
+
+      If rowFilter Is Nothing AndAlso GetRetPublicationCoverageTableRowCount() > MaximumNonFilteredRowsAllowed Then
+        Using e As Processors.EventArgs = New Processors.EventArgs()
+          Data.RetPublicationCoverage.Clear()
+          RaiseEvent RetPublicationCoverageExceedsNonFilteredRowsLimit(Me, e)
+          Exit Sub
+        End Using
+      End If
+
+      If rowFilter Is Nothing Then
+        LoadAllRetPublicationCoverage()
+      Else
+        LoadFilteredRetPublicationCoverage(rowFilter)
+      End If
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        RaiseEvent RetPublicationCoverageLoaded(Me, e)
+      End Using
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateRetPublicationCoverageTable(ByVal validateTable As MaintenanceDataSet.RetPublicationCoverageDataTable)
+      Dim tempRow As MaintenanceDataSet.RetPublicationCoverageRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates row values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateRetPublicationCoverageRows(ByVal validateTable As MaintenanceDataSet.RetPublicationCoverageDataTable)
+      Dim tempRow As MaintenanceDataSet.RetPublicationCoverageRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+        If tempRow.IsStartDtNull() Then
+          tempRow.SetColumnError("StartDt", "Specify start date for coverage.")
+        Else
+          tempRow.SetColumnError("StartDt", "")
+        End If
+
+        If tempRow.IsPriorityNull() Then
+          tempRow.SetColumnError("Priority", "Specify Priority for coverage.")
+        Else
+          tempRow.SetColumnError("Priority", "")
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates RetPublicationCoverage information.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Public Sub ValidateRetPublicationCoverageInformation(ByVal validateTable As MaintenanceDataSet.RetPublicationCoverageDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ValidateRows", validateTable)
+        RaiseEvent ValidatingRetPublicationCoverage(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Dim tempTable As MaintenanceDataSet.RetPublicationCoverageDataTable
+      tempTable = CType(validateTable.GetChanges(), MaintenanceDataSet.RetPublicationCoverageDataTable)
+
+      ValidateRetPublicationCoverageRows(tempTable)
+      ValidateRetPublicationCoverageTable(tempTable)
+
+      tempTable = Nothing
+
+      If validateTable.HasErrors Then
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent InvalidRetPublicationCoverageFound(Me, e)
+        End Using
+      Else
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent RetPublicationCoverageValidated(Me, e)
+        End Using
+      End If
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Synchronizes new row(s) added into DataTable.
+    ''' </summary>
+    ''' <param name="newrowsTable">RetPublicationCoverage table containing only new row(s)</param>
+    ''' <remarks></remarks>
+    Public Sub InsertRetPublicationCoverage(ByVal newrowsTable As MaintenanceDataSet.RetPublicationCoverageDataTable)
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent InsertingRetPublicationCoverage(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        RetPublicationCoverageAdapter.Update(newrowsTable)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to insert new Retailer-Publication coverage.", ex)
+      End Try
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent RetPublicationCoverageInserted(Me, e)
+        Exit Sub
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes modified row(s) in RetPublicationCoverage data table with database.
+    ''' </summary>
+    ''' <param name="modifiedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub UpdateRetPublicationCoverage(ByVal modifiedRows As MaintenanceDataSet.RetPublicationCoverageDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent UpdatingRetPublicationCoverage(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        RetPublicationCoverageAdapter.Update(modifiedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to update Retailer-Publication coverage(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent RetPublicationCoverageUpdated(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes deleted row(s) in RetPublicationCoverage data table with database.
+    ''' </summary>
+    ''' <param name="deletedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub DeleteRetPublicationCoverage(ByVal deletedRows As MaintenanceDataSet.RetPublicationCoverageDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("DeletedRows", deletedRows)
+        RaiseEvent DeletingRetPublicationCoverage(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        RetPublicationCoverageAdapter.Update(deletedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to delete Retailer-Publication coverage(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        RaiseEvent RetPublicationCoverageDeleted(Me, e)
+      End Using
+
+    End Sub
+
+
+#End Region
+
+
+#Region " Methods for sender table. "
+
+
+    Public Event LoadingSenders As MCAPCancellableEventHandler
+    Public Event SenderExceedsNonFilteredRowsLimit As MCAPEventHandler
+    Public Event SendersLoaded As MCAPEventHandler
+
+    Public Event ValidatingSenderInformation As MCAPCancellableEventHandler
+    Public Event InvalidSenderInformationFound As MCAPEventHandler
+    Public Event SenderInformationValidated As MCAPEventHandler
+
+    Public Event InsertingSender As MCAPCancellableEventHandler
+    Public Event SenderInserted As MCAPEventHandler
+
+    Public Event UpdatingSender As MCAPCancellableEventHandler
+    Public Event SenderUpdated As MCAPEventHandler
+
+    Public Event DeletingSender As MCAPCancellableEventHandler
+    Public Event SenderDeleted As MCAPEventHandler
+
+
+
+    ''' <summary>
+    ''' Returns total number of rows in expectation table.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetSenderTableRowCount() As Integer
+      Dim rowCount As Object
+
+
+      rowCount = SenderAdapter.GetRowCount()
+      If rowCount IsNot Nothing Then
+        Return CType(rowCount, Integer)
+      Else
+        Return 0
+      End If
+
+    End Function
+
+    ''' <summary>
+    ''' Loads all senders from database, sorted by sender name.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub LoadAllSenderInformation()
+
+      Data.Sender.LoadingTable = True
+      Data.Sender.BeginLoadData()
+      'SenderAdapter.Fill(Data.Sender, UserLocationId)
+      SenderAdapter.Fill(Data.Sender)
+      Data.Sender.EndLoadData()
+      Data.Sender.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads senders from database satisfying specified filter condition.
+    ''' </summary>
+    ''' <param name="filterCondition"></param>
+    ''' <remarks></remarks>
+    Private Sub LoadFilteredSenderInformation(ByVal filterCondition As String)
+
+      Data.Sender.LoadingTable = True
+      Data.Sender.BeginLoadData()
+      SenderAdapter.FillByWhereClause(Data.Sender, UserLocationId, filterCondition)
+      Data.Sender.EndLoadData()
+      Data.Sender.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads sender information from database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadSenders(Optional ByVal filterCondition As String = Nothing)
+      Dim rowFilter As String = Nothing
+
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Cancel = False
+        e.Data.Add("Filter", filterCondition)
+
+        RaiseEvent LoadingSenders(Me, e)
+
+        If e.Cancel Then
+          e.Dispose()
+          Exit Sub
+        ElseIf e.Data.Contains("Filter") AndAlso e.Data("Filter") IsNot Nothing Then
+          rowFilter = e.Data("Filter").ToString()
+        End If
+      End Using
+
+      'What about priority?
+      If Data.vwFrequency.Count = 0 Then LoadFrequencies()
+      If Data.vwSenderType.Count = 0 Then LoadSenderTypes()
+      If Data.vwLocation.Count = 0 Then LoadLocations()
+      If Data.SenderList.Count = 0 Then LoadSenderList()
+
+      If rowFilter Is Nothing AndAlso GetSenderTableRowCount() > MaximumNonFilteredRowsAllowed Then
+        Using e As Processors.EventArgs = New Processors.EventArgs()
+          Data.Sender.Clear()
+          RaiseEvent SenderExceedsNonFilteredRowsLimit(Me, e)
+          Exit Sub
+        End Using
+      End If
+
+      If rowFilter Is Nothing Then
+        LoadAllSenderInformation()
+      Else
+        LoadFilteredSenderInformation(rowFilter)
+      End If
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        RaiseEvent SendersLoaded(Me, e)
+      End Using
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateSenderTable(ByVal validateTable As MaintenanceDataSet.SenderDataTable)
+      Dim tempRow As MaintenanceDataSet.SenderRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateSenderRows(ByVal validateTable As MaintenanceDataSet.SenderDataTable)
+      Dim tempRow As MaintenanceDataSet.SenderRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+        If tempRow.IsNameNull() Then
+          tempRow.SetColumnError("Name", "Sender name can not be blank.")
+        Else
+          tempRow.SetColumnError("Name", String.Empty)
+        End If
+
+        If tempRow.IsStartDtNull() Then
+          tempRow.SetColumnError("StartDt", "Specify start date for sender.")
+        Else
+          tempRow.SetColumnError("StartDt", String.Empty)
+        End If
+
+        If tempRow.IsPriorityNull() Then
+          tempRow.SetColumnError("Priority", "Specify priority for sender.")
+        Else
+          tempRow.SetColumnError("Priority", String.Empty)
+        End If
+
+        If tempRow.IsFrequencyIdNull() Then
+          tempRow.SetColumnError("FrequencyId", "Specify frequency for sender.")
+        Else
+          tempRow.SetColumnError("FrequencyId", String.Empty)
+        End If
+
+        If tempRow.IsTypeIdNull() Then
+          tempRow.SetColumnError("TypeId", "Specify sender type for sender.")
+        Else
+          tempRow.SetColumnError("TypeId", String.Empty)
+        End If
+
+        If tempRow.IsIndNoShippingNull() Then
+          tempRow.IndNoShipping = 1 'True = Shipping is not required.
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates Sender information.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Public Sub ValidateSenderInformation(ByVal validateTable As MaintenanceDataSet.SenderDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ValidateRows", validateTable)
+        RaiseEvent ValidatingSenderInformation(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Dim tempTable As MaintenanceDataSet.SenderDataTable
+      tempTable = CType(validateTable.GetChanges(), MaintenanceDataSet.SenderDataTable)
+
+      ValidateSenderRows(tempTable)
+      ValidateSenderTable(tempTable)
+
+      tempTable = Nothing
+
+      If validateTable.HasErrors Then
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent InvalidSenderInformationFound(Me, e)
+        End Using
+      Else
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent SenderInformationValidated(Me, e)
+        End Using
+      End If
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Synchronizes new row(s) added into DataTable.
+    ''' </summary>
+    ''' <param name="newrowsTable">Sender table containing only new row(s)</param>
+    ''' <remarks></remarks>
+    Public Sub InsertSender(ByVal newrowsTable As MaintenanceDataSet.SenderDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent InsertingSender(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        SenderAdapter.Update(newrowsTable)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to insert new sender information.", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent SenderInserted(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes modified row(s) in Sender data table with database.
+    ''' </summary>
+    ''' <param name="modifiedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub UpdateSender(ByVal modifiedRows As MaintenanceDataSet.SenderDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent UpdatingSender(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        SenderAdapter.Update(modifiedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to update Sender(s) information.", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent SenderUpdated(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes deleted row(s) in Sender data table with database.
+    ''' </summary>
+    ''' <param name="deletedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub DeleteSender(ByVal deletedRows As MaintenanceDataSet.SenderDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("DeletedRows", deletedRows)
+        RaiseEvent DeletingSender(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        SenderAdapter.Update(deletedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to delete Sender(s) information.", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        RaiseEvent SenderDeleted(Me, e)
+      End Using
+
+    End Sub
+
+
+#End Region
+
+
+#Region " Methods for SenderMktAssoc table. "
+
+
+    Public Event LoadingSenderMktAssoc As MCAPCancellableEventHandler
+    Public Event SenderMktAssocExceedsNonFilteredRowsLimit As MCAPEventHandler
+    Public Event SenderMktAssocLoaded As MCAPEventHandler
+
+    Public Event ValidatingSenderMktAssoc As MCAPCancellableEventHandler
+    Public Event InvalidSenderMktAssocFound As MCAPEventHandler
+    Public Event SenderMktAssocValidated As MCAPEventHandler
+
+    Public Event InsertingSenderMktAssoc As MCAPCancellableEventHandler
+    Public Event SenderMktAssocInserted As MCAPEventHandler
+
+    Public Event UpdatingSenderMktAssoc As MCAPCancellableEventHandler
+    Public Event SenderMktAssocUpdated As MCAPEventHandler
+
+    Public Event DeletingSenderMktAssoc As MCAPCancellableEventHandler
+    Public Event SenderMktAssocDeleted As MCAPEventHandler
+
+
+
+    ''' <summary>
+    ''' Returns total number of rows in SenderMktAssoc table.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetSenderMktAssocTableRowCount() As Integer
+      Dim rowCount As Object
+
+
+      rowCount = SenderMktAssocAdapter.GetRowCount(UserLocationId)
+      If rowCount IsNot Nothing Then
+        Return CType(rowCount, Integer)
+      Else
+        Return 0
+      End If
+
+    End Function
+
+    ''' <summary>
+    ''' Loads all Sender market association from database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub LoadAllSenderMktAssoc()
+
+      Data.SenderMktAssoc.LoadingTable = True
+      Data.SenderMktAssoc.BeginLoadData()
+      SenderMktAssocAdapter.Fill(Data.SenderMktAssoc, UserLocationId)
+      Data.SenderMktAssoc.EndLoadData()
+      Data.SenderMktAssoc.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads SenderMktAssoc from database satisfying specified filter condition.
+    ''' </summary>
+    ''' <param name="filterCondition"></param>
+    ''' <remarks></remarks>
+    Private Sub LoadFilteredSenderMktAssoc(ByVal filterCondition As String)
+
+      Data.SenderMktAssoc.LoadingTable = True
+      Data.SenderMktAssoc.BeginLoadData()
+      SenderMktAssocAdapter.FillByWhereClause(Data.SenderMktAssoc, UserLocationId, "SMA." + filterCondition)
+      Data.SenderMktAssoc.EndLoadData()
+      Data.SenderMktAssoc.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Load SenderMktAssoc from database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadSenderMktAssoc(Optional ByVal filterCondition As String = Nothing)
+      Dim rowFilter As String = Nothing
+
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Cancel = False
+        e.Data.Add("Filter", filterCondition)
+
+        RaiseEvent LoadingSenderMktAssoc(Me, e)
+
+        If e.Cancel Then
+          e.Dispose()
+          Exit Sub
+        ElseIf e.Data.Contains("Filter") AndAlso e.Data("Filter") IsNot Nothing Then
+          rowFilter = e.Data("Filter").ToString()
+        End If
+      End Using
+
+      If Data.Mkt.Count = 0 Then LoadMarkets()
+      If Data.SenderList.Count = 0 Then LoadSenderList()
+
+      If rowFilter Is Nothing AndAlso GetSenderMktAssocTableRowCount() > MaximumNonFilteredRowsAllowed Then
+        Using e As Processors.EventArgs = New Processors.EventArgs()
+          Data.SenderMktAssoc.Clear()
+          RaiseEvent SenderMktAssocExceedsNonFilteredRowsLimit(Me, e)
+          Exit Sub
+        End Using
+      End If
+
+      If rowFilter Is Nothing Then
+        LoadAllSenderMktAssoc()
+      Else
+        LoadFilteredSenderMktAssoc(rowFilter)
+      End If
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        RaiseEvent SenderMktAssocLoaded(Me, e)
+      End Using
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateSenderMktAssocTable(ByVal validateTable As MaintenanceDataSet.SenderMktAssocDataTable)
+      Dim tempRow As MaintenanceDataSet.SenderMktAssocRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates row values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateSenderMktAssocRows(ByVal validateTable As MaintenanceDataSet.SenderMktAssocDataTable)
+      Dim tempRow As MaintenanceDataSet.SenderMktAssocRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates Sender information.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Public Sub ValidateSenderMktAssocInformation(ByVal validateTable As MaintenanceDataSet.SenderMktAssocDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ValidateRows", validateTable)
+        RaiseEvent ValidatingSenderMktAssoc(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      ValidateSenderMktAssocTable(validateTable)
+
+      If validateTable.HasErrors Then
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent InvalidSenderMktAssocFound(Me, e)
+        End Using
+      Else
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent SenderMktAssocValidated(Me, e)
+        End Using
+      End If
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Synchronizes new row(s) added into DataTable.
+    ''' </summary>
+    ''' <param name="newrowsTable">SenderMktAssoc table containing only new row(s)</param>
+    ''' <remarks></remarks>
+    Public Sub InsertSenderMktAssoc(ByVal newrowsTable As MaintenanceDataSet.SenderMktAssocDataTable)
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent InsertingSenderMktAssoc(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        SenderMktAssocAdapter.Update(newrowsTable)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to insert new Sender-Market association.", ex)
+      End Try
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent SenderMktAssocInserted(Me, e)
+        Exit Sub
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes modified row(s) in SenderMktAssoc data table with database.
+    ''' </summary>
+    ''' <param name="modifiedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub UpdateSenderMktAssoc(ByVal modifiedRows As MaintenanceDataSet.SenderMktAssocDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent UpdatingSenderMktAssoc(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        SenderMktAssocAdapter.Update(modifiedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to update Sender-Market association(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent SenderMktAssocUpdated(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes deleted row(s) in SenderMktAssoc data table with database.
+    ''' </summary>
+    ''' <param name="deletedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub DeleteSenderMktAssoc(ByVal deletedRows As MaintenanceDataSet.SenderMktAssocDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("DeletedRows", deletedRows)
+        RaiseEvent DeletingSenderMktAssoc(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        SenderMktAssocAdapter.Update(deletedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to delete Sender-Market association(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        RaiseEvent SenderMktAssocDeleted(Me, e)
+      End Using
+
+    End Sub
+
+
+#End Region
+
+
+#Region " Methods for Shipper table. "
+
+
+    Public Event LoadingShippers As MCAPCancellableEventHandler
+    Public Event ShipperExceedsNonFilteredRowsLimit As MCAPEventHandler
+    Public Event ShippersLoaded As MCAPEventHandler
+
+    Public Event ValidatingShipper As MCAPCancellableEventHandler
+    Public Event InvalidShipperFound As MCAPEventHandler
+    Public Event ShipperValidated As MCAPEventHandler
+
+    Public Event InsertingShipper As MCAPCancellableEventHandler
+    Public Event ShipperInserted As MCAPEventHandler
+
+    Public Event UpdatingShipper As MCAPCancellableEventHandler
+    Public Event ShipperUpdated As MCAPEventHandler
+
+    Public Event DeletingShipper As MCAPCancellableEventHandler
+    Public Event ShipperDeleted As MCAPEventHandler
+
+
+
+    ''' <summary>
+    ''' Returns total number of rows in shipper table.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetShipperTableRowCount() As Integer
+      Dim rowCount As Nullable(Of Integer)
+
+
+      rowCount = ShipperAdapter.GetRowCount()
+      If rowCount.HasValue Then
+        Return rowCount.Value
+      Else
+        Return 0
+      End If
+
+    End Function
+
+    ''' <summary>
+    ''' Loads all shippers from database, sorted by shipper name.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub LoadAllShippers()
+
+      Data.Shipper.LoadingTable = True
+      Data.Shipper.BeginLoadData()
+      ShipperAdapter.Fill(Data.Shipper)
+      Data.Shipper.EndLoadData()
+      Data.Shipper.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads shipper from database satisfying specified filter condition.
+    ''' </summary>
+    ''' <param name="filterCondition"></param>
+    ''' <remarks></remarks>
+    Private Sub LoadFilteredShippers(ByVal filterCondition As String)
+
+      Data.Shipper.LoadingTable = True
+      Data.Shipper.BeginLoadData()
+      ShipperAdapter.FillByWhereClause(Data.Shipper, filterCondition)
+      Data.Shipper.EndLoadData()
+      Data.Shipper.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads shippers from database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadShippers(Optional ByVal filterCondition As String = Nothing)
+      Dim rowFilter As String = Nothing
+
+      Try
+        Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+          e.Cancel = False
+          e.Data.Add("Filter", filterCondition)
+
+          RaiseEvent LoadingShippers(Me, e)
+
+          If e.Cancel Then
+            e.Dispose()
+            Exit Sub
+          ElseIf e.Data.Contains("Filter") AndAlso e.Data("Filter") IsNot Nothing Then
+            rowFilter = e.Data("Filter").ToString()
+          End If
+        End Using
+
+        If rowFilter Is Nothing AndAlso GetShipperTableRowCount() > MaximumNonFilteredRowsAllowed Then
+          Using e As Processors.EventArgs = New Processors.EventArgs()
+            Data.Shipper.Clear()
+            RaiseEvent ShipperExceedsNonFilteredRowsLimit(Me, e)
+            Exit Sub
+          End Using
+        End If
+
+
+        If rowFilter Is Nothing Then
+          LoadAllShippers()
+        Else
+          LoadFilteredShippers(rowFilter)
+        End If
+
+        Using e As Processors.EventArgs = New Processors.EventArgs()
+          RaiseEvent ShippersLoaded(Me, e)
+        End Using
+      Catch ex As Exception
+        MessageBox.Show(ex.Message)
+      End Try
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateShipperTable(ByVal validateTable As MaintenanceDataSet.ShipperDataTable)
+      Dim tempRow As MaintenanceDataSet.ShipperRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates rows values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateShipperRows(ByVal validateTable As MaintenanceDataSet.ShipperDataTable)
+      Dim tempRow As MaintenanceDataSet.ShipperRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+        If tempRow.IsDescripNull() OrElse tempRow.Descrip.Trim().Length = 0 Then
+          tempRow.SetColumnError("Descrip", "Specify shipper name. Name can not be blank.")
+        Else
+          tempRow.SetColumnError("Descrip", "")
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates Sender information.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Public Sub ValidateShipperInformation(ByVal validateTable As MaintenanceDataSet.ShipperDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ValidateRows", validateTable)
+        RaiseEvent ValidatingShipper(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Dim tempTable As MaintenanceDataSet.ShipperDataTable
+      tempTable = CType(validateTable.GetChanges(), MaintenanceDataSet.ShipperDataTable)
+
+      ValidateShipperRows(tempTable)
+      ValidateShipperTable(tempTable)
+
+      tempTable = Nothing
+
+      If validateTable.HasErrors Then
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent InvalidShipperFound(Me, e)
+        End Using
+      Else
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent ShipperValidated(Me, e)
+        End Using
+      End If
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Synchronizes new row(s) added into DataTable.
+    ''' </summary>
+    ''' <param name="newrowsTable">Shipper table containing only new row(s)</param>
+    ''' <remarks></remarks>
+    Public Sub InsertShipper(ByVal newrowsTable As MaintenanceDataSet.ShipperDataTable)
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent InsertingShipper(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        ShipperAdapter.Update(newrowsTable)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to insert new shipper.", ex)
+      End Try
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent ShipperInserted(Me, e)
+        Exit Sub
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes modified row(s) in Shipper data table with database.
+    ''' </summary>
+    ''' <param name="modifiedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub UpdateShipper(ByVal modifiedRows As MaintenanceDataSet.ShipperDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent UpdatingShipper(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        ShipperAdapter.Update(modifiedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to update shipper(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent ShipperUpdated(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes deleted row(s) in Shipper data table with database.
+    ''' </summary>
+    ''' <param name="deletedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub DeleteShipper(ByVal deletedRows As MaintenanceDataSet.ShipperDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("DeletedRows", deletedRows)
+        RaiseEvent DeletingShipper(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        ShipperAdapter.Update(deletedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to delete shipper(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        RaiseEvent ShipperDeleted(Me, e)
+      End Using
+
+    End Sub
+
+
+#End Region
+
+
+#Region " Methods for Size table "
+
+
+    Public Event LoadingSizes As MCAPCancellableEventHandler
+    Public Event SizesExceedsNonFilteredRowsLimit As MCAPEventHandler
+    Public Event SizesLoaded As MCAPEventHandler
+
+    Public Event ValidatingSize As MCAPCancellableEventHandler
+    Public Event InvalidSizeFound As MCAPEventHandler
+    Public Event SizeValidated As MCAPEventHandler
+
+    Public Event InsertingSize As MCAPCancellableEventHandler
+    Public Event SizeInserted As MCAPEventHandler
+
+    Public Event UpdatingSize As MCAPCancellableEventHandler
+    Public Event SizeUpdated As MCAPEventHandler
+
+    Public Event DeletingSize As MCAPCancellableEventHandler
+    Public Event SizeDeleted As MCAPEventHandler
+
+
+
+    ''' <summary>
+    ''' Returns total number of rows in size table.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function GetSizeTableRowCount() As Integer
+      Dim rowCount As Nullable(Of Integer)
+
+
+      rowCount = SizeAdapter.GetRowCount()
+      If rowCount.HasValue Then
+        Return rowCount.Value
+      Else
+        Return 0
+      End If
+
+    End Function
+
+    ''' <summary>
+    ''' Loads all sizes from database, sorted by size Id.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private Sub LoadAllSizes()
+
+      Data.Size.LoadingTable = True
+      Data.Size.BeginLoadData()
+      SizeAdapter.Fill(Data.Size)
+      Data.Size.EndLoadData()
+      Data.Size.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads expectations from database satisfying specified filter condition.
+    ''' </summary>
+    ''' <param name="filterCondition"></param>
+    ''' <remarks></remarks>
+    Private Sub LoadFilteredSizes(ByVal filterCondition As String)
+
+      Data.Size.LoadingTable = True
+      Data.Size.BeginLoadData()
+      SizeAdapter.FillByWhereClause(Data.Size, filterCondition)
+      Data.Size.EndLoadData()
+      Data.Size.LoadingTable = False
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads Sizes information from database.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadSizes(Optional ByVal filterCondition As String = Nothing)
+      Dim rowFilter As String = Nothing
+
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Cancel = False
+        e.Data.Add("Filter", filterCondition)
+
+        RaiseEvent LoadingSizes(Me, e)
+
+        If e.Cancel Then
+          e.Dispose()
+          Exit Sub
+        ElseIf e.Data.Contains("Filter") AndAlso e.Data("Filter") IsNot Nothing Then
+          rowFilter = e.Data("Filter").ToString()
+        End If
+      End Using
+
+      If rowFilter Is Nothing AndAlso GetSizeTableRowCount() > MaximumNonFilteredRowsAllowed Then
+        Using e As Processors.EventArgs = New Processors.EventArgs()
+          Data.Size.Clear()
+          RaiseEvent SizesExceedsNonFilteredRowsLimit(Me, e)
+          Exit Sub
+        End Using
+      End If
+
+      If rowFilter Is Nothing Then
+        LoadAllSizes()
+      Else
+        LoadFilteredSizes(rowFilter)
+      End If
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        RaiseEvent SizesLoaded(Me, e)
+      End Using
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Validates table values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateSizeTable(ByVal validateTable As MaintenanceDataSet.SizeDataTable)
+      Dim tempRow As MaintenanceDataSet.SizeRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates rows values.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Private Sub ValidateSizeRows(ByVal validateTable As MaintenanceDataSet.SizeDataTable)
+      Dim tempRow As MaintenanceDataSet.SizeRow
+
+
+      For i As Integer = 0 To validateTable.Count - 1
+        tempRow = validateTable(i)
+
+        If tempRow.IsHeightNull() Then
+          tempRow.SetColumnError("Height", "Specify height. Height can not be blank.")
+        Else
+          tempRow.SetColumnError("Height", "")
+        End If
+
+        If tempRow.IsWidthNull() Then
+          tempRow.SetColumnError("Width", "Specify width. Width can not be blank.")
+        Else
+          tempRow.SetColumnError("Width", "")
+        End If
+
+        tempRow = Nothing
+      Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates Sender information.
+    ''' </summary>
+    ''' <param name="validateTable"></param>
+    ''' <remarks></remarks>
+    Public Sub ValidateSizeInformation(ByVal validateTable As MaintenanceDataSet.SizeDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ValidateRows", validateTable)
+        RaiseEvent ValidatingSize(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Dim tempTable As MaintenanceDataSet.SizeDataTable
+      tempTable = CType(validateTable.GetChanges(), MaintenanceDataSet.SizeDataTable)
+
+      ValidateSizeRows(tempTable)
+      ValidateSizeTable(tempTable)
+
+      tempTable = Nothing
+
+      If validateTable.HasErrors Then
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent InvalidSizeFound(Me, e)
+        End Using
+      Else
+        Using e As EventArgs = New EventArgs
+          e.Data.Add("ValidateRows", validateTable)
+          RaiseEvent SizeValidated(Me, e)
+        End Using
+      End If
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Synchronizes new row(s) added into DataTable.
+    ''' </summary>
+    ''' <param name="newrowsTable">Size table containing only new row(s)</param>
+    ''' <remarks></remarks>
+    Public Sub InsertSize(ByVal newrowsTable As MaintenanceDataSet.SizeDataTable)
+
+      Using e As Processors.CancellableEventArgs = New Processors.CancellableEventArgs()
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent InsertingSize(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        SizeAdapter.Update(newrowsTable)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to insert new size.", ex)
+      End Try
+
+      Using e As Processors.EventArgs = New Processors.EventArgs()
+        e.Data.Add("NewRows", newrowsTable)
+        RaiseEvent SizeInserted(Me, e)
+        Exit Sub
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes modified row(s) in Size data table with database.
+    ''' </summary>
+    ''' <param name="modifiedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub UpdateSize(ByVal modifiedRows As MaintenanceDataSet.SizeDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent UpdatingSize(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        SizeAdapter.Update(modifiedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to update size(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        e.Data.Add("ModifiedRows", modifiedRows)
+        RaiseEvent SizeUpdated(Me, e)
+      End Using
+
+    End Sub
+
+    ''' <summary>
+    ''' Synchronizes deleted row(s) in Size data table with database.
+    ''' </summary>
+    ''' <param name="deletedRows"></param>
+    ''' <remarks></remarks>
+    Public Sub DeleteSize(ByVal deletedRows As MaintenanceDataSet.SizeDataTable)
+
+      Using e As CancellableEventArgs = New CancellableEventArgs
+        e.Data.Add("DeletedRows", deletedRows)
+        RaiseEvent DeletingSize(Me, e)
+        If e.Cancel Then
+          Exit Sub
+        End If
+      End Using
+
+      Try
+        SizeAdapter.Update(deletedRows)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unable to delete size(s).", ex)
+      End Try
+
+      Using e As EventArgs = New EventArgs
+        RaiseEvent SizeDeleted(Me, e)
+      End Using
+
+    End Sub
+
+
+#End Region
+
+
+  End Class
+
+End Namespace

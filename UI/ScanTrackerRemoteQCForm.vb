@@ -1,0 +1,492 @@
+﻿Namespace UI
+    Public Class ScanTrackerRemoteQCForm
+        Implements IForm
+
+        Private WithEvents m_Processor As Processors.ScanTrackerRemoteQc
+
+
+#Region "Delegates"
+        ''' <summary>
+        '''  Handles UI updating from BackgroundWorker events (Threads)
+        ''' </summary>
+        ''' <remarks></remarks>
+        Delegate Sub CountStartedCallback()
+        Delegate Sub CountFinishedCallback()
+        Delegate Sub MoveStartedCallback()
+        Delegate Sub MoveFinishedCallback()
+        Delegate Sub ProgressIncreasedCallback()
+        Delegate Sub ProgressImageMovedCallback()
+        Delegate Sub ProgressVehicleMovedCallback()
+        Delegate Sub ProgressChangedCallback(ByVal percent As Integer)
+        Delegate Sub ShowMessageCallback(ByVal mesg As String)
+#End Region
+
+#Region "Constants"
+        Private Const FORM_NAME As String = "ScanTrackerRemoteQc"
+#End Region
+
+#Region "Member Variables"
+        'Private WithEvents m_Processor As Processors.ScanTrackerRemoteQc
+        Private m_errorList As System.Collections.Generic.List(Of String)
+        Private m_invalidVehicleIdList As System.Collections.Generic.List(Of String)
+        Private m_invalidPageCountList As System.Collections.Generic.List(Of String)
+#End Region
+
+#Region "Properties"
+        Public ReadOnly Property Processor() As Processors.ScanTrackerRemoteQc
+            Get
+                Return m_Processor
+            End Get
+        End Property
+
+        Public Property RotateDegree() As Integer
+            Get
+                Dim d As Integer
+                Integer.TryParse(RotateComboBox.Text, d)
+                Return d
+            End Get
+            Set(ByVal value As Integer)
+                If RotateComboBox.Items.Contains(value.ToString) Then
+                    RotateComboBox.Text = value.ToString
+                End If
+            End Set
+        End Property
+#End Region
+
+#Region "IForm Implementation "
+
+        Public Event ApplyingUserCredentials() Implements UI.IForm.ApplyingUserCredentials
+        Public Event UserCredentialsApplied() Implements UI.IForm.UserCredentialsApplied
+
+        Public Event FormInitialized() Implements UI.IForm.FormInitialized
+        Public Event InitializingForm() Implements UI.IForm.InitializingForm
+
+        Public Sub ApplyUserCredentials() Implements UI.IForm.ApplyUserCredentials
+
+        End Sub
+
+        Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+            RaiseEvent InitializingForm()
+            Me.SuspendLayout()
+            Me.FormState = formStatus
+
+            m_Processor = New Processors.ScanTrackerRemoteQc(Me)
+            Processor.Initialize()
+            Processor.CreateNewSession()
+
+            m_errorList = New System.Collections.Generic.List(Of String)
+            m_invalidVehicleIdList = New System.Collections.Generic.List(Of String)
+            m_invalidPageCountList = New System.Collections.Generic.List(Of String)
+
+            Me.ResumeLayout(False)
+
+            EnableDisableControls(Me.FormState)
+
+            RaiseEvent FormInitialized()
+
+        End Sub
+
+#End Region
+
+#Region "Form Functions"
+
+        Private Sub ScanTrackerRemoteQcForm_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
+            SourceTextBox.Text = Me.Processor.Source
+            DestinationLabel.Text = Me.Processor.Destination
+            PopulateRotateDropDown()
+            PopulateLocationDropDown()
+            If System.IO.Directory.Exists(Me.Processor.Source) Then
+                Me.Processor.Count()
+            End If
+            DisplayStatus(False)
+        End Sub
+
+        ''' <summary>
+        ''' Saves Source to user preferences.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        ''' <remarks></remarks>
+        Private Sub ScanTracker_Closing(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
+            e.Cancel = Me.Processor.MoveActive Or Me.Processor.CountActive
+            If Not e.Cancel Then
+                SetSourceTextBox(SourceTextBox.Text)
+                Processor.EndSession()
+            End If
+        End Sub
+
+        Private Sub ReviewButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReviewButton.Click
+            Me.Processor.Review()
+        End Sub
+
+        Private Sub PostButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PostButton.Click
+            If LocationComboBox.SelectedIndex = -1 Then
+                MsgBox("Please select a QC Location")
+                LocationComboBox.Focus()
+                Exit Sub
+            End If
+            If SourceTextBox.Text = "" Then
+                MsgBox("Please provide a valid source.")
+                SourceTextBox.Focus()
+                Exit Sub
+            End If
+            Me.Processor.setScanTrackerRemoteQc(User.LocationId, CInt(LocationComboBox.SelectedValue.ToString()))
+            Me.Processor.Post(Me.RotateDegree)
+
+
+        End Sub
+
+        Private Sub BrowseButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BrowseButton.Click
+            FolderBrowserDialog1.SelectedPath = SourceTextBox.Text
+            If FolderBrowserDialog1.ShowDialog() = DialogResult.OK Then
+                Me.Processor.Source = FolderBrowserDialog1.SelectedPath
+                SourceTextBox.Text = FolderBrowserDialog1.SelectedPath
+                Me.Processor.Count()
+            End If
+        End Sub
+
+        Private Sub RecountButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RecountButton.Click
+            Me.Processor.Count()
+        End Sub
+#End Region
+
+#Region "Processor Events"
+        ''' <summary>
+        ''' Shows errors from Counting, and sets form controls to count values
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub Processor_CountFinished() Handles m_Processor.CountFinished
+            If Me.ImageCountLabel.InvokeRequired Then
+                Dim d As New CountFinishedCallback(AddressOf Processor_CountFinished)
+                Me.Invoke(d)
+            Else
+                ProcessErrors()
+                ClearErrors()
+                Me.ImageCountLabel.Text = Me.Processor.ImageCount.ToString
+                Me.VehicleCountLabel.Text = Me.Processor.VehicleCount.ToString
+                DisplayStatus(False)
+                Me.RecountButton.Text = "Recount"
+                Me.ReviewButton.Enabled = (Me.Processor.ImageCount > 0)
+                Me.PostButton.Enabled = (Me.Processor.ImageCount > 0)
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Resets form control count values, clears errors
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub Processor_CountStarted() Handles m_Processor.CountStarted
+            If Me.ImageCountLabel.InvokeRequired Then
+                Dim d As New CountStartedCallback(AddressOf Processor_CountStarted)
+                Me.Invoke(d)
+            Else
+                DisplayStatus(True)
+                Me.ImageCountLabel.Text = ""
+                Me.VehicleCountLabel.Text = ""
+                Me.RecountButton.Enabled = True
+                Me.RecountButton.Text = "Cancel"
+                Me.PostButton.Enabled = False
+                ClearErrors()
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Processes errors on Move Finish, starts a recount.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub Processor_MoveFinished() Handles m_Processor.MoveFinished
+            If Me.ProgressPanel.InvokeRequired Then
+                Dim d As New MoveFinishedCallback(AddressOf Processor_MoveFinished)
+                Me.Invoke(d)
+            Else
+                ProcessErrors()
+                ClearErrors()
+                DisplayStatus(False)
+                Me.RecountButton.Enabled = True
+                Me.PostButton.Text = "Post Images"
+                Me.Processor.Count()
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Clears errors
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub Processor_MoveStarted() Handles m_Processor.MoveStarted
+            If Me.ProgressPanel.InvokeRequired Then
+                Dim d As New MoveStartedCallback(AddressOf Processor_MoveStarted)
+                Me.Invoke(d)
+            Else
+                DisplayStatus(True)
+                ClearErrors()
+                Me.RecountButton.Enabled = False
+                Me.PostButton.Text = "Cancel"
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Updates Progress bar
+        ''' </summary>
+        ''' <param name="percent"></param>
+        ''' <remarks></remarks>
+        Private Sub Processor_ProgressChanged(ByVal percent As Integer) Handles m_Processor.ProgressChanged
+            If Me.imageProgressBar.InvokeRequired Then
+                Dim d As New ProgressChangedCallback(AddressOf Processor_ProgressChanged)
+                Me.Invoke(d, New Object() {percent})
+            Else
+                Me.imageProgressBar.Value = percent
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Updates progress bar by increment
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub Processor_ProgressIncreased() Handles m_Processor.ProgressIncreased
+            If Me.imageProgressBar.InvokeRequired Then
+                Dim d As New ProgressIncreasedCallback(AddressOf Processor_ProgressIncreased)
+                Me.Invoke(d)
+            Else
+                If Me.imageProgressBar.Value >= Me.imageProgressBar.Maximum Then
+                    Me.imageProgressBar.Value = Me.imageProgressBar.Minimum
+                Else
+                    Me.imageProgressBar.Value += 1
+                End If
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Decreases image count
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub Processor_ProgressMovedImage() Handles m_Processor.ProgressMovedImage
+            If Me.imageProgressBar.InvokeRequired Then
+                Dim d As New ProgressImageMovedCallback(AddressOf Processor_ProgressMovedImage)
+                Me.Invoke(d)
+            Else
+                Dim imageCount As Integer
+                If Integer.TryParse(Me.ImageCountLabel.Text, imageCount) Then
+                    If imageCount > 0 Then
+                        Me.ImageCountLabel.Text = (imageCount - 1).ToString
+                    End If
+                End If
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Decreases vehicle count
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub Processor_ProgressMovedVehicle() Handles m_Processor.ProgressMovedVehicle
+            If Me.imageProgressBar.InvokeRequired Then
+                Dim d As New ProgressVehicleMovedCallback(AddressOf Processor_ProgressMovedVehicle)
+                Me.Invoke(d)
+            Else
+                Dim vehicleCount As Integer
+                If Integer.TryParse(Me.VehicleCountLabel.Text, vehicleCount) Then
+                    If vehicleCount > 0 Then
+                        Me.VehicleCountLabel.Text = (vehicleCount - 1).ToString
+                    End If
+                End If
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Shows a message from a thread
+        ''' </summary>
+        ''' <param name="mesg"></param>
+        ''' <remarks></remarks>
+        Private Sub Processor_ShowMessage(ByVal mesg As String) Handles m_Processor.ShowMessage
+            If Me.ProgressPanel.InvokeRequired Then
+                Dim d As New ShowMessageCallback(AddressOf Processor_ShowMessage)
+                Me.Invoke(d, New Object() {mesg})
+            Else
+                MessageBox.Show(Me, mesg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            End If
+
+        End Sub
+#End Region
+
+#Region "Functionality"
+        ''' <summary>
+        ''' saves source to user preferences
+        ''' </summary>
+        ''' <param name="sourceFolder"></param>
+        ''' <remarks></remarks>
+        Private Sub SetSourceTextBox(ByVal sourceFolder As String)
+            MDIForm.AppVar.SaveValue(UI.Processors.ScanTracker.XML_SOURCE_TEXTBOX, sourceFolder)
+        End Sub
+
+        ''' <summary>
+        ''' shows or  hides the status panel.
+        ''' </summary>
+        ''' <param name="visible"></param>
+        ''' <remarks></remarks>
+        Private Sub DisplayStatus(ByVal visible As Boolean)
+            'If Me.ProgressPanel.InvokeRequired Then
+            '  Dim d As New DisplayStatusCallback(AddressOf DisplayStatus)
+            '  Me.Invoke(d, New Object() {visible})
+            'End If
+            Me.ProgressPanel.Visible = visible
+            If visible Then
+                Me.Height = 182
+                Me.imageProgressBar.Value = Me.imageProgressBar.Minimum
+            Else
+                Me.Height = 182 - Me.ProgressPanel.Height
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Populates the Rotate Drop Down
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub PopulateRotateDropDown()
+            Dim i As Integer
+            RotateComboBox.Items.Clear()
+            i = 0
+            While i < 360
+                RotateComboBox.Items.Add(i)
+                i += 90
+            End While
+            RotateComboBox.SelectedIndex = 0
+        End Sub
+
+        ''' <summary>
+        ''' Populates the Location Drop Down
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub PopulateLocationDropDown()
+
+            m_Processor.LoadLocations(User.LocationId)
+            LocationComboBox.DisplayMember = "Descrip"
+            LocationComboBox.ValueMember = "CodeId"
+            LocationComboBox.DataSource = Processor.Data.ScanLocation() ' ScanTrackerLocation(User.LocationId))
+      LocationComboBox.SelectedIndex = -1
+
+
+        End Sub
+
+        ''' <summary>
+        ''' Add error message to list from backgroundworkers
+        ''' </summary>
+        ''' <param name="mesg"></param>
+        ''' <remarks></remarks>
+        Protected Friend Sub AddError(ByVal mesg As String)
+            If m_errorList.Count = 0 Then
+                m_errorList.Add(String.Empty)
+                m_errorList.Add("Error(s):")
+                m_errorList.Add("=========")
+            End If
+
+            m_errorList.Add(mesg)
+        End Sub
+
+        Protected Friend Sub AddInvalidVehicleId(ByVal messageText As String)
+            If m_invalidVehicleIdList.Count = 0 Then
+                m_invalidVehicleIdList.Add(String.Empty)
+                m_invalidVehicleIdList.Add("List of Invalid VehicleId(s) below:")
+                m_invalidVehicleIdList.Add("===================================")
+            End If
+            m_invalidVehicleIdList.Add(messageText)
+        End Sub
+
+        Protected Friend Sub AddInvalidPageCount(ByVal messageText As String)
+            If m_invalidPageCountList.Count = 0 Then
+                m_invalidPageCountList.Add("List of VehicleId(s) having invalid page count:")
+                m_invalidPageCountList.Add("===============================================")
+            End If
+            m_invalidPageCountList.Add(messageText)
+        End Sub
+
+
+        ''' <summary>
+        ''' If any errors in ArrayList, then display them, then clear them.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub ProcessErrors()
+            Dim dispMsg As UI.Controls.MultipleScanForm = New UI.Controls.MultipleScanForm()
+            Dim msgQuery As System.Collections.Generic.IEnumerable(Of String)
+
+
+            msgQuery = m_invalidPageCountList.Concat(m_invalidVehicleIdList.Concat(m_errorList))
+
+            dispMsg.vehicleIdTextBox.Lines = msgQuery.ToArray()
+
+            If dispMsg.vehicleIdTextBox.Lines.Length > 0 Then
+                dispMsg.Text = "Error List"
+                dispMsg.cancelButton.Hide()
+                dispMsg.FormBorderStyle = Windows.Forms.FormBorderStyle.Sizable
+                dispMsg.MaximizeBox = True
+                If Screen.PrimaryScreen.WorkingArea.Width > 500 AndAlso Screen.PrimaryScreen.WorkingArea.Height > 500 Then
+                    dispMsg.Size = New System.Drawing.Size(500, 500)
+                    dispMsg.StartPosition = FormStartPosition.CenterScreen
+                Else
+                    dispMsg.WindowState = FormWindowState.Maximized
+                End If
+                dispMsg.ShowDialog(Me)
+            End If
+
+            dispMsg.Close()
+            dispMsg.Dispose()
+            dispMsg = Nothing
+        End Sub
+
+        ''' <summary>
+        ''' Clear out the error list
+        ''' </summary>
+        ''' <remarks></remarks>
+        Private Sub ClearErrors()
+            m_errorList.Clear()
+            m_invalidPageCountList.Clear()
+            m_invalidVehicleIdList.Clear()
+        End Sub
+#End Region
+
+
+    Private Sub BatchPostButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BatchPostButton.Click
+      Dim userResponse As DialogResult
+      Dim vehicleIdArray() As String
+      Dim multiScan As UI.Controls.MultipleScanForm
+            If SourceTextBox.Text = "" Then
+                MsgBox("Please provide a valid source.")
+                SourceTextBox.Focus()
+                Exit Sub
+            End If
+      multiScan = New UI.Controls.MultipleScanForm()
+      userResponse = multiScan.ShowDialog(Me)
+            
+
+      If userResponse = Windows.Forms.DialogResult.OK Then
+        vehicleIdArray = multiScan.vehicleIdTextBox.Lines
+      End If
+
+      multiScan.Dispose()
+            multiScan = Nothing
+            Dim locationID As Integer
+
+            If LocationComboBox.SelectedIndex = -1 Then
+                locationID = User.LocationId
+                LocationComboBox.SelectedValue = locationID.ToString
+                LocationComboBox.Text = User.Location
+            End If
+
+      m_Processor.setScanTrackerRemoteQc(0, CInt(LocationComboBox.SelectedValue.ToString()))
+
+      If vehicleIdArray IsNot Nothing AndAlso vehicleIdArray.Length > 0 Then
+        Dim vehicleId As Integer
+        Dim vehicleQuery As System.Data.EnumerableRowCollection(Of MCAP.FamilyCheckInDataSet.MarketRow)
+
+        For i As Integer = 0 To vehicleIdArray.Length - 1
+          If Integer.TryParse(vehicleIdArray(i), vehicleId) Then
+            'Execute Save to RemoteQC Table
+            m_Processor.VehicleRemoteQC(vehicleId)
+          End If
+        Next
+        MsgBox("Batch Remote QC Posted.")
+      End If
+    End Sub
+  End Class
+
+
+End Namespace

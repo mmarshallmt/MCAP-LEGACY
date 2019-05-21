@@ -1,0 +1,123 @@
+﻿Namespace UI.Processors
+
+  Public Class ErrorsCorrectedReport
+
+
+    Private m_errorsCorrectedAdapter As ErrorCorrectedReportDataSetTableAdapters.EnvelopeErrorsCorrectedAdapter
+    Private m_userAdapter As ErrorCorrectedReportDataSetTableAdapters.UserTableAdapter
+    Private m_DataSet As ErrorCorrectedReportDataSet
+
+
+    ''' <summary>
+    ''' Adapter for user table.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property UserAdapter() As ErrorCorrectedReportDataSetTableAdapters.UserTableAdapter
+      Get
+        Return m_userAdapter
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' DataSet
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property Data() As ErrorCorrectedReportDataSet
+      Get
+        Return m_DataSet
+      End Get
+    End Property
+
+
+    Public Sub New()
+
+      m_userAdapter = New ErrorCorrectedReportDataSetTableAdapters.UserTableAdapter
+      m_errorsCorrectedAdapter = New ErrorCorrectedReportDataSetTableAdapters.EnvelopeErrorsCorrectedAdapter
+      m_DataSet = New ErrorCorrectedReportDataSet
+
+    End Sub
+
+    Public Sub Initialize()
+
+      m_errorsCorrectedAdapter.Connection.ConnectionString = GetConnectionStringForLogDB()
+      m_userAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Loads initial values into dataset.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub LoadDataSet()
+
+      m_userAdapter.Fill(Data.User)
+
+    End Sub
+
+    Public Function GetWeekNumber(ByVal targetDate As DateTime) As String
+      Dim weekNo As String
+      Dim weekNoCommand As System.Data.SqlClient.SqlCommand
+
+
+      weekNoCommand = New System.Data.SqlClient.SqlCommand()
+      weekNoCommand.CommandText = "SELECT dbo.WeekNoMondayStart(@pDate)"
+      weekNoCommand.Parameters.Add("@pDate", SqlDbType.DateTime)
+      weekNoCommand.Parameters("@pDate").Value = targetDate
+
+      weekNoCommand.Connection = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+      Try
+        weekNoCommand.Connection.Open()
+        weekNo = weekNoCommand.ExecuteScalar().ToString()
+      Catch ex As Exception
+        MessageBox.Show("An error has occured while calculating week number." _
+                        , My.Application.Info.ProductName, MessageBoxButtons.OK _
+                        , MessageBoxIcon.Error)
+      Finally
+        If weekNoCommand.Connection.State <> ConnectionState.Closed Then weekNoCommand.Connection.Close()
+      End Try
+
+      weekNoCommand.Connection.Dispose()
+      weekNoCommand.Dispose()
+      weekNoCommand = Nothing
+
+      Return weekNo
+
+    End Function
+
+    ''' <summary>
+    ''' Loads records created by supplied user name between date range.
+    ''' </summary>
+    ''' <param name="userName">Username who has created record with errors.</param>
+    ''' <param name="startDate">Records created on or after this date.</param>
+    ''' <param name="endDate">Records created on or before this date.</param>
+    ''' <remarks></remarks>
+    Public Sub LoadReportData(ByVal userName As String, ByVal startDate As DateTime?, ByVal endDate As DateTime?)
+            m_errorsCorrectedAdapter.Adapter.SelectCommand.CommandTimeout = My.Settings.CommandTimeout
+      m_errorsCorrectedAdapter.Fill(Data.EnvelopeErrorsCorrected, userName, startDate, endDate)
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads records created by supplied user and between specified weeks.
+    ''' </summary>
+    ''' <param name="userName"></param>
+    ''' <param name="startWeekNo"></param>
+    ''' <param name="startYear"></param>
+    ''' <param name="endWeekNo"></param>
+    ''' <param name="endYear"></param>
+    ''' <remarks></remarks>
+    Public Sub LoadReportData(ByVal userName As String, ByVal startWeekNo As Decimal, ByVal startYear As Decimal, ByVal endWeekNo As Decimal, ByVal endYear As Decimal)
+            m_errorsCorrectedAdapter.Adapter.SelectCommand.CommandTimeout = My.Settings.CommandTimeout
+      m_errorsCorrectedAdapter.FillByWeekNumber(Data.EnvelopeErrorsCorrected, userName, startWeekNo, startYear, endWeekNo, endYear)
+
+    End Sub
+
+
+  End Class
+
+End Namespace

@@ -1,0 +1,710 @@
+﻿Namespace UI
+
+  Public Class ResequenceForm
+    Implements IForm
+
+
+
+    Private WithEvents m_resequenceProcessor As Processors.Resequence
+        Private m_pageImageFolderPath As String
+        Private initialSortedPages() As String
+        Private originalRow() As ResequenceDataSet.PageRow
+        'resequenceListBox.Items.Count - 1
+        Private m_InReQC As Boolean
+        Public m_VehicleId As Integer
+        Public m_IsAllowedCache As Boolean
+        Public m_remoteImagePath As String
+
+
+
+    ''' <summary>
+    ''' Gets instance of resequence processor.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property Processor() As Processors.Resequence
+      Get
+        Return m_resequenceProcessor
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Property PageImageFolderPath() As String
+      Get
+        Return m_pageImageFolderPath
+      End Get
+      Set(ByVal value As String)
+        m_pageImageFolderPath = value
+      End Set
+    End Property
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Property InReQC() As Boolean
+      Get
+        Return m_InReQC
+      End Get
+      Set(ByVal value As Boolean)
+        m_InReQC = value
+      End Set
+        End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Property RemoteImagePath() As String
+            Get
+                Return m_remoteImagePath
+            End Get
+            Set(ByVal value As String)
+                m_remoteImagePath = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Property IsAllowedCache() As Boolean
+            Get
+                Return m_IsAllowedCache
+            End Get
+            Set(ByVal value As Boolean)
+                m_IsAllowedCache = value
+            End Set
+        End Property
+
+
+    ''' <summary>
+    ''' Checks whether the selection includes contiguous items or not.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function IsContinuousSelection() As Boolean
+      Dim itemCounter, indexDifference As Integer
+
+
+      indexDifference = -1
+      'If resequenceListBox.SelectedIndices.Count = 0 Then Return True
+
+      For itemCounter = 1 To resequenceListBox.SelectedIndices.Count - 1
+        indexDifference = resequenceListBox.SelectedIndices(itemCounter - 1) _
+                          - resequenceListBox.SelectedIndices(itemCounter)
+        If indexDifference <> -1 Then Exit For
+      Next
+
+      Return (indexDifference = -1)
+
+    End Function
+
+
+
+#Region " IForm implementation "
+
+    Public Event InitializingForm() Implements IForm.InitializingForm
+    Public Event FormInitialized() Implements IForm.FormInitialized
+
+    Public Event ApplyingUserCredentials() Implements IForm.ApplyingUserCredentials
+    Public Event UserCredentialsApplied() Implements IForm.UserCredentialsApplied
+
+
+    Public Sub ApplyUserCredentials() Implements IForm.ApplyUserCredentials
+
+    End Sub
+
+    Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+      RaiseEvent InitializingForm()
+
+      Me.FormState = formStatus
+
+      m_resequenceProcessor = New Processors.Resequence
+
+      Processor.Initialize()
+
+      pageInfoListBox.DisplayMember = "PageSize"
+      pageInfoListBox.ValueMember = "PageId"
+      pageInfoListBox.DataSource = Processor.DataSet.Page
+      pageInfoListBox.SelectedIndex = -1
+
+      'sizeComboBox.DisplayMember = "PageSize"
+      'sizeComboBox.ValueMember = "SizeId"
+      'sizeComboBox.DataSource = Processor.DataSet.Size
+      'sizeComboBox.SelectedValue = DBNull.Value
+
+      RaiseEvent FormInitialized()
+
+    End Sub
+
+#End Region
+
+
+    ''' <summary>
+    ''' Fills Page and Size data tables.
+    ''' </summary>
+    ''' <param name="vehicleId">Page DataTable will have rows for specified vehicleId only.</param>
+    ''' <remarks></remarks>
+    Public Sub LoadPageInformation(ByVal vehicleId As Integer)
+
+      Processor.LoadDataSet(vehicleId)
+
+      FillPagesInformation()
+
+    End Sub
+
+    ''' <summary>
+    ''' Fills listboxes using information in Page data table.
+    ''' </summary>
+    ''' <remarks></remarks>
+        Private Sub FillPagesInformation()
+
+            Dim rowCounter As Integer
+
+
+            For rowCounter = 0 To Processor.DataSet.Page.Count - 1
+                resequenceListBox.Items.Add(Processor.DataSet.Page(rowCounter).ImageFileName)
+                
+            Next
+
+      If InReQC Then
+        Array.Resize(initialSortedPages, resequenceListBox.Items.Count)
+        Array.Resize(originalRow, resequenceListBox.Items.Count)
+
+        resequenceListBox.Items.CopyTo(initialSortedPages, 0)
+
+        For rowCounter = 0 To resequenceListBox.Items.Count - 1
+          originalRow(rowCounter) = Processor.GetImageInformation(initialSortedPages(rowCounter))
+
+        Next
+      End If
+
+    End Sub
+
+
+
+    'Private Sub setSizeButton_Click _
+    '    (ByVal sender As Object, ByVal e As System.EventArgs)
+
+    '  Dim bmb As BindingManagerBase
+    '  Dim tempRow As ResequenceDataSet.PageRow
+
+
+    '  If sizeComboBox.SelectedValue Is Nothing Then
+    '    MessageBox.Show("Select size from drop-down list.", ProductName _
+    '                    , MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '    Exit Sub
+    '  ElseIf pageInfoListBox.SelectedValue Is Nothing Then
+    '    MessageBox.Show("Select page from pages list on top-left corner.", ProductName _
+    '                    , MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '    Exit Sub
+    '  End If
+
+    '  bmb = Me.BindingContext(pageInfoListBox.DataSource)
+    '  tempRow = CType(CType(bmb.Current, Data.DataRowView).Row, ResequenceDataSet.PageRow)
+    '  tempRow.BeginEdit()
+    '  tempRow.SizeID = CType(sizeComboBox.SelectedValue, Integer)
+    '  tempRow.EndEdit()
+
+    '  bmb = Nothing
+    '  tempRow = Nothing
+
+    'End Sub
+
+    'Private Sub PageTypeButton_Click _
+    '    (ByVal sender As Object, ByVal e As System.EventArgs)
+
+    '  Dim bmb As BindingManagerBase
+    '  Dim tempRow As ResequenceDataSet.PageRow
+
+
+    '  If sizeComboBox.SelectedValue Is Nothing Then
+    '    MessageBox.Show("Select size from drop-down list.", ProductName _
+    '                    , MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '    Exit Sub
+    '  ElseIf pageInfoListBox.SelectedValue Is Nothing Then
+    '    MessageBox.Show("Select page from pages list on top-left corner.", ProductName _
+    '                    , MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '    Exit Sub
+    '  End If
+
+    '  bmb = Me.BindingContext(pageInfoListBox.DataSource)
+    '  tempRow = CType(CType(bmb.Current, Data.DataRowView).Row, ResequenceDataSet.PageRow)
+    '  tempRow.BeginEdit()
+    '  If sender Is baseButton Then
+    '    tempRow.PageTypeId = "B"
+    '    tempRow.PageSize = tempRow.ImageName + "Base"
+    '  ElseIf sender Is wrapButton Then
+    '    tempRow.PageTypeId = "W"
+    '    tempRow.PageName = "W1"
+    '    tempRow.PageSize = tempRow.ImageName + "Wrap"
+    '  Else
+    '    tempRow.PageTypeId = "I"
+    '    tempRow.PageSize = tempRow.ImageName + "Insert"
+    '    tempRow.PageName = tempRow.PageTypeId + pageTextBox.Text
+    '  End If
+    '  tempRow.EndEdit()
+
+    '  bmb = Nothing
+    '  tempRow = Nothing
+
+    'End Sub
+
+
+    Private Sub ResequencePagesImageFiles(ByVal resequencedPageImages() As String)
+      Dim pageImageCount As Integer
+      Dim existingFilePath, newFilePath As System.Text.StringBuilder
+      Dim temporaryFiles As System.Collections.Generic.List(Of String)
+      Dim renamedFiles As System.Collections.Generic.List(Of String)
+
+
+      existingFilePath = New System.Text.StringBuilder()
+      newFilePath = New System.Text.StringBuilder()
+      temporaryFiles = New System.Collections.Generic.List(Of String)
+      renamedFiles = New System.Collections.Generic.List(Of String)
+            ' omar start changes here for resequence
+      pageImageCount = resequencedPageImages.Length
+
+      Try
+        For i As Integer = 0 To pageImageCount - 1
+          existingFilePath.Append(Me.PageImageFolderPath)
+          existingFilePath.Append("\")
+          existingFilePath.Append(resequencedPageImages(i))
+          existingFilePath.Append(".jpg")
+
+          newFilePath.Append("_")
+          newFilePath.Append((i + 1).ToString("000"))
+
+          newFilePath.Append(".jpg")
+
+                   
+          My.Computer.FileSystem.RenameFile(existingFilePath.ToString(), newFilePath.ToString())
+
+          temporaryFiles.Add(Me.PageImageFolderPath + "\" + newFilePath.ToString())
+          newFilePath.Remove(0, 1)
+          renamedFiles.Add(Me.PageImageFolderPath + "\" + newFilePath.ToString())
+
+          existingFilePath.Remove(0, existingFilePath.Length)
+          newFilePath.Remove(0, newFilePath.Length)
+        Next
+
+        For i As Integer = 0 To temporaryFiles.Count - 1
+                    System.IO.File.Move(temporaryFiles(i), renamedFiles(i))
+                Next
+
+                If IsAllowedCache = True Then
+                    ResequenceRemotePagesImageFiles(resequencedPageImages)
+                End If
+
+      Catch ex As System.IO.PathTooLongException
+        MessageBox.Show("All page image files' name are not resequenced." + Environment.NewLine _
+                        + "Image file path is too long. Cannot resequence image files' name." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+      Catch ex As System.IO.FileNotFoundException
+        MessageBox.Show("All page image files' name are not resequenced." + Environment.NewLine _
+                        + "Cannot find one of the image file while resequencing image files' name." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+      Catch ex As System.IO.IOException
+        MessageBox.Show("All page image files' name are not resequenced." + Environment.NewLine _
+                        + ex.Message, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+      Catch ex As Exception
+        MessageBox.Show("All page image files' name are not resequenced." + Environment.NewLine _
+                        + "An unknown error has occurred while resequencing image files' name." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+      End Try
+
+    End Sub
+
+
+    Private Sub okButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles okButton.Click
+            Dim sortedPages(resequenceListBox.Items.Count - 1) As String
+            Dim sortedVals(resequenceListBox.Items.Count - 1) As Integer
+            Dim rowCounter As Integer
+            ' Omar Murray
+
+      resequenceListBox.Items.CopyTo(sortedPages, 0)
+            'If InReQC in change data; if not yet QCed then move images
+            If GetDownLoadState(m_VehicleId) = 0 Then
+                InReQC = True
+                Array.Resize(initialSortedPages, resequenceListBox.Items.Count)
+                Array.Resize(originalRow, resequenceListBox.Items.Count)
+
+                resequenceListBox.Items.CopyTo(initialSortedPages, 0)
+
+                For rowCounter = 0 To resequenceListBox.Items.Count - 1
+                    originalRow(rowCounter) = Processor.GetImageInformation(initialSortedPages(rowCounter))
+
+                Next
+            End If
+            If InReQC Then
+                Processor.UpdatePageSequence(sortedPages, originalRow)
+            Else
+                ResequencePagesImageFiles(sortedPages)
+            End If
+
+            Array.Clear(sortedPages, 0, sortedPages.Length)
+            sortedPages = Nothing
+
+            If InReQC Then
+                Try
+                    Processor.SynchronizePageInformation()
+                Catch ex As System.Data.SqlClient.SqlException
+                    MessageBox.Show("A database related error has occurred while updating page sequence." _
+                                    , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Catch ex As Exception
+                    MessageBox.Show("An unknown error has occurred while updating page sequence." _
+                                    , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End If
+            originalRow = Nothing
+            Processor.UpdateAllBlankImageName(m_VehicleId)
+        End Sub
+
+    Private Sub pageInfoListBox_SelectedIndexChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles pageInfoListBox.SelectedIndexChanged
+      Dim bmb As BindingManagerBase
+      Dim tempPageRow As ResequenceDataSet.PageRow
+
+
+      bmb = Me.BindingContext(pageInfoListBox.DataSource)
+      tempPageRow = CType(CType(bmb.Current, Data.DataRowView).Row, ResequenceDataSet.PageRow)
+
+      If tempPageRow.IsSizeIDNull AndAlso tempPageRow.SizeRow Is Nothing Then
+        pageSizeValueLabel.Text = String.Empty
+      ElseIf tempPageRow.SizeRow IsNot Nothing Then
+        pageSizeValueLabel.Text = tempPageRow.SizeRow.PageSize
+      End If
+
+      tempPageRow = Nothing
+      bmb = Nothing
+
+    End Sub
+
+    Private Sub moveToTopButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles moveToTopButton.Click, moveToTopToolStripMenuItem.Click
+      Dim selectionCount, itemCounter As Integer
+
+
+      If resequenceListBox.SelectedIndices.Count = 0 Then
+        MessageBox.Show("Select atleast one item to resequence.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      ElseIf IsContinuousSelection() = False Then
+        MessageBox.Show("Select adjacent items to resequence.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      End If
+
+      selectionCount = resequenceListBox.SelectedItems.Count
+
+      Dim selectedItems(selectionCount) As String
+      resequenceListBox.SelectedItems.CopyTo(selectedItems, 0)
+
+      For itemCounter = 0 To selectionCount - 1
+        resequenceListBox.Items.Remove(selectedItems(itemCounter))
+        resequenceListBox.Items.Insert(itemCounter, selectedItems(itemCounter))
+      Next
+
+      For itemCounter = 0 To itemCounter - 1
+        resequenceListBox.SetSelected(itemCounter, True)
+      Next
+
+      Array.Clear(selectedItems, 0, selectedItems.Length)
+      selectedItems = Nothing
+
+    End Sub
+
+    Private Sub moveUpwardsButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles moveUpwardsButton.Click, moveUpwardsToolStripMenuItem.Click
+            Dim selectionCount, itemCounter, itemIndex As Integer
+
+
+      If resequenceListBox.SelectedIndices.Count = 0 Then
+        MessageBox.Show("Select atleast one item to resequence.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      ElseIf IsContinuousSelection() = False Then
+        MessageBox.Show("Select adjacent items to resequence.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      End If
+
+      If resequenceListBox.SelectedIndices(0) = 0 Then Exit Sub
+
+      selectionCount = resequenceListBox.SelectedItems.Count
+      selectionCount -= 1
+
+      Dim selectedIndices(selectionCount) As Integer
+      Dim selectedItems(selectionCount) As String
+      resequenceListBox.SelectedItems.CopyTo(selectedItems, 0)
+
+      For itemCounter = 0 To selectionCount
+        itemIndex = resequenceListBox.FindStringExact(selectedItems(itemCounter))
+        resequenceListBox.Items.Remove(selectedItems(itemCounter))
+        resequenceListBox.Items.Insert(itemIndex - 1, selectedItems(itemCounter))
+        selectedIndices(itemCounter) = itemIndex - 1
+      Next
+
+      For itemCounter = 0 To selectionCount
+        resequenceListBox.SetSelected(selectedIndices(itemCounter), True)
+      Next
+
+      Array.Clear(selectedItems, 0, selectedItems.Length)
+      selectedItems = Nothing
+
+    End Sub
+
+    Private Sub moveDownwardsButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles moveDownwardsButton.Click, moveDownwardsToolStripMenuItem.Click
+      Dim selectionCount, itemCounter, itemIndex As Integer
+
+
+      If resequenceListBox.SelectedIndices.Count = 0 Then
+        MessageBox.Show("Select atleast one item to resequence.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      ElseIf IsContinuousSelection() = False Then
+        MessageBox.Show("Select adjacent items to resequence.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      End If
+
+      selectionCount = resequenceListBox.SelectedItems.Count
+      selectionCount -= 1
+
+      Dim selectedIndices(selectionCount) As Integer
+      Dim selectedItems(selectionCount) As String
+
+      resequenceListBox.SelectedItems.CopyTo(selectedItems, 0)
+      resequenceListBox.SelectedIndices.CopyTo(selectedIndices, 0)
+
+      If selectedIndices(selectedIndices.Length - 1) = resequenceListBox.Items.Count - 1 Then Exit Sub
+
+      For itemCounter = selectionCount To 0 Step -1
+        itemIndex = resequenceListBox.FindStringExact(selectedItems(itemCounter))
+        resequenceListBox.Items.Remove(selectedItems(itemCounter))
+        resequenceListBox.Items.Insert(itemIndex + 1, selectedItems(itemCounter))
+      Next
+
+      For itemCounter = 0 To selectionCount
+        resequenceListBox.SetSelected(selectedIndices(itemCounter) + 1, True)
+      Next
+
+      Array.Clear(selectedItems, 0, selectedItems.Length)
+      selectedItems = Nothing
+
+    End Sub
+
+    Private Sub moveToBottomButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles moveToBottomButton.Click, moveToBottomToolStripMenuItem.Click
+      Dim selectionCount, itemCounter As Integer
+
+
+      If resequenceListBox.SelectedIndices.Count = 0 Then
+        MessageBox.Show("Select atleast one item to resequence.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      ElseIf IsContinuousSelection() = False Then
+        MessageBox.Show("Select adjacent items to resequence.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      End If
+
+      selectionCount = resequenceListBox.SelectedItems.Count
+
+      Dim selectedItems(selectionCount - 1) As String
+      resequenceListBox.SelectedItems.CopyTo(selectedItems, 0)
+
+      For itemCounter = 0 To selectionCount - 1
+        resequenceListBox.Items.Remove(selectedItems(itemCounter))
+      Next
+      resequenceListBox.Items.AddRange(selectedItems)
+
+      For itemCounter = 0 To selectionCount - 1
+        resequenceListBox.SetSelected(resequenceListBox.Items.Count - 1 - itemCounter, True)
+      Next
+
+      Array.Clear(selectedItems, 0, selectedItems.Length)
+      selectedItems = Nothing
+
+    End Sub
+
+
+    Private Sub m_resequenceProcessor_PagesInformationSynchronized() Handles m_resequenceProcessor.PagesInformationSynchronized
+      Dim pageImageCount As Integer
+      Dim existingFilePath, newFilePath As System.Text.StringBuilder
+      Dim renamedFiles As System.Collections.Generic.List(Of String)
+
+
+      existingFilePath = New System.Text.StringBuilder()
+      newFilePath = New System.Text.StringBuilder()
+      renamedFiles = New System.Collections.Generic.List(Of String)
+      pageImageCount = resequenceListBox.Items.Count
+
+      Try
+        If Not InReQC Then
+          For i As Integer = 0 To pageImageCount - 1
+            'Rename files only if its not QCed(i.e. rename only when having image file names as 001, 002,...)
+            If Processor.DataSet.Page(i).IsImageNameNull() Then
+              existingFilePath.Append(Me.PageImageFolderPath)
+              existingFilePath.Append("\")
+              existingFilePath.Append(Processor.DataSet.Page(i).ImageFileName)
+              existingFilePath.Append(".jpg")
+
+              
+              newFilePath.Append("_")
+              newFilePath.Append(Processor.DataSet.Page(i).ReceivedOrder.ToString("000"))
+              newFilePath.Append(".jpg")
+
+              My.Computer.FileSystem.RenameFile(existingFilePath.ToString(), newFilePath.ToString())
+
+              renamedFiles.Add(Me.PageImageFolderPath + "\" + newFilePath.ToString())
+
+              existingFilePath.Remove(0, existingFilePath.Length)
+              newFilePath.Remove(0, newFilePath.Length)
+            End If
+          Next
+
+          For i As Integer = 0 To renamedFiles.Count - 1
+            existingFilePath.Append(renamedFiles(i))
+            newFilePath.Append(renamedFiles(i).Replace("_", ""))
+
+            System.IO.File.Move(existingFilePath.ToString(), newFilePath.ToString())
+
+            existingFilePath.Remove(0, existingFilePath.Length)
+            newFilePath.Remove(0, newFilePath.Length)
+          Next
+        End If
+      Catch ex As System.IO.PathTooLongException
+        MessageBox.Show("All page image files' name are not resequenced." + Environment.NewLine _
+                        + "Image file path is too long. Cannot resequence image files' name." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+      Catch ex As System.IO.FileNotFoundException
+        MessageBox.Show("All page image files' name are not resequenced." + Environment.NewLine _
+                        + "Cannot find one of the image file while resequencing image files' name." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+      Catch ex As System.IO.IOException
+        MessageBox.Show("All page image files' name are not resequenced." + Environment.NewLine _
+                        + ex.Message, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+      Catch ex As Exception
+        MessageBox.Show("All page image files' name are not resequenced." + Environment.NewLine _
+                        + "An unknown error has occurred while resequencing image files' name." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+      End Try
+
+        End Sub
+
+
+        Private Sub ResequenceRemotePagesImageFiles(ByVal resequencedPageImages() As String)
+            Dim pageImageCount As Integer
+            Dim existingFilePath, newFilePath As System.Text.StringBuilder
+            Dim temporaryFiles As System.Collections.Generic.List(Of String)
+            Dim renamedFiles As System.Collections.Generic.List(Of String)
+
+
+            existingFilePath = New System.Text.StringBuilder()
+            newFilePath = New System.Text.StringBuilder()
+            temporaryFiles = New System.Collections.Generic.List(Of String)
+            renamedFiles = New System.Collections.Generic.List(Of String)
+            ' omar start changes here for resequence
+            pageImageCount = resequencedPageImages.Length
+
+            Try
+                For i As Integer = 0 To pageImageCount - 1
+                    existingFilePath.Append(Me.RemoteImagePath)
+                    existingFilePath.Append("\")
+                    existingFilePath.Append(resequencedPageImages(i))
+                    existingFilePath.Append(".jpg")
+
+                    newFilePath.Append("_")
+                    newFilePath.Append((i + 1).ToString("000"))
+
+                    newFilePath.Append(".jpg")
+
+
+                    My.Computer.FileSystem.RenameFile(existingFilePath.ToString(), newFilePath.ToString())
+
+                    temporaryFiles.Add(Me.RemoteImagePath + "\" + newFilePath.ToString())
+                    newFilePath.Remove(0, 1)
+                    renamedFiles.Add(Me.RemoteImagePath + "\" + newFilePath.ToString())
+
+                    existingFilePath.Remove(0, existingFilePath.Length)
+                    newFilePath.Remove(0, newFilePath.Length)
+                Next
+
+                For i As Integer = 0 To temporaryFiles.Count - 1
+                    System.IO.File.Move(temporaryFiles(i), renamedFiles(i))
+                Next
+            Catch ex As Exception
+
+            End Try
+        End Sub
+
+        Private Function GetSenderid(ByVal Vehicleid As String) As String
+            Dim senderid As String
+            senderid = GetFieldValue("select distinct e.senderid from envelope e inner join vehicle v on e.envelopeid=v.envelopeid where vehicleid=" + Vehicleid.ToString, "userid")
+            If String.IsNullOrEmpty(senderid) = True Then
+                senderid = Guid.Empty.ToString
+            End If
+            Return senderid
+        End Function
+
+        Public Function GetDownLoadState(ByVal VehicleId As Integer) As Byte
+            Dim obj As Object
+            Dim val As Byte
+
+            Dim cmd As System.Data.SqlClient.SqlCommand
+            Dim cn As System.Data.SqlClient.SqlConnection
+
+            cn = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+            cmd = New System.Data.SqlClient.SqlCommand
+            cn.Open()
+            cmd.Connection = cn
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.CommandText = "mt_proc_GetStatusForResequence"
+            cmd.Parameters.Add("@Reqc", SqlDbType.Bit).Direction = ParameterDirection.Output
+
+            cmd.Parameters.AddWithValue("@VehicleId", VehicleId)
+
+
+            obj = cmd.ExecuteScalar()
+
+            val = CType(obj, Byte)
+            Dim familyid As Byte = Convert.ToByte(cmd.Parameters("@Reqc").Value)
+
+            If cmd.Connection.State = ConnectionState.Open Then
+                cmd.Connection.Close()
+            End If
+            cmd = Nothing
+
+            Return familyid
+        End Function
+
+    End Class
+
+End Namespace

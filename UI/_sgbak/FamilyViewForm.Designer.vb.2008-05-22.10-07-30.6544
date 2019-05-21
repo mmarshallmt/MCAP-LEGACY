@@ -1,0 +1,435 @@
+﻿Namespace UI
+
+  <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+  Partial Class FamilyViewForm
+    Inherits BaseForm
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+      Try
+        If disposing AndAlso components IsNot Nothing Then
+          components.Dispose()
+        End If
+      Finally
+        MyBase.Dispose(disposing)
+      End Try
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+      Me.components = New System.ComponentModel.Container
+      Me.topPanel = New System.Windows.Forms.Panel
+      Me.retailerNameLabel = New System.Windows.Forms.Label
+      Me.retailerLabel = New System.Windows.Forms.Label
+      Me.loadButton = New System.Windows.Forms.Button
+      Me.vehicleIdTextBox = New System.Windows.Forms.TextBox
+      Me.loadLabel = New System.Windows.Forms.Label
+      Me.bottomPanel = New System.Windows.Forms.Panel
+      Me.closeButton = New System.Windows.Forms.Button
+      Me.familyButton = New System.Windows.Forms.Button
+      Me.splitFamilyButton = New System.Windows.Forms.Button
+      Me.familyDataGridView = New System.Windows.Forms.DataGridView
+      Me.FamilyIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.VehicleIdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.RetIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.MktIdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.ThemeIdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.EventIdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.MediaIdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.RetailerDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.MediaDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.PriorityDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.BreakDtDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.StartDtDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.EndDtDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.FrontPageDataGridViewImageColumn = New System.Windows.Forms.DataGridViewImageColumn
+      Me.BackPageDataGridViewImageColumn = New System.Windows.Forms.DataGridViewImageColumn
+      Me.MarketDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.CheckInPageCountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.ThemeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.EventDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.PriorityNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.CreateDtDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.DisplayFamilyBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+      Me.FamilyViewDataSet = New MCAP.FamilyViewDataSet
+      Me.DisplayFamilyTableAdapter = New MCAP.FamilyViewDataSetTableAdapters.DisplayFamilyTableAdapter
+      CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
+      Me.topPanel.SuspendLayout()
+      Me.bottomPanel.SuspendLayout()
+      CType(Me.familyDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+      CType(Me.DisplayFamilyBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+      CType(Me.FamilyViewDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
+      Me.SuspendLayout()
+      '
+      'topPanel
+      '
+      Me.topPanel.Controls.Add(Me.retailerNameLabel)
+      Me.topPanel.Controls.Add(Me.retailerLabel)
+      Me.topPanel.Controls.Add(Me.loadButton)
+      Me.topPanel.Controls.Add(Me.vehicleIdTextBox)
+      Me.topPanel.Controls.Add(Me.loadLabel)
+      Me.topPanel.Dock = System.Windows.Forms.DockStyle.Top
+      Me.topPanel.Location = New System.Drawing.Point(0, 0)
+      Me.topPanel.Name = "topPanel"
+      Me.topPanel.Size = New System.Drawing.Size(904, 55)
+      Me.topPanel.TabIndex = 0
+      '
+      'retailerNameLabel
+      '
+      Me.retailerNameLabel.AutoSize = True
+      Me.retailerNameLabel.Location = New System.Drawing.Point(64, 31)
+      Me.retailerNameLabel.Name = "retailerNameLabel"
+      Me.retailerNameLabel.Size = New System.Drawing.Size(55, 13)
+      Me.retailerNameLabel.TabIndex = 4
+      Me.retailerNameLabel.Text = "<Retailer>"
+      '
+      'retailerLabel
+      '
+      Me.retailerLabel.AutoSize = True
+      Me.retailerLabel.Location = New System.Drawing.Point(12, 31)
+      Me.retailerLabel.Name = "retailerLabel"
+      Me.retailerLabel.Size = New System.Drawing.Size(46, 13)
+      Me.retailerLabel.TabIndex = 3
+      Me.retailerLabel.Text = "Retailer:"
+      '
+      'loadButton
+      '
+      Me.loadButton.Location = New System.Drawing.Point(267, 4)
+      Me.loadButton.Name = "loadButton"
+      Me.loadButton.Size = New System.Drawing.Size(75, 23)
+      Me.loadButton.TabIndex = 2
+      Me.loadButton.Text = "&Load"
+      Me.loadButton.UseVisualStyleBackColor = True
+      '
+      'vehicleIdTextBox
+      '
+      Me.vehicleIdTextBox.Location = New System.Drawing.Point(128, 6)
+      Me.vehicleIdTextBox.Name = "vehicleIdTextBox"
+      Me.vehicleIdTextBox.Size = New System.Drawing.Size(133, 20)
+      Me.vehicleIdTextBox.TabIndex = 1
+      '
+      'loadLabel
+      '
+      Me.loadLabel.AutoSize = True
+      Me.loadLabel.Location = New System.Drawing.Point(12, 9)
+      Me.loadLabel.Name = "loadLabel"
+      Me.loadLabel.Size = New System.Drawing.Size(110, 13)
+      Me.loadLabel.TabIndex = 0
+      Me.loadLabel.Text = "Load From &Vehicle Id:"
+      '
+      'bottomPanel
+      '
+      Me.bottomPanel.Controls.Add(Me.closeButton)
+      Me.bottomPanel.Controls.Add(Me.familyButton)
+      Me.bottomPanel.Controls.Add(Me.splitFamilyButton)
+      Me.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom
+      Me.bottomPanel.Location = New System.Drawing.Point(0, 421)
+      Me.bottomPanel.Name = "bottomPanel"
+      Me.bottomPanel.Size = New System.Drawing.Size(904, 56)
+      Me.bottomPanel.TabIndex = 1
+      '
+      'closeButton
+      '
+      Me.closeButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+      Me.closeButton.Location = New System.Drawing.Point(755, 19)
+      Me.closeButton.Name = "closeButton"
+      Me.closeButton.Size = New System.Drawing.Size(137, 23)
+      Me.closeButton.TabIndex = 2
+      Me.closeButton.Text = "&Close - Don't Review Family"
+      Me.closeButton.UseVisualStyleBackColor = True
+      '
+      'familyButton
+      '
+      Me.familyButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+      Me.familyButton.Location = New System.Drawing.Point(674, 19)
+      Me.familyButton.Name = "familyButton"
+      Me.familyButton.Size = New System.Drawing.Size(75, 23)
+      Me.familyButton.TabIndex = 1
+      Me.familyButton.Text = "Family &OK"
+      Me.familyButton.UseVisualStyleBackColor = True
+      '
+      'splitFamilyButton
+      '
+      Me.splitFamilyButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+      Me.splitFamilyButton.Location = New System.Drawing.Point(4, 8)
+      Me.splitFamilyButton.Name = "splitFamilyButton"
+      Me.splitFamilyButton.Size = New System.Drawing.Size(115, 45)
+      Me.splitFamilyButton.TabIndex = 0
+      Me.splitFamilyButton.Text = "Split Out Selected to Separate Family"
+      Me.splitFamilyButton.UseVisualStyleBackColor = True
+      '
+      'familyDataGridView
+      '
+      Me.familyDataGridView.AllowUserToAddRows = False
+      Me.familyDataGridView.AllowUserToDeleteRows = False
+      Me.familyDataGridView.AutoGenerateColumns = False
+      Me.familyDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+      Me.familyDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+      Me.familyDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.FamilyIDDataGridViewTextBoxColumn, Me.VehicleIdDataGridViewTextBoxColumn, Me.RetIDDataGridViewTextBoxColumn, Me.MktIdDataGridViewTextBoxColumn, Me.ThemeIdDataGridViewTextBoxColumn, Me.EventIdDataGridViewTextBoxColumn, Me.MediaIdDataGridViewTextBoxColumn, Me.RetailerDataGridViewTextBoxColumn, Me.MediaDataGridViewTextBoxColumn, Me.PriorityDataGridViewTextBoxColumn, Me.BreakDtDataGridViewTextBoxColumn, Me.StartDtDataGridViewTextBoxColumn, Me.EndDtDataGridViewTextBoxColumn, Me.FrontPageDataGridViewImageColumn, Me.BackPageDataGridViewImageColumn, Me.MarketDataGridViewTextBoxColumn, Me.CheckInPageCountDataGridViewTextBoxColumn, Me.ThemeDataGridViewTextBoxColumn, Me.EventDataGridViewTextBoxColumn, Me.PriorityNameDataGridViewTextBoxColumn, Me.CreateDtDataGridViewTextBoxColumn})
+      Me.familyDataGridView.DataSource = Me.DisplayFamilyBindingSource
+      Me.familyDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+      Me.familyDataGridView.Location = New System.Drawing.Point(0, 55)
+      Me.familyDataGridView.Name = "familyDataGridView"
+      Me.familyDataGridView.ReadOnly = True
+      Me.familyDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+      Me.familyDataGridView.Size = New System.Drawing.Size(904, 366)
+      Me.familyDataGridView.TabIndex = 2
+      '
+      'FamilyIDDataGridViewTextBoxColumn
+      '
+      Me.FamilyIDDataGridViewTextBoxColumn.DataPropertyName = "FamilyID"
+      Me.FamilyIDDataGridViewTextBoxColumn.HeaderText = "FamilyID"
+      Me.FamilyIDDataGridViewTextBoxColumn.Name = "FamilyIDDataGridViewTextBoxColumn"
+      Me.FamilyIDDataGridViewTextBoxColumn.ReadOnly = True
+      Me.FamilyIDDataGridViewTextBoxColumn.Visible = False
+      Me.FamilyIDDataGridViewTextBoxColumn.Width = 72
+      '
+      'VehicleIdDataGridViewTextBoxColumn
+      '
+      Me.VehicleIdDataGridViewTextBoxColumn.DataPropertyName = "VehicleId"
+      Me.VehicleIdDataGridViewTextBoxColumn.HeaderText = "VehicleId"
+      Me.VehicleIdDataGridViewTextBoxColumn.Name = "VehicleIdDataGridViewTextBoxColumn"
+      Me.VehicleIdDataGridViewTextBoxColumn.ReadOnly = True
+      Me.VehicleIdDataGridViewTextBoxColumn.Visible = False
+      Me.VehicleIdDataGridViewTextBoxColumn.Width = 76
+      '
+      'RetIDDataGridViewTextBoxColumn
+      '
+      Me.RetIDDataGridViewTextBoxColumn.DataPropertyName = "RetID"
+      Me.RetIDDataGridViewTextBoxColumn.HeaderText = "RetID"
+      Me.RetIDDataGridViewTextBoxColumn.Name = "RetIDDataGridViewTextBoxColumn"
+      Me.RetIDDataGridViewTextBoxColumn.ReadOnly = True
+      Me.RetIDDataGridViewTextBoxColumn.Visible = False
+      Me.RetIDDataGridViewTextBoxColumn.Width = 60
+      '
+      'MktIdDataGridViewTextBoxColumn
+      '
+      Me.MktIdDataGridViewTextBoxColumn.DataPropertyName = "MktId"
+      Me.MktIdDataGridViewTextBoxColumn.HeaderText = "MktId"
+      Me.MktIdDataGridViewTextBoxColumn.Name = "MktIdDataGridViewTextBoxColumn"
+      Me.MktIdDataGridViewTextBoxColumn.ReadOnly = True
+      Me.MktIdDataGridViewTextBoxColumn.Visible = False
+      Me.MktIdDataGridViewTextBoxColumn.Width = 59
+      '
+      'ThemeIdDataGridViewTextBoxColumn
+      '
+      Me.ThemeIdDataGridViewTextBoxColumn.DataPropertyName = "ThemeId"
+      Me.ThemeIdDataGridViewTextBoxColumn.HeaderText = "ThemeId"
+      Me.ThemeIdDataGridViewTextBoxColumn.Name = "ThemeIdDataGridViewTextBoxColumn"
+      Me.ThemeIdDataGridViewTextBoxColumn.ReadOnly = True
+      Me.ThemeIdDataGridViewTextBoxColumn.Visible = False
+      Me.ThemeIdDataGridViewTextBoxColumn.Width = 74
+      '
+      'EventIdDataGridViewTextBoxColumn
+      '
+      Me.EventIdDataGridViewTextBoxColumn.DataPropertyName = "EventId"
+      Me.EventIdDataGridViewTextBoxColumn.HeaderText = "EventId"
+      Me.EventIdDataGridViewTextBoxColumn.Name = "EventIdDataGridViewTextBoxColumn"
+      Me.EventIdDataGridViewTextBoxColumn.ReadOnly = True
+      Me.EventIdDataGridViewTextBoxColumn.Visible = False
+      Me.EventIdDataGridViewTextBoxColumn.Width = 69
+      '
+      'MediaIdDataGridViewTextBoxColumn
+      '
+      Me.MediaIdDataGridViewTextBoxColumn.DataPropertyName = "MediaId"
+      Me.MediaIdDataGridViewTextBoxColumn.HeaderText = "MediaId"
+      Me.MediaIdDataGridViewTextBoxColumn.Name = "MediaIdDataGridViewTextBoxColumn"
+      Me.MediaIdDataGridViewTextBoxColumn.ReadOnly = True
+      Me.MediaIdDataGridViewTextBoxColumn.Visible = False
+      Me.MediaIdDataGridViewTextBoxColumn.Width = 70
+      '
+      'RetailerDataGridViewTextBoxColumn
+      '
+      Me.RetailerDataGridViewTextBoxColumn.DataPropertyName = "Retailer"
+      Me.RetailerDataGridViewTextBoxColumn.HeaderText = "Retailer"
+      Me.RetailerDataGridViewTextBoxColumn.Name = "RetailerDataGridViewTextBoxColumn"
+      Me.RetailerDataGridViewTextBoxColumn.ReadOnly = True
+      Me.RetailerDataGridViewTextBoxColumn.Visible = False
+      Me.RetailerDataGridViewTextBoxColumn.Width = 68
+      '
+      'MediaDataGridViewTextBoxColumn
+      '
+      Me.MediaDataGridViewTextBoxColumn.DataPropertyName = "Media"
+      Me.MediaDataGridViewTextBoxColumn.HeaderText = "Media"
+      Me.MediaDataGridViewTextBoxColumn.Name = "MediaDataGridViewTextBoxColumn"
+      Me.MediaDataGridViewTextBoxColumn.ReadOnly = True
+      Me.MediaDataGridViewTextBoxColumn.Visible = False
+      Me.MediaDataGridViewTextBoxColumn.Width = 61
+      '
+      'PriorityDataGridViewTextBoxColumn
+      '
+      Me.PriorityDataGridViewTextBoxColumn.DataPropertyName = "Priority"
+      Me.PriorityDataGridViewTextBoxColumn.HeaderText = "Priority"
+      Me.PriorityDataGridViewTextBoxColumn.Name = "PriorityDataGridViewTextBoxColumn"
+      Me.PriorityDataGridViewTextBoxColumn.ReadOnly = True
+      Me.PriorityDataGridViewTextBoxColumn.Visible = False
+      Me.PriorityDataGridViewTextBoxColumn.Width = 63
+      '
+      'BreakDtDataGridViewTextBoxColumn
+      '
+      Me.BreakDtDataGridViewTextBoxColumn.DataPropertyName = "BreakDt"
+      Me.BreakDtDataGridViewTextBoxColumn.HeaderText = "BreakDt"
+      Me.BreakDtDataGridViewTextBoxColumn.Name = "BreakDtDataGridViewTextBoxColumn"
+      Me.BreakDtDataGridViewTextBoxColumn.ReadOnly = True
+      Me.BreakDtDataGridViewTextBoxColumn.Visible = False
+      Me.BreakDtDataGridViewTextBoxColumn.Width = 71
+      '
+      'StartDtDataGridViewTextBoxColumn
+      '
+      Me.StartDtDataGridViewTextBoxColumn.DataPropertyName = "StartDt"
+      Me.StartDtDataGridViewTextBoxColumn.HeaderText = "StartDt"
+      Me.StartDtDataGridViewTextBoxColumn.Name = "StartDtDataGridViewTextBoxColumn"
+      Me.StartDtDataGridViewTextBoxColumn.ReadOnly = True
+      Me.StartDtDataGridViewTextBoxColumn.Visible = False
+      Me.StartDtDataGridViewTextBoxColumn.Width = 65
+      '
+      'EndDtDataGridViewTextBoxColumn
+      '
+      Me.EndDtDataGridViewTextBoxColumn.DataPropertyName = "EndDt"
+      Me.EndDtDataGridViewTextBoxColumn.HeaderText = "EndDt"
+      Me.EndDtDataGridViewTextBoxColumn.Name = "EndDtDataGridViewTextBoxColumn"
+      Me.EndDtDataGridViewTextBoxColumn.ReadOnly = True
+      Me.EndDtDataGridViewTextBoxColumn.Visible = False
+      Me.EndDtDataGridViewTextBoxColumn.Width = 62
+      '
+      'FrontPageDataGridViewImageColumn
+      '
+      Me.FrontPageDataGridViewImageColumn.HeaderText = "Front Page"
+      Me.FrontPageDataGridViewImageColumn.Name = "FrontPageDataGridViewImageColumn"
+      Me.FrontPageDataGridViewImageColumn.ReadOnly = True
+      Me.FrontPageDataGridViewImageColumn.Width = 65
+      '
+      'BackPageDataGridViewImageColumn
+      '
+      Me.BackPageDataGridViewImageColumn.HeaderText = "Back Page"
+      Me.BackPageDataGridViewImageColumn.Name = "BackPageDataGridViewImageColumn"
+      Me.BackPageDataGridViewImageColumn.ReadOnly = True
+      Me.BackPageDataGridViewImageColumn.Width = 66
+      '
+      'MarketDataGridViewTextBoxColumn
+      '
+      Me.MarketDataGridViewTextBoxColumn.DataPropertyName = "Market"
+      Me.MarketDataGridViewTextBoxColumn.HeaderText = "Market"
+      Me.MarketDataGridViewTextBoxColumn.Name = "MarketDataGridViewTextBoxColumn"
+      Me.MarketDataGridViewTextBoxColumn.ReadOnly = True
+      Me.MarketDataGridViewTextBoxColumn.Width = 65
+      '
+      'CheckInPageCountDataGridViewTextBoxColumn
+      '
+      Me.CheckInPageCountDataGridViewTextBoxColumn.DataPropertyName = "CheckInPageCount"
+      Me.CheckInPageCountDataGridViewTextBoxColumn.HeaderText = "Page Count"
+      Me.CheckInPageCountDataGridViewTextBoxColumn.Name = "CheckInPageCountDataGridViewTextBoxColumn"
+      Me.CheckInPageCountDataGridViewTextBoxColumn.ReadOnly = True
+      Me.CheckInPageCountDataGridViewTextBoxColumn.Width = 88
+      '
+      'ThemeDataGridViewTextBoxColumn
+      '
+      Me.ThemeDataGridViewTextBoxColumn.DataPropertyName = "Theme"
+      Me.ThemeDataGridViewTextBoxColumn.HeaderText = "Theme"
+      Me.ThemeDataGridViewTextBoxColumn.Name = "ThemeDataGridViewTextBoxColumn"
+      Me.ThemeDataGridViewTextBoxColumn.ReadOnly = True
+      Me.ThemeDataGridViewTextBoxColumn.Width = 65
+      '
+      'EventDataGridViewTextBoxColumn
+      '
+      Me.EventDataGridViewTextBoxColumn.DataPropertyName = "Event"
+      Me.EventDataGridViewTextBoxColumn.HeaderText = "Event"
+      Me.EventDataGridViewTextBoxColumn.Name = "EventDataGridViewTextBoxColumn"
+      Me.EventDataGridViewTextBoxColumn.ReadOnly = True
+      Me.EventDataGridViewTextBoxColumn.Width = 60
+      '
+      'PriorityNameDataGridViewTextBoxColumn
+      '
+      Me.PriorityNameDataGridViewTextBoxColumn.DataPropertyName = "PriorityName"
+      Me.PriorityNameDataGridViewTextBoxColumn.HeaderText = "PriorityName"
+      Me.PriorityNameDataGridViewTextBoxColumn.Name = "PriorityNameDataGridViewTextBoxColumn"
+      Me.PriorityNameDataGridViewTextBoxColumn.ReadOnly = True
+      Me.PriorityNameDataGridViewTextBoxColumn.Width = 91
+      '
+      'CreateDtDataGridViewTextBoxColumn
+      '
+      Me.CreateDtDataGridViewTextBoxColumn.DataPropertyName = "CreateDt"
+      Me.CreateDtDataGridViewTextBoxColumn.HeaderText = "Entry Date"
+      Me.CreateDtDataGridViewTextBoxColumn.Name = "CreateDtDataGridViewTextBoxColumn"
+      Me.CreateDtDataGridViewTextBoxColumn.ReadOnly = True
+      Me.CreateDtDataGridViewTextBoxColumn.Width = 82
+      '
+      'DisplayFamilyBindingSource
+      '
+      Me.DisplayFamilyBindingSource.DataMember = "DisplayFamily"
+      Me.DisplayFamilyBindingSource.DataSource = Me.FamilyViewDataSet
+      '
+      'FamilyViewDataSet
+      '
+      Me.FamilyViewDataSet.DataSetName = "FamilyViewDataSet"
+      Me.FamilyViewDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+      '
+      'DisplayFamilyTableAdapter
+      '
+      Me.DisplayFamilyTableAdapter.ClearBeforeFill = True
+      '
+      'FamilyViewForm
+      '
+      Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+      Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+      Me.ClientSize = New System.Drawing.Size(904, 477)
+      Me.Controls.Add(Me.familyDataGridView)
+      Me.Controls.Add(Me.bottomPanel)
+      Me.Controls.Add(Me.topPanel)
+      Me.Name = "FamilyViewForm"
+      Me.Text = "View Family"
+      CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).EndInit()
+      Me.topPanel.ResumeLayout(False)
+      Me.topPanel.PerformLayout()
+      Me.bottomPanel.ResumeLayout(False)
+      CType(Me.familyDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+      CType(Me.DisplayFamilyBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+      CType(Me.FamilyViewDataSet, System.ComponentModel.ISupportInitialize).EndInit()
+      Me.ResumeLayout(False)
+
+    End Sub
+    Friend WithEvents topPanel As System.Windows.Forms.Panel
+    Friend WithEvents bottomPanel As System.Windows.Forms.Panel
+    Friend WithEvents familyDataGridView As System.Windows.Forms.DataGridView
+    Friend WithEvents loadLabel As System.Windows.Forms.Label
+    Friend WithEvents retailerNameLabel As System.Windows.Forms.Label
+    Friend WithEvents retailerLabel As System.Windows.Forms.Label
+    Friend WithEvents loadButton As System.Windows.Forms.Button
+    Friend WithEvents vehicleIdTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents closeButton As System.Windows.Forms.Button
+    Friend WithEvents familyButton As System.Windows.Forms.Button
+    Friend WithEvents splitFamilyButton As System.Windows.Forms.Button
+    Friend WithEvents FamilyIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents VehicleIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents RetIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents MktIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ThemeIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents EventIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents MediaIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents RetailerDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents MediaDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PriorityDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents BreakDtDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents StartDtDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents EndDtDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents FrontPageDataGridViewImageColumn As System.Windows.Forms.DataGridViewImageColumn
+    Friend WithEvents BackPageDataGridViewImageColumn As System.Windows.Forms.DataGridViewImageColumn
+    Friend WithEvents MarketDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents CheckInPageCountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ThemeDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents EventDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PriorityNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents CreateDtDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DisplayFamilyBindingSource As System.Windows.Forms.BindingSource
+    Friend WithEvents FamilyViewDataSet As MCAP.FamilyViewDataSet
+    Friend WithEvents DisplayFamilyTableAdapter As MCAP.FamilyViewDataSetTableAdapters.DisplayFamilyTableAdapter
+  End Class
+
+End Namespace

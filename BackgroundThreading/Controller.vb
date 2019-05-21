@@ -1,0 +1,336 @@
+Imports System.Threading
+Namespace BackgroundThreading
+  '''-----------------------------------------------------------------------------
+  ''' Project		: Background
+  ''' Class		: Controller
+  '''
+  '''-----------------------------------------------------------------------------
+  ''' <summary>
+  ''' Contains all the code to safely start the worker thread, relay any status 
+  ''' messages from the worker thread back to the UI thread, and relay any cancel 
+  ''' request from the UI thread to the worker thread. 
+  ''' </summary>
+  ''' <remarks>Based on sample code from:
+  '''   "Implementing a Background Process in Visual Basic .NET" by Rockford Lhotka
+  ''' http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnadvnet/html/vbnet09272002.asp
+  ''' </remarks>
+  '''-----------------------------------------------------------------------------
+  Public Class Controller
+    Implements IController
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' this delegate signature matches that of IClient.Completed and is used to 
+    ''' safely invoke that method on the UI thread
+    ''' </summary>
+    ''' <param name="cancelled">indicates a pending cancel</param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Private Delegate Sub CompletedDelegate(ByVal cancelled As Boolean, ByVal partialSuccess As Boolean)
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' this delegate signature matches that of IClient.Display and is used to safely
+    ''' invoke that method on the UI thread
+    ''' </summary>
+    ''' <param name="text">text to display</param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Private Delegate Sub DisplayDelegate(ByVal text As String)
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' this delegate signature matches that of IClient.Failed and is used to 
+    ''' safely invoke that method on the UI thread
+    ''' </summary>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Private Delegate Sub FailedDelegate(ByVal e As Exception)
+
+    Private m_worker As IWorker
+    Private m_client As Form
+    Private m_running As Boolean
+    Private m_percent As Integer
+    Private m_count As Integer
+    Private m_infoList As New ArrayList
+    Private m_runningTaskType As IController.TaskType
+    Private m_errorList As New ArrayList
+
+#Region " Properties"
+    ReadOnly Property ErrorList() As ArrayList Implements IController.ErrorList
+      Get
+        Return m_errorList
+      End Get
+    End Property
+    ReadOnly Property Errors() As String
+      Get
+        Dim err As String
+        Dim allerrs As String = String.Empty
+        For Each err In m_errorList
+          allerrs &= err & vbCrLf
+        Next
+        Return allerrs
+      End Get
+    End Property
+
+    ReadOnly Property RunningTaskName() As String
+      Get
+        Select Case m_runningTaskType
+          Case IController.TaskType.CountImages
+            Return "CountImages"
+          Case IController.TaskType.MoveImages
+            Return "MoveImages"
+          Case Else
+            Return "Unknown"
+        End Select
+      End Get
+    End Property
+#End Region
+
+#Region " Code called from UI thread "
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' init the controller to use a regular form as a client
+    ''' </summary>
+    ''' <param name="client">A windows Form object which requires threaded work</param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Public Sub New(ByVal client As IClient)
+      m_client = CType(client, Form)
+    End Sub
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' called by the UI and runs on the UI thread. Starts the worker thread
+    ''' </summary>
+    ''' <param name="Worker">used to store a reference to the worker object</param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Public Sub Start(Optional ByVal worker As IWorker = Nothing)
+      ' if we're already running raise an error
+      If m_running Then
+        Throw New Exception("Background process already running")
+      End If
+      m_running = True
+
+      m_errorList.Clear()
+      'initialize the worker object so it
+      ' has a reference to the Controller
+      m_worker = worker
+      m_worker.Initialize(Me)
+
+      ' now create the background thread 
+      ' to do the background processing
+      Dim backThread As New Thread(AddressOf m_worker.Start)
+
+      ' now start the background work
+      backThread.Start()
+
+      ' tell the client that the background work is started
+      CType(m_client, IClient).Start(Me)
+    End Sub
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary> called by the UI and so it runs on the UI thread. Sets
+    ''' a flag to request a cancel
+    ''' </summary>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Public Sub Cancel()
+      Debug.WriteLine(Now.ToString & ": Controller.Cancel.")
+      m_running = False
+    End Sub
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' returns the percent complete value and is called only by the UI thread
+    ''' </summary>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Public ReadOnly Property Percent() As Integer
+      Get
+        Return m_percent
+      End Get
+    End Property
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' returns the count of images moved and is called only by the UI thread
+    ''' </summary>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Public ReadOnly Property Count() As Integer
+      Get
+        Return m_count
+      End Get
+    End Property
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' returns an array list with information about individiual items being iterated
+    ''' through. called from UI thread.
+    ''' </summary>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Public ReadOnly Property InfoList() As ArrayList
+      Get
+        Return m_infoList
+      End Get
+    End Property
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' returns the type of the currently running task and is called only by the 
+    ''' UI thread
+    ''' </summary>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Public ReadOnly Property RunningTaskType() As IController.TaskType
+      Get
+        Return m_runningTaskType
+      End Get
+    End Property
+#End Region
+
+#Region " Code called from the worker thread "
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' Called from the worker thread to update the display. Triggers a method call 
+    ''' to the UI with the status text - and that call is made on the UI thread
+    ''' </summary>
+    ''' <param name="text">Status text for display in the calling form.</param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Private Sub Display(ByVal text As String) _
+        Implements IController.Display
+
+      Dim disp As New DisplayDelegate(AddressOf CType(m_client, IClient).Display)
+      Dim ar() As Object = {text}
+
+      ' call the client form on the UI thread
+      ' to update the display
+      m_client.BeginInvoke(disp, ar)
+
+    End Sub
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' called from the worker thread to indicate failure triggering a method call 
+    ''' to the UI with the exception object, that call is made on the UI thread
+    ''' </summary>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Private Sub Failed(ByVal e As Exception) _
+        Implements IController.Failed
+
+      Debug.WriteLine(Now.ToString & ": Controller.Failed.")
+      m_running = False
+      Dim disp As New FailedDelegate(AddressOf CType(m_client, IClient).Failed)
+      Dim ar() As Object = {e}
+      m_client.Invoke(disp, ar)
+
+    End Sub
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' passes the percent complete value to the Controller from the worker. 
+    ''' The value is available to be read by the UI if desired.
+    ''' </summary>
+    ''' <param name="percent">worker's current measure of work completed</param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Private Sub SetPercent(ByVal percent As Integer) _
+        Implements IController.SetPercent
+
+      m_percent = percent
+
+    End Sub
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' passes the count to the Controller from the worker. 
+    ''' The value is available to be read by the UI if desired.
+    ''' </summary>
+    ''' <param name="count">worker's current measure of work completed</param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Private Sub SetCount(ByVal count As Integer) _
+        Implements IController.SetCount
+
+      m_count = count
+
+    End Sub
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' passes the count to the Controller from the worker. 
+    ''' The value is available to be read by the UI if desired.
+    ''' </summary>
+    ''' <param name="count">worker's current measure of work completed</param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Private Sub SetInfoList(ByVal infoList As ArrayList) _
+        Implements IController.SetInfoList
+
+      m_infoList = infoList
+
+    End Sub
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' passes the count to the Controller from the worker. 
+    ''' The value is available to be read by the UI if desired.
+    ''' </summary>
+    ''' <param name="count">worker's current measure of work completed</param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Private Sub SetRunningTaskType(ByVal taskType As IController.TaskType) _
+        Implements IController.SetRunningTaskType
+
+      m_runningTaskType = taskType
+
+    End Sub
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' Indicates completion from worker. The call to the UI is made on the UI 
+    ''' thread.
+    ''' </summary>
+    ''' <param name="cancelled">indicate whether completed successfully or cancelled
+    ''' </param>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Private Sub Completed(ByVal cancelled As Boolean, ByVal partialSuccess As Boolean) _
+        Implements IController.Completed
+      Debug.WriteLine(Now.ToString & ": " & Me.RunningTaskName & ".Controller.Completed.")
+      m_running = False
+      Dim comp As New CompletedDelegate(AddressOf CType(m_client, IClient).Completed)
+      Dim ar() As Object = {cancelled, partialSuccess}
+      m_client.Invoke(comp, ar)
+
+    End Sub
+
+    '''-----------------------------------------------------------------------------
+    ''' <summary>
+    ''' Indicates processes should be running or cancelled, if cancel has been 
+    ''' requested. Called from the worker thread so the worker code can see if it 
+    ''' should gracefully exit
+    ''' </summary>
+    ''' <remarks></remarks>
+    '''-----------------------------------------------------------------------------
+    Private ReadOnly Property Running() As Boolean _
+        Implements IController.Running
+      Get
+        Return m_running
+      End Get
+    End Property
+
+#End Region
+
+  End Class
+
+End Namespace

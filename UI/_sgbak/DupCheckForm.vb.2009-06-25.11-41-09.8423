@@ -1,0 +1,892 @@
+﻿Namespace UI
+
+  Public Class DupCheckForm
+    Implements IForm
+
+
+#Region " Events "
+
+    Public Event RefreshingPossibleDuplicateRecords()
+    Public Event PossibleDuplicateRecordsRefreshed()
+    Public Event OnError(ByVal sender As Object, ByVal e As System.Exception)
+
+#End Region
+
+
+    Private m_isPossibleDuplicateRecordsFound As Boolean
+    Private m_isOverride As Boolean
+    Private m_isReview As Boolean
+    Private m_isDuplicate As Boolean
+
+    Private m_removeVehicleId As Integer
+    Private m_retId As Integer
+    Private m_mktId As Integer
+    Private m_pubId As Integer
+    Private m_adDate As DateTime
+    Private m_mediaText As String
+    Private m_startDate As DateTime
+    Private m_endDate As DateTime
+    Private m_languageId As Nullable(Of Integer)
+    Private m_allowThumbnails As Boolean = False
+    Private m_thumbnailList As System.Collections.Generic.List(Of String)
+
+    ''' <summary>
+    ''' Processor
+    ''' </summary>
+    ''' <remarks></remarks>
+    Private WithEvents m_dupCheckProcessor As UI.Processors.DupCheck
+
+
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private ReadOnly Property Processor() As UI.Processors.DupCheck
+      Get
+        Return m_dupCheckProcessor
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Returns true, if user has clicked Override button.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property IsOverride() As Boolean
+      Get
+        Return m_isOverride
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Returns true, if user has clicked Review button.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property IsReview() As Boolean
+      Get
+        Return m_isReview
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Returns true, if user has selected to mark vehicle as duplicate.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property IsDuplicate() As Boolean
+      Get
+        Return m_isDuplicate
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Return true, if no possible duplicate records found in database.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property IsPossibleDuplicateRecordsFound() As Boolean
+      Get
+        Return m_isPossibleDuplicateRecordsFound
+      End Get
+    End Property
+
+    ''' <summary>
+    ''' Removes supplied vehicle id from DataTable.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Property RemoveVehicle() As Integer
+      Get
+        Return m_removeVehicleId
+      End Get
+      Set(ByVal value As Integer)
+        m_removeVehicleId = value
+      End Set
+    End Property
+
+    '''' <summary>
+    '''' Gets or sets flag indicating whether to load thumbnails for selected vehicle or not.
+    '''' </summary>
+    '''' <value></value>
+    '''' <returns></returns>
+    '''' <remarks></remarks>
+    'Public Property AllowThumbnails() As Boolean
+    '  Get
+    '    Return m_allowThumbnails
+    '  End Get
+    '  Set(ByVal value As Boolean)
+    '    m_allowThumbnails = value
+    '  End Set
+    'End Property
+
+    ''' <summary>
+    ''' List of image paths displayed in list of thumbnails.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private ReadOnly Property ThumbnailList() As System.Collections.Generic.List(Of String)
+      Get
+        Return m_thumbnailList
+      End Get
+    End Property
+
+
+
+#Region " Constructors "
+
+    ''' <summary>
+    ''' Overloaded constructor for FSI.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Sub New(ByVal retId As Integer, ByVal mktId As Integer, ByVal adDate As DateTime, ByVal mediaList As System.Collections.Generic.List(Of String), ByVal languageId As Nullable(Of Integer))
+
+      InitializeComponent()
+
+      m_retId = retId
+      m_mktId = mktId
+      m_pubId = -1
+      m_adDate = adDate
+      m_mediaText = GetMediaText(mediaList)
+      m_startDate = Nothing
+      m_endDate = Nothing
+      m_languageId = languageId
+      m_thumbnailList = New System.Collections.Generic.List(Of String)
+
+      dupcheckConditionLabel.Text = "Start date: NA, End date: NA."
+
+    End Sub
+
+    ''' <summary>
+    ''' Overloaded constructor for ROP.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Sub New(ByVal retId As Integer, ByVal mktId As Integer, ByVal publicationId As Integer, ByVal adDate As DateTime, ByVal mediaList As System.Collections.Generic.List(Of String), ByVal languageId As Nullable(Of Integer))
+
+      InitializeComponent()
+
+      m_retId = retId
+      m_mktId = mktId
+      m_pubId = publicationId
+      m_adDate = adDate
+      m_mediaText = GetMediaText(mediaList)
+      m_startDate = Nothing
+      m_endDate = Nothing
+      m_languageId = languageId
+      m_thumbnailList = New System.Collections.Generic.List(Of String)
+
+      dupcheckConditionLabel.Text = "Start date: NA, End date: NA."
+
+    End Sub
+
+    ''' <summary>
+    ''' Overloaded constructor for Non FSI and ROP.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Sub New(ByVal retId As Integer, ByVal mktId As Integer, ByVal adDate As DateTime, ByVal mediaList As System.Collections.Generic.List(Of String), ByVal startDate As DateTime, ByVal endDate As DateTime, ByVal languageId As Nullable(Of Integer))
+
+      InitializeComponent()
+
+      m_retId = retId
+      m_mktId = mktId
+      m_adDate = adDate
+      m_mediaText = GetMediaText(mediaList)
+      m_startDate = startDate
+      m_endDate = endDate
+      m_languageId = languageId
+      m_thumbnailList = New System.Collections.Generic.List(Of String)
+
+      If m_startDate = Nothing Then
+        dupcheckConditionLabel.Text = "Start date: NA"
+      Else
+        dupcheckConditionLabel.Text = "Start date: " + m_startDate.ToString("MM/dd/yyyy")
+      End If
+
+      If m_endDate = Nothing Then
+        dupcheckConditionLabel.Text += ", End date: NA."
+      Else
+        dupcheckConditionLabel.Text += ", End date: " + m_endDate.ToString("MM/dd/yyyy")
+      End If
+
+    End Sub
+
+#End Region
+
+
+
+    '''' <summary>
+    '''' Loads image files in thumbnail image list.
+    '''' </summary>
+    '''' <param name="directoryPath"></param>
+    '''' <param name="filterString"></param>
+    '''' <remarks></remarks>
+    'Private Sub ShowThumbnails(ByVal directoryPath As String, ByVal filterString As String)
+    '  Dim filesArray() As String
+
+
+    '  filesArray = System.IO.Directory.GetFiles(directoryPath, filterString)
+
+    '  For i As Integer = 0 To filesArray.Length - 1
+    '    dupCheckThumbnailBrowser.LoadFromFile(filesArray(i), BITsPerPixel, 0, 1)
+    '    With dupCheckThumbnailBrowser.Item(dupCheckThumbnailBrowser.Count - 1)
+    '      .Text = System.IO.Path.GetFileName(filesArray(i))
+    '      .ExtraText = filesArray(i)
+    '    End With
+
+    '    ThumbnailList.Add(filesArray(i))
+    '  Next
+
+    '  filesArray = Nothing
+
+    'End Sub
+
+
+    ''' <summary>
+    ''' Loads image files in thumbnail image list.
+    ''' </summary>
+    ''' <param name="filesArray">String array, containing path to thumbnail page images.</param>
+    ''' <param name="thumbnails">True if array contains path of thumbnails, false otherwise.</param>
+    ''' <remarks></remarks>
+    Private Sub ShowThumbnailsForDebugVersion(ByVal filesArray() As String, ByVal thumbnails As Boolean)
+      Dim notFound, noThumbnail As String
+
+      notFound = "C:\temp\notfound.png" 'System.IO.Path.GetTempFileName()
+      noThumbnail = "C:\temp\nothumbnail.png" 'System.IO.Path.GetTempFileName()
+      Trace.WriteLine(String.Format("Temporary image file locations: NotFound={0}; NoThumbnail={1}", notFound, noThumbnail))
+
+      My.Resources.notfound.Save(notFound)
+      My.Resources.nothumbnail.Save(noThumbnail)
+      Trace.WriteLine("Image files saved successfully.")
+
+      For i As Integer = 0 To filesArray.Length - 1
+        Trace.WriteLine(String.Format("i={0}, file={1}", i, filesArray(i)))
+
+        Try
+          If System.IO.File.Exists(filesArray(i)) = False Then
+            Trace.WriteLine(String.Format("i={0}, file={1}", i, notFound))
+            dupCheckThumbnailBrowser.LoadFromFile(notFound, BITsPerPixel, 0, 1)
+          ElseIf thumbnails = False AndAlso i > 0 Then  'Display first unsized page image.
+
+            Trace.WriteLine(String.Format("i={0}, file={1}", i, noThumbnail))
+            MsgBox(noThumbnail)
+            dupCheckThumbnailBrowser.LoadFromFile(noThumbnail, BITsPerPixel, 0, 1)
+          Else
+            MsgBox(filesArray(i))
+            dupCheckThumbnailBrowser.LoadFromFile(filesArray(i), BITsPerPixel, 0, 1)
+          End If
+
+          With dupCheckThumbnailBrowser.Item(dupCheckThumbnailBrowser.Count - 1)
+            .Text = System.IO.Path.GetFileName(filesArray(i))
+            .ExtraText = filesArray(i)
+          End With
+        Catch ex As Exception
+          Trace.TraceError("DupCheckForm.ShowThumbnails. Message=" + ex.Message, New Object() {"FileArrayLength=", filesArray.Length, "Thumbnails=", thumbnails.ToString(), "i=", i, "File=", filesArray(i)})
+          MessageBox.Show(ex.Message, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        ThumbnailList.Add(filesArray(i))
+      Next
+
+      Trace.WriteLine("Removing temporary files.")
+      If System.IO.File.Exists(notFound) Then System.IO.File.Delete(notFound)
+      If System.IO.File.Exists(noThumbnail) Then System.IO.File.Delete(noThumbnail)
+      Trace.WriteLine("Temporary image files removed successfully.")
+
+      notFound = Nothing
+      noThumbnail = Nothing
+      filesArray = Nothing
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads image files in thumbnail image list.
+    ''' </summary>
+    ''' <param name="filesArray">String array, containing path to thumbnail page images.</param>
+    ''' <param name="thumbnails">True if array contains path of thumbnails, false otherwise.</param>
+    ''' <remarks></remarks>
+    Private Sub ShowThumbnailsForReleaseVersion(ByVal filesArray() As String, ByVal thumbnails As Boolean)
+
+      For i As Integer = 0 To filesArray.Length - 1
+        Trace.WriteLine(String.Format("i={0}, file={1}", i, filesArray(i)))
+
+        Try
+          If System.IO.File.Exists(filesArray(i)) Then
+            dupCheckThumbnailBrowser.LoadFromFile(filesArray(i), BITsPerPixel, 0, 1)
+
+            With dupCheckThumbnailBrowser.Item(dupCheckThumbnailBrowser.Count - 1)
+              .Text = System.IO.Path.GetFileName(filesArray(i))
+              .ExtraText = filesArray(i)
+            End With
+
+            ThumbnailList.Add(filesArray(i))
+          End If
+
+        Catch ex As Exception
+          Trace.TraceError("DupCheckForm.ShowThumbnails. Message=" + ex.Message, New Object() {"FileArrayLength=", filesArray.Length, "Thumbnails=", thumbnails.ToString(), "i=", i, "File=", filesArray(i)})
+          MessageBox.Show(ex.Message, ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+      Next
+
+      System.Array.Clear(filesArray, 0, filesArray.Length)
+      filesArray = Nothing
+
+    End Sub
+
+
+
+    ''' <summary>
+    ''' Loads image files in thumbnail image list.
+    ''' </summary>
+    ''' <param name="filesArray">String array, containing path to thumbnail page images.</param>
+    ''' <param name="thumbnails">True if array contains path of thumbnails, false otherwise.</param>
+    ''' <remarks></remarks>
+    Private Sub ShowThumbnails(ByVal filesArray() As String, ByVal thumbnails As Boolean)
+
+#If DEBUG Then
+      ShowThumbnailsForDebugVersion(filesArray, thumbnails)
+#Else
+      ShowThumbnailsForReleaseVersion(filesArray, thumbnails)
+#End If
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Returns string in XML format based on supplied collection of string.
+    ''' </summary>
+    ''' <param name="mediaList">Collection of media types</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function GetMediaText(ByVal mediaList As System.Collections.Generic.List(Of String)) As String
+      Dim mediaText As System.Text.StringBuilder
+
+
+      mediaText = New System.Text.StringBuilder()
+
+      mediaText.Append("<MediaList>")
+      For i As Integer = 0 To mediaList.Count - 1
+        mediaText.Append("<Media>")
+        mediaText.Append(mediaList(i))
+        mediaText.Append("</Media>")
+      Next
+      mediaText.Append("</MediaList>")
+
+      Return mediaText.ToString()
+
+    End Function
+
+
+#Region " IForm Implementation "
+
+
+    Public Event InitializingForm() Implements IForm.InitializingForm
+    Public Event FormInitialized() Implements IForm.FormInitialized
+
+    Public Event ApplyingUserCredentials() Implements IForm.ApplyingUserCredentials
+    Public Event UserCredentialsApplied() Implements IForm.UserCredentialsApplied
+
+
+    Public Sub ApplyUserCredentials() Implements IForm.ApplyUserCredentials
+
+    End Sub
+
+    Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+      RaiseEvent InitializingForm()
+
+      Me.SuspendLayout()
+
+      Me.StatusMessage = "Loading information. This may take some time. Please wait..."
+
+      Me.FormState = formStatus
+      m_isDuplicate = False
+      m_isOverride = False
+      m_isOverride = False
+
+      m_dupCheckProcessor = New UI.Processors.DupCheck
+      Processor.Initialize()
+
+      LoadAndBindDataGridView(m_mediaText)
+
+      Me.StatusMessage = "Information loaded. Preparing to show information on window."
+
+      SetDataGridView()
+
+      'Me.StatusMessage = "Loading vehicle page images."
+
+      'LoadThumbnailsForDataGridViewRow(0)
+
+      Me.StatusMessage = ""
+
+      Me.ResumeLayout(False)
+
+      RaiseEvent FormInitialized()
+
+    End Sub
+
+
+#End Region
+
+
+    Private Sub LoadPossibleDuplicateFSI(ByVal retailerId As Integer, ByVal marketId As Integer, ByVal adDate As DateTime, ByVal mediaText As String, ByVal languageId As Integer?, ByVal dateRange As Integer)
+
+      Try
+        Processor.LoadPossibleDuplicateFSI(retailerId, marketId, adDate, mediaText, languageId, dateRange)
+      Catch ex As Exception
+        Trace.TraceError("DupCheckForm.LoadPossibleDuplicateFSI. Message=" + ex.Message, New Object() {"RetId=", retailerId, "MktId=", marketId, "Ad date=", adDate, "Media Text=", mediaText, "LanguageId=", languageId, "DateRange=", dateRange})
+        Throw
+      End Try
+
+      If Me.RemoveVehicle > 0 Then
+        Dim tempRow As DupCheckDataSet.mt_proc_GetPossibleDuplicateFSIRow
+
+        tempRow = Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateFSI.FindByVehicleID(Me.RemoveVehicle)
+        If tempRow IsNot Nothing Then
+          tempRow.Delete()
+          Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateFSI.AcceptChanges()
+        End If
+
+        tempRow = Nothing
+      End If
+
+    End Sub
+
+    Private Sub LoadPossibleDuplicateROP(ByVal retailerId As Integer, ByVal marketId As Integer, ByVal publicationId As Integer, ByVal adDate As DateTime, ByVal mediaText As String, ByVal languageId As Integer?, ByVal dateRange As Integer)
+
+      Try
+        Processor.LoadPossibleDuplicateROP(retailerId, marketId, publicationId, adDate, mediaText, languageId, dateRange)
+      Catch ex As Exception
+        Trace.TraceError("DupCheckForm.LoadPossibleDuplicateROP. Message=" + ex.Message, New Object() {"RetId=", retailerId, "MktId=", marketId, "Publication=", publicationId, "Ad date=", adDate, "Media Text=", mediaText, "LanguageId=", languageId, "DateRange=", dateRange})
+        Throw
+      End Try
+
+      If Me.RemoveVehicle > 0 Then
+        Dim tempRow As DupCheckDataSet.mt_proc_GetPossibleDuplicateROPRow
+
+        tempRow = Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateROP.FindByVehicleID(Me.RemoveVehicle)
+        If tempRow IsNot Nothing Then
+          tempRow.Delete()
+          Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateROP.AcceptChanges()
+        End If
+
+        tempRow = Nothing
+      End If
+
+    End Sub
+
+    Private Sub LoadPossibleDuplicateNonFSIROP(ByVal retailerId As Integer, ByVal marketId As Integer, ByVal adDate As DateTime, ByVal mediaText As String, ByVal startDate As DateTime?, ByVal endDate As DateTime?, ByVal languageId As Integer?, ByVal dateRange As Integer)
+
+      Try
+        If startDate.HasValue = False And endDate.HasValue = False Then
+          Processor.LoadPossibleDuplicateNonFSIROP(retailerId, marketId, adDate, mediaText, Nothing, Nothing, languageId, dateRange)
+        ElseIf startDate.HasValue = False Then
+          Processor.LoadPossibleDuplicateNonFSIROP(retailerId, marketId, adDate, mediaText, Nothing, endDate.Value, languageId, dateRange)
+        ElseIf endDate.HasValue = False Then
+          Processor.LoadPossibleDuplicateNonFSIROP(retailerId, marketId, adDate, mediaText, startDate.Value, Nothing, languageId, dateRange)
+        Else
+          Processor.LoadPossibleDuplicateNonFSIROP(retailerId, marketId, adDate, mediaText, startDate.Value, endDate.Value, languageId, dateRange)
+        End If
+      Catch ex As Exception
+        Trace.TraceError("DupCheckForm.LoadPossibleDuplicateNonFSIROP. Message=" + ex.Message, New Object() {"RetId=", retailerId, "MktId=", marketId, "Ad date=", adDate, "Media Text=", mediaText, "Start date=", startDate, "End date=", endDate, "LanguageId=", languageId, "DateRange=", dateRange})
+        Throw
+      End Try
+
+      If Me.RemoveVehicle > 0 Then
+        Dim tempRow As DupCheckDataSet.mt_proc_GetPossibleDuplicateNonFSIROPRow
+
+        tempRow = Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateNonFSIROP.FindByVehicleID(Me.RemoveVehicle)
+        If tempRow IsNot Nothing Then
+          tempRow.Delete()
+          Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateNonFSIROP.AcceptChanges()
+        End If
+
+        tempRow = Nothing
+      End If
+
+    End Sub
+
+    Private Sub LoadAndBindDataGridView(ByVal mediaText As String)
+
+      dupCheckDataGridView.DataSource = Nothing
+
+      If mediaText.ToUpper().IndexOf("FSI") > 0 Then
+        LoadPossibleDuplicateFSI(m_retId, m_mktId, m_adDate, m_mediaText, m_languageId, CType(dateRangeNumericUpDown.Value, Integer))
+        dupCheckDataGridView.DataSource = Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateFSI
+        m_isPossibleDuplicateRecordsFound = (Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateFSI.Count > 0)
+
+      ElseIf mediaText.ToUpper().IndexOf("ROP") > 0 Then
+        LoadPossibleDuplicateROP(m_retId, m_mktId, m_pubId, m_adDate, m_mediaText, m_languageId, CType(dateRangeNumericUpDown.Value, Integer))
+        dupCheckDataGridView.DataSource = Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateROP
+        m_isPossibleDuplicateRecordsFound = (Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateROP.Count > 0)
+
+      Else
+        LoadPossibleDuplicateNonFSIROP(m_retId, m_mktId, m_adDate, m_mediaText, m_startDate, m_endDate, m_languageId, CType(dateRangeNumericUpDown.Value, Integer))
+        dupCheckDataGridView.DataSource = Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateNonFSIROP
+        m_isPossibleDuplicateRecordsFound = (Processor.DupCheckDataSet.mt_proc_GetPossibleDuplicateNonFSIROP.Count > 0)
+      End If
+
+    End Sub
+
+    Private Sub SetDataGridView()
+      Dim columnCounter, columnWidth As Integer
+
+
+      dupCheckDataGridView.Columns("CouponInd").Visible = False
+      dupCheckDataGridView.Columns("CreatedById").Visible = False
+
+      dupCheckDataGridView.Columns("VehicleID").HeaderText = "Vehicle ID"
+      dupCheckDataGridView.Columns("BreakDt").HeaderText = "Ad Date"
+      dupCheckDataGridView.Columns("StartDt").HeaderText = "Start Date"
+      dupCheckDataGridView.Columns("EndDt").HeaderText = "End Date"
+      dupCheckDataGridView.Columns("CreateDt").HeaderText = "Create Date"
+      dupCheckDataGridView.Columns("CreatedBy").HeaderText = "Created By"
+      If dupCheckDataGridView.Columns.Contains("ActualPageCount") Then
+        dupCheckDataGridView.Columns("ActualPageCount").HeaderText = "Pages"
+      Else  'For ROP/Magazine only.
+        dupCheckDataGridView.Columns("CheckInPageCount").HeaderText = "Pages"
+      End If
+
+      columnWidth = dupCheckDataGridView.ClientSize.Width - dupCheckDataGridView.RowHeadersWidth
+      columnCounter = dupCheckDataGridView.Columns("CreatedBy").Index 'Hide all columns after this column.
+      columnWidth \= columnCounter 'To avoid Id columns count.
+      If columnWidth < 100 Then columnWidth = 100
+
+      For columnCounter = 0 To columnCounter  'Hiding columns after CreatedBy
+        dupCheckDataGridView.Columns(columnCounter).Width = columnWidth
+      Next
+
+      For columnCounter = columnCounter To dupCheckDataGridView.ColumnCount - 1
+        dupCheckDataGridView.Columns(columnCounter).Visible = False
+      Next
+
+    End Sub
+
+    Private Sub LoadVehiclePagesThumbnails(ByVal vehicleId As Integer, ByVal createDt As DateTime)
+      Dim isThumbnailAvailable As Boolean = True
+      Dim pageImageFolderPath As String
+
+
+      dupCheckThumbnailBrowser.Clear()
+      ThumbnailList.Clear()
+
+      pageImageFolderPath = VehicleImageFolderPath + "\" + createDt.ToString("yyyyMM") _
+                            + "\" + vehicleId.ToString() + "\" + ThumbSizedPageImageFolderName
+      If System.IO.Directory.Exists(pageImageFolderPath) = False Then
+        isThumbnailAvailable = False
+        pageImageFolderPath = VehicleImageFolderPath + "\" + createDt.ToString("yyyyMM") _
+                              + "\" + vehicleId.ToString() + "\" + UnsizedPageImageFolderName
+      End If
+
+      If System.IO.Directory.Exists(pageImageFolderPath) = False Then
+        imageNotAvailableLabel.Show()
+        pageImageFolderPath = Nothing
+        Exit Sub
+      End If
+
+      If imageNotAvailableLabel.Visible Then imageNotAvailableLabel.Hide()
+
+      'ShowThumbnails(pageImageFolderPath, "*.jpg")
+      Dim thumbnailQuery As System.Collections.Generic.IEnumerable(Of String)
+      thumbnailQuery = From pageRow In Processor.DupCheckDataSet.Page _
+                       Select pageImageFolderPath + "\" + pageRow.ImageName + ".jpg"
+      ShowThumbnails(thumbnailQuery.ToArray(), isThumbnailAvailable)
+      thumbnailQuery = Nothing
+
+      pageImageFolderPath = Nothing
+
+    End Sub
+
+    Private Sub LoadThumbnailsForDataGridViewRow(ByVal rowIndex As Integer)
+      Dim vehicleId As Integer, createDt As DateTime
+
+
+      If Me.dupCheckDataGridView.Rows.Count < 1 OrElse rowIndex < 0 Then Exit Sub
+
+      vehicleId = Me.dupCheckDataGridView.Columns("CreateDt").Index
+      createDt = CType(Me.dupCheckDataGridView.Rows(rowIndex).Cells(vehicleId).Value, DateTime)
+      vehicleId = Me.dupCheckDataGridView.Columns("VehicleId").Index
+      vehicleId = CType(Me.dupCheckDataGridView.Rows(rowIndex).Cells(vehicleId).Value, Integer)
+
+      Try
+        Processor.LoadPageImageInformation(vehicleId)
+        LoadVehiclePagesThumbnails(vehicleId, createDt)
+
+      Catch ex As System.Data.SqlClient.SqlException
+        Trace.TraceError("DupCheckForm.LoadPageImageInformation. Message=" + ex.Message, New Object() {"VehicleId=", vehicleId, "RowIndex=", rowIndex})
+        MessageBox.Show("Can not load Page image information. An error has occurred while loading" _
+                        + " Page image information from database.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Error)
+      Catch ex As Exception
+        Trace.TraceError("DupCheckForm.LoadVehiclePagesThumbnails. Message=" + ex.Message, New Object() {"VehicleId=", vehicleId, "CreateDt=", createDt, "RowIndex=", rowIndex})
+        MessageBox.Show("Can not load Page images. An error has occurred while loading Page images." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+      End Try
+
+    End Sub
+
+    'Public Function NavigateToVehicle(ByVal vehicleId As Integer) As Boolean
+    '  Dim DomainName As String
+    '  Dim URL As System.Text.StringBuilder
+
+
+    '  DomainName = WebDomainName.Replace("http://", "")
+
+    '  URL = New System.Text.StringBuilder
+    '  URL.Append("http://")
+    '  URL.Append(WebDomainUser)
+    '  URL.Append(":")
+    '  URL.Append(WebDomainPassword)
+    '  URL.Append("@")
+    '  URL.Append(DomainName)
+    '  URL.Append("/page21DEAdjacent.asp?Flyer=")
+    '  URL.Append(vehicleId)
+    '  URL.Append("&Page=1")
+
+    '  Try
+    '    Me.Cursor = Cursors.WaitCursor
+    '    Application.DoEvents()
+    '    dupCheckThumbnailBrowser.Navigate(URL.ToString())
+    '    Application.DoEvents()
+    '    NavigateToVehicle = True
+
+    '  Catch ex As System.Exception
+    '    NavigateToVehicle = False
+    '    RaiseEvent OnError(Me, ex)
+
+    '  Finally
+    '    URL = Nothing
+    '    Me.Cursor = Cursors.Default
+
+    '  End Try
+
+    'End Function
+
+    Private Function PrepareURL(ByVal possibleDupRow As System.Data.DataRowView) As String
+      Dim tempDate As DateTime
+      Dim urlText As System.Text.StringBuilder
+
+
+      urlText = New System.Text.StringBuilder()
+
+      'urlText.Append("http://")
+      'urlText.Append(WebDomainUser)
+      'urlText.Append(":")
+      'urlText.Append(WebDomainPassword)
+      'urlText.Append("@")
+      'If WebDomainName.IndexOf("http:") > 0 Then
+      '  urlText.Append(WebDomainName.Replace("http://", ""))
+      'Else
+      '  urlText.Append(WebDomainName)
+      'End If
+      'urlText.Append("/adresultsDE.asp?Call=Dup")
+
+      urlText.Append("adresultsDE.asp?Call=Dup")
+      urlText.Append("&date1=")
+      urlText.Append(System.Web.HttpUtility.UrlEncode(tempDate.ToString("MM/dd/yy")))
+      urlText.Append("&Advertiser=")
+      urlText.Append(System.Web.HttpUtility.UrlEncode(possibleDupRow("Retailer").ToString()))
+      urlText.Append("&Market=")
+      urlText.Append(System.Web.HttpUtility.UrlEncode(possibleDupRow("Market").ToString()))
+      urlText.Append("&SDate=")
+      If possibleDupRow("StartDt").ToString().Length = 0 Then
+        urlText.Append(System.Web.HttpUtility.UrlEncode("__/__/__"))
+      Else
+        urlText.Append(System.Web.HttpUtility.UrlEncode(possibleDupRow("StartDt").ToString()))
+      End If
+      urlText.Append("&EDate=")
+      If possibleDupRow("EndDt").ToString().Length = 0 Then
+        urlText.Append(System.Web.HttpUtility.UrlEncode("__/__/__"))
+      Else
+        urlText.Append(System.Web.HttpUtility.UrlEncode(possibleDupRow("EndDt").ToString()))
+      End If
+
+      Return urlText.ToString()
+
+    End Function
+
+
+
+    Private Sub refreshButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles refreshButton.Click
+
+      RaiseEvent RefreshingPossibleDuplicateRecords()
+
+      'DupCheckProcessor.LoadPossibleDuplicateFSI(m_retId, m_mktId, m_adDate, m_mediaText, CType(dateRangeNumericUpDown.Value, Integer))
+      LoadAndBindDataGridView(m_mediaText)
+      SetDataGridView()
+
+      RaiseEvent PossibleDuplicateRecordsRefreshed()
+
+    End Sub
+
+    Private Sub overrideButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles overrideButton.Click
+      Dim UserResponse As System.Windows.Forms.DialogResult
+
+
+      UserResponse = MessageBox.Show(Me, "I am sure this vehicle is not a duplicate record with these other" _
+                                     + " records.", ProductName, MessageBoxButtons.OKCancel, _
+                                     MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+
+      If UserResponse = DialogResult.OK Then
+        m_isOverride = True
+        Me.DialogResult = DialogResult.OK
+        Me.Close()
+      End If
+
+    End Sub
+
+    Private Sub reviewButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles reviewButton.Click
+      Dim userResponse As System.Windows.Forms.DialogResult
+
+
+      userResponse = MessageBox.Show(Me, "Are you sure you want to mark current vehicle as " _
+                                     + "needing review?", ProductName, MessageBoxButtons.YesNo _
+                                     , MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
+
+      If userResponse = DialogResult.Yes Then
+        m_isReview = True
+        Me.DialogResult = DialogResult.OK
+        Me.Close()
+      End If
+
+    End Sub
+
+    Private Sub clearDuplicateButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles duplicateButton.Click
+      Dim UserResponse As System.Windows.Forms.DialogResult
+
+
+      UserResponse = MessageBox.Show(Me, "Are you sure you want to mark the current vehicle as a duplicate?" _
+                                     , ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question _
+                                     , MessageBoxDefaultButton.Button2)
+
+      If UserResponse = DialogResult.Yes Then
+        m_isDuplicate = True
+        Me.DialogResult = DialogResult.OK
+        Me.Close()
+      End If
+
+    End Sub
+
+    Private Sub showAdButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles showAdButton.Click
+      Dim targetURL As String
+      Dim selectedVehicle As Data.DataRowView
+      Dim bmb As BindingManagerBase
+      Dim showWebsite As WebBrowserForm
+
+
+      Try
+        Me.Cursor = Cursors.WaitCursor
+        bmb = Me.BindingContext(Me.dupCheckDataGridView.DataSource)
+        selectedVehicle = CType(bmb.Current, System.Data.DataRowView)
+        bmb = Nothing
+        targetURL = PrepareURL(selectedVehicle)
+        selectedVehicle = Nothing
+
+        showWebsite = New WebBrowserForm
+        showWebsite.Navigate(targetURL)
+        Application.DoEvents()
+        showWebsite.ShowDialog(Me)
+        Application.DoEvents()
+        showWebsite.Dispose()
+
+      Catch ex As System.Exception
+        Trace.TraceError("DupCheckForm.showAdButton_Click. Message=" + ex.Message, New Object() {"targetURL=", targetURL})
+        MessageBox.Show(Me, "Unknown error has occured while loading ad page. Unable to load the ad page." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+      Finally
+        showWebsite = Nothing
+        targetURL = Nothing
+        Me.Cursor = Cursors.Default
+      End Try
+
+    End Sub
+
+    Private Sub printButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles printButton.Click
+      Dim selectedVehicle As Data.DataRowView
+      Dim bmb As BindingManagerBase
+
+
+#If DEBUG Then
+
+      If MessageBox.Show("Do you want to print?", Application.ProductName, MessageBoxButtons.YesNo _
+                         , MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) = DialogResult.No _
+      Then
+        Exit Sub
+      End If
+
+#End If
+
+      bmb = Me.BindingContext(Me.dupCheckDataGridView.DataSource)
+      selectedVehicle = CType(bmb.Current, System.Data.DataRowView)
+      bmb = Nothing
+
+      Try
+        Processor.PrintBarcode(selectedVehicle)
+      Catch ex As Exception
+        Trace.TraceError("DupCheckForm.PrintBarcode. Message=" + ex.Message, New Object() {"DataRow=", selectedVehicle})
+        MessageBox.Show("An error has occurred while printing barcode label.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Error)
+      End Try
+
+      selectedVehicle = Nothing
+    End Sub
+
+    Private Sub dupCheckDataGridView_RowEnter _
+        (ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) _
+        Handles dupCheckDataGridView.RowEnter
+
+      LoadThumbnailsForDataGridViewRow(e.RowIndex)
+
+    End Sub
+
+    Private Sub dupCheckThumbnailBrowser_ItemSelected _
+        (ByVal sender As Object, ByVal e As AxLEADImgListLib._LEADImgListEvents_ItemSelectedEvent) _
+        Handles dupCheckThumbnailBrowser.ItemSelected
+      Dim selectedIndex As Integer
+      Dim imagePath As String
+      Dim imgViewer As UI.Controls.ImageViewerForm = New UI.Controls.ImageViewerForm()
+
+
+      selectedIndex = e.nIndex
+
+      If selectedIndex < 0 Then Exit Sub
+
+      If ThumbnailList(selectedIndex).Contains("\" + ThumbSizedPageImageFolderName + "\") Then
+        imagePath = ThumbnailList(selectedIndex).Replace("\" + ThumbSizedPageImageFolderName + "\", "\" + UnsizedPageImageFolderName + "\")
+      Else
+        imagePath = ThumbnailList(selectedIndex)
+      End If
+
+      imgViewer.LoadImage(imagePath)
+      imgViewer.Show(Me)
+
+      imagePath = Nothing
+      imgViewer = Nothing
+
+    End Sub
+
+
+  End Class
+
+End Namespace

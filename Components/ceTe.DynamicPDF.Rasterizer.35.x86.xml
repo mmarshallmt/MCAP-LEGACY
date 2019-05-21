@@ -1,0 +1,1365 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ceTe.DynamicPDF.Rasterizer.35.x86</name>
+    </assembly>
+    <members>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.BitmapColorFormat">
+            <summary>
+            Specifies Bitmap color formats.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.BitmapColorFormat.Grayscale">
+            <summary>
+            Color format Grayscale.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.BitmapColorFormat.Monochrome">
+            <summary>
+            Color format Monochrome.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.BitmapColorFormat.Rgb">
+            <summary>
+            Color format RGB.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.BitmapColorFormat.RgbA">
+            <summary>
+            Color format Rgb with Alpha.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.BmpColorFormat">
+            <summary>
+            Specifies BMP color formats.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.BmpColorFormat.Monochrome">
+            <summary>
+            Monochrome color format.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.BmpColorFormat.Rgb">
+            <summary>
+            RGB color format.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.BmpImageFormat">
+             <summary>
+             Represents a BMP image format.
+             </summary>
+             <example>This example demonstrates how to rasterize a PDF document to BMP images.<p/>
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+             	Sub Main()
+                 
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf")
+            
+                      ' Create a BmpImageFormat object.
+                     Dim bmpImageFormat As BmpImageFormat = New BmpImageFormat(BmpColorFormat.Rgb)
+            
+                     ' Save the image.
+                     rasterizer.Draw("Output.bmp", bmpImageFormat, ImageSize.Dpi72)
+             		
+             	End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+            
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+            
+                     // Create a BmpImageFormat object.
+                     BmpImageFormat bmpImageFormat = new BmpImageFormat(BmpColorFormat.Rgb);
+            
+                     // Save the image.
+                     rasterizer.Draw("Output.bmp", bmpImageFormat, ImageSize.Dpi72);
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.ImageFormat">
+            <summary>
+            Base class that represents an image format. 
+            <remarks>
+            ImageFormat's derived classes are: <see cref="T:ceTe.DynamicPDF.Rasterizer.BmpImageFormat"/>, <see cref="T:ceTe.DynamicPDF.Rasterizer.GifImageFormat"/>, <see cref="T:ceTe.DynamicPDF.Rasterizer.JpegImageFormat"/>, <see cref="T:ceTe.DynamicPDF.Rasterizer.PngImageFormat"/> and <see cref="T:ceTe.DynamicPDF.Rasterizer.TiffImageFormat"/>. See the <a href="DynamicPDFRasterizerProgrammingWithOutputImageFormat.html">Output Image Format</a> topic for more on Image Formats.
+            </remarks>
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageFormat.Jpeg">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.JpegImageFormat"/> class.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageFormat.Bmp">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.BmpImageFormat"/> class.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageFormat.Gif">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.GifImageFormat"/> class.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageFormat.Png">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.PngImageFormat"/> class.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageFormat.TiffWithCcitGroup3">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.TiffImageFormat"/> class with CCIT Group 3 compression specified.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageFormat.TiffWithCcitGroup4">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.TiffImageFormat"/> class with CCIT Group 4 compression specified.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageFormat.TiffWithLzw">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.TiffImageFormat"/> class with JPEG compression specified.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageFormat.AntiAliasing">
+             <summary>
+             Gets or sets boolean value to turn off or on antialiasing.
+             </summary>
+             <remarks>
+             By default anti-aliasing is turned on . Set AntiAliasing property to false to turn off anti-aliasing. 
+             </remarks>
+             <example>This example demonstrates how to turn off/On anti aliasing.<p/> 
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+                 Sub Main()
+             
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf")
+            
+                     ' Create a PngImageFormat object.
+                     Dim pngImageFormat As PngImageFormat = New PngImageFormat(PngColorFormat.Rgb)
+                     pngImageFormat.AntiAliasing = false
+             
+                     ' Save the image.
+                     rasterizer.Draw("Output.png", pngImageFormat, ImageSize.Dpi72)   
+            
+                 End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+             
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+             
+                     // Create a PngImageFormat object.
+                     PngImageFormat pngImageFormat = new PngImageFormat(PngColorFormat.Rgb);
+                     pngImageFormat.AntiAliasing = false;
+            
+                     // Save the image.
+                     rasterizer.Draw("Output.png", pngImageFormat, ImageSize.Dpi72);
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.BmpImageFormat.#ctor(ceTe.DynamicPDF.Rasterizer.BmpColorFormat)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.BmpImageFormat"/> class.
+            </summary>
+            <param name="colorFormat">Format of the BMP image.</param>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.BmpImageFormat.ColorFormat">
+            <summary>
+            Gets or sets the BMP color format.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.DpiImageSize">
+             <summary>
+             Represents a DPI image size.
+             </summary>
+             <example>This example demonstrates how to rasterize a pdf document to a specific DPI.<p/>
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+             	Sub Main()
+                 
+                     ' Create PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf") 
+            
+                     ' Create a PngImageFormat object.
+                     Dim pngImageFormat As PngImageFormat = New PngImageFormat(PngColorFormat.Rgb)
+              
+                     ' Create a ImageSize object.
+                     Dim ImageSize As DpiImageSize = New DpiImageSize(72.0F, 72.0F)
+            
+                     ' Save the image.
+                     rasterizer.Draw("Output.png", pngImageFormat, ImageSize)
+             		
+             	End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+             
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+            
+                     // Create a PngImageFormat object.
+                     PngImageFormat pngImageFormat = new PngImageFormat(PngColorFormat.Rgb);
+             
+                     // Create a ImageSize object.
+                     DpiImageSize imagesize = new DpiImageSize(72.0f, 72.0f);
+            
+                     // Save the image.
+                     rasterizer.Draw("Output.png", pngImageFormat, imagesize);
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.ImageSize">
+            <summary>
+            Base class which represents an image size.
+            <remarks>
+            ImageSize's derived classes are: <see cref="T:ceTe.DynamicPDF.Rasterizer.DpiImageSize"/>, <see cref="T:ceTe.DynamicPDF.Rasterizer.FixedImageSize"/>, <see cref="T:ceTe.DynamicPDF.Rasterizer.MaxImageSize"/> and <see cref="T:ceTe.DynamicPDF.Rasterizer.PercentageImageSize"/>. See the <a href="DynamicPDFRasterizerProgrammingWithOutputImageSize.html">Output Image Size</a> topic for more on Image Sizes.
+            </remarks>
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageSize.HorizontalDpi">
+            <summary>
+            Gets or sets the horizontal DPI of an image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageSize.VerticalDpi">
+            <summary>
+            Gets or sets the vertical DPI of an image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageSize.Dpi72">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.DpiImageSize"/> class set to 72 DPI.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageSize.Dpi96">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.DpiImageSize"/> class set to 96 DPI.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageSize.Dpi150">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.DpiImageSize"/> class set to 150 DPI.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageSize.Dpi300">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.DpiImageSize"/> class set to 300 DPI.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageSize.Dpi600">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.DpiImageSize"/> class set to 600 DPI.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageSize.FaxStandard">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.DpiImageSize"/> class set to the standard fax DPI.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageSize.FaxFine">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.DpiImageSize"/> class set to the fine fax DPI.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.ImageSize.FaxSuperfine">
+            <summary>
+            Gets a default <see cref="T:ceTe.DynamicPDF.Rasterizer.DpiImageSize"/> class set to the super fine fax DPI.
+            </summary>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.DpiImageSize.#ctor(System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.DpiImageSize"/> class.
+            </summary>
+            <param name="horizontalDpi">Horizontal DPI of the image.</param>
+            <param name="verticalDpi">Vertical DPI of the image.</param>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.DpiImageSize.HorizontalDpi">
+            <summary>
+            Gets or sets the horizondal DPI of the image. 
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.DpiImageSize.VerticalDpi">
+            <summary>
+            Gets or sets the vertical DPI of the image.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.FixedImageSize">
+             <summary>
+             Represents a fixed image size.
+             </summary>
+             <example>This example demonstrates how to rasterize a PDF document to a fixed image size.<p/>
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+                 Sub Main()
+            
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf")
+            
+                     ' Create a JpegImageFormat object.
+                     Dim jpegImageFormat As JpegImageFormat = New JpegImageFormat(90)
+                
+                     ' Create a FixedImageSize object.
+                     Dim fixedImageSize As FixedImageSize = New FixedImageSize(50.0F, 50.0F)
+            
+                     ' Save the image.
+                     rasterizer.Draw("Output.jpg", jpegImageFormat, fixedImageSize)
+            
+                 End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+             
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+                        
+                     // Create a JpegImageFormat object.
+                     JpegImageFormat jpegImageFormat = new JpegImageFormat(90);
+                         
+                     // Create a FixedImageSize object.
+                     FixedImageSize fixedImageSize = new FixedImageSize(50.0f, 50.0f);
+            
+                     // Save the image.
+                     rasterizer.Draw("Output.jpg", jpegImageFormat, fixedImageSize);
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.FixedImageSize.#ctor(System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.FixedImageSize"/> class.
+            </summary>
+            <param name="width">Width of the image.</param>
+            <param name="height">Height of the image.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.FixedImageSize.#ctor(System.Single,System.Single,ceTe.DynamicPDF.Rasterizer.UnitType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.FixedImageSize"/> class.
+            </summary>
+            <param name="width">Width of the image.</param>
+            <param name="height">Height of the image.</param>
+            <param name="units">Unit type of the image.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.FixedImageSize.#ctor(System.Single,System.Single,System.Single,System.Single,ceTe.DynamicPDF.Rasterizer.UnitType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.FixedImageSize"/> class.
+            </summary>
+            <param name="width">Width of the image.</param>
+            <param name="height">Height of the image.</param>
+            <param name="horizontalDpi">Horizondal dpi of the image.</param>
+            <param name="verticalDpi">Vertical dpi of the image.</param>
+            <param name="units">Unit type of the image.</param>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.FixedImageSize.Width">
+            <summary>
+            Gets or sets width of the image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.FixedImageSize.Height">
+            <summary>
+            Gets or sets height of the image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.FixedImageSize.UnitType">
+            <summary>
+            Gets or sets unit type of the image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.FixedImageSize.HorizontalDpi">
+            <summary>
+            Gets or sets horizontal DPI of the image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.FixedImageSize.VerticalDpi">
+            <summary>
+            Gets or sets vertical DPI of the image.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.GifImageFormat">
+             <summary>
+             Represents a GIF image format.
+             </summary>
+             <example>This example demonstrates how to rasterize a PDF document to GIF images.<p/> 
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+                 Sub Main()
+            
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf")
+            
+                     ' Save the image.
+                     rasterizer.Draw("Output.gif", ImageFormat.Gif, ImageSize.Dpi72)
+            
+                 End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+             
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+             
+                     // Save the image.
+                     rasterizer.Draw("Output.gif", ImageFormat.Gif, ImageSize.Dpi72);
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.GifImageFormat.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.GifImageFormat"/> class.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.InputPdf">
+             <summary>
+             Represents an input PDF.
+             </summary>
+             <example>This example demonstrates how to rasterize a PDF document to JPEG.<p/> 
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+                 Sub Main()
+            
+                     ' Create a InputPdf object.
+                     Dim input As InputPdf = New InputPdf("InputPdfFile.pdf")
+            
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer(input)
+            
+                     ' Create a JpegImageFormat object.
+                     Dim jpegImageFormat As JpegImageFormat = New JpegImageFormat(80)
+            
+                     ' Save the image.
+                     rasterizer.Draw("Output.jpg", jpegImageFormat, ImageSize.Dpi72)
+            
+                 End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+            
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a InputPdf object.
+                     InputPdf input = new InputPdf("InputPdfFile.pdf");
+            
+                     // Create a PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer(input);
+                         
+                     // Create a JpegImageFormat object.
+                     JpegImageFormat jpegImageFormat = new JpegImageFormat(80);
+            
+                     // Save the image.
+                     rasterizer.Draw("Output.jpg", jpegImageFormat,ImageSize.Dpi72);
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdf.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.InputPdf"/> class.
+            </summary>
+            <param name="fileName">Physical file path of the PDF.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdf.#ctor(System.IO.Stream)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.InputPdf"/> class.
+            </summary>
+            <param name="stream"><see cref="T:System.IO.Stream"/>containing the PDF data.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdf.#ctor(System.Byte[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.InputPdf"/> class.
+            </summary>
+            <param name="pdfData">Byte array of the input PDF data.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdf.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.InputPdf"/> class.
+            </summary>
+            <param name="fileName">Physical file path of the PDF.</param>
+            <param name="password">Password to open the PDF file.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdf.#ctor(System.IO.Stream,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.InputPdf"/> class.
+            </summary>
+            <param name="stream"><see cref="T:System.IO.Stream"/>containing the PDF data.</param>
+            <param name="password">Password to open the PDF file. </param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdf.#ctor(System.Byte[],System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.InputPdf"/> class.
+            </summary>
+            <param name="pdfData">Byte array of the input PDF data. </param>
+            <param name="password">Password to open the PDF file.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdf.Finalize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdf.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.InputPdf.Pages">
+            <summary>
+            Gets the <see cref="T:ceTe.DynamicPDF.Rasterizer.InputPdfPageList"/> containing the pages of the input PDF.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.InputPdfPage">
+            <summary>
+            Represents a page in an input PDF.
+            </summary>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdfPage.Finalize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdfPage.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.InputPdfPage.Width">
+            <summary>
+            Gets the width of the page in points.
+            </summary> 
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.InputPdfPage.Height">
+            <summary>
+            Gets the height of the page in points.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.InputPdfPageList">
+            <summary>
+            Represents a list of input PDF pages.
+            </summary>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdfPageList.Finalize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.InputPdfPageList.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.InputPdfPageList.Count">
+            <summary>
+            Gets the number of pages in the list.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.InputPdfPageList.Item(System.Int32)">
+            <summary>
+            Gets a page by index.
+            </summary>
+            <param name="index">The index of the page.</param>
+            <returns>Returns a <see ref="InputPdfPage"/>.</returns>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.JpegImageFormat">
+             <summary>
+             Represents a JPEG image format.
+             </summary>
+             <example>This example demonstrates how to draw a PDF document to a JPEG images.<p/> 
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+                 Sub Main()
+            
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf")
+            
+                     ' Create a JpegImageFormat.
+                     Dim jpegImageFormat As JpegImageFormat = New JpegImageFormat(80)
+            
+                     ' Save the image.
+                     rasterizer.Draw("Output.jpg", jpegImageFormat, ImageSize.Dpi72)
+            
+                 End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+             
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+                        
+                     // Create a JpegImageFormat.
+                     JpegImageFormat jpegImageFormat = new JpegImageFormat(80);    
+            
+                     // Save the image.
+                     rasterizer.Draw("Output.jpg", jpegImageFormat, ImageSize.Dpi72);
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.JpegImageFormat.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.JpegImageFormat"/> class.
+            </summary>
+            <param name="quality">Quality of the jpeg image.</param>
+            <remarks> The value ranges from 0 to 100,where 0 indicates highly compressed and low quality and 100 indicates high quality and less compressed image. 
+            </remarks>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.JpegImageFormat.Quality">
+            <summary>
+            Gets or sets of the image quality.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.LicensingException">
+            <summary>
+            Represents a licensing exception.
+            </summary>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.LicensingException.#ctor(System.String)">
+            <summary>Initializes a new instance of LicensingException</summary>
+            <param name="message">Message for the licensing exception</param>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.MaxImageSize">
+             <summary>
+             Represents a maximum image size.
+             </summary>
+             <remarks>
+             Maintains the aspect ratio of the image. 
+             </remarks>
+             <example>This example demonstrates how to rasterize a PDF document to the maximum size while maintaining its aspect ratio.<p/> 
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+                 Sub Main()
+            
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf")
+            
+                     ' Create a JpegImageFormat object.
+                     Dim jpegImageFormat As JpegImageFormat = New JpegImageFormat(90)
+            
+                     ' Create a MaxImageSize object.
+                     Dim maxImageSize As MaxImageSize = New MaxImageSize(80.0F, 40.0F)
+            
+                     ' Save the image.
+                     rasterizer.Draw("Output.jpg", jpegImageFormat, maxImageSize)
+            
+                 End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+             
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a PdfRasterizer object
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+                         
+                     // Create a JpegImageFormat object.
+                     JpegImageFormat jpegImageFormat =  new JpegImageFormat(90);
+                        
+                     // Create a MaxImageSize object.
+                     MaxImageSize maxImageSize = new MaxImageSize(80.0f, 40.0f);
+             
+                     // Save the image.
+                     rasterizer.Draw("Output.jpg",jpegImageFormat,maxImageSize);
+                 }
+             }
+             </code>
+             </example> 
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.MaxImageSize.#ctor(System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.MaxImageSize"/> class.
+            </summary>
+            <param name="maxWidth">Maximum width of the image.</param>
+            <param name="maxHeight">Maximum height of the image.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.MaxImageSize.#ctor(System.Single,System.Single,ceTe.DynamicPDF.Rasterizer.UnitType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.MaxImageSize"/> class.
+            </summary>
+            <param name="maxWidth">Maximum width of the image.</param>
+            <param name="maxHeight">Maximum height of the image.</param>
+            <param name="units"></param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.MaxImageSize.#ctor(System.Single,System.Single,System.Single,System.Single,ceTe.DynamicPDF.Rasterizer.UnitType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.MaxImageSize"/> class.
+            </summary>
+            <param name="maxWidth">Maximum width of the image.</param>
+            <param name="maxHeight">Maximum height of the image.</param>
+            <param name="horizontalDpi">Horizondal dpi of the image.</param>
+            <param name="verticalDpi">Vertical dpi of the image.</param>
+            <param name="units"></param>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.MaxImageSize.MaxWidth">
+            <summary>
+            Gets or sets maximum width of the image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.MaxImageSize.MaxHeight">
+            <summary>
+            Gets or sets maximum height of the image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.MaxImageSize.HorizontalDpi">
+            <summary>
+            Gets or sets horizontal DPI of the image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.MaxImageSize.VerticalDpi">
+            <summary>
+            Gets or sets vertical DPI of the image.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.PdfRasterizer">
+             <summary>
+             Represents a PDF rasterizer.
+             </summary>
+             <example>This example demonstrates how to rasterize a PDF document.<p/> 
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+                 Sub Main()
+            
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf")
+            
+                     ' Save the image.
+                     rasterizer.DrawToMultiPageTiff("Output.tif", TiffImageFormat.TiffWithLzw, ImageSize.Dpi72)
+            
+                 End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+             
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+                         
+                     // Save the image.
+                     rasterizer.DrawToMultiPageTiff("Output.tif", TiffImageFormat.TiffWithLzw, ImageSize.Dpi72);
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.PdfRasterizer"/> class.
+            </summary>
+            <param name="filePath">Physical file path of the PDF to rasterize.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.#ctor(ceTe.DynamicPDF.Rasterizer.InputPdf)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.PdfRasterizer"/> class.
+            </summary>
+            <param name="inputPdf">Represents an input PDF to rasterize.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.#ctor(System.String,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.PdfRasterizer"/> class.
+            </summary>
+            <param name="filePath">Physical file path of the PDF to rasterize.</param>
+            <param name="startPageNumber">Starting page number of the PDF to rasterize.</param>
+            <param name="pageCount">Total page count of the PDF to rasterize.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.#ctor(ceTe.DynamicPDF.Rasterizer.InputPdf,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.PdfRasterizer"/> class.
+            </summary>
+            <param name="inputPdf">Represents an input PDF to rasterize.</param>
+            <param name="startPageNumber">Starting page number of the PDF to rasterize.</param>
+            <param name="pageCount">Total page count of the PDF to rasterize.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.AddLicense(System.String)">
+            <summary>
+            Adds a license key.
+            </summary>
+            <param name="licenseKey">The license key to add.</param>
+            <returns>A boolean value indicating if the license is valid.</returns>
+            <remarks>This method accepts a license key, not a serial number.</remarks>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.Append(System.String)">
+            <summary>
+            Append the entire PDF document to the list of pages to rasterize.
+            </summary>
+            <param name="filePath">Physical file path of the PDF to rasterize. </param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.Append(ceTe.DynamicPDF.Rasterizer.InputPdf)">
+            <summary>
+            Append the entire PDF document to the list of pages to rasterize.
+            </summary>
+            <param name="inputPdf">Represents an input PDF to rasterize.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.Append(System.String,System.Int32,System.Int32)">
+            <summary>
+            Append the entire PDF document to the list of pages to rasterize.
+            </summary>
+            <param name="filePath">Physical file path of the Pdf </param>
+            <param name="startPageNumber">Starting page number of the PDF to rasterize.</param>
+            <param name="pageCount">Total page count of the PDF to rasterize.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.Append(ceTe.DynamicPDF.Rasterizer.InputPdf,System.Int32,System.Int32)">
+            <summary>
+            Append the entire the pages of the pdf document to the PdfRasterizerPageList.
+            </summary>
+            <param name="inputPdf">Represents an input PDF to rasterize.</param>
+            <param name="startPageNumber">Starting page number of the PDF to rasterize.</param>
+            <param name="pageCount">Total page count of the PDF to rasterize.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.Draw(ceTe.DynamicPDF.Rasterizer.ImageFormat,ceTe.DynamicPDF.Rasterizer.ImageSize)">
+            <summary>
+            Rasterizes all pages in the page list to an array of byte arrays containing the image data. 
+            </summary>
+            <param name="imageFormat">Represents the image format to use.</param>
+            <param name="imageSize">Represents image size to use. </param>
+            <returns>Returns the array of byte arrays containing the image data.</returns>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.Draw(System.String,ceTe.DynamicPDF.Rasterizer.ImageFormat,ceTe.DynamicPDF.Rasterizer.ImageSize)">
+            <summary>
+            Rasterizes all pages in the page list to an image and stores the image to the given filename.
+            </summary>
+            <param name="fileName">Pysical file path of the image.</param>
+            <param name="imageFormat">Represents the image format to use.</param>
+            <param name="imageSize">Represents image size to use. </param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.DrawToMultiPageTiff(System.String,ceTe.DynamicPDF.Rasterizer.TiffImageFormat,ceTe.DynamicPDF.Rasterizer.ImageSize)">
+            <summary>
+            Rasterizes all pages in the page list to an multi-page TIFF image and stores it to the given filename.
+            </summary>
+            <param name="fileName">Pysical filepath of the image.</param>
+            <param name="tiffImageFormat">Represents the TIFF image format to use.</param>
+            <param name="imageSize">Represents image size to use. </param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.DrawToMultiPageTiff(ceTe.DynamicPDF.Rasterizer.TiffImageFormat,ceTe.DynamicPDF.Rasterizer.ImageSize)">
+            <summary>
+            Rasterizes all pages in the page list to an multi-page TIFF image and returns it as a byte array.
+            </summary>
+            <param name="tiffImageFormat">Represents the TIFF image format to use.</param>
+            <param name="imageSize">Represents image size to use. </param>
+            <returns></returns>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.DrawToMultiPageTiff(System.IO.Stream,ceTe.DynamicPDF.Rasterizer.TiffImageFormat,ceTe.DynamicPDF.Rasterizer.ImageSize)">
+            <summary>
+            Rasterizes all pages in the page list to an multi-page TIFF image and stores it to the given stream.
+            </summary>
+            <param name="stream"><see cref="T:System.IO.Stream"/>containing the Pdf data.</param>
+            <param name="tiffImageFormat">Represents the TIFF image format to use.</param>
+            <param name="imageSize">Represents image size to use. </param>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.PdfRasterizer.Pages">
+            <summary>
+            Gets the <see cref="T:ceTe.DynamicPDF.Rasterizer.PdfRasterizerPageList"/> containing the pages to rasterize.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.PdfRasterizerException">
+            <summary>
+            Represents a PdfRasterizerException
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.PdfRasterizerPage">
+             <summary>
+             Represents a page of the PDF rasterizer.
+             </summary>
+             <example>This example demonstrates how to rasterize a PDF document to one JPEG image for each page.<p/> 
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+                 Sub Main()
+             
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf")
+            
+                     ' Create a JpegImageFormat object.
+                     Dim jpegImageFormat As JpegImageFormat = New JpegImageFormat(80)
+            
+                     ' Save the image.
+                     Dim i As Integer
+                     For i = 0 To rasterizer.Pages.Count - 1
+                         rasterizer.Pages(i).Draw("Output" + i.ToString() + ".jpg", jpegImageFormat, ImageSize.Dpi72)
+                     Next
+             
+                 End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+             
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+                        
+                     // Create a JpegImageFormat object.
+                     JpegImageFormat jpegImageFormat = new JpegImageFormat(80);
+                         
+                     // Save the image.
+                     for (int i = 0; i &lt; rasterizer.Pages.Count; i++)
+                     {
+                         rasterizer.Pages[i].Draw("Output"+i+".jpg", jpegImageFormat, ImageSize.Dpi72);
+                     }
+                 }
+             }
+             </code>
+             </example> 
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizerPage.Draw(ceTe.DynamicPDF.Rasterizer.ImageFormat,ceTe.DynamicPDF.Rasterizer.ImageSize)">
+            <summary>
+            Rasterizes the page to a byte array containing the image data.
+            </summary>
+            <param name="imageFormat">Represents the image format to use.</param>
+            <param name="imageSize">Represents the image size to use.</param>
+            <returns>Returns a byte array containing the image data.</returns>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizerPage.Draw(System.String,ceTe.DynamicPDF.Rasterizer.ImageFormat,ceTe.DynamicPDF.Rasterizer.ImageSize)">
+            <summary>
+            Rasterizes the page to an image and stores it to the given file path.
+            </summary>
+            <param name="filePath">Physical file path of the image.</param>
+            <param name="imageFormat">Represents the image format to use.</param>
+            <param name="imageSize">Represents the image size to use.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizerPage.Draw(System.IO.Stream,ceTe.DynamicPDF.Rasterizer.ImageFormat,ceTe.DynamicPDF.Rasterizer.ImageSize)">
+            <summary>
+            Rasterizes the page to an image and stores it to the given stream.
+            </summary>
+            <param name="stream">The <see cref="T:System.IO.Stream"/> containing the Pdf data. </param>
+            <param name="imageFormat">Represents the image format to use.</param>
+            <param name="imageSize">Represents the image size to use.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizerPage.DrawToBitmap(ceTe.DynamicPDF.Rasterizer.BitmapColorFormat,ceTe.DynamicPDF.Rasterizer.ImageSize)">
+            <summary>
+            Rasterizes the page and returns it as a <see cref="T:System.Drawing.Bitmap"/> object containing the image data.
+            </summary>
+            <param name="colorFormat">Represents the color format to use for the Bitmap.</param>
+            <param name="imageSize">Represents the image size to use.</param>
+            <returns>Returns a <see cref="T:System.Drawing.Bitmap"/> contain the image data.</returns>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PdfRasterizerPage.DrawToBitmap(ceTe.DynamicPDF.Rasterizer.BitmapColorFormat,ceTe.DynamicPDF.Rasterizer.ImageSize,System.Boolean)">
+            <summary>
+            Rasterizes the page and returns it as a <see cref="T:System.Drawing.Bitmap"/> object containing the image data.
+            </summary>
+            <param name="colorFormat">Represents the color format to use for the Bitmap.</param>
+            <param name="imageSize">Represents the image size to use.</param>
+            <param name="isAntiAliasing">Set false if anti-aliasing to be turned off.</param>
+            <returns>Returns a <see cref="T:System.Drawing.Bitmap"/> contain the image data.</returns>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.PdfRasterizerPageList">
+            <summary>
+            Represents a list of pages to rasterize.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.PdfRasterizerPageList.Item(System.Int32)">
+            <summary>
+            Gets a page by index.
+            </summary>
+            <param name="pageNumber">Index of the page.</param>
+            <returns></returns>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.PdfRasterizerPageList.Count">
+            <summary>
+            Gets the number of pages in page list.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.PercentageImageSize">
+             <summary>
+             Represents a percentage image size.
+             </summary>
+             <remarks>
+             Specifies PercentageImageSize as a single parameter horizontal percentage and vertical percentage is same value. 
+             </remarks>
+             <example>This example demonstartes how to rasterize a PDF document with a given percentage of its original size.<p/> 
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+                 Sub Main()
+             
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf")
+            
+                     ' Create a PercentageImageSize object.
+                     Dim percentageImageSize As PercentageImageSize = New PercentageImageSize(25)
+            
+                     ' Save the image.
+                     rasterizer.Draw("Output.gif", ImageFormat.Gif, percentageImageSize)  
+            
+                 End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+             
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+                         
+                     // Create a PercentageImageSize object.
+                     PercentageImageSize percentageImageSize = new PercentageImageSize(25); 
+            
+                     // Save the image.
+                     rasterizer.Draw("Output.gif", ImageFormat.Gif, percentageImageSize);
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PercentageImageSize.#ctor(System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.PercentageImageSize"/> class.
+            </summary>
+            <param name="percentage">Percentage of the original image.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PercentageImageSize.#ctor(System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.PercentageImageSize"/> class.
+            </summary>
+            <param name="horizontalPercentage">Horizontal percentage of the image.</param>
+            <param name="verticalPercentage">Vertical percentage of the image.</param>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PercentageImageSize.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.PercentageImageSize"/> class.
+            </summary>
+            <param name="horizontalPercentage">Horizontal percentage of the image.</param>
+            <param name="verticalPercentage">Vertical percentage of the image.</param>
+            <param name="horizontalDpi">Horizondal DPI of the image.</param>
+            <param name="verticalDpi">Vertical DPI of the image.</param>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.PercentageImageSize.HorizontalPercentage">
+            <summary>
+            Get or sets horizontal percentage of the image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.PercentageImageSize.VerticalPercentage">
+            <summary>
+            Gets or sets vertical percentage of the image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.PercentageImageSize.HorizontalDpi">
+            <summary>
+            Gets or sets horizontal DPI of the image.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.PercentageImageSize.VerticalDpi">
+            <summary>
+            Gets or sets vertical DPI of the image.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.PngColorFormat">
+            <summary>
+            Specifies PNG color formats.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.PngColorFormat.Rgb">
+            <summary>
+            Color format RGB.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.PngColorFormat.RgbA">
+            <summary>
+            Color format Rgb with Alpha.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.PngColorFormat.Grayscale">
+            <summary>
+            Color format Grayscale.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.PngImageFormat">
+             <summary>
+             Represents a PNG image format.
+             </summary>
+             <example>This example demonstrates how to rasterize a PDF document to PNG.<p/> 
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+                 Sub Main()
+             
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf")
+            
+                     ' Create a PngImageFormat object.
+                     Dim pngImageFormat As PngImageFormat = New PngImageFormat(PngColorFormat.Rgb)
+            
+                     ' Save the image.
+                     rasterizer.Draw("Output.png", pngImageFormat, ImageSize.Dpi72)   
+            
+                 End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+             
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+             
+                     // Create a PngImageFormat object.
+                     PngImageFormat pngImageFormat = new PngImageFormat(PngColorFormat.Rgb);
+            
+                     // Save the image.
+                     rasterizer.Draw("Output.png", pngImageFormat, ImageSize.Dpi72);
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.PngImageFormat.#ctor(ceTe.DynamicPDF.Rasterizer.PngColorFormat)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ceTe.DynamicPDF.Rasterizer.PngImageFormat"/> class.  
+            </summary>
+            <param name="colorFormat">Color format of the PNG image.</param>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.PngImageFormat.ColorFormat">
+            <summary>
+            Gets or sets the PNG color format.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.TiffColorFormat">
+            <summary>
+            Specifies TIFF color formats.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.TiffColorFormat.Monochrome">
+            <summary>
+            Monochrome color format.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.TiffColorFormat.Rgb">
+            <summary>
+            RGB color format.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.TiffColorFormat.RgbA">
+            <summary>
+            RGB with Alpha color format.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.TiffColorFormat.Grayscale">
+            <summary>
+            Grayscale Color format.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.TiffCompression">
+            <summary>
+            Specifies TIFF compression formats. 
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.TiffCompression.CcitGroup3">
+            <summary>
+            Compression of type CCIT Group3.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.TiffCompression.CcitGroup4">
+            <summary>
+            Compression of type CCIT Group4.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.TiffCompression.Lzw">
+            <summary>
+            Compression of type LZW.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.TiffImageFormat">
+             <summary>
+             Represents a TIFF image format
+             </summary>
+             <example>This example demonstrates how to rasterize a PDF document to color TIFFs.<p/> 
+             <code lang="VB">
+             Imports System
+             Imports ceTe.DynamicPDF.Rasterizer
+             
+             Module MyModule
+             
+                 Sub Main()
+            
+                     ' Create a PdfRasterizer object.
+                     Dim rasterizer As PdfRasterizer = New PdfRasterizer("InputPdfFile.pdf")
+            
+                     ' Create a TiffImageFormat object.
+                     Dim tiffImageFormat As TiffImageFormat = New TiffImageFormat(TiffColorFormat.Rgb, TiffCompression.Lzw)
+            
+                     ' Create a PercentageImageSize object. 
+                     Dim percentageImageSize As PercentageImageSize = New PercentageImageSize(50)
+            
+                     ' Save the image.
+                     rasterizer.Draw("Output.tif", tiffImageFormat, percentageImageSize)
+             
+                 End Sub
+             End Module
+             </code>
+             <code lang="C#">
+             using System;
+             using ceTe.DynamicPDF.Rasterizer;
+             
+             class MyClass
+             {
+                 static void Main(string[] args)
+                 {
+                     // Create a PdfRasterizer object.
+                     PdfRasterizer rasterizer = new PdfRasterizer("InputPdfFile.pdf");
+             
+                     // Create a TiffImageFormat object.
+                     TiffImageFormat tiffImageFormat = new TiffImageFormat(TiffColorFormat.Rgb, TiffCompression.Lzw);
+                         
+                     // Create a PercentageImageSize object. 
+                     PercentageImageSize percentageImageSize = new PercentageImageSize(50);
+            
+                     // Save the image.
+                     rasterizer.Draw("Output.tif", tiffImageFormat,percentageImageSize);
+                 }
+             }
+             </code>
+             </example>
+        </member>
+        <member name="M:ceTe.DynamicPDF.Rasterizer.TiffImageFormat.#ctor(ceTe.DynamicPDF.Rasterizer.TiffColorFormat,ceTe.DynamicPDF.Rasterizer.TiffCompression)">
+            <summary>
+            Initializes a new instance of the class.<see cref="T:ceTe.DynamicPDF.Rasterizer.TiffImageFormat"/>
+            </summary>
+            <param name="colorFormat">Color format of the tiff image.</param>
+            <param name="compression">Comprerssion of the tiff image.</param>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.TiffImageFormat.ColorFormat">
+            <summary>
+            Gets or sets the Tiff color format.
+            </summary>
+        </member>
+        <member name="P:ceTe.DynamicPDF.Rasterizer.TiffImageFormat.Compression">
+            <summary>
+            Gets or sets the Tiff image compression.
+            </summary>
+        </member>
+        <member name="T:ceTe.DynamicPDF.Rasterizer.UnitType">
+            <summary>
+            Represents a UnitType value. 
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.UnitType.Millimeter">
+            <summary>
+            Unit values in Millimeters.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.UnitType.Inch">
+            <summary>
+            Unit values in Inches.
+            </summary>
+        </member>
+        <member name="F:ceTe.DynamicPDF.Rasterizer.UnitType.Point">
+            <summary>
+            Unit values in Typesetting Points.
+            </summary>
+        </member>
+    </members>
+</doc>

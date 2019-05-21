@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="PageDefinitionsDataSet" targetNamespace="http://tempuri.org/PageDefinitionsDataSet.xsd" xmlns:mstns="http://tempuri.org/PageDefinitionsDataSet.xsd" xmlns="http://tempuri.org/PageDefinitionsDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="MCAPConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="MCAPConnectionString (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.MCAP.My.MySettings.GlobalReference.Default.MCAPConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="PagesDBTableAdapter" GeneratorDataComponentClassName="PagesDBTableAdapter" Name="PagesDB" UserDataComponentName="PagesDBTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT p.PageId, p.VehicleId, p.ImageName, p.PageTypeId, p.ReceivedOrder, p.PageName
+		, p.PixelHieght, p.PixelWidth, p.SizeID, s.Height, s.Width
+		, CAST(s.Width AS VARCHAR) + 'x' + CAST(s.Height AS VARCHAR) AS [Size]
+		, CASE WHEN PageTypeId &lt;&gt; 'B' THEN 
+				CASE WHEN ASCII(SUBSTRING(P.PageName, 2, 1)) BETWEEN 48 AND 57 AND CHARINDEX('-',P.PageName) = 0 THEN
+					CAST(SUBSTRING(P.PageName, 2, LEN(P.PageName)-1) AS INT)
+				WHEN ASCII(SUBSTRING(P.PageName, 2, 1)) BETWEEN 48 AND 57 AND CHARINDEX('-',P.PageName) &gt; 0 THEN
+					CAST(SUBSTRING(P.PageName, 2, CHARINDEX('-',P.PageName)-2) AS INT)
+				ELSE
+					CAST(SUBSTRING(P.PageName, 3, CHARINDEX('-',P.PageName)-3) AS INT)
+				END
+			ELSE NULL
+			END AS InsertNumber
+		, CASE WHEN PageTypeId &lt;&gt; 'B' AND CHARINDEX('-',P.PageName) = 0 THEN 
+				CAST(RIGHT(PageName, LEN(PageName) - 1) AS INT)
+			WHEN PageTypeId &lt;&gt; 'B' AND CHARINDEX('-',P.PageName) &gt; 0 THEN 
+				CAST(RIGHT(PageName, LEN(PageName) - CHARINDEX('-',PageName)) AS INT)
+			ELSE CAST(PageName AS INT)
+			END AS PageNumber
+, p.PageStartDt, p.PageEndDt
+FROM dbo.Page p WITH (NOLOCK)
+	JOIN dbo.Size s WITH (NOLOCK) ON p.SizeId = s.SizeId
+ORDER BY p.ReceivedOrder</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="PageId" DataSetColumn="PageId" />
+              <Mapping SourceColumn="VehicleId" DataSetColumn="VehicleId" />
+              <Mapping SourceColumn="ImageName" DataSetColumn="ImageName" />
+              <Mapping SourceColumn="ReceivedOrder" DataSetColumn="ReceivedOrder" />
+              <Mapping SourceColumn="PageName" DataSetColumn="PageName" />
+              <Mapping SourceColumn="PixelHieght" DataSetColumn="PixelHieght" />
+              <Mapping SourceColumn="PixelWidth" DataSetColumn="PixelWidth" />
+              <Mapping SourceColumn="SizeID" DataSetColumn="SizeID" />
+              <Mapping SourceColumn="Height" DataSetColumn="Height" />
+              <Mapping SourceColumn="Width" DataSetColumn="Width" />
+              <Mapping SourceColumn="Size" DataSetColumn="Size" />
+              <Mapping SourceColumn="InsertNumber" DataSetColumn="InsertNumber" />
+              <Mapping SourceColumn="PageNumber" DataSetColumn="PageNumber" />
+              <Mapping SourceColumn="PageTypeId" DataSetColumn="PageTypeId" />
+              <Mapping SourceColumn="PageStartDt" DataSetColumn="PageStartDt" />
+              <Mapping SourceColumn="PageEndDt" DataSetColumn="PageEndDt" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillBy" GenerateMethods="Fill" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="FillBy" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillBy">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT p.PageId, p.VehicleId, p.ImageName, p.PageTypeId, p.ReceivedOrder, p.PageName
+		, p.PixelHieght, p.PixelWidth, p.SizeID, s.Height, s.Width
+		, CAST(s.Width AS VARCHAR) + 'x' + CAST(s.Height AS VARCHAR) AS [Size]
+		, CASE WHEN PT.PageTypeId &lt;&gt; 'B' THEN 
+				/*CASE WHEN ASCII(SUBSTRING(P.PageName, 2, 1)) BETWEEN 48 AND 57 AND CHARINDEX('-',P.PageName) = 0 THEN
+					CAST(SUBSTRING(P.PageName, 2, LEN(P.PageName)-1) AS INT)
+				WHEN ASCII(SUBSTRING(P.PageName, 2, 1)) BETWEEN 48 AND 57 AND CHARINDEX('-',P.PageName) &gt; 0 THEN
+					CAST(SUBSTRING(P.PageName, 2, CHARINDEX('-',P.PageName)-2) AS INT)
+				ELSE
+					CAST(SUBSTRING(P.PageName, 3, CHARINDEX('-',P.PageName)-3) AS INT)
+				END*/
+				CAST(SUBSTRING(P.PageName, LEN(PT.Abbr)+1, CHARINDEX('-',P.PageName)-LEN(PT.Abbr)-1) AS INT)
+			ELSE NULL
+			END AS InsertNumber
+		, CASE WHEN PT.PageTypeId &lt;&gt; 'B' AND CHARINDEX('-',P.PageName) = 0 THEN 
+				CAST(RIGHT(PageName, LEN(PageName) - 1) AS INT)
+			WHEN PT.PageTypeId &lt;&gt; 'B' AND CHARINDEX('-',P.PageName) &gt; 0 THEN 
+				CAST(RIGHT(PageName, LEN(PageName) - CHARINDEX('-',PageName)) AS INT)
+			ELSE CAST(PageName AS INT)
+			END AS PageNumber
+, p.PageStartDt, p.PageEndDt
+FROM dbo.Page p WITH (NOLOCK)
+	LEFT JOIN dbo.Size s WITH (NOLOCK) ON p.SizeId = s.SizeId
+	LEFT JOIN dbo.PageType PT WITH (NOLOCK) ON P.PageTypeId=PT.PageTypeId
+WHERE p.VehicleId = @VehicleId
+ORDER BY p.ReceivedOrder</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="VehicleId" ColumnName="VehicleId" DataSourceName="MCAP_Micro.dbo.Page" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@VehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="GetBasePageCount" Modifier="Public" Name="GetBasePageCount" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="GetBasePageCount">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT COUNT(*)
+FROM dbo.Page p WITH (NOLOCK)
+WHERE p.VehicleID = @vehicleId
+AND p.pagetypeId = 'B'</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="vehicleId" ColumnName="VehicleId" DataSourceName="MCAP.dbo.Page" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@vehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SizeTableAdapter" GeneratorDataComponentClassName="SizeTableAdapter" Name="Size" UserDataComponentName="SizeTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Size" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <DeleteCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>DELETE FROM [dbo].[Size] WHERE (([SizeID] = @Original_SizeID) AND ((@IsNull_Height = 1 AND [Height] IS NULL) OR ([Height] = @Original_Height)) AND ((@IsNull_Width = 1 AND [Width] IS NULL) OR ([Width] = @Original_Width)))</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_SizeID" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="SizeID" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_Height" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Height" SourceColumnNullMapping="true" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Double" Direction="Input" ParameterName="@Original_Height" Precision="0" ProviderType="Float" Scale="0" Size="0" SourceColumn="Height" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@IsNull_Width" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Width" SourceColumnNullMapping="true" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Double" Direction="Input" ParameterName="@Original_Width" Precision="0" ProviderType="Float" Scale="0" Size="0" SourceColumn="Width" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </DeleteCommand>
+                <InsertCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>INSERT INTO [dbo].[Size] ([Height], [Width]) VALUES (@Height, @Width);
+SELECT SizeID, Height, Width, CAST(Width AS varchar) + 'x' + CAST(Height AS varchar) AS Descrip FROM Size WHERE (SizeID = SCOPE_IDENTITY()) ORDER BY Width, Height</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="Height" ColumnName="Height" DataSourceName="" DataTypeServer="float" DbType="Double" Direction="Input" ParameterName="@Height" Precision="0" ProviderType="Float" Scale="0" Size="8" SourceColumn="Height" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="Width" ColumnName="Width" DataSourceName="" DataTypeServer="float" DbType="Double" Direction="Input" ParameterName="@Width" Precision="0" ProviderType="Float" Scale="0" Size="8" SourceColumn="Width" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </InsertCommand>
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT     SizeID, Height, Width, dbo.GetSizeText(SizeID) AS Descrip
+FROM         Size
+ORDER BY Width, Height</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>UPDATE [dbo].[Size] SET [Height] = @Height, [Width] = @Width WHERE (([SizeID] = @Original_SizeID) AND ((@IsNull_Height = 1 AND [Height] IS NULL) OR ([Height] = @Original_Height)) AND ((@IsNull_Width = 1 AND [Width] IS NULL) OR ([Width] = @Original_Width)));
+SELECT SizeID, Height, Width, CAST(Width AS varchar) + 'x' + CAST(Height AS varchar) AS Descrip FROM Size WHERE (SizeID = @SizeID) ORDER BY Width, Height</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="Height" ColumnName="Height" DataSourceName="" DataTypeServer="float" DbType="Double" Direction="Input" ParameterName="@Height" Precision="0" ProviderType="Float" Scale="0" Size="8" SourceColumn="Height" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="Width" ColumnName="Width" DataSourceName="" DataTypeServer="float" DbType="Double" Direction="Input" ParameterName="@Width" Precision="0" ProviderType="Float" Scale="0" Size="8" SourceColumn="Width" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="Original_SizeID" ColumnName="SizeID" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@Original_SizeID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="SizeID" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="IsNull_Height" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@IsNull_Height" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Height" SourceColumnNullMapping="true" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="IsNull_Width" ColumnName="" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@IsNull_Width" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Width" SourceColumnNullMapping="true" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="Original_Height" ColumnName="Height" DataSourceName="" DataTypeServer="float" DbType="Double" Direction="Input" ParameterName="@Original_Height" Precision="0" ProviderType="Float" Scale="0" Size="8" SourceColumn="Height" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="SizeID" ColumnName="SizeID" DataSourceName="" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@SizeID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="SizeID" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="SizeID" DataSetColumn="SizeID" />
+              <Mapping SourceColumn="Height" DataSetColumn="Height" />
+              <Mapping SourceColumn="Width" DataSetColumn="Width" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="VehicleTableAdapter" GeneratorDataComponentClassName="VehicleTableAdapter" Name="Vehicle" UserDataComponentName="VehicleTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.vwCircular" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT VehicleId, RetId, MktId, BreakDt, StartDt, EndDt, TypeId, LanguageId, EventId, ThemeId, MediaId, PublicationId, CreateDt, CreatedById, ScanDt, ScannedById, QCDt, QCedById, FamilyId, CouponInd, CreateSizedDt, Priority, CheckInPageCount, CheckInOccurrences FROM dbo.vwCircular</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="VehicleId" DataSetColumn="VehicleId" />
+              <Mapping SourceColumn="RetId" DataSetColumn="RetId" />
+              <Mapping SourceColumn="MktId" DataSetColumn="MktId" />
+              <Mapping SourceColumn="BreakDt" DataSetColumn="BreakDt" />
+              <Mapping SourceColumn="StartDt" DataSetColumn="StartDt" />
+              <Mapping SourceColumn="EndDt" DataSetColumn="EndDt" />
+              <Mapping SourceColumn="TypeId" DataSetColumn="TypeId" />
+              <Mapping SourceColumn="LanguageId" DataSetColumn="LanguageId" />
+              <Mapping SourceColumn="EventId" DataSetColumn="EventId" />
+              <Mapping SourceColumn="ThemeId" DataSetColumn="ThemeId" />
+              <Mapping SourceColumn="MediaId" DataSetColumn="MediaId" />
+              <Mapping SourceColumn="PublicationId" DataSetColumn="PublicationId" />
+              <Mapping SourceColumn="CreateDt" DataSetColumn="CreateDt" />
+              <Mapping SourceColumn="CreatedById" DataSetColumn="CreatedById" />
+              <Mapping SourceColumn="ScanDt" DataSetColumn="ScanDt" />
+              <Mapping SourceColumn="ScannedById" DataSetColumn="ScannedById" />
+              <Mapping SourceColumn="QCDt" DataSetColumn="QCDt" />
+              <Mapping SourceColumn="QCedById" DataSetColumn="QCedById" />
+              <Mapping SourceColumn="FamilyId" DataSetColumn="FamilyId" />
+              <Mapping SourceColumn="CouponInd" DataSetColumn="CouponInd" />
+              <Mapping SourceColumn="CreateSizedDt" DataSetColumn="CreateSizedDt" />
+              <Mapping SourceColumn="Priority" DataSetColumn="Priority" />
+              <Mapping SourceColumn="CheckInPageCount" DataSetColumn="CheckInPageCount" />
+              <Mapping SourceColumn="CheckInOccurrences" DataSetColumn="CheckInOccurrences" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.vwCircular" DbObjectType="View" FillMethodModifier="Public" FillMethodName="FillBy" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="FillBy" GetMethodModifier="Public" GetMethodName="GetDataBy" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillBy">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     VehicleId, RetId, MktId, BreakDt, StartDt, EndDt, TypeId, LanguageId, EventId, ThemeId, MediaId, PublicationId, CreateDt, CreatedById, ScanDt, 
+                      ScannedById, QCDt, QCedById, FamilyId, CouponInd, CreateSizedDt, Priority, CheckInPageCount, CheckInOccurrences
+FROM         vwCircular WITH (NOLOCK)
+WHERE     (VehicleId = @VehicleId)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="VehicleId" ColumnName="VehicleId" DataSourceName="MCAP.dbo.vwCircular" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@VehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateVehiclePageCount" Modifier="Public" Name="UpdateVehiclePageCount" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="UpdateVehiclePageCount">
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>UPDATE    Vehicle
+SET              CheckInPageCount = @PageCount
+WHERE     (VehicleId = @VehicleId)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="PageCount" ColumnName="CheckInPageCount" DataSourceName="MCAP.dbo.Vehicle" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@PageCount" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="CheckInPageCount" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="VehicleId" ColumnName="VehicleId" DataSourceName="MCAP.dbo.Vehicle" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@VehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="InsertsDBTableAdapter" GeneratorDataComponentClassName="InsertsDBTableAdapter" Name="InsertsDB" UserDataComponentName="InsertsDBTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPTest.dbo.Page" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT /*CAST(CASE WHEN ASCII(SUBSTRING(P.PageName, 2, 1)) BETWEEN 48 AND 57 AND CHARINDEX('-',P.PageName) = 0 THEN
+				SUBSTRING(P.PageName, 2, LEN(P.PageName)-1) 
+			WHEN ASCII(SUBSTRING(P.PageName, 2, 1)) BETWEEN 48 AND 57 AND CHARINDEX('-',P.PageName) &gt; 0 THEN
+				SUBSTRING(P.PageName, 2, CHARINDEX('-',P.PageName)-2) 
+			ELSE
+				SUBSTRING(P.PageName, 3, CHARINDEX('-',P.PageName)-3) 
+			END	AS INT) AS [Number]*/
+		CAST(SUBSTRING(P.PageName, LEN(PT.Abbr)+1, CHARINDEX('-',P.PageName)-LEN(PT.Abbr)-1) AS INT) AS [Number]
+		, CAST(COUNT(PageName) AS INT) AS [PageCount], CAST(MIN(ReceivedOrder) AS INT) AS StartPage
+		, P.PageTypeId
+FROM Page p WITH (NOLOCK)
+	INNER JOIN dbo.PageType PT WITH (NOLOCK) ON P.PageTypeId=PT.PageTypeId
+WHERE VehicleId = @VehicleId AND P.PageTypeId &lt;&gt; 'B'
+GROUP BY P.PageTypeId, /*CASE WHEN ASCII(SUBSTRING(P.PageName, 2, 1)) BETWEEN 48 AND 57 AND CHARINDEX('-',P.PageName) = 0 THEN
+							SUBSTRING(P.PageName, 2, LEN(P.PageName)-1) 
+						WHEN ASCII(SUBSTRING(P.PageName, 2, 1)) BETWEEN 48 AND 57 AND CHARINDEX('-',P.PageName) &gt; 0 THEN
+							SUBSTRING(P.PageName, 2, CHARINDEX('-',P.PageName)-2) 
+						ELSE
+							SUBSTRING(P.PageName, 3, CHARINDEX('-',P.PageName)-3) 
+						END */
+			CAST(SUBSTRING(P.PageName, LEN(PT.Abbr)+1, CHARINDEX('-',P.PageName)-LEN(PT.Abbr)-1) AS INT)
+ORDER BY StartPage</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="VehicleId" ColumnName="VehicleId" DataSourceName="MCAPTest.dbo.Page" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@VehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="PageCount" DataSetColumn="PageCount" />
+              <Mapping SourceColumn="Number" DataSetColumn="Number" />
+              <Mapping SourceColumn="StartPage" DataSetColumn="StartPage" />
+              <Mapping SourceColumn="PageTypeId" DataSetColumn="PageTypeId" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="PageTableAdapter" GeneratorDataComponentClassName="PageTableAdapter" Name="Page" UserDataComponentName="PageTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAPDev.dbo.Page" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <DeleteCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>DELETE FROM [Page] WHERE (([PageId] = @Original_PageId))</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_PageId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="PageId" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </DeleteCommand>
+                <InsertCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>INSERT INTO [Page] ([VehicleId], [ImageName], [PageTypeId], [ReceivedOrder], [PageName], [PixelHieght], [PixelWidth], [SizeID], [PageStartDt], [PageEndDt]) VALUES (@VehicleId, @ImageName, @PageTypeId, @ReceivedOrder, @PageName, @PixelHieght, @PixelWidth, @SizeID, @PageStartDt, @PageEndDt);
+SELECT PageId, VehicleId, ImageName, PageTypeId, ReceivedOrder, PageName, PixelHieght, PixelWidth, SizeID, PageStartDt, PageEndDt FROM Page WHERE (PageId = SCOPE_IDENTITY())</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@VehicleId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@ImageName" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="ImageName" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@PageTypeId" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="PageTypeId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@ReceivedOrder" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="ReceivedOrder" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@PageName" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="PageName" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@PixelHieght" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="PixelHieght" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@PixelWidth" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="PixelWidth" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@SizeID" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="SizeID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@PageStartDt" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="PageStartDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@PageEndDt" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="PageEndDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </InsertCommand>
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        PageId, VehicleId, ImageName, PageTypeId, ReceivedOrder, PageName, PixelHieght, PixelWidth, SizeID, PageStartDt, PageEndDt
+FROM            Page</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>UPDATE [Page] SET [VehicleId] = @VehicleId, [ImageName] = @ImageName, [PageTypeId] = @PageTypeId, [ReceivedOrder] = @ReceivedOrder, [PageName] = @PageName, [PixelHieght] = @PixelHieght, [PixelWidth] = @PixelWidth, [SizeID] = @SizeID, [PageStartDt] = @PageStartDt, [PageEndDt] = @PageEndDt WHERE (([PageId] = @Original_PageId));
+SELECT PageId, VehicleId, ImageName, PageTypeId, ReceivedOrder, PageName, PixelHieght, PixelWidth, SizeID, PageStartDt, PageEndDt FROM Page WHERE (PageId = @PageId)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@VehicleId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@ImageName" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="ImageName" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@PageTypeId" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="PageTypeId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@ReceivedOrder" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="ReceivedOrder" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="AnsiString" Direction="Input" ParameterName="@PageName" Precision="0" ProviderType="VarChar" Scale="0" Size="0" SourceColumn="PageName" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@PixelHieght" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="PixelHieght" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@PixelWidth" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="PixelWidth" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@SizeID" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="SizeID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@PageStartDt" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="PageStartDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@PageEndDt" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="PageEndDt" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Original_PageId" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="PageId" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="PageId" ColumnName="PageId" DataSourceName="MCAPDev.dbo.Page" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@PageId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="PageId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="PageId" DataSetColumn="PageId" />
+              <Mapping SourceColumn="VehicleId" DataSetColumn="VehicleId" />
+              <Mapping SourceColumn="ImageName" DataSetColumn="ImageName" />
+              <Mapping SourceColumn="PageTypeId" DataSetColumn="PageTypeId" />
+              <Mapping SourceColumn="ReceivedOrder" DataSetColumn="ReceivedOrder" />
+              <Mapping SourceColumn="PageName" DataSetColumn="PageName" />
+              <Mapping SourceColumn="PixelHieght" DataSetColumn="PixelHieght" />
+              <Mapping SourceColumn="PixelWidth" DataSetColumn="PixelWidth" />
+              <Mapping SourceColumn="SizeID" DataSetColumn="SizeID" />
+              <Mapping SourceColumn="PageStartDt" DataSetColumn="PageStartDt" />
+              <Mapping SourceColumn="PageEndDt" DataSetColumn="PageEndDt" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Page" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillBy" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="FillBy" GetMethodModifier="Public" GetMethodName="GetDataBy" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillBy">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT ImageName, PageEndDt, PageId, PageName, PageStartDt, PageTypeId, PixelHieght, PixelWidth, ReceivedOrder, SizeID, VehicleId FROM Page WHERE (VehicleId = @VehicleID)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="VehicleID" ColumnName="VehicleId" DataSourceName="MCAP_Micro.dbo.Page" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@VehicleID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="GetBasePageCount" Modifier="Public" Name="GetBasePageCount" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="GetBasePageCount">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT COUNT(*)
+FROM dbo.Page p WITH (NOLOCK)
+WHERE p.VehicleID = @vehicleId
+AND p.pagetypeId = 'B'</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="vehicleId" ColumnName="VehicleId" DataSourceName="MCAP.dbo.Page" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@vehicleId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="VehicleId" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="PageTypeTableAdapter" GeneratorDataComponentClassName="PageTypeTableAdapter" Name="PageType" UserDataComponentName="PageTypeTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.PageType" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Fill" GenerateShortCommands="false" GeneratorSourceName="Fill" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT PageTypeId, Descrip, Abbr, Descrip + ' (' + Abbr + ')' DisplayDescrip 
+FROM PageType
+ORDER BY Descrip</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="PageTypeId" DataSetColumn="PageTypeId" />
+              <Mapping SourceColumn="Descrip" DataSetColumn="Descrip" />
+              <Mapping SourceColumn="Abbr" DataSetColumn="Abbr" />
+              <Mapping SourceColumn="DisplayDescrip" DataSetColumn="DisplayDescrip" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="PageDefinitionsDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="PageDefinitionsDataSet" msprop:Generator_UserDSName="PageDefinitionsDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PagesDB" msprop:Generator_UserTableName="PagesDB" msprop:Generator_RowEvArgName="PagesDBRowChangeEvent" msprop:Generator_TableVarName="tablePagesDB" msprop:Generator_TablePropName="PagesDB" msprop:Generator_RowDeletingName="PagesDBRowDeleting" msprop:Generator_RowChangingName="PagesDBRowChanging" msprop:Generator_RowDeletedName="PagesDBRowDeleted" msprop:Generator_RowEvHandlerName="PagesDBRowChangeEventHandler" msprop:Generator_TableClassName="PagesDBDataTable" msprop:Generator_RowChangedName="PagesDBRowChanged" msprop:Generator_RowClassName="PagesDBRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PageId" msprop:Generator_ColumnVarNameInTable="columnPageId" msprop:Generator_ColumnPropNameInRow="PageId" msprop:Generator_ColumnPropNameInTable="PageIdColumn" msprop:Generator_UserColumnName="PageId" type="xs:int" />
+              <xs:element name="VehicleId" msprop:Generator_ColumnVarNameInTable="columnVehicleId" msprop:Generator_ColumnPropNameInRow="VehicleId" msprop:Generator_ColumnPropNameInTable="VehicleIdColumn" msprop:Generator_UserColumnName="VehicleId" type="xs:int" minOccurs="0" />
+              <xs:element name="ImageName" msprop:Generator_ColumnVarNameInTable="columnImageName" msprop:Generator_ColumnPropNameInRow="ImageName" msprop:Generator_ColumnPropNameInTable="ImageNameColumn" msprop:Generator_UserColumnName="ImageName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PageTypeId" msprop:Generator_ColumnVarNameInTable="columnPageTypeId" msprop:Generator_ColumnPropNameInRow="PageTypeId" msprop:Generator_ColumnPropNameInTable="PageTypeIdColumn" msprop:Generator_UserColumnName="PageTypeId" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ReceivedOrder" msprop:Generator_ColumnVarNameInTable="columnReceivedOrder" msprop:Generator_ColumnPropNameInRow="ReceivedOrder" msprop:Generator_ColumnPropNameInTable="ReceivedOrderColumn" msprop:Generator_UserColumnName="ReceivedOrder" type="xs:int" minOccurs="0" />
+              <xs:element name="PageName" msprop:Generator_ColumnVarNameInTable="columnPageName" msprop:Generator_ColumnPropNameInRow="PageName" msprop:Generator_ColumnPropNameInTable="PageNameColumn" msprop:Generator_UserColumnName="PageName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PixelHieght" msprop:Generator_ColumnVarNameInTable="columnPixelHieght" msprop:Generator_ColumnPropNameInRow="PixelHieght" msprop:Generator_ColumnPropNameInTable="PixelHieghtColumn" msprop:Generator_UserColumnName="PixelHieght" type="xs:int" minOccurs="0" />
+              <xs:element name="PixelWidth" msprop:Generator_ColumnVarNameInTable="columnPixelWidth" msprop:Generator_ColumnPropNameInRow="PixelWidth" msprop:Generator_ColumnPropNameInTable="PixelWidthColumn" msprop:Generator_UserColumnName="PixelWidth" type="xs:int" minOccurs="0" />
+              <xs:element name="SizeID" msprop:Generator_ColumnVarNameInTable="columnSizeID" msprop:Generator_ColumnPropNameInRow="SizeID" msprop:Generator_ColumnPropNameInTable="SizeIDColumn" msprop:Generator_UserColumnName="SizeID" type="xs:int" minOccurs="0" />
+              <xs:element name="Height" msprop:Generator_ColumnVarNameInTable="columnHeight" msprop:Generator_ColumnPropNameInRow="Height" msprop:Generator_ColumnPropNameInTable="HeightColumn" msprop:Generator_UserColumnName="Height" type="xs:double" minOccurs="0" />
+              <xs:element name="Width" msprop:Generator_ColumnVarNameInTable="columnWidth" msprop:Generator_ColumnPropNameInRow="Width" msprop:Generator_ColumnPropNameInTable="WidthColumn" msprop:Generator_UserColumnName="Width" type="xs:double" minOccurs="0" />
+              <xs:element name="Size" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSize" msprop:Generator_ColumnPropNameInRow="Size" msprop:Generator_ColumnPropNameInTable="SizeColumn" msprop:Generator_UserColumnName="Size" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="63" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="InsertNumber" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnInsertNumber" msprop:Generator_ColumnPropNameInRow="InsertNumber" msprop:Generator_ColumnPropNameInTable="InsertNumberColumn" msprop:Generator_UserColumnName="InsertNumber" type="xs:int" minOccurs="0" />
+              <xs:element name="PageNumber" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPageNumber" msprop:Generator_ColumnPropNameInRow="PageNumber" msprop:Generator_ColumnPropNameInTable="PageNumberColumn" msprop:Generator_UserColumnName="PageNumber" type="xs:int" minOccurs="0" />
+              <xs:element name="PageStartDt" msprop:Generator_ColumnVarNameInTable="columnPageStartDt" msprop:Generator_ColumnPropNameInRow="PageStartDt" msprop:Generator_ColumnPropNameInTable="PageStartDtColumn" msprop:Generator_UserColumnName="PageStartDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PageEndDt" msprop:Generator_ColumnVarNameInTable="columnPageEndDt" msprop:Generator_ColumnPropNameInRow="PageEndDt" msprop:Generator_ColumnPropNameInTable="PageEndDtColumn" msprop:Generator_UserColumnName="PageEndDt" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Size" msprop:Generator_UserTableName="Size" msprop:Generator_RowEvArgName="SizeRowChangeEvent" msprop:Generator_TableVarName="tableSize" msprop:Generator_TablePropName="Size" msprop:Generator_RowDeletingName="SizeRowDeleting" msprop:Generator_RowChangingName="SizeRowChanging" msprop:Generator_RowDeletedName="SizeRowDeleted" msprop:Generator_RowEvHandlerName="SizeRowChangeEventHandler" msprop:Generator_TableClassName="SizeDataTable" msprop:Generator_RowChangedName="SizeRowChanged" msprop:Generator_RowClassName="SizeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SizeID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnSizeID" msprop:Generator_ColumnPropNameInRow="SizeID" msprop:Generator_ColumnPropNameInTable="SizeIDColumn" msprop:Generator_UserColumnName="SizeID" type="xs:int" />
+              <xs:element name="Height" msprop:Generator_ColumnVarNameInTable="columnHeight" msprop:Generator_ColumnPropNameInRow="Height" msprop:Generator_ColumnPropNameInTable="HeightColumn" msprop:Generator_UserColumnName="Height" type="xs:double" minOccurs="0" />
+              <xs:element name="Width" msprop:Generator_ColumnVarNameInTable="columnWidth" msprop:Generator_ColumnPropNameInRow="Width" msprop:Generator_ColumnPropNameInTable="WidthColumn" msprop:Generator_UserColumnName="Width" type="xs:double" minOccurs="0" />
+              <xs:element name="Descrip" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="63" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Vehicle" msprop:Generator_UserTableName="Vehicle" msprop:Generator_RowEvArgName="VehicleRowChangeEvent" msprop:Generator_TableVarName="tableVehicle" msprop:Generator_TablePropName="Vehicle" msprop:Generator_RowDeletingName="VehicleRowDeleting" msprop:Generator_RowChangingName="VehicleRowChanging" msprop:Generator_RowDeletedName="VehicleRowDeleted" msprop:Generator_RowEvHandlerName="VehicleRowChangeEventHandler" msprop:Generator_TableClassName="VehicleDataTable" msprop:Generator_RowChangedName="VehicleRowChanged" msprop:Generator_RowClassName="VehicleRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="VehicleId" msprop:Generator_ColumnVarNameInTable="columnVehicleId" msprop:Generator_ColumnPropNameInRow="VehicleId" msprop:Generator_ColumnPropNameInTable="VehicleIdColumn" msprop:Generator_UserColumnName="VehicleId" type="xs:int" />
+              <xs:element name="RetId" msprop:Generator_ColumnVarNameInTable="columnRetId" msprop:Generator_ColumnPropNameInRow="RetId" msprop:Generator_ColumnPropNameInTable="RetIdColumn" msprop:Generator_UserColumnName="RetId" type="xs:int" minOccurs="0" />
+              <xs:element name="MktId" msprop:Generator_ColumnVarNameInTable="columnMktId" msprop:Generator_ColumnPropNameInRow="MktId" msprop:Generator_ColumnPropNameInTable="MktIdColumn" msprop:Generator_UserColumnName="MktId" type="xs:int" minOccurs="0" />
+              <xs:element name="BreakDt" msprop:Generator_ColumnVarNameInTable="columnBreakDt" msprop:Generator_ColumnPropNameInRow="BreakDt" msprop:Generator_ColumnPropNameInTable="BreakDtColumn" msprop:Generator_UserColumnName="BreakDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="StartDt" msprop:Generator_ColumnVarNameInTable="columnStartDt" msprop:Generator_ColumnPropNameInRow="StartDt" msprop:Generator_ColumnPropNameInTable="StartDtColumn" msprop:Generator_UserColumnName="StartDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EndDt" msprop:Generator_ColumnVarNameInTable="columnEndDt" msprop:Generator_ColumnPropNameInRow="EndDt" msprop:Generator_ColumnPropNameInTable="EndDtColumn" msprop:Generator_UserColumnName="EndDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TypeId" msprop:Generator_ColumnVarNameInTable="columnTypeId" msprop:Generator_ColumnPropNameInRow="TypeId" msprop:Generator_ColumnPropNameInTable="TypeIdColumn" msprop:Generator_UserColumnName="TypeId" type="xs:int" minOccurs="0" />
+              <xs:element name="LanguageId" msprop:Generator_ColumnVarNameInTable="columnLanguageId" msprop:Generator_ColumnPropNameInRow="LanguageId" msprop:Generator_ColumnPropNameInTable="LanguageIdColumn" msprop:Generator_UserColumnName="LanguageId" type="xs:int" minOccurs="0" />
+              <xs:element name="EventId" msprop:Generator_ColumnVarNameInTable="columnEventId" msprop:Generator_ColumnPropNameInRow="EventId" msprop:Generator_ColumnPropNameInTable="EventIdColumn" msprop:Generator_UserColumnName="EventId" type="xs:int" minOccurs="0" />
+              <xs:element name="ThemeId" msprop:Generator_ColumnVarNameInTable="columnThemeId" msprop:Generator_ColumnPropNameInRow="ThemeId" msprop:Generator_ColumnPropNameInTable="ThemeIdColumn" msprop:Generator_UserColumnName="ThemeId" type="xs:int" minOccurs="0" />
+              <xs:element name="MediaId" msprop:Generator_ColumnVarNameInTable="columnMediaId" msprop:Generator_ColumnPropNameInRow="MediaId" msprop:Generator_ColumnPropNameInTable="MediaIdColumn" msprop:Generator_UserColumnName="MediaId" type="xs:int" minOccurs="0" />
+              <xs:element name="PublicationId" msprop:Generator_ColumnVarNameInTable="columnPublicationId" msprop:Generator_ColumnPropNameInRow="PublicationId" msprop:Generator_ColumnPropNameInTable="PublicationIdColumn" msprop:Generator_UserColumnName="PublicationId" type="xs:int" minOccurs="0" />
+              <xs:element name="CreateDt" msprop:Generator_ColumnVarNameInTable="columnCreateDt" msprop:Generator_ColumnPropNameInRow="CreateDt" msprop:Generator_ColumnPropNameInTable="CreateDtColumn" msprop:Generator_UserColumnName="CreateDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CreatedById" msprop:Generator_ColumnVarNameInTable="columnCreatedById" msprop:Generator_ColumnPropNameInRow="CreatedById" msprop:Generator_ColumnPropNameInTable="CreatedByIdColumn" msprop:Generator_UserColumnName="CreatedById" type="xs:int" minOccurs="0" />
+              <xs:element name="ScanDt" msprop:Generator_ColumnVarNameInTable="columnScanDt" msprop:Generator_ColumnPropNameInRow="ScanDt" msprop:Generator_ColumnPropNameInTable="ScanDtColumn" msprop:Generator_UserColumnName="ScanDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ScannedById" msprop:Generator_ColumnVarNameInTable="columnScannedById" msprop:Generator_ColumnPropNameInRow="ScannedById" msprop:Generator_ColumnPropNameInTable="ScannedByIdColumn" msprop:Generator_UserColumnName="ScannedById" type="xs:int" minOccurs="0" />
+              <xs:element name="QCDt" msprop:Generator_ColumnVarNameInTable="columnQCDt" msprop:Generator_ColumnPropNameInRow="QCDt" msprop:Generator_ColumnPropNameInTable="QCDtColumn" msprop:Generator_UserColumnName="QCDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="QCedById" msprop:Generator_ColumnVarNameInTable="columnQCedById" msprop:Generator_ColumnPropNameInRow="QCedById" msprop:Generator_ColumnPropNameInTable="QCedByIdColumn" msprop:Generator_UserColumnName="QCedById" type="xs:int" minOccurs="0" />
+              <xs:element name="FamilyId" msprop:Generator_ColumnVarNameInTable="columnFamilyId" msprop:Generator_ColumnPropNameInRow="FamilyId" msprop:Generator_ColumnPropNameInTable="FamilyIdColumn" msprop:Generator_UserColumnName="FamilyId" type="xs:int" minOccurs="0" />
+              <xs:element name="CouponInd" msprop:Generator_ColumnVarNameInTable="columnCouponInd" msprop:Generator_ColumnPropNameInRow="CouponInd" msprop:Generator_ColumnPropNameInTable="CouponIndColumn" msprop:Generator_UserColumnName="CouponInd" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="CreateSizedDt" msprop:Generator_ColumnVarNameInTable="columnCreateSizedDt" msprop:Generator_ColumnPropNameInRow="CreateSizedDt" msprop:Generator_ColumnPropNameInTable="CreateSizedDtColumn" msprop:Generator_UserColumnName="CreateSizedDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Priority" msprop:Generator_ColumnVarNameInTable="columnPriority" msprop:Generator_ColumnPropNameInRow="Priority" msprop:Generator_ColumnPropNameInTable="PriorityColumn" msprop:Generator_UserColumnName="Priority" type="xs:int" minOccurs="0" />
+              <xs:element name="CheckInPageCount" msprop:Generator_ColumnVarNameInTable="columnCheckInPageCount" msprop:Generator_ColumnPropNameInRow="CheckInPageCount" msprop:Generator_ColumnPropNameInTable="CheckInPageCountColumn" msprop:Generator_UserColumnName="CheckInPageCount" type="xs:int" minOccurs="0" />
+              <xs:element name="CheckInOccurrences" msprop:Generator_ColumnVarNameInTable="columnCheckInOccurrences" msprop:Generator_ColumnPropNameInRow="CheckInOccurrences" msprop:Generator_ColumnPropNameInTable="CheckInOccurrencesColumn" msprop:Generator_UserColumnName="CheckInOccurrences" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Inserts" msprop:Generator_UserTableName="Inserts" msprop:Generator_RowEvArgName="InsertsRowChangeEvent" msprop:Generator_TableVarName="tableInserts" msprop:Generator_TablePropName="Inserts" msprop:Generator_RowDeletingName="InsertsRowDeleting" msprop:Generator_RowChangingName="InsertsRowChanging" msprop:Generator_RowDeletedName="InsertsRowDeleted" msprop:Generator_RowEvHandlerName="InsertsRowChangeEventHandler" msprop:Generator_TableClassName="InsertsDataTable" msprop:Generator_RowChangedName="InsertsRowChanged" msprop:Generator_RowClassName="InsertsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PageTypeId" msprop:Generator_ColumnVarNameInTable="columnPageTypeId" msprop:Generator_ColumnPropNameInRow="PageTypeId" msprop:Generator_ColumnPropNameInTable="PageTypeIdColumn" msprop:Generator_UserColumnName="PageTypeId" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Number" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnVarNameInTable="columnNumber" msprop:Generator_ColumnPropNameInRow="Number" msprop:Generator_ColumnPropNameInTable="NumberColumn" msprop:Generator_UserColumnName="Number" type="xs:int" default="0" />
+              <xs:element name="PageCount" msprop:Generator_ColumnVarNameInTable="columnPageCount" msprop:Generator_ColumnPropNameInRow="PageCount" msprop:Generator_ColumnPropNameInTable="PageCountColumn" msprop:Generator_UserColumnName="PageCount" type="xs:int" default="0" />
+              <xs:element name="StartPage" msprop:Generator_ColumnVarNameInTable="columnStartPage" msprop:Generator_ColumnPropNameInRow="StartPage" msprop:Generator_ColumnPropNameInTable="StartPageColumn" msprop:Generator_UserColumnName="StartPage" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Pages" msprop:Generator_UserTableName="Pages" msprop:Generator_RowEvArgName="PagesRowChangeEvent" msprop:Generator_TableVarName="tablePages" msprop:Generator_TablePropName="Pages" msprop:Generator_RowDeletingName="PagesRowDeleting" msprop:Generator_RowChangingName="PagesRowChanging" msprop:Generator_RowDeletedName="PagesRowDeleted" msprop:Generator_RowEvHandlerName="PagesRowChangeEventHandler" msprop:Generator_TableClassName="PagesDataTable" msprop:Generator_RowChangedName="PagesRowChanged" msprop:Generator_RowClassName="PagesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PageTypeId" msprop:Generator_ColumnVarNameInTable="columnPageTypeId" msprop:Generator_ColumnPropNameInRow="PageTypeId" msprop:Generator_ColumnPropNameInTable="PageTypeIdColumn" msprop:Generator_UserColumnName="PageTypeId">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ReceivedOrder" msdata:Caption="#" msprop:Generator_ColumnVarNameInTable="columnReceivedOrder" msprop:Generator_ColumnPropNameInRow="ReceivedOrder" msprop:Generator_ColumnPropNameInTable="ReceivedOrderColumn" msprop:Generator_UserColumnName="ReceivedOrder" type="xs:int" minOccurs="0" />
+              <xs:element name="SizeId" msprop:Generator_ColumnVarNameInTable="columnSizeId" msprop:Generator_ColumnPropNameInRow="SizeId" msprop:Generator_ColumnPropNameInTable="SizeIdColumn" msprop:Generator_UserColumnName="SizeId" type="xs:int" minOccurs="0" />
+              <xs:element name="PageName" msprop:Generator_ColumnVarNameInTable="columnPageName" msprop:Generator_ColumnPropNameInRow="PageName" msprop:Generator_ColumnPropNameInTable="PageNameColumn" msprop:Generator_UserColumnName="PageName" type="xs:string" minOccurs="0" />
+              <xs:element name="Size" msprop:Generator_ColumnVarNameInTable="columnSize" msprop:Generator_ColumnPropNameInRow="Size" msprop:Generator_ColumnPropNameInTable="SizeColumn" msprop:Generator_UserColumnName="Size" type="xs:string" minOccurs="0" />
+              <xs:element name="InsertNumber" msprop:Generator_ColumnVarNameInTable="columnInsertNumber" msprop:Generator_ColumnPropNameInRow="InsertNumber" msprop:Generator_ColumnPropNameInTable="InsertNumberColumn" msprop:Generator_UserColumnName="InsertNumber" type="xs:int" minOccurs="0" />
+              <xs:element name="PageNumber" msprop:Generator_ColumnVarNameInTable="columnPageNumber" msprop:Generator_ColumnPropNameInRow="PageNumber" msprop:Generator_ColumnPropNameInTable="PageNumberColumn" msprop:Generator_UserColumnName="PageNumber" type="xs:int" minOccurs="0" />
+              <xs:element name="PageId" msprop:Generator_ColumnVarNameInTable="columnPageId" msprop:Generator_ColumnPropNameInRow="PageId" msprop:Generator_ColumnPropNameInTable="PageIdColumn" msprop:Generator_UserColumnName="PageId" type="xs:int" minOccurs="0" />
+              <xs:element name="PageStartDt" msprop:Generator_ColumnVarNameInTable="columnPageStartDt" msprop:Generator_ColumnPropNameInRow="PageStartDt" msprop:Generator_ColumnPropNameInTable="PageStartDtColumn" msprop:Generator_UserColumnName="PageStartDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PageEndDt" msprop:Generator_ColumnVarNameInTable="columnPageEndDt" msprop:Generator_ColumnPropNameInRow="PageEndDt" msprop:Generator_ColumnPropNameInTable="PageEndDtColumn" msprop:Generator_UserColumnName="PageEndDt" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="InsertsDB" msprop:Generator_UserTableName="InsertsDB" msprop:Generator_RowEvArgName="InsertsDBRowChangeEvent" msprop:Generator_TableVarName="tableInsertsDB" msprop:Generator_TablePropName="InsertsDB" msprop:Generator_RowDeletingName="InsertsDBRowDeleting" msprop:Generator_RowChangingName="InsertsDBRowChanging" msprop:Generator_RowDeletedName="InsertsDBRowDeleted" msprop:Generator_RowEvHandlerName="InsertsDBRowChangeEventHandler" msprop:Generator_TableClassName="InsertsDBDataTable" msprop:Generator_RowChangedName="InsertsDBRowChanged" msprop:Generator_RowClassName="InsertsDBRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PageTypeId" msprop:Generator_ColumnVarNameInTable="columnPageTypeId" msprop:Generator_ColumnPropNameInRow="PageTypeId" msprop:Generator_ColumnPropNameInTable="PageTypeIdColumn" msprop:Generator_UserColumnName="PageTypeId" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PageCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPageCount" msprop:Generator_ColumnPropNameInRow="PageCount" msprop:Generator_ColumnPropNameInTable="PageCountColumn" msprop:Generator_UserColumnName="PageCount" type="xs:int" minOccurs="0" />
+              <xs:element name="Number" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNumber" msprop:Generator_ColumnPropNameInRow="Number" msprop:Generator_ColumnPropNameInTable="NumberColumn" msprop:Generator_UserColumnName="Number" type="xs:int" minOccurs="0" />
+              <xs:element name="StartPage" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnStartPage" msprop:Generator_ColumnPropNameInRow="StartPage" msprop:Generator_ColumnPropNameInTable="StartPageColumn" msprop:Generator_UserColumnName="StartPage" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Page" msprop:Generator_UserTableName="Page" msprop:Generator_RowEvArgName="PageRowChangeEvent" msprop:Generator_TableVarName="tablePage" msprop:Generator_TablePropName="Page" msprop:Generator_RowDeletingName="PageRowDeleting" msprop:Generator_RowChangingName="PageRowChanging" msprop:Generator_RowDeletedName="PageRowDeleted" msprop:Generator_RowEvHandlerName="PageRowChangeEventHandler" msprop:Generator_TableClassName="PageDataTable" msprop:Generator_RowChangedName="PageRowChanged" msprop:Generator_RowClassName="PageRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PageId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnPageId" msprop:Generator_ColumnPropNameInRow="PageId" msprop:Generator_ColumnPropNameInTable="PageIdColumn" msprop:Generator_UserColumnName="PageId" type="xs:int" />
+              <xs:element name="VehicleId" msprop:Generator_ColumnVarNameInTable="columnVehicleId" msprop:Generator_ColumnPropNameInRow="VehicleId" msprop:Generator_ColumnPropNameInTable="VehicleIdColumn" msprop:Generator_UserColumnName="VehicleId" type="xs:int" minOccurs="0" />
+              <xs:element name="ImageName" msprop:Generator_ColumnVarNameInTable="columnImageName" msprop:Generator_ColumnPropNameInRow="ImageName" msprop:Generator_ColumnPropNameInTable="ImageNameColumn" msprop:Generator_UserColumnName="ImageName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PageTypeId" msprop:Generator_ColumnVarNameInTable="columnPageTypeId" msprop:Generator_ColumnPropNameInRow="PageTypeId" msprop:Generator_ColumnPropNameInTable="PageTypeIdColumn" msprop:Generator_UserColumnName="PageTypeId" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ReceivedOrder" msprop:Generator_ColumnVarNameInTable="columnReceivedOrder" msprop:Generator_ColumnPropNameInRow="ReceivedOrder" msprop:Generator_ColumnPropNameInTable="ReceivedOrderColumn" msprop:Generator_UserColumnName="ReceivedOrder" type="xs:int" minOccurs="0" />
+              <xs:element name="PageName" msprop:Generator_ColumnVarNameInTable="columnPageName" msprop:Generator_ColumnPropNameInRow="PageName" msprop:Generator_ColumnPropNameInTable="PageNameColumn" msprop:Generator_UserColumnName="PageName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PixelHieght" msprop:Generator_ColumnVarNameInTable="columnPixelHieght" msprop:Generator_ColumnPropNameInRow="PixelHieght" msprop:Generator_ColumnPropNameInTable="PixelHieghtColumn" msprop:Generator_UserColumnName="PixelHieght" type="xs:int" minOccurs="0" />
+              <xs:element name="PixelWidth" msprop:Generator_ColumnVarNameInTable="columnPixelWidth" msprop:Generator_ColumnPropNameInRow="PixelWidth" msprop:Generator_ColumnPropNameInTable="PixelWidthColumn" msprop:Generator_UserColumnName="PixelWidth" type="xs:int" minOccurs="0" />
+              <xs:element name="SizeID" msprop:Generator_ColumnVarNameInTable="columnSizeID" msprop:Generator_ColumnPropNameInRow="SizeID" msprop:Generator_ColumnPropNameInTable="SizeIDColumn" msprop:Generator_UserColumnName="SizeID" type="xs:int" minOccurs="0" />
+              <xs:element name="PageStartDt" msprop:Generator_ColumnVarNameInTable="columnPageStartDt" msprop:Generator_ColumnPropNameInRow="PageStartDt" msprop:Generator_ColumnPropNameInTable="PageStartDtColumn" msprop:Generator_UserColumnName="PageStartDt" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PageEndDt" msprop:Generator_ColumnVarNameInTable="columnPageEndDt" msprop:Generator_ColumnPropNameInRow="PageEndDt" msprop:Generator_ColumnPropNameInTable="PageEndDtColumn" msprop:Generator_UserColumnName="PageEndDt" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PageType" msprop:Generator_UserTableName="PageType" msprop:Generator_RowEvArgName="PageTypeRowChangeEvent" msprop:Generator_TableVarName="tablePageType" msprop:Generator_TablePropName="PageType" msprop:Generator_RowDeletingName="PageTypeRowDeleting" msprop:Generator_RowChangingName="PageTypeRowChanging" msprop:Generator_RowDeletedName="PageTypeRowDeleted" msprop:Generator_RowEvHandlerName="PageTypeRowChangeEventHandler" msprop:Generator_TableClassName="PageTypeDataTable" msprop:Generator_RowChangedName="PageTypeRowChanged" msprop:Generator_RowClassName="PageTypeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PageTypeId" msprop:Generator_ColumnVarNameInTable="columnPageTypeId" msprop:Generator_ColumnPropNameInRow="PageTypeId" msprop:Generator_ColumnPropNameInTable="PageTypeIdColumn" msprop:Generator_UserColumnName="PageTypeId">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Descrip" msprop:Generator_ColumnVarNameInTable="columnDescrip" msprop:Generator_ColumnPropNameInRow="Descrip" msprop:Generator_ColumnPropNameInTable="DescripColumn" msprop:Generator_UserColumnName="Descrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Abbr" msprop:Generator_ColumnVarNameInTable="columnAbbr" msprop:Generator_ColumnPropNameInRow="Abbr" msprop:Generator_ColumnPropNameInTable="AbbrColumn" msprop:Generator_UserColumnName="Abbr" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DisplayDescrip" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDisplayDescrip" msprop:Generator_ColumnPropNameInRow="DisplayDescrip" msprop:Generator_ColumnPropNameInTable="DisplayDescripColumn" msprop:Generator_UserColumnName="DisplayDescrip" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="153" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:PagesDB" />
+      <xs:field xpath="mstns:PageId" />
+    </xs:unique>
+    <xs:unique name="Size_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Size" />
+      <xs:field xpath="mstns:SizeID" />
+    </xs:unique>
+    <xs:unique name="Vehicle_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Vehicle" />
+      <xs:field xpath="mstns:VehicleId" />
+    </xs:unique>
+    <xs:unique name="Page_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Page" />
+      <xs:field xpath="mstns:PageId" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="FK_Page_Size" msdata:parent="Size" msdata:child="PagesDB" msdata:parentkey="SizeID" msdata:childkey="SizeID" msprop:Generator_UserChildTable="PagesDB" msprop:Generator_ChildPropName="GetPageRows" msprop:Generator_UserRelationName="FK_Page_Size" msprop:Generator_RelationVarName="relationFK_Page_Size" msprop:Generator_UserParentTable="Size" msprop:Generator_ParentPropName="SizeRow" />
+      <msdata:Relationship name="FK_Page_Vehicle" msdata:parent="Vehicle" msdata:child="PagesDB" msdata:parentkey="VehicleId" msdata:childkey="VehicleId" msprop:Generator_UserChildTable="PagesDB" msprop:Generator_ChildPropName="GetPageRows" msprop:Generator_UserRelationName="FK_Page_Vehicle" msprop:Generator_RelationVarName="relationFK_Page_Vehicle" msprop:Generator_UserParentTable="Vehicle" msprop:Generator_ParentPropName="VehicleRow" />
+      <msdata:Relationship name="FK_Page_Size1" msdata:parent="Size" msdata:child="Page" msdata:parentkey="SizeID" msdata:childkey="SizeID" msprop:Generator_UserChildTable="Page" msprop:Generator_ChildPropName="_GetPageRows" msprop:Generator_UserRelationName="FK_Page_Size1" msprop:Generator_RelationVarName="relationFK_Page_Size1" msprop:Generator_UserParentTable="Size" msprop:Generator_ParentPropName="SizeRow" />
+      <msdata:Relationship name="FK_Page_Vehicle1" msdata:parent="Vehicle" msdata:child="Page" msdata:parentkey="VehicleId" msdata:childkey="VehicleId" msprop:Generator_UserChildTable="Page" msprop:Generator_ChildPropName="_GetPageRows" msprop:Generator_UserRelationName="FK_Page_Vehicle1" msprop:Generator_RelationVarName="relationFK_Page_Vehicle1" msprop:Generator_UserParentTable="Vehicle" msprop:Generator_ParentPropName="VehicleRow" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

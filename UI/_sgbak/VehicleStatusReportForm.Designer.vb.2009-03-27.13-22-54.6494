@@ -1,0 +1,980 @@
+﻿Namespace UI
+
+  <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+  Partial Class VehicleStatusReportForm
+    Inherits UI.MDIChildFormBase
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+      If disposing AndAlso components IsNot Nothing Then
+        components.Dispose()
+      End If
+      MyBase.Dispose(disposing)
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+      Me.components = New System.ComponentModel.Container
+      Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(VehicleStatusReportForm))
+      Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+      Me.searchGroupBox = New System.Windows.Forms.GroupBox
+      Me.searchButton = New System.Windows.Forms.Button
+      Me.searchTextBox = New System.Windows.Forms.TextBox
+      Me.vehicleIdLabel = New System.Windows.Forms.Label
+      Me.couponValueLabel = New System.Windows.Forms.Label
+      Me.StatusReportDataSet = New MCAP.StatusReportDataSet
+      Me.couponLabel = New System.Windows.Forms.Label
+      Me.priorityValueLabel = New System.Windows.Forms.Label
+      Me.priorityLabel = New System.Windows.Forms.Label
+      Me.eventValueLabel = New System.Windows.Forms.Label
+      Me.themeLabel = New System.Windows.Forms.Label
+      Me.themeValueLabel = New System.Windows.Forms.Label
+      Me.eventLabel = New System.Windows.Forms.Label
+      Me.endDtValueLabel = New System.Windows.Forms.Label
+      Me.languageValueLabel = New System.Windows.Forms.Label
+      Me.publicationLabel = New System.Windows.Forms.Label
+      Me.publicationValueLabel = New System.Windows.Forms.Label
+      Me.breakDtLabel = New System.Windows.Forms.Label
+      Me.breakDtValueLabel = New System.Windows.Forms.Label
+      Me.retailerValueLabel = New System.Windows.Forms.Label
+      Me.retailerLabel = New System.Windows.Forms.Label
+      Me.languageLabel = New System.Windows.Forms.Label
+      Me.startDtValueLabel = New System.Windows.Forms.Label
+      Me.endDtLabel = New System.Windows.Forms.Label
+      Me.marketValueLabel = New System.Windows.Forms.Label
+      Me.marketLabel = New System.Windows.Forms.Label
+      Me.mediaValueLabel = New System.Windows.Forms.Label
+      Me.mediaLabel = New System.Windows.Forms.Label
+      Me.senderNameLabel = New System.Windows.Forms.Label
+      Me.senderLabel = New System.Windows.Forms.Label
+      Me.startDtLabel = New System.Windows.Forms.Label
+      Me.envelopeIdLinkLabel = New System.Windows.Forms.LinkLabel
+      Me.envelopeIdLabel = New System.Windows.Forms.Label
+      Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
+      Me.basePagesLabel = New System.Windows.Forms.Label
+      Me.basePageCountLabel = New System.Windows.Forms.Label
+      Me.insertPagesLabel = New System.Windows.Forms.Label
+      Me.insertPageCountLabel = New System.Windows.Forms.Label
+      Me.wrapPagesLabel = New System.Windows.Forms.Label
+      Me.wrapPageCountLabel = New System.Windows.Forms.Label
+      Me.pagesDataGridView = New System.Windows.Forms.DataGridView
+      Me.VehicleIdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.PageIdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.ImageNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.PageTypeIdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.ReceivedOrderDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.PageNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.SizeIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.SizeTextDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.PixelHieghtDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.PixelWidthDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+      Me.StatusReportDataSetBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+      Me.flashValueLabel = New System.Windows.Forms.Label
+      Me.flashLabel = New System.Windows.Forms.Label
+      Me.vehicleStatusLabel = New System.Windows.Forms.Label
+      Me.vehicleStatusValueLabel = New System.Windows.Forms.Label
+      Me.createdOnLabel = New System.Windows.Forms.Label
+      Me.indexedOnLabel = New System.Windows.Forms.Label
+      Me.scannedOnLabel = New System.Windows.Forms.Label
+      Me.qcedOnLabel = New System.Windows.Forms.Label
+      Me.sizedOnLabel = New System.Windows.Forms.Label
+      Me.sizedOnValueLabel = New System.Windows.Forms.Label
+      Me.createdOnValueLabel = New System.Windows.Forms.Label
+      Me.indexedOnValueLabel = New System.Windows.Forms.Label
+      Me.scannedOnValueLabel = New System.Windows.Forms.Label
+      Me.qcedOnValueLabel = New System.Windows.Forms.Label
+      Me.tradeclassLabel = New System.Windows.Forms.Label
+      Me.tradeclassValueLabel = New System.Windows.Forms.Label
+      Me.ftpedOnLabel = New System.Windows.Forms.Label
+      Me.ftpOnValueLabel = New System.Windows.Forms.Label
+      Me.exportStatusLabel = New System.Windows.Forms.Label
+      Me.exportStatusValueLabel = New System.Windows.Forms.Label
+      CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
+      Me.searchGroupBox.SuspendLayout()
+      CType(Me.StatusReportDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
+      Me.TableLayoutPanel1.SuspendLayout()
+      CType(Me.pagesDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+      CType(Me.StatusReportDataSetBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+      Me.SuspendLayout()
+      '
+      'smalliconImageList
+      '
+      Me.smalliconImageList.ImageStream = CType(resources.GetObject("smalliconImageList.ImageStream"), System.Windows.Forms.ImageListStreamer)
+      Me.smalliconImageList.Images.SetKeyName(0, "Filter.ico")
+      Me.smalliconImageList.Images.SetKeyName(1, "Printer.ico")
+      Me.smalliconImageList.Images.SetKeyName(2, "DefaultPrinter.ico")
+      '
+      'searchGroupBox
+      '
+      Me.searchGroupBox.Controls.Add(Me.searchButton)
+      Me.searchGroupBox.Controls.Add(Me.searchTextBox)
+      Me.searchGroupBox.Controls.Add(Me.vehicleIdLabel)
+      Me.searchGroupBox.Dock = System.Windows.Forms.DockStyle.Top
+      Me.searchGroupBox.Location = New System.Drawing.Point(0, 0)
+      Me.searchGroupBox.Name = "searchGroupBox"
+      Me.searchGroupBox.Size = New System.Drawing.Size(961, 49)
+      Me.searchGroupBox.TabIndex = 1
+      Me.searchGroupBox.TabStop = False
+      Me.searchGroupBox.Text = "Search"
+      '
+      'searchButton
+      '
+      Me.searchButton.Location = New System.Drawing.Point(286, 17)
+      Me.searchButton.Name = "searchButton"
+      Me.searchButton.Size = New System.Drawing.Size(75, 23)
+      Me.searchButton.TabIndex = 2
+      Me.searchButton.Text = "&Search"
+      Me.searchButton.UseVisualStyleBackColor = True
+      '
+      'searchTextBox
+      '
+      Me.searchTextBox.Location = New System.Drawing.Point(79, 19)
+      Me.searchTextBox.Name = "searchTextBox"
+      Me.searchTextBox.Size = New System.Drawing.Size(201, 20)
+      Me.searchTextBox.TabIndex = 1
+      '
+      'vehicleIdLabel
+      '
+      Me.vehicleIdLabel.AutoSize = True
+      Me.vehicleIdLabel.Location = New System.Drawing.Point(6, 22)
+      Me.vehicleIdLabel.Name = "vehicleIdLabel"
+      Me.vehicleIdLabel.Size = New System.Drawing.Size(57, 13)
+      Me.vehicleIdLabel.TabIndex = 0
+      Me.vehicleIdLabel.Text = "Vehicle Id:"
+      '
+      'couponValueLabel
+      '
+      Me.couponValueLabel.AutoSize = True
+      Me.couponValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Coupon", True))
+      Me.couponValueLabel.Location = New System.Drawing.Point(88, 387)
+      Me.couponValueLabel.Name = "couponValueLabel"
+      Me.couponValueLabel.Size = New System.Drawing.Size(56, 13)
+      Me.couponValueLabel.TabIndex = 27
+      Me.couponValueLabel.Text = "<Coupon>"
+      Me.couponValueLabel.UseMnemonic = False
+      '
+      'StatusReportDataSet
+      '
+      Me.StatusReportDataSet.DataSetName = "StatusReportDataSet"
+      Me.StatusReportDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+      '
+      'couponLabel
+      '
+      Me.couponLabel.AutoSize = True
+      Me.couponLabel.Location = New System.Drawing.Point(3, 387)
+      Me.couponLabel.Name = "couponLabel"
+      Me.couponLabel.Size = New System.Drawing.Size(44, 13)
+      Me.couponLabel.TabIndex = 26
+      Me.couponLabel.Text = "Coupon"
+      '
+      'priorityValueLabel
+      '
+      Me.priorityValueLabel.AutoSize = True
+      Me.priorityValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Priority", True))
+      Me.priorityValueLabel.Location = New System.Drawing.Point(88, 358)
+      Me.priorityValueLabel.Name = "priorityValueLabel"
+      Me.priorityValueLabel.Size = New System.Drawing.Size(50, 13)
+      Me.priorityValueLabel.TabIndex = 25
+      Me.priorityValueLabel.Text = "<Priority>"
+      Me.priorityValueLabel.UseMnemonic = False
+      '
+      'priorityLabel
+      '
+      Me.priorityLabel.AutoSize = True
+      Me.priorityLabel.Location = New System.Drawing.Point(3, 358)
+      Me.priorityLabel.Name = "priorityLabel"
+      Me.priorityLabel.Size = New System.Drawing.Size(38, 13)
+      Me.priorityLabel.TabIndex = 24
+      Me.priorityLabel.Text = "Priority"
+      '
+      'eventValueLabel
+      '
+      Me.eventValueLabel.AutoSize = True
+      Me.eventValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Event", True))
+      Me.eventValueLabel.Location = New System.Drawing.Point(88, 329)
+      Me.eventValueLabel.Name = "eventValueLabel"
+      Me.eventValueLabel.Size = New System.Drawing.Size(47, 13)
+      Me.eventValueLabel.TabIndex = 23
+      Me.eventValueLabel.Text = "<Event>"
+      Me.eventValueLabel.UseMnemonic = False
+      '
+      'themeLabel
+      '
+      Me.themeLabel.AutoSize = True
+      Me.themeLabel.Location = New System.Drawing.Point(3, 300)
+      Me.themeLabel.Name = "themeLabel"
+      Me.themeLabel.Size = New System.Drawing.Size(40, 13)
+      Me.themeLabel.TabIndex = 20
+      Me.themeLabel.Text = "Theme"
+      '
+      'themeValueLabel
+      '
+      Me.themeValueLabel.AutoSize = True
+      Me.themeValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Theme", True))
+      Me.themeValueLabel.Location = New System.Drawing.Point(88, 300)
+      Me.themeValueLabel.Name = "themeValueLabel"
+      Me.themeValueLabel.Size = New System.Drawing.Size(52, 13)
+      Me.themeValueLabel.TabIndex = 21
+      Me.themeValueLabel.Text = "<Theme>"
+      Me.themeValueLabel.UseMnemonic = False
+      '
+      'eventLabel
+      '
+      Me.eventLabel.AutoSize = True
+      Me.eventLabel.Location = New System.Drawing.Point(3, 329)
+      Me.eventLabel.Name = "eventLabel"
+      Me.eventLabel.Size = New System.Drawing.Size(35, 13)
+      Me.eventLabel.TabIndex = 22
+      Me.eventLabel.Text = "Event"
+      '
+      'endDtValueLabel
+      '
+      Me.endDtValueLabel.AutoSize = True
+      Me.endDtValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.EndDt", True))
+      Me.endDtValueLabel.Location = New System.Drawing.Point(88, 271)
+      Me.endDtValueLabel.Name = "endDtValueLabel"
+      Me.endDtValueLabel.Size = New System.Drawing.Size(64, 13)
+      Me.endDtValueLabel.TabIndex = 19
+      Me.endDtValueLabel.Text = "<End Date>"
+      Me.endDtValueLabel.UseMnemonic = False
+      '
+      'languageValueLabel
+      '
+      Me.languageValueLabel.AutoSize = True
+      Me.languageValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Language", True))
+      Me.languageValueLabel.Location = New System.Drawing.Point(88, 213)
+      Me.languageValueLabel.Name = "languageValueLabel"
+      Me.languageValueLabel.Size = New System.Drawing.Size(67, 13)
+      Me.languageValueLabel.TabIndex = 15
+      Me.languageValueLabel.Text = "<Language>"
+      Me.languageValueLabel.UseMnemonic = False
+      '
+      'publicationLabel
+      '
+      Me.publicationLabel.AutoSize = True
+      Me.publicationLabel.Location = New System.Drawing.Point(3, 97)
+      Me.publicationLabel.Name = "publicationLabel"
+      Me.publicationLabel.Size = New System.Drawing.Size(59, 13)
+      Me.publicationLabel.TabIndex = 8
+      Me.publicationLabel.Text = "Publication"
+      '
+      'publicationValueLabel
+      '
+      Me.publicationValueLabel.AutoSize = True
+      Me.publicationValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Publication", True))
+      Me.publicationValueLabel.Location = New System.Drawing.Point(88, 97)
+      Me.publicationValueLabel.Name = "publicationValueLabel"
+      Me.publicationValueLabel.Size = New System.Drawing.Size(71, 13)
+      Me.publicationValueLabel.TabIndex = 9
+      Me.publicationValueLabel.Text = "<Publication>"
+      Me.publicationValueLabel.UseMnemonic = False
+      '
+      'breakDtLabel
+      '
+      Me.breakDtLabel.AutoSize = True
+      Me.breakDtLabel.Location = New System.Drawing.Point(3, 126)
+      Me.breakDtLabel.Name = "breakDtLabel"
+      Me.breakDtLabel.Size = New System.Drawing.Size(46, 13)
+      Me.breakDtLabel.TabIndex = 10
+      Me.breakDtLabel.Text = "Ad Date"
+      '
+      'breakDtValueLabel
+      '
+      Me.breakDtValueLabel.AutoSize = True
+      Me.breakDtValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.BreakDt", True))
+      Me.breakDtValueLabel.Location = New System.Drawing.Point(88, 126)
+      Me.breakDtValueLabel.Name = "breakDtValueLabel"
+      Me.breakDtValueLabel.Size = New System.Drawing.Size(58, 13)
+      Me.breakDtValueLabel.TabIndex = 11
+      Me.breakDtValueLabel.Text = "<Ad Date>"
+      Me.breakDtValueLabel.UseMnemonic = False
+      '
+      'retailerValueLabel
+      '
+      Me.retailerValueLabel.AutoSize = True
+      Me.retailerValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Retailer", True))
+      Me.retailerValueLabel.Location = New System.Drawing.Point(88, 155)
+      Me.retailerValueLabel.Name = "retailerValueLabel"
+      Me.retailerValueLabel.Size = New System.Drawing.Size(55, 13)
+      Me.retailerValueLabel.TabIndex = 13
+      Me.retailerValueLabel.Text = "<Retailer>"
+      Me.retailerValueLabel.UseMnemonic = False
+      '
+      'retailerLabel
+      '
+      Me.retailerLabel.AutoSize = True
+      Me.retailerLabel.Location = New System.Drawing.Point(3, 155)
+      Me.retailerLabel.Name = "retailerLabel"
+      Me.retailerLabel.Size = New System.Drawing.Size(43, 13)
+      Me.retailerLabel.TabIndex = 12
+      Me.retailerLabel.Text = "Retailer"
+      '
+      'languageLabel
+      '
+      Me.languageLabel.AutoSize = True
+      Me.languageLabel.Location = New System.Drawing.Point(3, 213)
+      Me.languageLabel.Name = "languageLabel"
+      Me.languageLabel.Size = New System.Drawing.Size(55, 13)
+      Me.languageLabel.TabIndex = 14
+      Me.languageLabel.Text = "Language"
+      '
+      'startDtValueLabel
+      '
+      Me.startDtValueLabel.AutoSize = True
+      Me.startDtValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.StartDt", True))
+      Me.startDtValueLabel.Location = New System.Drawing.Point(88, 242)
+      Me.startDtValueLabel.Name = "startDtValueLabel"
+      Me.startDtValueLabel.Size = New System.Drawing.Size(67, 13)
+      Me.startDtValueLabel.TabIndex = 17
+      Me.startDtValueLabel.Text = "<Start Date>"
+      Me.startDtValueLabel.UseMnemonic = False
+      '
+      'endDtLabel
+      '
+      Me.endDtLabel.AutoSize = True
+      Me.endDtLabel.Location = New System.Drawing.Point(3, 271)
+      Me.endDtLabel.Name = "endDtLabel"
+      Me.endDtLabel.Size = New System.Drawing.Size(52, 13)
+      Me.endDtLabel.TabIndex = 18
+      Me.endDtLabel.Text = "End Date"
+      '
+      'marketValueLabel
+      '
+      Me.marketValueLabel.AutoSize = True
+      Me.marketValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Market", True))
+      Me.marketValueLabel.Location = New System.Drawing.Point(88, 68)
+      Me.marketValueLabel.Name = "marketValueLabel"
+      Me.marketValueLabel.Size = New System.Drawing.Size(52, 13)
+      Me.marketValueLabel.TabIndex = 7
+      Me.marketValueLabel.Text = "<Market>"
+      Me.marketValueLabel.UseMnemonic = False
+      '
+      'marketLabel
+      '
+      Me.marketLabel.AutoSize = True
+      Me.marketLabel.Location = New System.Drawing.Point(3, 68)
+      Me.marketLabel.Name = "marketLabel"
+      Me.marketLabel.Size = New System.Drawing.Size(40, 13)
+      Me.marketLabel.TabIndex = 6
+      Me.marketLabel.Text = "Market"
+      '
+      'mediaValueLabel
+      '
+      Me.mediaValueLabel.AutoSize = True
+      Me.mediaValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Media", True))
+      Me.mediaValueLabel.Location = New System.Drawing.Point(88, 39)
+      Me.mediaValueLabel.Name = "mediaValueLabel"
+      Me.mediaValueLabel.Size = New System.Drawing.Size(48, 13)
+      Me.mediaValueLabel.TabIndex = 5
+      Me.mediaValueLabel.Text = "<Media>"
+      Me.mediaValueLabel.UseMnemonic = False
+      '
+      'mediaLabel
+      '
+      Me.mediaLabel.AutoSize = True
+      Me.mediaLabel.Location = New System.Drawing.Point(3, 39)
+      Me.mediaLabel.Name = "mediaLabel"
+      Me.mediaLabel.Size = New System.Drawing.Size(36, 13)
+      Me.mediaLabel.TabIndex = 4
+      Me.mediaLabel.Text = "Media"
+      '
+      'senderNameLabel
+      '
+      Me.senderNameLabel.AutoSize = True
+      Me.TableLayoutPanel1.SetColumnSpan(Me.senderNameLabel, 2)
+      Me.senderNameLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwEnvelopeStatusReport.Sender", True))
+      Me.senderNameLabel.Location = New System.Drawing.Point(341, 10)
+      Me.senderNameLabel.Name = "senderNameLabel"
+      Me.senderNameLabel.Size = New System.Drawing.Size(84, 13)
+      Me.senderNameLabel.TabIndex = 3
+      Me.senderNameLabel.Text = "<Sender Name>"
+      Me.senderNameLabel.UseMnemonic = False
+      '
+      'senderLabel
+      '
+      Me.senderLabel.AutoSize = True
+      Me.senderLabel.Location = New System.Drawing.Point(261, 10)
+      Me.senderLabel.Name = "senderLabel"
+      Me.senderLabel.Size = New System.Drawing.Size(41, 13)
+      Me.senderLabel.TabIndex = 2
+      Me.senderLabel.Text = "Sender"
+      '
+      'startDtLabel
+      '
+      Me.startDtLabel.AutoSize = True
+      Me.startDtLabel.Location = New System.Drawing.Point(3, 242)
+      Me.startDtLabel.Name = "startDtLabel"
+      Me.startDtLabel.Size = New System.Drawing.Size(55, 13)
+      Me.startDtLabel.TabIndex = 16
+      Me.startDtLabel.Text = "Start Date"
+      '
+      'envelopeIdLinkLabel
+      '
+      Me.envelopeIdLinkLabel.AutoSize = True
+      Me.envelopeIdLinkLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.EnvelopeId", True))
+      Me.envelopeIdLinkLabel.Location = New System.Drawing.Point(88, 10)
+      Me.envelopeIdLinkLabel.Name = "envelopeIdLinkLabel"
+      Me.envelopeIdLinkLabel.Size = New System.Drawing.Size(76, 13)
+      Me.envelopeIdLinkLabel.TabIndex = 1
+      Me.envelopeIdLinkLabel.TabStop = True
+      Me.envelopeIdLinkLabel.Text = "<Envelope Id>"
+      Me.envelopeIdLinkLabel.UseMnemonic = False
+      '
+      'envelopeIdLabel
+      '
+      Me.envelopeIdLabel.AutoSize = True
+      Me.envelopeIdLabel.Location = New System.Drawing.Point(3, 10)
+      Me.envelopeIdLabel.Name = "envelopeIdLabel"
+      Me.envelopeIdLabel.Size = New System.Drawing.Size(64, 13)
+      Me.envelopeIdLabel.TabIndex = 0
+      Me.envelopeIdLabel.Text = "Envelope Id"
+      '
+      'TableLayoutPanel1
+      '
+      Me.TableLayoutPanel1.ColumnCount = 10
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85.0!))
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
+      Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75.0!))
+      Me.TableLayoutPanel1.Controls.Add(Me.envelopeIdLabel, 0, 1)
+      Me.TableLayoutPanel1.Controls.Add(Me.envelopeIdLinkLabel, 1, 1)
+      Me.TableLayoutPanel1.Controls.Add(Me.senderLabel, 2, 1)
+      Me.TableLayoutPanel1.Controls.Add(Me.senderNameLabel, 3, 1)
+      Me.TableLayoutPanel1.Controls.Add(Me.mediaLabel, 0, 2)
+      Me.TableLayoutPanel1.Controls.Add(Me.mediaValueLabel, 1, 2)
+      Me.TableLayoutPanel1.Controls.Add(Me.basePagesLabel, 4, 2)
+      Me.TableLayoutPanel1.Controls.Add(Me.basePageCountLabel, 5, 2)
+      Me.TableLayoutPanel1.Controls.Add(Me.insertPagesLabel, 6, 2)
+      Me.TableLayoutPanel1.Controls.Add(Me.insertPageCountLabel, 7, 2)
+      Me.TableLayoutPanel1.Controls.Add(Me.wrapPagesLabel, 8, 2)
+      Me.TableLayoutPanel1.Controls.Add(Me.wrapPageCountLabel, 9, 2)
+      Me.TableLayoutPanel1.Controls.Add(Me.pagesDataGridView, 4, 3)
+      Me.TableLayoutPanel1.Controls.Add(Me.retailerValueLabel, 1, 6)
+      Me.TableLayoutPanel1.Controls.Add(Me.retailerLabel, 0, 6)
+      Me.TableLayoutPanel1.Controls.Add(Me.publicationValueLabel, 1, 4)
+      Me.TableLayoutPanel1.Controls.Add(Me.publicationLabel, 0, 4)
+      Me.TableLayoutPanel1.Controls.Add(Me.breakDtLabel, 0, 5)
+      Me.TableLayoutPanel1.Controls.Add(Me.breakDtValueLabel, 1, 5)
+      Me.TableLayoutPanel1.Controls.Add(Me.marketLabel, 0, 3)
+      Me.TableLayoutPanel1.Controls.Add(Me.marketValueLabel, 1, 3)
+      Me.TableLayoutPanel1.Controls.Add(Me.languageValueLabel, 1, 8)
+      Me.TableLayoutPanel1.Controls.Add(Me.startDtValueLabel, 1, 9)
+      Me.TableLayoutPanel1.Controls.Add(Me.endDtValueLabel, 1, 10)
+      Me.TableLayoutPanel1.Controls.Add(Me.themeValueLabel, 1, 11)
+      Me.TableLayoutPanel1.Controls.Add(Me.eventValueLabel, 1, 12)
+      Me.TableLayoutPanel1.Controls.Add(Me.priorityValueLabel, 1, 13)
+      Me.TableLayoutPanel1.Controls.Add(Me.couponValueLabel, 1, 14)
+      Me.TableLayoutPanel1.Controls.Add(Me.flashValueLabel, 1, 15)
+      Me.TableLayoutPanel1.Controls.Add(Me.languageLabel, 0, 8)
+      Me.TableLayoutPanel1.Controls.Add(Me.startDtLabel, 0, 9)
+      Me.TableLayoutPanel1.Controls.Add(Me.endDtLabel, 0, 10)
+      Me.TableLayoutPanel1.Controls.Add(Me.themeLabel, 0, 11)
+      Me.TableLayoutPanel1.Controls.Add(Me.eventLabel, 0, 12)
+      Me.TableLayoutPanel1.Controls.Add(Me.priorityLabel, 0, 13)
+      Me.TableLayoutPanel1.Controls.Add(Me.couponLabel, 0, 14)
+      Me.TableLayoutPanel1.Controls.Add(Me.flashLabel, 0, 15)
+      Me.TableLayoutPanel1.Controls.Add(Me.vehicleStatusLabel, 0, 16)
+      Me.TableLayoutPanel1.Controls.Add(Me.vehicleStatusValueLabel, 1, 16)
+      Me.TableLayoutPanel1.Controls.Add(Me.createdOnLabel, 2, 2)
+      Me.TableLayoutPanel1.Controls.Add(Me.indexedOnLabel, 2, 3)
+      Me.TableLayoutPanel1.Controls.Add(Me.scannedOnLabel, 2, 4)
+      Me.TableLayoutPanel1.Controls.Add(Me.qcedOnLabel, 2, 5)
+      Me.TableLayoutPanel1.Controls.Add(Me.sizedOnLabel, 2, 6)
+      Me.TableLayoutPanel1.Controls.Add(Me.sizedOnValueLabel, 3, 6)
+      Me.TableLayoutPanel1.Controls.Add(Me.createdOnValueLabel, 3, 2)
+      Me.TableLayoutPanel1.Controls.Add(Me.indexedOnValueLabel, 3, 3)
+      Me.TableLayoutPanel1.Controls.Add(Me.scannedOnValueLabel, 3, 4)
+      Me.TableLayoutPanel1.Controls.Add(Me.qcedOnValueLabel, 3, 5)
+      Me.TableLayoutPanel1.Controls.Add(Me.tradeclassLabel, 0, 7)
+      Me.TableLayoutPanel1.Controls.Add(Me.tradeclassValueLabel, 1, 7)
+      Me.TableLayoutPanel1.Controls.Add(Me.ftpedOnLabel, 2, 7)
+      Me.TableLayoutPanel1.Controls.Add(Me.ftpOnValueLabel, 3, 7)
+      Me.TableLayoutPanel1.Controls.Add(Me.exportStatusLabel, 2, 8)
+      Me.TableLayoutPanel1.Controls.Add(Me.exportStatusValueLabel, 3, 8)
+      Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+      Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 49)
+      Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+      Me.TableLayoutPanel1.RowCount = 17
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10.0!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.249231!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.249231!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.24923!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.24923!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.24923!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.249231!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.252928!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.250479!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.251282!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.251282!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.251282!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.249969!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.249969!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.249969!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.24997!))
+      Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.247469!))
+      Me.TableLayoutPanel1.Size = New System.Drawing.Size(961, 481)
+      Me.TableLayoutPanel1.TabIndex = 2
+      '
+      'basePagesLabel
+      '
+      Me.basePagesLabel.AutoSize = True
+      Me.basePagesLabel.Location = New System.Drawing.Point(514, 39)
+      Me.basePagesLabel.Name = "basePagesLabel"
+      Me.basePagesLabel.Size = New System.Drawing.Size(64, 13)
+      Me.basePagesLabel.TabIndex = 54
+      Me.basePagesLabel.Text = "Base Pages"
+      '
+      'basePageCountLabel
+      '
+      Me.basePageCountLabel.AutoSize = True
+      Me.basePageCountLabel.Location = New System.Drawing.Point(589, 39)
+      Me.basePageCountLabel.Name = "basePageCountLabel"
+      Me.basePageCountLabel.Size = New System.Drawing.Size(68, 26)
+      Me.basePageCountLabel.TabIndex = 55
+      Me.basePageCountLabel.Text = "<Base Page Count>"
+      '
+      'insertPagesLabel
+      '
+      Me.insertPagesLabel.AutoSize = True
+      Me.insertPagesLabel.Location = New System.Drawing.Point(664, 39)
+      Me.insertPagesLabel.Name = "insertPagesLabel"
+      Me.insertPagesLabel.Size = New System.Drawing.Size(66, 13)
+      Me.insertPagesLabel.TabIndex = 56
+      Me.insertPagesLabel.Text = "Insert Pages"
+      '
+      'insertPageCountLabel
+      '
+      Me.insertPageCountLabel.AutoSize = True
+      Me.insertPageCountLabel.Location = New System.Drawing.Point(739, 39)
+      Me.insertPageCountLabel.Name = "insertPageCountLabel"
+      Me.insertPageCountLabel.Size = New System.Drawing.Size(69, 26)
+      Me.insertPageCountLabel.TabIndex = 57
+      Me.insertPageCountLabel.Text = "<Page Page Count>"
+      '
+      'wrapPagesLabel
+      '
+      Me.wrapPagesLabel.AutoSize = True
+      Me.wrapPagesLabel.Location = New System.Drawing.Point(814, 39)
+      Me.wrapPagesLabel.Name = "wrapPagesLabel"
+      Me.wrapPagesLabel.Size = New System.Drawing.Size(66, 13)
+      Me.wrapPagesLabel.TabIndex = 58
+      Me.wrapPagesLabel.Text = "Wrap Pages"
+      '
+      'wrapPageCountLabel
+      '
+      Me.wrapPageCountLabel.AutoSize = True
+      Me.wrapPageCountLabel.Location = New System.Drawing.Point(889, 39)
+      Me.wrapPageCountLabel.Name = "wrapPageCountLabel"
+      Me.wrapPageCountLabel.Size = New System.Drawing.Size(67, 26)
+      Me.wrapPageCountLabel.TabIndex = 59
+      Me.wrapPageCountLabel.Text = "<Wrap Page Count>"
+      '
+      'pagesDataGridView
+      '
+      Me.pagesDataGridView.AllowUserToAddRows = False
+      Me.pagesDataGridView.AllowUserToDeleteRows = False
+      DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+      Me.pagesDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+      Me.pagesDataGridView.AutoGenerateColumns = False
+      Me.pagesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+      Me.pagesDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.VehicleIdDataGridViewTextBoxColumn, Me.PageIdDataGridViewTextBoxColumn, Me.ImageNameDataGridViewTextBoxColumn, Me.PageTypeIdDataGridViewTextBoxColumn, Me.ReceivedOrderDataGridViewTextBoxColumn, Me.PageNameDataGridViewTextBoxColumn, Me.SizeIDDataGridViewTextBoxColumn, Me.SizeTextDataGridViewTextBoxColumn, Me.PixelHieghtDataGridViewTextBoxColumn, Me.PixelWidthDataGridViewTextBoxColumn})
+      Me.TableLayoutPanel1.SetColumnSpan(Me.pagesDataGridView, 6)
+      Me.pagesDataGridView.DataMember = "Page"
+      Me.pagesDataGridView.DataSource = Me.StatusReportDataSetBindingSource
+      Me.pagesDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+      Me.pagesDataGridView.Location = New System.Drawing.Point(514, 71)
+      Me.pagesDataGridView.Name = "pagesDataGridView"
+      Me.pagesDataGridView.ReadOnly = True
+      Me.pagesDataGridView.RowHeadersVisible = False
+      Me.TableLayoutPanel1.SetRowSpan(Me.pagesDataGridView, 14)
+      Me.pagesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+      Me.pagesDataGridView.Size = New System.Drawing.Size(444, 407)
+      Me.pagesDataGridView.TabIndex = 60
+      '
+      'VehicleIdDataGridViewTextBoxColumn
+      '
+      Me.VehicleIdDataGridViewTextBoxColumn.DataPropertyName = "VehicleId"
+      Me.VehicleIdDataGridViewTextBoxColumn.HeaderText = "VehicleId"
+      Me.VehicleIdDataGridViewTextBoxColumn.Name = "VehicleIdDataGridViewTextBoxColumn"
+      Me.VehicleIdDataGridViewTextBoxColumn.ReadOnly = True
+      Me.VehicleIdDataGridViewTextBoxColumn.Visible = False
+      '
+      'PageIdDataGridViewTextBoxColumn
+      '
+      Me.PageIdDataGridViewTextBoxColumn.DataPropertyName = "PageId"
+      Me.PageIdDataGridViewTextBoxColumn.HeaderText = "PageId"
+      Me.PageIdDataGridViewTextBoxColumn.Name = "PageIdDataGridViewTextBoxColumn"
+      Me.PageIdDataGridViewTextBoxColumn.ReadOnly = True
+      Me.PageIdDataGridViewTextBoxColumn.Visible = False
+      '
+      'ImageNameDataGridViewTextBoxColumn
+      '
+      Me.ImageNameDataGridViewTextBoxColumn.DataPropertyName = "ImageName"
+      Me.ImageNameDataGridViewTextBoxColumn.HeaderText = "Image Name"
+      Me.ImageNameDataGridViewTextBoxColumn.Name = "ImageNameDataGridViewTextBoxColumn"
+      Me.ImageNameDataGridViewTextBoxColumn.ReadOnly = True
+      '
+      'PageTypeIdDataGridViewTextBoxColumn
+      '
+      Me.PageTypeIdDataGridViewTextBoxColumn.DataPropertyName = "PageTypeId"
+      Me.PageTypeIdDataGridViewTextBoxColumn.HeaderText = "Page-Type Id"
+      Me.PageTypeIdDataGridViewTextBoxColumn.Name = "PageTypeIdDataGridViewTextBoxColumn"
+      Me.PageTypeIdDataGridViewTextBoxColumn.ReadOnly = True
+      '
+      'ReceivedOrderDataGridViewTextBoxColumn
+      '
+      Me.ReceivedOrderDataGridViewTextBoxColumn.DataPropertyName = "ReceivedOrder"
+      Me.ReceivedOrderDataGridViewTextBoxColumn.HeaderText = "Received Order"
+      Me.ReceivedOrderDataGridViewTextBoxColumn.Name = "ReceivedOrderDataGridViewTextBoxColumn"
+      Me.ReceivedOrderDataGridViewTextBoxColumn.ReadOnly = True
+      '
+      'PageNameDataGridViewTextBoxColumn
+      '
+      Me.PageNameDataGridViewTextBoxColumn.DataPropertyName = "PageName"
+      Me.PageNameDataGridViewTextBoxColumn.HeaderText = "Page Name"
+      Me.PageNameDataGridViewTextBoxColumn.Name = "PageNameDataGridViewTextBoxColumn"
+      Me.PageNameDataGridViewTextBoxColumn.ReadOnly = True
+      '
+      'SizeIDDataGridViewTextBoxColumn
+      '
+      Me.SizeIDDataGridViewTextBoxColumn.DataPropertyName = "SizeID"
+      Me.SizeIDDataGridViewTextBoxColumn.HeaderText = "SizeID"
+      Me.SizeIDDataGridViewTextBoxColumn.Name = "SizeIDDataGridViewTextBoxColumn"
+      Me.SizeIDDataGridViewTextBoxColumn.ReadOnly = True
+      Me.SizeIDDataGridViewTextBoxColumn.Visible = False
+      '
+      'SizeTextDataGridViewTextBoxColumn
+      '
+      Me.SizeTextDataGridViewTextBoxColumn.DataPropertyName = "SizeText"
+      Me.SizeTextDataGridViewTextBoxColumn.HeaderText = "Size"
+      Me.SizeTextDataGridViewTextBoxColumn.Name = "SizeTextDataGridViewTextBoxColumn"
+      Me.SizeTextDataGridViewTextBoxColumn.ReadOnly = True
+      '
+      'PixelHieghtDataGridViewTextBoxColumn
+      '
+      Me.PixelHieghtDataGridViewTextBoxColumn.DataPropertyName = "PixelHieght"
+      Me.PixelHieghtDataGridViewTextBoxColumn.HeaderText = "Height (Pixels)"
+      Me.PixelHieghtDataGridViewTextBoxColumn.Name = "PixelHieghtDataGridViewTextBoxColumn"
+      Me.PixelHieghtDataGridViewTextBoxColumn.ReadOnly = True
+      Me.PixelHieghtDataGridViewTextBoxColumn.Visible = False
+      '
+      'PixelWidthDataGridViewTextBoxColumn
+      '
+      Me.PixelWidthDataGridViewTextBoxColumn.DataPropertyName = "PixelWidth"
+      Me.PixelWidthDataGridViewTextBoxColumn.HeaderText = "Width (Pixels)"
+      Me.PixelWidthDataGridViewTextBoxColumn.Name = "PixelWidthDataGridViewTextBoxColumn"
+      Me.PixelWidthDataGridViewTextBoxColumn.ReadOnly = True
+      Me.PixelWidthDataGridViewTextBoxColumn.Visible = False
+      '
+      'StatusReportDataSetBindingSource
+      '
+      Me.StatusReportDataSetBindingSource.DataSource = Me.StatusReportDataSet
+      Me.StatusReportDataSetBindingSource.Position = 0
+      '
+      'flashValueLabel
+      '
+      Me.flashValueLabel.AutoSize = True
+      Me.flashValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Flash", True))
+      Me.flashValueLabel.Location = New System.Drawing.Point(88, 416)
+      Me.flashValueLabel.Name = "flashValueLabel"
+      Me.flashValueLabel.Size = New System.Drawing.Size(44, 13)
+      Me.flashValueLabel.TabIndex = 29
+      Me.flashValueLabel.Text = "<Flash>"
+      Me.flashValueLabel.UseMnemonic = False
+      '
+      'flashLabel
+      '
+      Me.flashLabel.AutoSize = True
+      Me.flashLabel.Location = New System.Drawing.Point(3, 416)
+      Me.flashLabel.Name = "flashLabel"
+      Me.flashLabel.Size = New System.Drawing.Size(32, 13)
+      Me.flashLabel.TabIndex = 28
+      Me.flashLabel.Text = "Flash"
+      '
+      'vehicleStatusLabel
+      '
+      Me.vehicleStatusLabel.AutoSize = True
+      Me.vehicleStatusLabel.Location = New System.Drawing.Point(3, 445)
+      Me.vehicleStatusLabel.Name = "vehicleStatusLabel"
+      Me.vehicleStatusLabel.Size = New System.Drawing.Size(75, 13)
+      Me.vehicleStatusLabel.TabIndex = 52
+      Me.vehicleStatusLabel.Text = "Vehicle Status"
+      '
+      'vehicleStatusValueLabel
+      '
+      Me.vehicleStatusValueLabel.AutoSize = True
+      Me.vehicleStatusValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Status", True))
+      Me.vehicleStatusValueLabel.Location = New System.Drawing.Point(88, 445)
+      Me.vehicleStatusValueLabel.Name = "vehicleStatusValueLabel"
+      Me.vehicleStatusValueLabel.Size = New System.Drawing.Size(87, 13)
+      Me.vehicleStatusValueLabel.TabIndex = 53
+      Me.vehicleStatusValueLabel.Text = "<Vehicle Status>"
+      Me.vehicleStatusValueLabel.UseMnemonic = False
+      '
+      'createdOnLabel
+      '
+      Me.createdOnLabel.AutoSize = True
+      Me.createdOnLabel.Location = New System.Drawing.Point(261, 39)
+      Me.createdOnLabel.Name = "createdOnLabel"
+      Me.createdOnLabel.Size = New System.Drawing.Size(61, 13)
+      Me.createdOnLabel.TabIndex = 30
+      Me.createdOnLabel.Text = "Created On"
+      '
+      'indexedOnLabel
+      '
+      Me.indexedOnLabel.AutoSize = True
+      Me.indexedOnLabel.Location = New System.Drawing.Point(261, 68)
+      Me.indexedOnLabel.Name = "indexedOnLabel"
+      Me.indexedOnLabel.Size = New System.Drawing.Size(62, 13)
+      Me.indexedOnLabel.TabIndex = 34
+      Me.indexedOnLabel.Text = "Indexed On"
+      '
+      'scannedOnLabel
+      '
+      Me.scannedOnLabel.AutoSize = True
+      Me.scannedOnLabel.Location = New System.Drawing.Point(261, 97)
+      Me.scannedOnLabel.Name = "scannedOnLabel"
+      Me.scannedOnLabel.Size = New System.Drawing.Size(67, 13)
+      Me.scannedOnLabel.TabIndex = 38
+      Me.scannedOnLabel.Text = "Scanned On"
+      '
+      'qcedOnLabel
+      '
+      Me.qcedOnLabel.AutoSize = True
+      Me.qcedOnLabel.Location = New System.Drawing.Point(261, 126)
+      Me.qcedOnLabel.Name = "qcedOnLabel"
+      Me.qcedOnLabel.Size = New System.Drawing.Size(51, 13)
+      Me.qcedOnLabel.TabIndex = 42
+      Me.qcedOnLabel.Text = "QCed On"
+      '
+      'sizedOnLabel
+      '
+      Me.sizedOnLabel.AutoSize = True
+      Me.sizedOnLabel.Location = New System.Drawing.Point(261, 155)
+      Me.sizedOnLabel.Name = "sizedOnLabel"
+      Me.sizedOnLabel.Size = New System.Drawing.Size(50, 13)
+      Me.sizedOnLabel.TabIndex = 46
+      Me.sizedOnLabel.Text = "Sized On"
+      '
+      'sizedOnValueLabel
+      '
+      Me.sizedOnValueLabel.AutoSize = True
+      Me.sizedOnValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.CreateSizedDt", True))
+      Me.sizedOnValueLabel.Location = New System.Drawing.Point(341, 155)
+      Me.sizedOnValueLabel.Name = "sizedOnValueLabel"
+      Me.sizedOnValueLabel.Size = New System.Drawing.Size(62, 13)
+      Me.sizedOnValueLabel.TabIndex = 47
+      Me.sizedOnValueLabel.Text = "<Sized On>"
+      Me.sizedOnValueLabel.UseMnemonic = False
+      '
+      'createdOnValueLabel
+      '
+      Me.createdOnValueLabel.AutoSize = True
+      Me.createdOnValueLabel.Location = New System.Drawing.Point(341, 39)
+      Me.createdOnValueLabel.Name = "createdOnValueLabel"
+      Me.createdOnValueLabel.Size = New System.Drawing.Size(73, 13)
+      Me.createdOnValueLabel.TabIndex = 61
+      Me.createdOnValueLabel.Text = "<Created On>"
+      Me.createdOnValueLabel.UseMnemonic = False
+      '
+      'indexedOnValueLabel
+      '
+      Me.indexedOnValueLabel.AutoSize = True
+      Me.indexedOnValueLabel.Location = New System.Drawing.Point(341, 68)
+      Me.indexedOnValueLabel.Name = "indexedOnValueLabel"
+      Me.indexedOnValueLabel.Size = New System.Drawing.Size(74, 13)
+      Me.indexedOnValueLabel.TabIndex = 62
+      Me.indexedOnValueLabel.Text = "<Indexed On>"
+      Me.indexedOnValueLabel.UseMnemonic = False
+      '
+      'scannedOnValueLabel
+      '
+      Me.scannedOnValueLabel.AutoSize = True
+      Me.scannedOnValueLabel.Location = New System.Drawing.Point(341, 97)
+      Me.scannedOnValueLabel.Name = "scannedOnValueLabel"
+      Me.scannedOnValueLabel.Size = New System.Drawing.Size(79, 13)
+      Me.scannedOnValueLabel.TabIndex = 63
+      Me.scannedOnValueLabel.Text = "<Scanned On>"
+      Me.scannedOnValueLabel.UseMnemonic = False
+      '
+      'qcedOnValueLabel
+      '
+      Me.qcedOnValueLabel.AutoSize = True
+      Me.qcedOnValueLabel.Location = New System.Drawing.Point(341, 126)
+      Me.qcedOnValueLabel.Name = "qcedOnValueLabel"
+      Me.qcedOnValueLabel.Size = New System.Drawing.Size(63, 13)
+      Me.qcedOnValueLabel.TabIndex = 64
+      Me.qcedOnValueLabel.Text = "<QCed On>"
+      Me.qcedOnValueLabel.UseMnemonic = False
+      '
+      'tradeclassLabel
+      '
+      Me.tradeclassLabel.AutoSize = True
+      Me.tradeclassLabel.Location = New System.Drawing.Point(3, 184)
+      Me.tradeclassLabel.Name = "tradeclassLabel"
+      Me.tradeclassLabel.Size = New System.Drawing.Size(59, 13)
+      Me.tradeclassLabel.TabIndex = 65
+      Me.tradeclassLabel.Text = "Tradeclass"
+      '
+      'tradeclassValueLabel
+      '
+      Me.tradeclassValueLabel.AutoSize = True
+      Me.tradeclassValueLabel.DataBindings.Add(New System.Windows.Forms.Binding("Text", Me.StatusReportDataSet, "vwVehicleStatusReport.Tradeclass", True))
+      Me.tradeclassValueLabel.Location = New System.Drawing.Point(88, 184)
+      Me.tradeclassValueLabel.Name = "tradeclassValueLabel"
+      Me.tradeclassValueLabel.Size = New System.Drawing.Size(71, 13)
+      Me.tradeclassValueLabel.TabIndex = 66
+      Me.tradeclassValueLabel.Text = "<Tradeclass>"
+      Me.tradeclassValueLabel.UseMnemonic = False
+      '
+      'ftpedOnLabel
+      '
+      Me.ftpedOnLabel.AutoSize = True
+      Me.ftpedOnLabel.Location = New System.Drawing.Point(261, 184)
+      Me.ftpedOnLabel.Name = "ftpedOnLabel"
+      Me.ftpedOnLabel.Size = New System.Drawing.Size(39, 13)
+      Me.ftpedOnLabel.TabIndex = 48
+      Me.ftpedOnLabel.Text = "Ftp On"
+      '
+      'ftpOnValueLabel
+      '
+      Me.ftpOnValueLabel.AutoSize = True
+      Me.ftpOnValueLabel.Location = New System.Drawing.Point(341, 184)
+      Me.ftpOnValueLabel.Name = "ftpOnValueLabel"
+      Me.ftpOnValueLabel.Size = New System.Drawing.Size(72, 13)
+      Me.ftpOnValueLabel.TabIndex = 49
+      Me.ftpOnValueLabel.Text = "<FTP Stamp>"
+      Me.ftpOnValueLabel.UseMnemonic = False
+      '
+      'exportStatusLabel
+      '
+      Me.exportStatusLabel.AutoSize = True
+      Me.exportStatusLabel.Location = New System.Drawing.Point(261, 213)
+      Me.exportStatusLabel.Name = "exportStatusLabel"
+      Me.exportStatusLabel.Size = New System.Drawing.Size(70, 13)
+      Me.exportStatusLabel.TabIndex = 50
+      Me.exportStatusLabel.Text = "Export Status"
+      '
+      'exportStatusValueLabel
+      '
+      Me.exportStatusValueLabel.AutoSize = True
+      Me.exportStatusValueLabel.Location = New System.Drawing.Point(341, 213)
+      Me.exportStatusValueLabel.Name = "exportStatusValueLabel"
+      Me.exportStatusValueLabel.Size = New System.Drawing.Size(82, 13)
+      Me.exportStatusValueLabel.TabIndex = 51
+      Me.exportStatusValueLabel.Text = "<Export Status>"
+      Me.exportStatusValueLabel.UseMnemonic = False
+      '
+      'VehicleStatusReportForm
+      '
+      Me.AcceptButton = Me.searchButton
+      Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+      Me.AutoScroll = True
+      Me.ClientSize = New System.Drawing.Size(961, 530)
+      Me.Controls.Add(Me.TableLayoutPanel1)
+      Me.Controls.Add(Me.searchGroupBox)
+      Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+      Me.MaximizeBox = False
+      Me.Name = "VehicleStatusReportForm"
+      Me.StatusMessage = ""
+      Me.Text = "Vehicle Status"
+      CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).EndInit()
+      Me.searchGroupBox.ResumeLayout(False)
+      Me.searchGroupBox.PerformLayout()
+      CType(Me.StatusReportDataSet, System.ComponentModel.ISupportInitialize).EndInit()
+      Me.TableLayoutPanel1.ResumeLayout(False)
+      Me.TableLayoutPanel1.PerformLayout()
+      CType(Me.pagesDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+      CType(Me.StatusReportDataSetBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+      Me.ResumeLayout(False)
+
+    End Sub
+    Friend WithEvents searchGroupBox As System.Windows.Forms.GroupBox
+    Friend WithEvents searchButton As System.Windows.Forms.Button
+    Friend WithEvents searchTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents vehicleIdLabel As System.Windows.Forms.Label
+    Friend WithEvents couponValueLabel As System.Windows.Forms.Label
+    Friend WithEvents couponLabel As System.Windows.Forms.Label
+    Friend WithEvents priorityValueLabel As System.Windows.Forms.Label
+    Friend WithEvents priorityLabel As System.Windows.Forms.Label
+    Friend WithEvents eventValueLabel As System.Windows.Forms.Label
+    Friend WithEvents themeLabel As System.Windows.Forms.Label
+    Friend WithEvents themeValueLabel As System.Windows.Forms.Label
+    Friend WithEvents eventLabel As System.Windows.Forms.Label
+    Friend WithEvents endDtValueLabel As System.Windows.Forms.Label
+    Friend WithEvents languageValueLabel As System.Windows.Forms.Label
+    Friend WithEvents publicationLabel As System.Windows.Forms.Label
+    Friend WithEvents publicationValueLabel As System.Windows.Forms.Label
+    Friend WithEvents breakDtLabel As System.Windows.Forms.Label
+    Friend WithEvents breakDtValueLabel As System.Windows.Forms.Label
+    Friend WithEvents retailerValueLabel As System.Windows.Forms.Label
+    Friend WithEvents retailerLabel As System.Windows.Forms.Label
+    Friend WithEvents languageLabel As System.Windows.Forms.Label
+    Friend WithEvents startDtValueLabel As System.Windows.Forms.Label
+    Friend WithEvents endDtLabel As System.Windows.Forms.Label
+    Friend WithEvents marketValueLabel As System.Windows.Forms.Label
+    Friend WithEvents marketLabel As System.Windows.Forms.Label
+    Friend WithEvents mediaValueLabel As System.Windows.Forms.Label
+    Friend WithEvents mediaLabel As System.Windows.Forms.Label
+    Friend WithEvents senderNameLabel As System.Windows.Forms.Label
+    Friend WithEvents senderLabel As System.Windows.Forms.Label
+    Friend WithEvents startDtLabel As System.Windows.Forms.Label
+    Friend WithEvents envelopeIdLinkLabel As System.Windows.Forms.LinkLabel
+    Friend WithEvents envelopeIdLabel As System.Windows.Forms.Label
+    Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+    Friend WithEvents flashLabel As System.Windows.Forms.Label
+    Friend WithEvents flashValueLabel As System.Windows.Forms.Label
+    Friend WithEvents createdOnLabel As System.Windows.Forms.Label
+    Friend WithEvents indexedOnLabel As System.Windows.Forms.Label
+    Friend WithEvents scannedOnLabel As System.Windows.Forms.Label
+    Friend WithEvents qcedOnLabel As System.Windows.Forms.Label
+    Friend WithEvents sizedOnLabel As System.Windows.Forms.Label
+    Friend WithEvents sizedOnValueLabel As System.Windows.Forms.Label
+    Friend WithEvents ftpedOnLabel As System.Windows.Forms.Label
+    Friend WithEvents ftpOnValueLabel As System.Windows.Forms.Label
+    Friend WithEvents exportStatusLabel As System.Windows.Forms.Label
+    Friend WithEvents exportStatusValueLabel As System.Windows.Forms.Label
+    Friend WithEvents vehicleStatusLabel As System.Windows.Forms.Label
+    Friend WithEvents vehicleStatusValueLabel As System.Windows.Forms.Label
+    Friend WithEvents basePagesLabel As System.Windows.Forms.Label
+    Friend WithEvents basePageCountLabel As System.Windows.Forms.Label
+    Friend WithEvents insertPagesLabel As System.Windows.Forms.Label
+    Friend WithEvents insertPageCountLabel As System.Windows.Forms.Label
+    Friend WithEvents wrapPagesLabel As System.Windows.Forms.Label
+    Friend WithEvents wrapPageCountLabel As System.Windows.Forms.Label
+    Friend WithEvents pagesDataGridView As System.Windows.Forms.DataGridView
+    Friend WithEvents StatusReportDataSetBindingSource As System.Windows.Forms.BindingSource
+    Friend WithEvents StatusReportDataSet As MCAP.StatusReportDataSet
+    Friend WithEvents createdOnValueLabel As System.Windows.Forms.Label
+    Friend WithEvents indexedOnValueLabel As System.Windows.Forms.Label
+    Friend WithEvents scannedOnValueLabel As System.Windows.Forms.Label
+    Friend WithEvents qcedOnValueLabel As System.Windows.Forms.Label
+    Friend WithEvents VehicleIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PageIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ImageNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PageTypeIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents ReceivedOrderDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PageNameDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents SizeIDDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents SizeTextDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PixelHieghtDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents PixelWidthDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents tradeclassLabel As System.Windows.Forms.Label
+    Friend WithEvents tradeclassValueLabel As System.Windows.Forms.Label
+
+  End Class
+
+End Namespace

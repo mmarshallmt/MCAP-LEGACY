@@ -1,0 +1,234 @@
+﻿Namespace UI
+
+  Public Class RoleScreenForm
+    Implements IForm
+
+
+    Private WithEvents m_roleProcessor As UI.Processors.Role
+    Private WithEvents m_screenRolesTable As RoleDataSet.ScreenRolesDataTable
+
+
+#Region " IForm Implementation "
+
+    Public Event ApplyingUserCredentials() Implements IForm.ApplyingUserCredentials
+    Public Event UserCredentialsApplied() Implements IForm.UserCredentialsApplied
+
+    Public Event FormInitialized() Implements IForm.FormInitialized
+    Public Event InitializingForm() Implements IForm.InitializingForm
+
+    Public Sub ApplyUserCredentials() Implements IForm.ApplyUserCredentials
+
+    End Sub
+
+    Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+      RaiseEvent InitializingForm()
+
+      Me.FormState = formStatus
+
+      m_roleProcessor = New UI.Processors.Role
+      m_roleProcessor.Initialize()
+      m_roleProcessor.LoadAllRoles()
+      m_roleProcessor.LoadAllForms()
+
+      Me.roleComboBox.DisplayMember = "Descrip"
+      Me.roleComboBox.ValueMember = "RoleID"
+      Me.roleComboBox.DataSource = m_roleProcessor.RoleDataSet.Role
+
+      Dim screenColumn As DataGridViewComboBoxColumn = New DataGridViewComboBoxColumn
+
+      screenColumn.DataPropertyName = "ScreenId"
+      screenColumn.DisplayMember = "FormFunctionality"
+      screenColumn.ValueMember = "ScreenId"
+      screenColumn.DataSource = m_roleProcessor.RoleDataSet.Screen
+      screenColumn.Name = "ScreenIdDataGridViewComboBoxColumn"
+      screenColumn.Resizable = DataGridViewTriState.True
+      screenColumn.SortMode = DataGridViewColumnSortMode.Automatic
+      screenColumn.AutoComplete = True
+      screenColumn.HeaderText = "Screen"
+      screenColumn.Width = (screensDataGridView.ClientRectangle.Width - screensDataGridView.RowHeadersWidth)
+
+      Dim roleIdColumn As DataGridViewTextBoxColumn = New DataGridViewTextBoxColumn
+
+      roleIdColumn.DataPropertyName = "RoleId"
+      roleIdColumn.HeaderText = "RoleId"
+      roleIdColumn.Name = "RoleIdDataGridViewTextBoxColumn"
+      roleIdColumn.Visible = False
+
+      Me.screensDataGridView.Columns.Clear()
+      Me.screensDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {screenColumn, roleIdColumn})
+
+      screenColumn = Nothing
+      roleIdColumn = Nothing
+
+      m_screenRolesTable = m_roleProcessor.RoleDataSet.ScreenRoles
+
+      RaiseEvent FormInitialized()
+
+    End Sub
+
+#End Region
+
+
+    Private Sub roleComboBox_DropDown _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles roleComboBox.DropDown
+      Dim userResponse As System.Windows.Forms.DialogResult
+
+
+      If m_roleProcessor.RoleDataSet.HasChanges() Then
+        userResponse = _
+            MessageBox.Show("Unsaved changes exist for role " + Me.roleComboBox.Text _
+                            + ". Do you want to save those unsaved changes?" _
+                            , Application.ProductName, MessageBoxButtons.YesNo, _
+                            MessageBoxIcon.Question)
+
+        If userResponse = Windows.Forms.DialogResult.Yes Then _
+            Me.saveButton_Click(sender, e)
+      End If
+
+    End Sub
+
+    Private Sub roleComboBox_SelectedValueChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles roleComboBox.SelectedValueChanged
+      Dim roleID As Integer
+
+
+      roleID = CType(Me.roleComboBox.SelectedValue, Integer)
+
+      m_roleProcessor.GetFormIDsForRole(roleID)
+
+      Me.screensDataGridView.DataSource = m_roleProcessor.RoleDataSet.ScreenRoles
+
+    End Sub
+
+    Private Sub screensDataGridView_CellBeginEdit _
+        (ByVal sender As Object, _
+         ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs) _
+         Handles screensDataGridView.CellBeginEdit
+
+      If roleComboBox.Text.ToUpper() = "ADMINISTRATOR" _
+        AndAlso e.RowIndex <> screensDataGridView.NewRowIndex _
+      Then
+        MessageBox.Show("Can not edit screens assigned to Administrator.", Application.ProductName, _
+                        MessageBoxButtons.OK, MessageBoxIcon.Information)
+        e.Cancel = True
+      End If
+
+    End Sub
+
+    Private Sub screensDataGridView_CellEndEdit _
+        (ByVal sender As Object, _
+         ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) _
+        Handles screensDataGridView.CellEndEdit
+
+      Me.screensDataGridView.Rows(e.RowIndex).ErrorText = String.Empty
+
+    End Sub
+
+    Private Sub screensDataGridView_CellValidating _
+        (ByVal sender As Object, _
+         ByVal e As System.Windows.Forms.DataGridViewCellValidatingEventArgs) _
+        Handles screensDataGridView.CellValidating
+
+      If e.RowIndex <> screensDataGridView.NewRowIndex Then
+        If Me.screensDataGridView.Columns(e.ColumnIndex).DataPropertyName = "ScreenId" Then
+          If String.IsNullOrEmpty(e.FormattedValue.ToString()) Then
+            Me.screensDataGridView.Rows(e.RowIndex).ErrorText = "Select screen name."
+            e.Cancel = True
+          End If
+        End If
+      End If
+
+    End Sub
+
+    Private Sub screensDataGridView_DataError _
+        (ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewDataErrorEventArgs) _
+        Handles screensDataGridView.DataError
+
+      If TypeOf (e.Exception) Is System.Data.ConstraintException _
+          And e.Context = DataGridViewDataErrorContexts.Commit _
+      Then
+        MessageBox.Show("Screen is already associated with role.", Application.ProductName, _
+                        MessageBoxButtons.OK, MessageBoxIcon.Error)
+        e.Cancel = True
+      End If
+
+    End Sub
+
+    Private Sub screensDataGridView_SizeChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles screensDataGridView.SizeChanged
+
+      If Me.screensDataGridView.Columns.Count = 0 Then Exit Sub
+
+      Me.screensDataGridView.Columns(0).Width = _
+          (screensDataGridView.ClientRectangle.Width _
+           - screensDataGridView.RowHeadersWidth)
+
+    End Sub
+
+    Private Sub screensDataGridView_UserDeletingRow _
+        (ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewRowCancelEventArgs) _
+        Handles screensDataGridView.UserDeletingRow
+      Dim userResponse As System.Windows.Forms.DialogResult
+
+
+      If screensDataGridView.RowCount < 1 Then Exit Sub
+
+      If roleComboBox.Text.ToUpper() = "ADMINISTRATOR" Then
+        MessageBox.Show("Can not remove screens assigned to administrator.", Application.ProductName, _
+                        MessageBoxButtons.OK, MessageBoxIcon.Information)
+        e.Cancel = True
+        Exit Sub
+      End If
+
+      userResponse = MessageBox.Show("Are you sure, you want to remove selected screen?", _
+                                     Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+      If userResponse = Windows.Forms.DialogResult.No Then e.Cancel = True
+
+    End Sub
+
+    Private Sub m_screenRolesTable_ColumnChanged _
+        (ByVal sender As Object, ByVal e As System.Data.DataColumnChangeEventArgs) _
+        Handles m_screenRolesTable.ColumnChanged
+
+      If e.Column.ColumnName.ToUpper() = "SCREENID" Then
+        e.Row("RoleId") = Me.roleComboBox.SelectedValue
+      End If
+
+    End Sub
+
+    Private Sub saveButton_Click _
+        (ByVal sender As System.Object, ByVal e As System.EventArgs) _
+        Handles saveButton.Click
+      Dim newRowsTable, editedRowTable, deleteRowTable As Data.DataTable
+
+
+      newRowsTable = m_roleProcessor.RoleDataSet.ScreenRoles.GetChanges(DataRowState.Modified)
+      editedRowTable = m_roleProcessor.RoleDataSet.ScreenRoles.GetChanges(DataRowState.Added)
+      deleteRowTable = m_roleProcessor.RoleDataSet.ScreenRoles.GetChanges(DataRowState.Deleted)
+
+      If m_roleProcessor.AreScreensValidForRole(newRowsTable, editedRowTable) = False _
+        AndAlso deleteRowTable Is Nothing _
+      Then
+        newRowsTable = Nothing
+        editedRowTable = Nothing
+        deleteRowTable = Nothing
+        Exit Sub
+      End If
+
+      newRowsTable = Nothing
+      editedRowTable = Nothing
+      deleteRowTable = Nothing
+
+      m_roleProcessor.SaveScreensForRole()
+
+    End Sub
+
+
+  End Class
+
+
+End Namespace

@@ -1,0 +1,243 @@
+﻿Namespace UI
+
+  Public Class VehicleStatusReportForm
+    Implements IForm
+
+
+    Protected Overrides Sub ClearAllInputs()
+      MyBase.ClearAllInputs()
+
+      envelopeIdLinkLabel.Text = String.Empty
+      'envelopeIdLinkLabel.Links.Clear()
+      senderNameLabel.Text = String.Empty
+
+      mediaValueLabel.Text = String.Empty
+      marketValueLabel.Text = String.Empty
+      publicationValueLabel.Text = String.Empty
+      breakDtValueLabel.Text = String.Empty
+      retailerValueLabel.Text = String.Empty
+      tradeclassValueLabel.Text = String.Empty
+      languageValueLabel.Text = String.Empty
+      startDtValueLabel.Text = String.Empty
+      endDtValueLabel.Text = String.Empty
+      themeValueLabel.Text = String.Empty
+      eventValueLabel.Text = String.Empty
+      priorityValueLabel.Text = String.Empty
+      couponValueLabel.Text = String.Empty
+      flashValueLabel.Text = String.Empty
+
+      createdOnValueLabel.Text = String.Empty
+      indexedOnValueLabel.Text = String.Empty
+      scannedOnValueLabel.Text = String.Empty
+      qcedOnValueLabel.Text = String.Empty
+      sizedOnValueLabel.Text = String.Empty
+      ftpOnValueLabel.Text = String.Empty
+      exportStatusValueLabel.Text = String.Empty
+      vehicleStatusValueLabel.Text = String.Empty
+
+      basePageCountLabel.Text = String.Empty
+      insertPageCountLabel.Text = String.Empty
+      wrapPageCountLabel.Text = String.Empty
+
+    End Sub
+
+
+#Region " IForm Implementation "
+
+
+    Public Event InitializingForm() Implements IForm.InitializingForm
+    Public Event FormInitialized() Implements IForm.FormInitialized
+
+    Public Event ApplyingUserCredentials() Implements IForm.ApplyingUserCredentials
+    Public Event UserCredentialsApplied() Implements IForm.UserCredentialsApplied
+
+
+    Public Sub ApplyUserCredentials() Implements IForm.ApplyUserCredentials
+
+    End Sub
+
+
+    Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+      RaiseEvent InitializingForm()
+
+      Me.SuspendLayout()
+
+      Me.FormState = formStatus
+      ClearAllInputs()
+      ShowHideControls(Me.FormState)
+      EnableDisableControls(Me.FormState)
+
+      Me.ResumeLayout()
+
+      RaiseEvent FormInitialized()
+
+    End Sub
+
+
+#End Region
+
+
+
+    Private Sub LoadEnvelopeInformation(ByVal vehicleId As Integer)
+      Dim envelopeAdapter As StatusReportDataSetTableAdapters.vwEnvelopeStatusReportTableAdapter
+      Dim vehicleAdapter As StatusReportDataSetTableAdapters.vwVehicleStatusReportTableAdapter
+      Dim pageAdapter As StatusReportDataSetTableAdapters.PageTableAdapter
+
+
+      envelopeAdapter = New StatusReportDataSetTableAdapters.vwEnvelopeStatusReportTableAdapter
+      vehicleAdapter = New StatusReportDataSetTableAdapters.vwVehicleStatusReportTableAdapter
+      pageAdapter = New StatusReportDataSetTableAdapters.PageTableAdapter
+
+      envelopeAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      vehicleAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      pageAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      vehicleAdapter.FillByVehicleId(Me.StatusReportDataSet.vwVehicleStatusReport, vehicleId)
+      pageAdapter.Fill(Me.StatusReportDataSet.Page, vehicleId)
+      If Me.StatusReportDataSet.vwVehicleStatusReport.Count > 0 Then
+        With Me.StatusReportDataSet.vwVehicleStatusReport(0)
+          If .IsCreateDtNull() OrElse .IsCreatedByNull() Then
+            createdOnValueLabel.Text = String.Empty
+          Else
+            createdOnValueLabel.Text = .CreateDt.ToString("MM/dd/yyyy") + " by " + .CreatedBy
+          End If
+          If .IsIndexDtNull() OrElse .IsIndexedByNull() Then
+            indexedOnValueLabel.Text = String.Empty
+          Else
+            indexedOnValueLabel.Text = .IndexDt.ToString("MM/dd/yyyy") + " by " + .IndexedBy
+          End If
+          If .IsScanDtNull() OrElse .IsScannedByNull() Then
+            scannedOnValueLabel.Text = String.Empty
+          Else
+            scannedOnValueLabel.Text = .ScanDt.ToString("MM/dd/yyyy") + " by " + .ScannedBy
+          End If
+          If .IsQCDtNull() OrElse .IsQCedByNull() Then
+            qcedOnValueLabel.Text = String.Empty
+          Else
+            qcedOnValueLabel.Text = .QCDt.ToString("MM/dd/yyyy") + " by " + .QCedBy
+          End If
+
+          envelopeAdapter.Fill(Me.StatusReportDataSet.vwEnvelopeStatusReport, .EnvelopeId)
+        End With
+      End If
+
+      envelopeAdapter.Dispose()
+      vehicleAdapter.Dispose()
+      pageAdapter.Dispose()
+      envelopeAdapter = Nothing
+      vehicleAdapter = Nothing
+      pageAdapter = Nothing
+
+      If Me.StatusReportDataSet.vwEnvelopeStatusReport.Count > 0 Then
+        senderNameLabel.Text = Me.StatusReportDataSet.vwEnvelopeStatusReport(0).Sender
+      End If
+      pagesDataGridView.DataSource = Me.StatusReportDataSet.Page
+      GetPageCounts()
+
+    End Sub
+
+    Private Sub GetPageCounts()
+      Dim pages As System.Data.EnumerableRowCollection(Of StatusReportDataSet.PageRow)
+
+
+      'pages = From p In Me.StatusReportDataSet.Page _
+      '        Order By p.PageTypeId _
+      '        Group p By p.PageTypeId Into Count() _
+      '        Select Count
+
+      pages = From p In Me.StatusReportDataSet.Page _
+              Where p.PageTypeId = "B" _
+              Select p
+
+      If pages.Count() = 0 Then
+        basePageCountLabel.Text = String.Empty
+      Else
+        basePageCountLabel.Text = pages.Count().ToString()
+      End If
+
+
+      pages = From p In Me.StatusReportDataSet.Page _
+              Where p.PageTypeId = "I" _
+              Select p
+
+      If pages.Count() = 0 Then
+        insertPageCountLabel.Text = String.Empty
+      Else
+        insertPageCountLabel.Text = pages.Count().ToString()
+      End If
+
+
+      pages = From p In Me.StatusReportDataSet.Page _
+              Where p.PageTypeId = "W" _
+              Select p
+
+      If pages.Count() = 0 Then
+        wrapPageCountLabel.Text = String.Empty
+      Else
+        wrapPageCountLabel.Text = pages.Count().ToString()
+      End If
+
+
+      pages = Nothing
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads vehicle and vehicle pages information.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <remarks></remarks>
+    Public Sub LoadVehicleInformation(ByVal vehicleId As Integer)
+
+      searchTextBox.Text = vehicleId.ToString()
+      searchButton.PerformClick()
+
+    End Sub
+
+
+    Private Sub searchButton_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles searchButton.Click
+      Dim vehicleId As Integer
+
+
+      If Integer.TryParse(searchTextBox.Text, vehicleId) = False Then
+        MessageBox.Show("Provide valid vehicle Id.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      End If
+
+      LoadEnvelopeInformation(vehicleId)
+
+      If Me.StatusReportDataSet.vwVehicleStatusReport.Count = 0 Then
+        MessageBox.Show("Vehicle " + vehicleId.ToString() + " not found." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+      End If
+
+    End Sub
+
+    Private Sub envelopeIdLinkLabel_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles envelopeIdLinkLabel.Click
+      Dim envelopeId As Integer
+      Dim envStatusForm As EnvelopeStatusReportForm
+
+
+      If Integer.TryParse(envelopeIdLinkLabel.Text, envelopeId) = False Then
+        MessageBox.Show("Unable to find envelope Id. Can not load envelope status information screen." _
+                        , ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Exit Sub
+      End If
+
+      envStatusForm = New EnvelopeStatusReportForm()
+      envStatusForm.Init(FormStateEnum.View)
+      envStatusForm.ApplyUserCredentials()
+      envStatusForm.LoadEnvelope(envelopeId)
+      envStatusForm.ShowDialog(Me)
+
+      envStatusForm.Dispose()
+      envStatusForm = Nothing
+
+    End Sub
+
+
+  End Class
+
+End Namespace

@@ -1,0 +1,208 @@
+﻿Namespace UI.Processors
+
+  Public Class PublicationIndexQC
+    Inherits VehicleImageBase
+
+
+#Region " Events "
+
+
+    'Events can be extended to supply necessary information to consumer along with events.
+    'Information passed into event can be useful to consumer while processing the event.
+
+    Public Event Initializing()
+    Public Event Initialized()
+
+    Public Event LoadingData()
+    Public Event DataLoaded()
+
+    Public Event LoadingVehicle(ByVal vehicleId As Integer, ByRef Cancel As Boolean)
+    Public Event VehicleLoaded(ByVal vehicleRow As QCDataSet.vwPublicationEditionRow)
+    Public Event VehicleNotFound(ByVal vehicleId As Integer)
+    Public Event InvalidVehicleStatus(ByVal vehicleId As Integer, ByVal statusText As String)
+
+    Public Event LoadingMarkets()
+    Public Event MarketsLoaded()
+
+    Public Event LoadingPublications()
+    Public Event PublicationsLoaded()
+
+    Public Event LoadingRetailers()
+    Public Event RetailersLoaded()
+
+    Public Event SynchronizingVehicleInformation()
+    Public Event VehicleInformationSynchronized()
+
+
+#End Region
+
+
+    Private m_publicationEditionAdapter As QCDataSetTableAdapters.vwPublicationEditionTableAdapter
+
+
+
+    Sub New()
+      MyBase.new()
+
+      m_publicationEditionAdapter = New QCDataSetTableAdapters.vwPublicationEditionTableAdapter
+
+    End Sub
+
+
+
+    ''' <summary>
+    ''' Adapter for vwPublicationEdition view.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property VehicleAdapter() As QCDataSetTableAdapters.vwPublicationEditionTableAdapter
+      Get
+        Return m_publicationEditionAdapter
+      End Get
+    End Property
+
+
+
+    Public Sub Initialize()
+
+      RaiseEvent Initializing()
+
+      SetAdaptersConnectionString()
+      VehicleAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+
+      RaiseEvent Initialized()
+
+    End Sub
+
+    Public Overrides Sub LoadDataSet()
+
+      RaiseEvent LoadingData()
+
+      MyBase.LoadDataSet()
+      SizeAdapter.Fill(Data.Size)
+
+      RaiseEvent DataLoaded()
+
+    End Sub
+
+    Public Sub LoadMarket(ByVal senderId As Integer)
+
+      MarketAdapter.FillBySender(Data.Mkt, senderId)
+
+    End Sub
+
+    Public Sub LoadPublication(ByVal marketId As Integer)
+
+      LoadPublications(marketId)
+
+    End Sub
+
+    ''' <summary>
+    ''' Load retailers from Ret table using RetPublicationCoverage table. Rows are filtered on publication.
+    ''' </summary>
+    ''' <param name="publicationId"></param>
+    ''' <remarks></remarks>
+    Public Sub LoadRetailer(ByVal publicationId As Integer)
+      Dim RetailerAdapter As QCDataSetTableAdapters.RetTableAdapter
+
+
+      RetailerAdapter = New QCDataSetTableAdapters.RetTableAdapter()
+      RetailerAdapter.Connection.ConnectionString = GetConnectionStringForAppDB()
+      RetailerAdapter.FillByPublicationId(Data.Ret, publicationId)
+      RetailerAdapter.Dispose()
+      RetailerAdapter = Nothing
+
+    End Sub
+
+    Public Overrides Sub LoadVehicle(ByVal vehicleId As Integer, ByVal formName As String)
+      Dim Cancel As Boolean
+      Dim errorMessage As String
+
+
+      RaiseEvent LoadingVehicle(vehicleId, Cancel)
+
+      If Cancel Then Exit Sub
+
+      VehicleAdapter.Fill(Data.vwPublicationEdition, vehicleId, formName, errorMessage)
+
+      If Data.vwPublicationEdition.Count = 0 And errorMessage Is Nothing Then
+        RaiseEvent VehicleNotFound(vehicleId)
+      ElseIf Data.vwPublicationEdition.Count = 0 And errorMessage IsNot Nothing Then
+        RaiseEvent InvalidVehicleStatus(vehicleId, errorMessage)
+      Else
+        RaiseEvent VehicleLoaded(Data.vwPublicationEdition(0))
+      End If
+
+    End Sub
+
+    ''' <summary>
+    ''' Returns true if vehicle is marked as Indexed, false otherwise.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    ''' <exception cref="System.ApplicationException"></exception>
+    Public Function IsVehicleMarkedAsIndexingComplete(ByVal vehicleId As Integer) As Boolean
+      Dim vehicleCount As Nullable(Of Integer)
+
+
+      Try
+        vehicleCount = Me.VehicleAdapter.IsIndexComplete(vehicleId)
+
+      Catch ex As System.Data.SqlClient.SqlException
+        Throw New System.ApplicationException("Unable to mark vehicle " + vehicleId.ToString() _
+                                              + " as Index Completed.", ex)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unknown error has occurred while marking vehicle " _
+                                              + vehicleId.ToString() + " as Index Completed.", ex)
+      End Try
+
+      If vehicleCount.HasValue = False Or vehicleCount.Value = 0 Then
+        Return False
+      Else
+        Return True
+      End If
+
+    End Function
+
+    ''' <summary>
+    ''' Updates vehicle status. Marks vehicle as Indexed.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <remarks></remarks>
+    ''' <exception cref="System.ApplicationException"></exception>
+    Public Sub MarkedVehicleAsIndexingComplete(ByVal vehicleId As Integer)
+      Dim vehicleCount As Integer
+
+
+      Try
+        vehicleCount = Me.VehicleAdapter.MarkAsIndexingComplete(vehicleId)
+
+      Catch ex As System.Data.SqlClient.SqlException
+        Throw New System.ApplicationException("Unable to mark vehicle " + vehicleId.ToString() _
+                                              + " as Index Completed.", ex)
+      Catch ex As Exception
+        Throw New System.ApplicationException("Unknown error has occurred while marking vehicle " _
+                                              + vehicleId.ToString() + " as Index Completed.", ex)
+      End Try
+
+      vehicleCount = Nothing
+
+    End Sub
+
+
+    '
+    'On this form users are not allowed to manipulate information of vehicle.
+    '
+    'Public Overrides Sub SynchronizeVehicleInformation()
+
+    '  RaiseEvent SynchronizingVehicleInformation()
+
+    '  RaiseEvent VehicleInformationSynchronized()
+
+    'End Sub
+
+  End Class
+
+End Namespace

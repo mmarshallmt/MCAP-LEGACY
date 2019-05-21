@@ -1,0 +1,410 @@
+﻿Namespace UI
+
+  Public Class FamilyBaseForm
+
+
+    Private m_showImagePathTooltip As Boolean
+        Friend WithEvents columnIsSelected As System.Windows.Forms.DataGridViewCheckBoxColumn
+
+
+    ''' <summary>
+    ''' Gets or sets flag indicating whether to show image path as tooltip for 
+    ''' cells showing front and back page images.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Protected Property ShowImagePathAsTooltip() As Boolean
+      Get
+        Return m_showImagePathTooltip
+      End Get
+      Set(ByVal value As Boolean)
+        m_showImagePathTooltip = value
+      End Set
+    End Property
+
+
+    ''' <summary>
+    ''' Gets current(selected) row in grid.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns>FamilyDataSet.DisplayFamilyInformationRow</returns>
+    ''' <remarks>If no rows are selected, returns Nothing.</remarks>
+    Public ReadOnly Property CurrentRow() As FamilyDataSet.DisplayFamilyInformationRow
+      Get
+        Return GetCurrentRow()
+      End Get
+    End Property
+
+
+
+    ''' <summary>
+    ''' Returns DataRow representing currently selected row in data grid view.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function GetCurrentRow() As FamilyDataSet.DisplayFamilyInformationRow
+      Dim bmb As BindingManagerBase
+      Dim currentRow As FamilyDataSet.DisplayFamilyInformationRow
+
+
+      If familyDataGridView.Rows.Count = 0 Then Return Nothing
+
+      bmb = Me.BindingContext(familyDataGridView.DataSource)
+      currentRow = CType(CType(bmb.Current, Data.DataRowView).Row, FamilyDataSet.DisplayFamilyInformationRow)
+      bmb = Nothing
+
+      Return currentRow
+
+    End Function
+
+
+    ''' <summary>
+    ''' If image file path is correct, returns object containing resized image. 
+    ''' This does not affect actual image file.
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    ''' <param name="imageWidth"></param>
+    ''' <param name="imageHeight"></param>
+    ''' <param name="resizeOnlyIfWider"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' If file does not exist, returns Nothing.
+    ''' Reference URL = http://www.codeproject.com/KB/grid/ImagePreviewDataGridView.aspx
+    ''' </remarks>
+    Public Function GetResizedImage(ByVal filePath As String, ByVal imageWidth As Integer, ByVal imageHeight As Integer, ByVal resizeOnlyIfWider As Boolean) As System.Drawing.Image
+
+      If System.IO.File.Exists(filePath) = False Then Return Nothing
+
+      Using image As System.Drawing.Image = System.Drawing.Image.FromFile(filePath)
+        'Prevent using images internal thumbnail
+        image.RotateFlip(RotateFlipType.Rotate180FlipNone)
+        image.RotateFlip(RotateFlipType.Rotate180FlipNone)
+
+        If resizeOnlyIfWider Then
+          If image.Width <= imageWidth Then imageWidth = image.Width
+        End If
+
+        Dim resizedImage As System.Drawing.Image
+
+        resizedImage = image.GetThumbnailImage(imageWidth, imageHeight, Nothing, IntPtr.Zero)
+
+        Return resizedImage
+      End Using
+
+    End Function
+
+    ''' <summary>
+    ''' If image file path is correct, returns object containing resized image. 
+    ''' This does not affect actual image file.
+    ''' </summary>
+    ''' <param name="image"></param>
+    ''' <param name="imageWidth"></param>
+    ''' <param name="imageHeight"></param>
+    ''' <param name="resizeOnlyIfWider"></param>
+    ''' <returns></returns>
+    ''' <remarks>If file does not exist, returns Nothing.</remarks>
+    Public Function GetResizedImage(ByVal image As System.Drawing.Bitmap, ByVal imageWidth As Integer, ByVal imageHeight As Integer, ByVal resizeOnlyIfWider As Boolean) As System.Drawing.Image
+      Dim resizedImage As System.Drawing.Image
+
+
+      If image Is Nothing Then Return Nothing
+
+      'Prevent using images internal thumbnail
+      image.RotateFlip(RotateFlipType.Rotate180FlipNone)
+      image.RotateFlip(RotateFlipType.Rotate180FlipNone)
+
+      If resizeOnlyIfWider Then
+        If image.Width <= imageWidth Then imageWidth = image.Width
+      End If
+
+      resizedImage = image.GetThumbnailImage(imageWidth, imageHeight, Nothing, IntPtr.Zero)
+
+      Return resizedImage
+
+    End Function
+
+    ''' <summary>
+    ''' Gets resized image object to display image in data grid. It takes care 
+    ''' of maintaining image's width:height ratio based on application parameters.
+    ''' </summary>
+    ''' <param name="imagePath">Path to image file, which is to be displayed on grid.</param>
+    ''' <returns></returns>
+    ''' <remarks>If image file does not exist, returns Nothing.</remarks>
+    Private Function GetResizedImageForGrid(ByVal imagePath As String) As System.Drawing.Image
+      Dim resizeWidth, resizeHeight, widthDiff, heightDiff As Integer
+      Dim displayImage As System.Drawing.Image
+
+
+      If System.IO.File.Exists(imagePath) = False Then Return Nothing
+
+      displayImage = System.Drawing.Image.FromFile(imagePath)
+
+      If MaintainAspectRatioInGrid = False Then  'If resize with same scale
+        resizeWidth = ImageWidthInGrid
+        resizeHeight = ImageHeightInGrid
+      Else
+        widthDiff = Math.Abs(displayImage.Width - ImageWidthInGrid)
+        heightDiff = Math.Abs(displayImage.Height - ImageHeightInGrid)
+
+        If widthDiff > heightDiff Then
+          resizeWidth = ImageWidthInGrid
+          resizeHeight = CType(displayImage.Height * (resizeWidth / displayImage.Width), Integer)
+        Else
+          resizeHeight = ImageHeightInGrid
+          resizeWidth = CType(displayImage.Width * (resizeHeight / displayImage.Height), Integer)
+        End If
+      End If
+
+      displayImage.Dispose()
+
+      displayImage = GetResizedImage(imagePath, resizeWidth, resizeHeight, Not MaintainAspectRatioInGrid)
+
+      Return displayImage
+
+    End Function
+
+    ''' <summary>
+    ''' Gets resized image object to display image in data grid. It takes care 
+    ''' of maintaining image's width:height ratio based on application parameters.
+    ''' </summary>
+    ''' <param name="image">Image, which is to be displayed on grid.</param>
+    ''' <returns></returns>
+    ''' <remarks>If image does not exist, returns Nothing.</remarks>
+    Private Function GetResizedImageForGrid(ByVal image As System.Drawing.Bitmap) As System.Drawing.Image
+      Dim resizeWidth, resizeHeight, widthDiff, heightDiff As Integer
+      Dim displayImage As System.Drawing.Image
+
+
+      displayImage = image
+
+      If MaintainAspectRatioInGrid = False Then  'If resize with same scale
+        resizeWidth = ImageWidthInGrid
+        resizeHeight = ImageHeightInGrid
+      Else
+        widthDiff = Math.Abs(displayImage.Width - ImageWidthInGrid)
+        heightDiff = Math.Abs(displayImage.Height - ImageHeightInGrid)
+
+        If widthDiff > heightDiff Then
+          resizeWidth = ImageWidthInGrid
+          resizeHeight = CType(displayImage.Height * (resizeWidth / displayImage.Width), Integer)
+        Else
+          resizeHeight = ImageHeightInGrid
+          resizeWidth = CType(displayImage.Width * (resizeHeight / displayImage.Height), Integer)
+        End If
+      End If
+
+      displayImage = Nothing
+
+      displayImage = GetResizedImage(image, resizeWidth, resizeHeight, Not MaintainAspectRatioInGrid)
+
+      Return displayImage
+
+    End Function
+
+    ''' <summary>
+    ''' Returns vehicle page image name from ImageName column in Page table.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <param name="pageNumber"></param>
+    ''' <returns></returns>
+    ''' <remarks>Derived classes must override this function to return vehicle page image name.</remarks>
+    Protected Overridable Function GetVehiclePageImageName(ByVal vehicleId As Integer, ByVal pageNumber As Integer) As String
+      Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' Returns boolean flag, indicating whether vehicle page images are scanned or not.
+    ''' </summary>
+    ''' <param name="vehicleId"></param>
+    ''' <returns></returns>
+    ''' <remarks>Derived classes must override this function to return proper status. By default it returns True.</remarks>
+    Protected Overridable Function AreVehiclePageImagesScanned(ByVal vehicleId As Integer) As Boolean
+      Return True
+    End Function
+
+    ''' <summary>
+    ''' Returns boolean flag, indicating whether vehicle page images are transferred(FTPed) or not.
+    ''' </summary>
+    ''' <param name="vehicleId">Vehicle Id</param>
+    ''' <param name="locationId">Location of application user.</param>
+    ''' <returns></returns>
+    ''' <remarks>Derived classes must override this function to return proper status. By default it returns True.</remarks>
+    Protected Overridable Function AreVehicleImagesTransferred(ByVal vehicleId As Integer, ByVal locationId As Integer) As Boolean
+      Return True
+    End Function
+
+    ''' <summary>
+    ''' Loads Page image in DataGridViewImageCell.
+    ''' </summary>
+    ''' <param name="createDate"></param>
+    ''' <param name="vehicleId"></param>
+    ''' <param name="pageNumber"></param>
+    ''' <param name="pageImageCell"></param>
+    ''' <remarks></remarks>
+    Private Sub LoadPageImageInCell(ByVal createDate As DateTime, ByVal vehicleId As Integer, ByVal pageNumber As Integer, ByVal pageImageCell As DataGridViewImageCell)
+      Dim imageName As String
+      Dim imagePath As System.Text.StringBuilder
+            Dim image As System.Drawing.Bitmap
+            Dim temppath As String
+
+      imagePath = New System.Text.StringBuilder
+      imageName = GetVehiclePageImageName(vehicleId, pageNumber)
+
+            temppath = GetImagePath(createDate.ToString("yyyyMM"), User.LocationId, GetPathType("Master"))
+
+            If String.IsNullOrEmpty(temppath) = False Then
+                imagePath.Append(temppath)
+            Else
+                imagePath.Append(VehicleImageFolderPath)
+                imagePath.Append("\")
+                imagePath.Append(createDate.ToString("yyyyMM"))
+                imagePath.Append("\")
+            End If
+      imagePath.Append(vehicleId.ToString())
+      imagePath.Append("\")
+      imagePath.Append(ThumbSizedPageImageFolderName)
+      imagePath.Append("\")
+      imagePath.Append(imageName)
+      imagePath.Append(".jpg")
+
+      If System.IO.File.Exists(imagePath.ToString()) = False Then
+        imagePath = imagePath.Replace("\" + ThumbSizedPageImageFolderName + "\" + imageName + ".jpg" _
+                                      , "\" + UnsizedPageImageFolderName + "\" + imageName + ".jpg")
+      End If
+
+      pageImageCell.ToolTipText = imagePath.ToString()
+
+      If System.IO.File.Exists(imagePath.ToString()) = False Then
+        If AreVehiclePageImagesScanned(vehicleId) = False Then
+          image = My.Resources.notscanned 'Not Scanned.
+        ElseIf AreVehicleImagesTransferred(vehicleId, User.LocationId) = False Then
+          image = My.Resources.nottransferred 'Not Transferred.
+        Else
+          image = My.Resources.notfound 'Not Found.
+        End If
+      End If
+
+      Try
+        If image Is Nothing Then
+          pageImageCell.Value = GetResizedImageForGrid(imagePath.ToString())
+        Else
+          pageImageCell.Value = GetResizedImageForGrid(image)
+        End If
+      Catch ex As ArgumentException
+        Trace.TraceError("FamilyBaseForm.LoadPageImageInCell(): Throwing new ApplicationException(Page Image not found at: imagePath). Message=" + ex.Message, New Object() {"CreateDt=", createDate, "VehicleId=", vehicleId, "PageNumber=", pageNumber, "ImagePath=", imagePath.ToString(), ex})
+        Throw New ApplicationException("Page image not found at " + imagePath.ToString(), ex)
+      Finally
+        imagePath = Nothing
+        imageName = Nothing
+      End Try
+
+    End Sub
+
+    ''' <summary>
+    ''' Loads image in grid. While displaying image in grid, it is resized as 
+    ''' per the application parameters. If thumbnail image is not available, 
+    ''' unsized scanned image is used.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Protected Sub LoadPageImagesInDataGrid()
+      Dim rowCounter, vehicleId, pageCount As Integer
+      Dim createDt As DateTime
+      Dim frontPageImageCell, backPageImageCell As DataGridViewImageCell
+
+
+      For rowCounter = 0 To familyDataGridView.RowCount - 1
+        vehicleId = CType(familyDataGridView.Rows(rowCounter).Cells("VehicleIdDataGridViewTextBoxColumn").Value, Integer)
+        pageCount = CType(familyDataGridView.Rows(rowCounter).Cells("ActualPageCountDataGridViewTextBoxColumn").Value, Integer)
+                createDt = CType(familyDataGridView.Rows(rowCounter).Cells("CreateDtDataGridViewTextBoxColumn").Value, DateTime)
+        frontPageImageCell = CType(familyDataGridView.Rows(rowCounter).Cells("FrontPageDataGridViewImageColumn"), DataGridViewImageCell)
+
+        Try
+          LoadPageImageInCell(createDt, vehicleId, 1, frontPageImageCell)
+        Catch ex As Exception
+          Trace.TraceError("FamilyBaseForm.LoadPageImageInCell(): Message=" + ex.Message, New Object() {"AdDate=", createDt, "VehicleId=", vehicleId, "Page=", 1})
+          My.Application.Log.WriteException(ex)
+        Finally
+          frontPageImageCell = Nothing
+        End Try
+
+        backPageImageCell = CType(familyDataGridView.Rows(rowCounter).Cells("BackPageDataGridViewImageColumn") _
+                                  , DataGridViewImageCell)
+        Try
+          LoadPageImageInCell(createDt, vehicleId, pageCount, backPageImageCell)
+        Catch ex As Exception
+          Trace.TraceError("FamilyBaseForm.LoadPageImageInCell(): Message=" + ex.Message, New Object() {"AdDate=", createDt, "VehicleId=", vehicleId, "Page=", pageCount})
+          My.Application.Log.WriteException(ex)
+        Finally
+          backPageImageCell = Nothing
+        End Try
+      Next
+
+        End Sub
+
+        Private Function GetImagePath(ByVal YearMonth As String, ByVal LocationId As Integer, ByVal PathType As Integer) As String
+            Dim imgPathCommand As System.Data.SqlClient.SqlCommand
+            Dim obj As Object
+            Dim Path As System.Text.StringBuilder
+
+
+            imgPathCommand = New System.Data.SqlClient.SqlCommand
+            Path = New System.Text.StringBuilder
+
+            Try
+                With imgPathCommand
+                    .CommandText = "SELECT path FROM ImagePath WHERE yearmonth=" + YearMonth + " AND LocationId=" + LocationId.ToString + " AND PathTypeid=" + PathType.ToString
+                    .CommandType = CommandType.Text
+                    .Connection = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+                    .Connection.Open()
+                    obj = .ExecuteScalar()
+                End With
+                If String.IsNullOrEmpty(CType(obj, String)) = True Then Exit Function
+                Path.Append(CType(obj, String))
+                Path.Append("\")
+                Path.Append(YearMonth)
+                Path.Append("\")
+            Catch ex As Exception
+                My.Application.Log.WriteException(ex)
+            Finally
+                If imgPathCommand.Connection.State <> ConnectionState.Closed Then imgPathCommand.Connection.Close()
+            End Try
+
+            Return Path.ToString()
+        End Function
+
+        Private Function GetPathType(ByVal _Type As String) As Integer
+            Dim cmd As System.Data.SqlClient.SqlCommand
+            Dim obj As New Object
+            Dim _val As Integer
+
+            cmd = New System.Data.SqlClient.SqlCommand
+
+            Try
+                With cmd
+                    .CommandText = "Select codeid from vwCode where codedescrip='" + _Type + "'"
+                    .CommandType = CommandType.Text
+                    .Connection = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+                    .Connection.Open()
+                    obj = .ExecuteScalar()
+                End With
+                If String.IsNullOrEmpty(CType(obj, String)) = False Then _val = CType(obj, Integer)
+            Catch ex As Exception
+                Throw New ApplicationException("Unable to get the Path Type Id.", ex)
+            Finally
+                If cmd.Connection.State <> ConnectionState.Closed Then cmd.Connection.Close()
+            End Try
+
+            Return _val
+        End Function
+
+
+        Private Sub familyDataGridView_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles familyDataGridView.CellContentClick
+
+
+        End Sub
+
+        
+    End Class
+
+End Namespace

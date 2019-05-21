@@ -1,0 +1,703 @@
+﻿Namespace UI
+
+  Public Class PublicationCheckInForm
+    Implements IForm
+
+
+    Private Const MARKET_FOR_MAGAZINES As String = "N/A"
+
+
+    Private WithEvents m_publicationCheckInProcessor As Processors.PublicationCheckIn
+
+
+
+    Public ReadOnly Property Processor() As Processors.PublicationCheckIn
+      Get
+        Return m_publicationCheckInProcessor
+      End Get
+    End Property
+
+
+
+    ''' <summary>
+    ''' Clears all inputs on form.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Protected Overrides Sub ClearAllInputs()
+      MyBase.ClearAllInputs()
+
+      senderComboBox.SelectedValue = DBNull.Value
+      marketComboBox.SelectedValue = DBNull.Value
+      newspaperComboBox.SelectedValue = DBNull.Value
+      checkInMonthCalendar.SetDate(DateTime.Today)
+      breakDateListBox.Items.Clear()
+      weightTextBox.Clear()
+      searchTextBox.Clear()
+
+    End Sub
+
+    ''' <summary>
+    ''' Enables or Disables controls based on supplied value of formStatus.
+    ''' </summary>
+    ''' <param name="formStatus"></param>
+    ''' <remarks></remarks>
+    Protected Overrides Sub EnableDisableControls(ByVal formStatus As FormStateEnum)
+      MyBase.EnableDisableControls(formStatus)
+
+      Select Case formStatus
+        Case FormStateEnum.Insert, FormStateEnum.Edit
+          senderComboBox.Enabled = True
+          marketComboBox.Enabled = True
+          newspaperComboBox.Enabled = True
+          languageComboBox.Enabled = True
+          checkInMonthCalendar.Enabled = True
+          breakDateListBox.Enabled = True
+          weightTextBox.Enabled = True
+          reprintButton.Enabled = (formStatus = FormStateEnum.Edit)
+
+        Case Else
+          senderComboBox.Enabled = False
+          marketComboBox.Enabled = False
+          newspaperComboBox.Enabled = False
+          languageComboBox.Enabled = False
+          checkInMonthCalendar.Enabled = False
+          breakDateListBox.Enabled = False
+          weightTextBox.Enabled = False
+      End Select
+
+    End Sub
+
+    ''' <summary>
+    ''' Removes all error providers from form.
+    ''' </summary>
+    ''' <remarks></remarks>
+    Protected Overrides Sub RemoveAllErrorProviders()
+      MyBase.RemoveAllErrorProviders()
+
+      RemoveErrorProvider(senderComboBox)
+      RemoveErrorProvider(marketComboBox)
+      RemoveErrorProvider(newspaperComboBox)
+      RemoveErrorProvider(languageComboBox)
+      RemoveErrorProvider(breakDateListBox)
+      RemoveErrorProvider(weightTextBox)
+
+    End Sub
+
+    ''' <summary>
+    ''' Showing error popup to user based on error texts assigned to each column.
+    ''' </summary>
+    ''' <param name="validatedRow"></param>
+    ''' <remarks></remarks>
+    Private Sub ShowErrors(ByVal validatedRow As MCAP.PublicationCheckInDataSet.vwPublicationEditionRow)
+      Dim columnCounter As Integer
+      Dim errorMessage As System.Text.StringBuilder
+      Dim errorCols() As Data.DataColumn
+
+
+      If validatedRow.HasErrors = False Then Exit Sub
+
+      errorMessage = New System.Text.StringBuilder
+
+      If String.IsNullOrEmpty(validatedRow.RowError) = False Then
+        errorMessage.Append(validatedRow.RowError)
+      Else
+        errorCols = validatedRow.GetColumnsInError()
+
+        errorMessage.Append("Invalid inputs found.")
+        errorMessage.Append(Environment.NewLine)
+        For columnCounter = 0 To errorCols.Length - 1
+          errorMessage.Append(Environment.NewLine)
+          'errorMessage.Append(errorCols(columnCounter).Caption)
+          'errorMessage.Append(" - ")
+          errorMessage.Append((columnCounter + 1).ToString())
+          errorMessage.Append(". ")
+          errorMessage.Append(validatedRow.GetColumnError(errorCols(columnCounter)))
+        Next
+
+        System.Array.Clear(errorCols, 0, errorCols.Length)
+      End If
+
+      MessageBox.Show(errorMessage.ToString(), Application.ProductName, _
+                      MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+      errorMessage = Nothing
+      errorCols = Nothing
+
+    End Sub
+
+    ''' <summary>
+    ''' Validates all inputs on form.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Private Function AreInputsValid() As Boolean
+      Dim areAllValid As Boolean
+
+
+      areAllValid = Me.ValidateChildren(ValidationConstraints.Visible)
+
+      If areAllValid AndAlso CType(weightTextBox.Text, Double) <= 0 Then
+        SetErrorProvider(weightTextBox, "Weight should be a positive number.")
+        areAllValid = False
+      Else
+        RemoveErrorProvider(weightTextBox)
+      End If
+
+      Return areAllValid
+
+    End Function
+
+    ''' <summary>
+    ''' Assigns input values into data row of vwPublicationEdition datatable.
+    ''' </summary>
+    ''' <param name="tempRow"></param>
+    ''' <param name="dateRowIndex"></param>
+    ''' <exception cref="System.ApplicationException">Raises exception if ad date is an invalid date.</exception>
+    ''' <remarks></remarks>
+    Private Sub SetDataRowColumnValues _
+        (ByVal tempRow As PublicationCheckInDataSet.vwPublicationEditionRow _
+         , ByVal dateRowIndex As Integer)
+      Dim mediaId As Integer
+      Dim tempBreakDt As DateTime
+
+
+      If DateTime.TryParse(breakDateListBox.Items(dateRowIndex).ToString(), tempBreakDt) = False Then
+        Throw New System.ApplicationException("Invalid Ad date specified.")
+      End If
+
+      tempRow.BeginEdit()
+      If marketComboBox.Text = "N/A" Then
+        mediaId = Processor.GetMediaId("Magazine")
+        tempRow.MediaId = mediaId
+        tempRow.SenderId = Processor.GetSenderIdForMail()
+        tempRow.SetWeightNull()
+      Else
+        mediaId = Processor.GetMediaId("ROP")
+        tempRow.MediaId = mediaId
+        tempRow.SenderId = CType(senderComboBox.SelectedValue, Integer)
+        tempRow.Weight = CType(weightTextBox.Text, Double)
+      End If
+
+      tempRow.MktId = CType(marketComboBox.SelectedValue, Integer)
+      tempRow.PublicationId = CType(newspaperComboBox.SelectedValue, Integer)
+      tempRow.LanguageId = CType(languageComboBox.SelectedValue, Integer)
+      tempRow.BreakDt = tempBreakDt
+      tempRow.EndEdit()
+
+    End Sub
+
+    Private Sub ShowRecord(ByVal viewRow As PublicationCheckInDataSet.vwPublicationEditionRow)
+
+      senderComboBox.SelectedValue = viewRow.SenderId
+      marketComboBox.SelectedValue = viewRow.MktId
+      newspaperComboBox.SelectedValue = viewRow.PublicationId
+      If viewRow.IsLanguageIdNull() Then
+        languageComboBox.SelectedValue = DBNull.Value
+      Else
+        languageComboBox.SelectedValue = viewRow.LanguageId
+      End If
+      checkInMonthCalendar.SetDate(viewRow.BreakDt)
+      breakDateListBox.Items.Clear()
+      breakDateListBox.Items.Add(viewRow.BreakDt.ToString("MM/dd/yy"))
+      weightTextBox.Text = viewRow.Weight.ToString("0.00")
+
+    End Sub
+
+
+#Region " IForm Implementation "
+
+    Public Event ApplyingUserCredentials() Implements IForm.ApplyingUserCredentials
+    Public Event UserCredentialsApplied() Implements IForm.UserCredentialsApplied
+
+    Public Event InitializingForm() Implements IForm.InitializingForm
+    Public Event FormInitialized() Implements IForm.FormInitialized
+
+
+    Public Sub ApplyUserCredentials() Implements IForm.ApplyUserCredentials
+
+    End Sub
+
+    Public Sub Init(ByVal formStatus As FormStateEnum) Implements IForm.Init
+
+      RaiseEvent InitializingForm()
+
+      Me.SuspendLayout()
+
+      Me.FormState = formStatus
+
+      m_publicationCheckInProcessor = New Processors.PublicationCheckIn
+      Processor.Initialize()
+      Processor.LoadDataSet()
+
+      Me.StatusMessage = "Information loaded, preparing to show loaded information on window."
+
+      checkedInByValueLabel.Text = Processor.UserFirstName + " " + Processor.UserLastName
+
+      languageComboBox.DisplayMember = "Descrip"
+      languageComboBox.ValueMember = "LanguageId"
+      languageComboBox.DataSource = Processor.Data.Language
+      languageComboBox.SelectedValue = DBNull.Value
+
+      newspaperComboBox.DisplayMember = "Descrip"
+      newspaperComboBox.ValueMember = "PublicationId"
+      newspaperComboBox.DataSource = Processor.Data.Publication
+      newspaperComboBox.SelectedValue = DBNull.Value
+
+      marketComboBox.DisplayMember = "Descrip"
+      marketComboBox.ValueMember = "MktId"
+      marketComboBox.DataSource = Processor.Data.Mkt
+      marketComboBox.SelectedValue = DBNull.Value
+
+      senderComboBox.DisplayMember = "Name"
+      senderComboBox.ValueMember = "SenderId"
+      senderComboBox.DataSource = Processor.Data.Sender
+      senderComboBox.SelectedValue = DBNull.Value
+
+      Me.ResumeLayout(False)
+
+      RaiseEvent FormInitialized()
+
+    End Sub
+
+#End Region
+
+
+    Private Sub senderComboBox_SelectedValueChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles senderComboBox.SelectedValueChanged
+      Dim senderId As Integer
+
+
+      If senderComboBox.SelectedValue Is Nothing Then
+        'marketComboBox.DataSource = Nothing
+        'newspaperComboBox.DataSource = Nothing
+        Exit Sub
+      ElseIf Integer.TryParse(senderComboBox.SelectedValue.ToString(), senderId) = False Then
+        MessageBox.Show("Unable to read sender.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Exit Sub
+      End If
+
+      Processor.LoadMarketsForSender(senderId)
+      marketComboBox.SelectedValue = DBNull.Value
+
+    End Sub
+
+    Private Sub marketComboBox_SelectedValueChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles marketComboBox.SelectedValueChanged
+      Dim marketId As Integer
+
+
+      If marketComboBox.SelectedValue Is Nothing Then
+        'newspaperComboBox.DataSource = Nothing
+        Exit Sub
+      ElseIf Integer.TryParse(marketComboBox.SelectedValue.ToString(), marketId) = False Then
+        MessageBox.Show("Unable to read market.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Exit Sub
+      End If
+
+      Processor.LoadPublicationsForMarket(marketId)
+      newspaperComboBox.SelectedValue = DBNull.Value
+
+    End Sub
+
+    Private Sub marketComboBox_Validated _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles marketComboBox.Validated
+
+      If marketComboBox.Text = MARKET_FOR_MAGAZINES Then
+        senderComboBox.SelectedValue = Processor.GetSenderIdForMail()
+        senderComboBox.Enabled = False
+        weightTextBox.Text = String.Empty
+        weightTextBox.Enabled = False
+      Else
+        senderComboBox.Enabled = True
+        weightTextBox.Enabled = True
+      End If
+
+    End Sub
+
+    Private Sub newspaperComboBox_SelectedValueChanged _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles newspaperComboBox.SelectedValueChanged
+      Dim bmb As BindingManagerBase
+      Dim tempPublicationRow As System.Data.DataRowView
+
+
+      If marketComboBox.SelectedValue Is Nothing Then
+        languageComboBox.SelectedValue = DBNull.Value
+        Exit Sub
+      End If
+
+      bmb = Me.BindingContext(newspaperComboBox.DataSource)
+      tempPublicationRow = CType(bmb.Current, System.Data.DataRowView)
+
+      languageComboBox.SelectedValue = tempPublicationRow("LanguageId")
+
+      bmb = Nothing
+      tempPublicationRow = Nothing
+
+    End Sub
+
+    Private Sub ComboBox_Validating(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) _
+        Handles senderComboBox.Validating, marketComboBox.Validating, newspaperComboBox.Validating _
+                , languageComboBox.Validating
+      Dim tempComboBox As System.Windows.Forms.ComboBox
+
+
+      tempComboBox = CType(sender, System.Windows.Forms.ComboBox)
+
+      If tempComboBox.SelectedValue Is Nothing Then
+        SetErrorProvider(tempComboBox, "Select value from drop down.")
+      Else
+        RemoveErrorProvider(tempComboBox)
+      End If
+
+    End Sub
+
+    Private Sub checkInMonthCalendar_DateSelected _
+        (ByVal sender As Object, ByVal e As System.Windows.Forms.DateRangeEventArgs) _
+        Handles checkInMonthCalendar.DateSelected
+      Dim dateDiff, dateCounter As Integer
+      Dim loopStartDate As DateTime
+
+
+      If e.Start < e.End Then
+        dateDiff = e.End.Subtract(e.Start).Days
+        loopStartDate = e.Start
+      ElseIf e.End < e.Start Then
+        dateDiff = e.Start.Subtract(e.End).Days
+        loopStartDate = e.End
+      Else
+        loopStartDate = e.Start
+      End If
+
+      For dateCounter = 0 To dateDiff
+        If breakDateListBox.FindStringExact(loopStartDate.ToString("MM/dd/yy")) < 0 Then
+          breakDateListBox.Items.Add(loopStartDate.ToString("MM/dd/yy"))
+        Else
+          MessageBox.Show(loopStartDate.ToString("MM/dd/yy") + " already selected.", ProductName _
+                          , MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+        loopStartDate = loopStartDate.AddDays(1)
+      Next
+
+      checkInMonthCalendar.SetDate(e.End)
+
+      loopStartDate = Nothing
+
+    End Sub
+
+    Private Sub breakDateListBox_Validating _
+        (ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) _
+        Handles breakDateListBox.Validating
+
+      If breakDateListBox.Items.Count = 0 Then
+        SetErrorProvider(breakDateListBox, "Select at least one date from calendar.")
+      Else
+        RemoveErrorProvider(breakDateListBox)
+      End If
+
+    End Sub
+
+    Private Sub clearDatesButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles clearDatesButton.Click
+
+      If breakDateListBox.SelectedIndex < 0 Then
+        breakDateListBox.Items.Clear()
+      Else
+        breakDateListBox.Items.RemoveAt(breakDateListBox.SelectedIndex)
+        breakDateListBox.SelectedIndex = -1
+      End If
+
+    End Sub
+
+    Private Sub weightTextBox_KeyPress _
+        (ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) _
+        Handles weightTextBox.KeyPress
+
+      If Not (System.Char.IsDigit(e.KeyChar) Or e.KeyChar.Equals("."c) _
+              Or Microsoft.VisualBasic.ChrW(8) = e.KeyChar) _
+      Then
+        e.Handled = True
+      End If
+
+    End Sub
+
+    Private Sub weightTextBox_Validating _
+        (ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) _
+        Handles weightTextBox.Validating
+      Dim tempWeight As Double
+
+
+      If marketComboBox.Text = MARKET_FOR_MAGAZINES Then Exit Sub
+
+      If Double.TryParse("0" + weightTextBox.Text, tempWeight) = False Then
+        SetErrorProvider(weightTextBox, "Provide valid weight.")
+      Else
+        RemoveErrorProvider(weightTextBox)
+        weightTextBox.Text = tempWeight.ToString("0.0")
+      End If
+
+      tempWeight = Nothing
+
+    End Sub
+
+    Private Sub CheckInButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles newButton.Click, sameButton.Click
+      Dim itemCounter, senderId, marketId As Integer
+      Dim tempRow As PublicationCheckInDataSet.vwPublicationEditionRow
+
+
+      RemoveAllErrorProviders()
+      If AreInputsValid() = False Then Exit Sub
+
+      If Me.FormState = FormStateEnum.Edit Then
+        tempRow = Processor.Data.vwPublicationEdition(0)
+        SetDataRowColumnValues(tempRow, 0)
+        If Processor.IsDuplicate(tempRow.SenderId, tempRow.MktId, tempRow.PublicationId, tempRow.BreakDt, tempRow.VehicleId) Then
+          MessageBox.Show("Publication is already received.", ProductName _
+                          , MessageBoxButtons.OK, MessageBoxIcon.Information)
+          tempRow.RejectChanges()
+        Else
+          If Processor.IsDuplicate(tempRow.MktId, tempRow.PublicationId, tempRow.BreakDt, tempRow.VehicleId) Then
+            MessageBox.Show("Publication is already received from different sender.", ProductName _
+                            , MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Processor.SetStatusIdForDuplicate(tempRow)
+          End If
+          Processor.Synchronize()
+          Processor.PrintBarcode(tempRow)
+        End If
+
+      ElseIf Me.FormState = FormStateEnum.Insert Then
+        For itemCounter = 0 To breakDateListBox.Items.Count - 1
+          tempRow = Processor.CreateNew()
+          SetDataRowColumnValues(tempRow, itemCounter)
+          If Processor.IsDuplicate(tempRow.SenderId, tempRow.MktId, tempRow.PublicationId, tempRow.BreakDt, Nothing) Then
+            MessageBox.Show("Publication is already received.", ProductName _
+                            , MessageBoxButtons.OK, MessageBoxIcon.Information)
+            tempRow = Nothing
+            Continue For
+          ElseIf Processor.IsDuplicate(tempRow.MktId, tempRow.PublicationId, tempRow.BreakDt, Nothing) Then
+            MessageBox.Show("Publication is already received from different sender.", ProductName _
+                            , MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Processor.SetStatusIdForDuplicate(tempRow)
+          Else
+            Processor.SetStatusIdForReceived(tempRow)
+          End If
+          Processor.Add(tempRow)
+          Processor.Synchronize()
+          Processor.PrintBarcode(tempRow)
+          tempRow = Nothing
+        Next
+      End If
+
+      If sender Is sameButton Then
+        senderId = CType(senderComboBox.SelectedValue, Integer)
+        marketId = CType(marketComboBox.SelectedValue, Integer)
+      End If
+
+      Me.FormState = FormStateEnum.Insert
+      ClearAllInputs()
+      EnableDisableControls(Me.FormState)
+
+      If sender Is sameButton Then
+        senderComboBox.SelectedValue = senderId
+        marketComboBox.SelectedValue = marketId
+        newspaperComboBox.Focus()
+      Else
+        senderComboBox.Focus()
+      End If
+
+    End Sub
+
+    Private Sub gotoButton_Click _
+        (ByVal sender As System.Object, ByVal e As System.EventArgs) _
+        Handles gotoButton.Click
+      Dim vehicleId As Integer
+
+
+      If Integer.TryParse(searchTextBox.Text, vehicleId) = False Then
+        MessageBox.Show("Provide valid vehicle Id.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Error)
+        searchTextBox.Focus()
+        searchTextBox.SelectAll()
+        Exit Sub
+      End If
+
+      Processor.FindVehicle(vehicleId)
+      'If Processor.Data.vwPublicationEdition.Count = 0 Then
+      '  MessageBox.Show("Vehicle not found.", ProductName _
+      '                  , MessageBoxButtons.OK, MessageBoxIcon.Information)
+      '  searchTextBox.Focus()
+      '  searchTextBox.SelectAll()
+      '  Exit Sub
+      'End If
+
+      'RemoveAllErrorProviders()
+      'ClearAllInputs()
+      'ShowRecord(Processor.Data.vwPublicationEdition(0))
+      'Me.FormState = FormStateEnum.Edit
+      'EnableDisableControls(Me.FormState)
+
+    End Sub
+
+    Private Sub reprintButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles reprintButton.Click
+      Dim tempRow As PublicationCheckInDataSet.vwPublicationEditionRow
+
+
+      tempRow = Processor.Data.vwPublicationEdition(0)
+
+      Processor.PrintBarcode(tempRow)
+
+      tempRow = Nothing
+
+    End Sub
+
+    Private Sub clearButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles clearButton.Click
+
+      ClearAllInputs()
+      Me.FormState = FormStateEnum.Insert
+      ShowHideControls(Me.FormState)
+      EnableDisableControls(Me.FormState)
+
+      senderComboBox.Focus()
+
+    End Sub
+
+    Private Sub closeButton_Click _
+        (ByVal sender As Object, ByVal e As System.EventArgs) _
+        Handles closeButton.Click
+
+      Me.Close()
+
+    End Sub
+
+
+    Private Sub PublicationCheckInForm_FormInitialized() Handles Me.FormInitialized
+
+      Me.StatusMessage = String.Empty
+
+    End Sub
+
+    Private Sub PublicationCheckInForm_InitializingForm() Handles Me.InitializingForm
+
+      Me.StatusMessage = "Loading information, this may take some time. Please wait..."
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_BarcodePrinted() Handles m_publicationCheckInProcessor.BarcodePrinted
+
+      Me.StatusMessage = String.Empty
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_DataLoaded() Handles m_publicationCheckInProcessor.DataLoaded
+
+      Me.StatusMessage = String.Empty
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_Initialized() Handles m_publicationCheckInProcessor.Initialized
+
+      Me.StatusMessage = "Initializing processor..."
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_Initializing() Handles m_publicationCheckInProcessor.Initializing
+
+      Me.StatusMessage = String.Empty
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_LoadingData() Handles m_publicationCheckInProcessor.LoadingData
+
+      Me.StatusMessage = "Loading initial information from database. This may take some time. Please wait..."
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_LoadingMarkets() Handles m_publicationCheckInProcessor.LoadingMarkets
+
+      Me.StatusMessage = "Loading markets..."
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_LoadingPublications() Handles m_publicationCheckInProcessor.LoadingPublications
+
+      Me.StatusMessage = "Loading publications..."
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_LoadingVehicle() Handles m_publicationCheckInProcessor.LoadingVehicle
+
+      Me.StatusMessage = "Loading vehicle information..."
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_MarketsLoaded() Handles m_publicationCheckInProcessor.MarketsLoaded
+
+      Me.StatusMessage = String.Empty
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_PrintingBarcode() Handles m_publicationCheckInProcessor.PrintingBarcode
+
+      Me.StatusMessage = "Printing barcode label..."
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_PublicationsLoaded() Handles m_publicationCheckInProcessor.PublicationsLoaded
+
+      Me.StatusMessage = String.Empty
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_Synchronized() Handles m_publicationCheckInProcessor.Synchronized
+
+      Me.StatusMessage = "Saving vehicle information changes to database."
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_Synchronizing() Handles m_publicationCheckInProcessor.Synchronizing
+
+      Me.StatusMessage = String.Empty
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_VehicleLoaded() Handles m_publicationCheckInProcessor.VehicleLoaded
+
+      Me.StatusMessage = String.Empty
+
+      RemoveAllErrorProviders()
+      ClearAllInputs()
+
+      ShowRecord(Processor.Data.vwPublicationEdition(0))
+
+      Me.FormState = FormStateEnum.Edit
+      EnableDisableControls(Me.FormState)
+
+    End Sub
+
+    Private Sub m_publicationCheckInProcessor_VehicleNotFound() Handles m_publicationCheckInProcessor.VehicleNotFound
+
+      Me.StatusMessage = String.Empty
+
+      MessageBox.Show("Vehicle not found.", ProductName _
+                        , MessageBoxButtons.OK, MessageBoxIcon.Information)
+      searchTextBox.Focus()
+      searchTextBox.SelectAll()
+
+    End Sub
+
+
+  End Class
+
+End Namespace
