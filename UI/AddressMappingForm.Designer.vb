@@ -77,6 +77,8 @@
             Me.MT_MarketCol = New System.Windows.Forms.DataGridViewComboBoxColumn()
             Me.MT_MktIDCol = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.store_iCol = New System.Windows.Forms.DataGridViewComboBoxColumn()
+            Me.AC_MarketCol = New System.Windows.Forms.DataGridViewComboBoxColumn()
+            Me.AC_MktIDcol = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Store_AddressCol = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Store_CityCol = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Store_StateCol = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -101,10 +103,10 @@
             DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
             Me.AddMappingDGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
             Me.AddMappingDGV.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.AddMappingDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-            Me.AddMappingDGV.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.EditCol, Me.AC_AdvertiserCol, Me.AC_RetIDCol, Me.MT_AdvertiserCol, Me.MT_RetIDCol, Me.MT_MarketCol, Me.MT_MktIDCol, Me.store_iCol, Me.Store_AddressCol, Me.Store_CityCol, Me.Store_StateCol, Me.Store_ZipCol, Me.StartDtCol, Me.EndDtCol, Me.hold_daysCol, Me.DistinctionCol, Me.ImportTypeCol, Me.ImportMediaIDCol, Me.CommentCol, Me.FVRequiredCol, Me.IsMarketMapCol, Me.Addr_ID})
+            Me.AddMappingDGV.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.EditCol, Me.AC_AdvertiserCol, Me.AC_RetIDCol, Me.MT_AdvertiserCol, Me.MT_RetIDCol, Me.MT_MarketCol, Me.MT_MktIDCol, Me.store_iCol, Me.AC_MarketCol, Me.AC_MktIDcol, Me.Store_AddressCol, Me.Store_CityCol, Me.Store_StateCol, Me.Store_ZipCol, Me.StartDtCol, Me.EndDtCol, Me.hold_daysCol, Me.DistinctionCol, Me.ImportTypeCol, Me.ImportMediaIDCol, Me.CommentCol, Me.FVRequiredCol, Me.IsMarketMapCol, Me.Addr_ID})
             Me.AddMappingDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke
             Me.AddMappingDGV.Location = New System.Drawing.Point(12, 127)
             Me.AddMappingDGV.Name = "AddMappingDGV"
@@ -544,6 +546,21 @@
             Me.store_iCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic
             Me.store_iCol.Width = 66
             '
+            'AC_MarketCol
+            '
+            Me.AC_MarketCol.DataPropertyName = "AC_Market"
+            Me.AC_MarketCol.HeaderText = "PEP Major Market"
+            Me.AC_MarketCol.Name = "AC_MarketCol"
+            Me.AC_MarketCol.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+            Me.AC_MarketCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+            '
+            'AC_MktIDcol
+            '
+            Me.AC_MktIDcol.DataPropertyName = "AC_MktID"
+            Me.AC_MktIDcol.HeaderText = "AC_MktID"
+            Me.AC_MktIDcol.Name = "AC_MktIDcol"
+            Me.AC_MktIDcol.Visible = False
+            '
             'Store_AddressCol
             '
             Me.Store_AddressCol.DataPropertyName = "Store_Address"
@@ -712,27 +729,29 @@
         Friend WithEvents txtbxStoreID As TextBox
         Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
         Friend WithEvents ActiveAddrCheckBox As CheckBox
-        Friend WithEvents EditCol As System.Windows.Forms.DataGridViewCheckBoxColumn
-        Friend WithEvents AC_AdvertiserCol As System.Windows.Forms.DataGridViewComboBoxColumn
-        Friend WithEvents AC_RetIDCol As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents MT_AdvertiserCol As System.Windows.Forms.DataGridViewComboBoxColumn
-        Friend WithEvents MT_RetIDCol As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents MT_MarketCol As System.Windows.Forms.DataGridViewComboBoxColumn
-        Friend WithEvents MT_MktIDCol As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents store_iCol As System.Windows.Forms.DataGridViewComboBoxColumn
-        Friend WithEvents Store_AddressCol As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents Store_CityCol As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents Store_StateCol As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents Store_ZipCol As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents StartDtCol As MCAP.UI.Controls.CalendarColumn
-        Friend WithEvents EndDtCol As MCAP.UI.Controls.CalendarColumn
-        Friend WithEvents hold_daysCol As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents DistinctionCol As System.Windows.Forms.DataGridViewComboBoxColumn
-        Friend WithEvents ImportTypeCol As System.Windows.Forms.DataGridViewComboBoxColumn
-        Friend WithEvents ImportMediaIDCol As System.Windows.Forms.DataGridViewComboBoxColumn
-        Friend WithEvents CommentCol As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents FVRequiredCol As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents IsMarketMapCol As System.Windows.Forms.DataGridViewComboBoxColumn
-        Friend WithEvents Addr_ID As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents EditCol As DataGridViewCheckBoxColumn
+        Friend WithEvents AC_AdvertiserCol As DataGridViewComboBoxColumn
+        Friend WithEvents AC_RetIDCol As DataGridViewTextBoxColumn
+        Friend WithEvents MT_AdvertiserCol As DataGridViewComboBoxColumn
+        Friend WithEvents MT_RetIDCol As DataGridViewTextBoxColumn
+        Friend WithEvents MT_MarketCol As DataGridViewComboBoxColumn
+        Friend WithEvents MT_MktIDCol As DataGridViewTextBoxColumn
+        Friend WithEvents store_iCol As DataGridViewComboBoxColumn
+        Friend WithEvents AC_MarketCol As DataGridViewComboBoxColumn
+        Friend WithEvents AC_MktIDcol As DataGridViewTextBoxColumn
+        Friend WithEvents Store_AddressCol As DataGridViewTextBoxColumn
+        Friend WithEvents Store_CityCol As DataGridViewTextBoxColumn
+        Friend WithEvents Store_StateCol As DataGridViewTextBoxColumn
+        Friend WithEvents Store_ZipCol As DataGridViewTextBoxColumn
+        Friend WithEvents StartDtCol As Controls.CalendarColumn
+        Friend WithEvents EndDtCol As Controls.CalendarColumn
+        Friend WithEvents hold_daysCol As DataGridViewTextBoxColumn
+        Friend WithEvents DistinctionCol As DataGridViewComboBoxColumn
+        Friend WithEvents ImportTypeCol As DataGridViewComboBoxColumn
+        Friend WithEvents ImportMediaIDCol As DataGridViewComboBoxColumn
+        Friend WithEvents CommentCol As DataGridViewTextBoxColumn
+        Friend WithEvents FVRequiredCol As DataGridViewTextBoxColumn
+        Friend WithEvents IsMarketMapCol As DataGridViewComboBoxColumn
+        Friend WithEvents Addr_ID As DataGridViewTextBoxColumn
     End Class
 End Namespace

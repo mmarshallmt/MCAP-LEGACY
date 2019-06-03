@@ -13,10 +13,12 @@ Namespace UI
         Private MTMktDT As New System.Data.DataTable()
         Private ImportTypedt As New System.Data.DataTable()
         Private dtpriority As New System.Data.DataTable()
+        Private AC_MktDT As New System.Data.DataTable() 'LP430
 
         Private bsACRetailer As New BindingSource()
         Private bsMTRetailer As New BindingSource()
         Private bsMTMkt As New BindingSource()
+        Private bsACMkt As New BindingSource()
         Private bsImportType As New BindingSource()
 
         Private rwAftAltered As Boolean = False
@@ -123,7 +125,11 @@ Namespace UI
             If dsfilter.Tables.Count > 4 Then
                 dtpriority = dsfilter.Tables(4) 'allow additional priority to be added
             End If
-
+            AC_MktDT = dsfilter.Tables(5)
+            Dim ACMktdr As DataRow = AC_MktDT.NewRow()
+            ACMktdr("Descrip") = ""
+            ACMktdr("MktID") = -1
+            AC_MktDT.Rows.InsertAt(ACMktdr, 0)
 
         End Sub
 
@@ -172,6 +178,16 @@ Namespace UI
                     .DataSource = bsMTMkt
                     .DisplayMember = "Descrip"
                     .ValueMember = "MktID"
+                    .FlatStyle = FlatStyle.Flat
+                End With
+
+
+                bsACMkt.DataSource = AC_MktDT.Copy()
+                With AC_MarketCol
+                    .DataSource = bsACMkt
+                    .DataPropertyName = "AC_Market"
+                    .ValueMember = "MktID"
+                    .DisplayMember = "Descrip"
                     .FlatStyle = FlatStyle.Flat
                 End With
 
@@ -576,7 +592,6 @@ Namespace UI
         Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
             Try
-
                 If Not String.IsNullOrEmpty(rwToBeDeleted) Then
                     'Removing Deleted rows from DB
                     Dim EndsInComa As Boolean = rwToBeDeleted.EndsWith(",")
@@ -689,7 +704,7 @@ Namespace UI
         End Sub
 
         Private Sub AddMappingDGV_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs) Handles AddMappingDGV.EditingControlShowing
-            If AddMappingDGV.CurrentCell.ColumnIndex = 7 Then
+            If AddMappingDGV.CurrentCell.ColumnIndex = 7 Or AddMappingDGV.CurrentCell.ColumnIndex = 8 Then
                 Dim cb As ComboBox
                 If TypeOf e.Control Is ComboBox Then
                     cb = CType(e.Control, ComboBox)

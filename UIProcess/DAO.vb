@@ -70,7 +70,7 @@ Public Class DAO
                                         ByVal Store_City As String, ByVal Store_State As String, ByVal Store_Zip As String, ByVal store_i As Integer,
                                         ByVal StartDt As Nullable(Of Date), ByVal EndDt As Nullable(Of Date), ByVal hold_days As Integer, ByVal PriorityCode As Integer,
                                         ByVal ImportType As Integer, ByVal ImportMediaID As Integer, ByVal FVRequired As Integer, ByVal IsMarketMap As Integer,
-                                        ByVal queryType As Integer, ByVal comments As String) As Boolean
+                                        ByVal queryType As Integer, ByVal comments As String, ByVal AC_Market As String, ByVal AC_MktID As Integer) As Boolean
 
         Using objCnn As New SqlConnection(GetConnectionStringForAppDB)
             SqlHelper.ExecuteNonQuery(
@@ -96,7 +96,9 @@ Public Class DAO
                                                     New SqlParameter("@FVRequired", FVRequired),
                                                     New SqlParameter("@IsMarketMap", IsMarketMap),
                                                     New SqlParameter("@queryType", queryType),
-                                                    New SqlParameter("@Comment", comments))
+                                                    New SqlParameter("@Comment", comments),
+                                                    New SqlParameter("@AC_Market", AC_Market),
+                                                    New SqlParameter("@AC_MktID", AC_MktID))
             Return CBool(1)
         End Using
     End Function
