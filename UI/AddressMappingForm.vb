@@ -184,11 +184,12 @@ Namespace UI
 
                 bsACMkt.DataSource = AC_MktDT.Copy()
                 With AC_MarketCol
-                    .DataSource = bsACMkt
-                    .DataPropertyName = "AC_Market"
-                    .ValueMember = "MktID"
-                    .DisplayMember = "Descrip"
+                    .DataPropertyName = "AC_MktID"
+                    AC_MarketCol.DisplayMember = "Descrip"
+                    AC_MarketCol.ValueMember = "MktID"
                     .FlatStyle = FlatStyle.Flat
+
+                    AC_MarketCol.DataSource = bsACMkt
                 End With
 
                 Dim dtImportType As New DataTable
@@ -372,7 +373,7 @@ Namespace UI
                         End If
                     End If
                 End Using
-            ElseIf AddMappingDGV.Columns(e.ColumnIndex).Name = "IsMarketMapCol" And AddMappingDGV.Rows(e.RowIndex).Cells("IsMarketMapCol").Value.ToString = "True" Then
+            ElseIf AddMappingDGV.Columns(e.ColumnIndex).Name = "IsMarketMapCol" AndAlso AddMappingDGV.Rows(e.RowIndex).Cells("IsMarketMapCol").Value.ToString = "True" Then
                 Using store_iCell As DataGridViewComboBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("store_iCol"), DataGridViewComboBoxCell)
                     Dim dt As New DataTable
                     If store_iCell.DataSource IsNot Nothing Then
@@ -464,6 +465,8 @@ Namespace UI
                 .Cells("FVRequiredCol").Value = False
                 .Cells("IsMarketMapCol").Value = False
                 .Cells("Addr_ID").Value = 0
+                .Cells("AC_MarketCol").Value = ""
+                .Cells("AC_MktIDCol").Value = 0
 
             End With
         End Sub
@@ -473,8 +476,11 @@ Namespace UI
                 If IsDBNull(AddMappingDGV.Rows(e.RowIndex).Cells("store_iCol").Value) Then
                     Exit Sub
                 End If
+                If IsNothing(AddMappingDGV.CurrentCell) Then
+                    Exit Sub
+                End If
 
-                If (AddMappingDGV.CurrentCell.ColumnIndex = 12 Or AddMappingDGV.CurrentCell.ColumnIndex = 13) Then
+                If (AddMappingDGV.CurrentCell.ColumnIndex = 14 Or AddMappingDGV.CurrentCell.ColumnIndex = 15) Then
                     '  AddMappingDGV.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = DBNull.Value
                     Using DateCell As MCAP.UI.Controls.CalendarCell = CType(AddMappingDGV.CurrentCell, MCAP.UI.Controls.CalendarCell)
                         DateCell.Value = CType(Nothing, Date?)
@@ -483,7 +489,7 @@ Namespace UI
                     End Using
                 End If
                 Try
-                    If e.ColumnIndex = 16 And Not IsDBNull(AddMappingDGV.Rows(e.RowIndex).Cells("store_iCol").Value) Then 'ImportTypeCol incase there exists a record with 0
+                    If e.ColumnIndex = 18 And Not IsDBNull(AddMappingDGV.Rows(e.RowIndex).Cells("store_iCol").Value) Then 'ImportTypeCol incase there exists a record with 0
                         Using ImportTypeCol As DataGridViewComboBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("ImportTypeCol"), DataGridViewComboBoxCell)
                             ImportTypeCol.Value = RTrim("")
                         End Using
@@ -516,7 +522,7 @@ Namespace UI
 
         Private Sub AddMappingDGV_UserAddedRow(sender As Object, e As DataGridViewRowEventArgs) Handles AddMappingDGV.UserAddedRow
 
-            If CInt(AddMappingDGV("AC_AdvertiserCol", e.Row.Index - 1).Value.ToString) = 0 And AddMappingDGV.DataSource IsNot Nothing Then
+            If AddMappingDGV("AC_AdvertiserCol", e.Row.Index - 1).Value IsNot Nothing AndAlso CInt(AddMappingDGV("AC_AdvertiserCol", e.Row.Index - 1).Value.ToString) = 0 And AddMappingDGV.DataSource IsNot Nothing Then
                 'BIND THE NEW ROW SO WE CAN FILTER THE STORE LIST used for new rows added once a retailer is selected.
                 Me.AddMappingDGV.BindingContext(Me.AddMappingDGV.DataSource, Me.AddMappingDGV.DataMember).EndCurrentEdit()
             End If
@@ -713,9 +719,9 @@ Namespace UI
                     cb.AutoCompleteSource = AutoCompleteSource.ListItems
                 End If
             End If
+
+
         End Sub
-
-
 #End Region
 
     End Class
