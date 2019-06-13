@@ -182,15 +182,15 @@ Namespace UI
                 End With
 
 
-                bsACMkt.DataSource = AC_MktDT.Copy()
-                With AC_MarketCol
-                    .DataPropertyName = "AC_MktID"
-                    AC_MarketCol.DisplayMember = "Descrip"
-                    AC_MarketCol.ValueMember = "MktID"
-                    .FlatStyle = FlatStyle.Flat
+                'bsACMkt.DataSource = AC_MktDT.Copy()
+                'With AC_MarketCol
+                '    .DataPropertyName = "AC_MktID"
+                '    AC_MarketCol.DisplayMember = "Descrip"
+                '    AC_MarketCol.ValueMember = "MktID"
+                '    .FlatStyle = FlatStyle.Flat
 
-                    AC_MarketCol.DataSource = bsACMkt
-                End With
+                '    AC_MarketCol.DataSource = bsACMkt
+                'End With
 
                 Dim dtImportType As New DataTable
                 dtImportType = ImportTypedt.Copy()
@@ -370,6 +370,14 @@ Namespace UI
                             Using Market As DataGridViewComboBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("IsMarketMapCol"), DataGridViewComboBoxCell)
                                 Market.Value = RTrim("False")
                             End Using
+
+
+                            Using ACMKTIDCell As DataGridViewTextBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("AC_MktIDCol"), DataGridViewTextBoxCell)
+                                ACMKTIDCell.Value = RTrim(storedr(0)(7).ToString)
+                            End Using
+                            Using AC_MKT_NMCell As DataGridViewTextBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("AC_MarketCol"), DataGridViewTextBoxCell)
+                                AC_MKT_NMCell.Value = RTrim(storedr(0)(6).ToString)
+                            End Using
                         End If
                     End If
                 End Using
@@ -389,6 +397,12 @@ Namespace UI
                         End Using
                         Using ZipCell As DataGridViewTextBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("Store_ZipCol"), DataGridViewTextBoxCell)
                             ZipCell.Value = ""
+                        End Using
+                        Using ACMKTIDCell As DataGridViewTextBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("AC_MktIDCol"), DataGridViewTextBoxCell)
+                            ACMKTIDCell.Value = ""
+                        End Using
+                        Using AC_MKT_NMCell As DataGridViewComboBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("AC_MarketCol"), DataGridViewComboBoxCell)
+                            AC_MKT_NMCell.Value = ""
                         End Using
                     End If
                 End Using

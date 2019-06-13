@@ -77,7 +77,7 @@
             Me.MT_MarketCol = New System.Windows.Forms.DataGridViewComboBoxColumn()
             Me.MT_MktIDCol = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.store_iCol = New System.Windows.Forms.DataGridViewComboBoxColumn()
-            Me.AC_MarketCol = New System.Windows.Forms.DataGridViewComboBoxColumn()
+            Me.AC_MarketCol = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.AC_MktIDcol = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Store_AddressCol = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Store_CityCol = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -552,7 +552,6 @@
             Me.AC_MarketCol.HeaderText = "PEP Major Market"
             Me.AC_MarketCol.Name = "AC_MarketCol"
             Me.AC_MarketCol.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-            Me.AC_MarketCol.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
             '
             'AC_MktIDcol
             '
@@ -737,7 +736,7 @@
         Friend WithEvents MT_MarketCol As DataGridViewComboBoxColumn
         Friend WithEvents MT_MktIDCol As DataGridViewTextBoxColumn
         Friend WithEvents store_iCol As DataGridViewComboBoxColumn
-        Friend WithEvents AC_MarketCol As DataGridViewComboBoxColumn
+        Friend WithEvents AC_MarketCol As DataGridViewTextBoxColumn
         Friend WithEvents AC_MktIDcol As DataGridViewTextBoxColumn
         Friend WithEvents Store_AddressCol As DataGridViewTextBoxColumn
         Friend WithEvents Store_CityCol As DataGridViewTextBoxColumn
