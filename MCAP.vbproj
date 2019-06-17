@@ -35,7 +35,7 @@
     <SignManifests>false</SignManifests>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>MCAP_2_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
-    <PublishUrl>\\mt6sql1.apima01.local\MCAPInstall\</PublishUrl>
+    <PublishUrl>\\mt3sql1\MCAPInstall\Stage\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -50,8 +50,8 @@
     <SuiteName>Data Entry</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>33</ApplicationRevision>
-    <ApplicationVersion>1.2.4.33</ApplicationVersion>
+    <ApplicationRevision>97</ApplicationRevision>
+    <ApplicationVersion>1.2.4.97</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -1102,6 +1102,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Components\_sgbak\ceTe.DynamicPDF.Rasterizer.35.x86.dll.2010-11-30.09-42-34.4884" />
     <None Include="DataSet\BypassVehicleDataSet.xsc">
       <DependentUpon>BypassVehicleDataSet.xsd</DependentUpon>
     </None>
@@ -1887,6 +1888,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Components\ceTe.DynamicPDF.Rasterizer.35.x86.dll" />
+    <Content Include="Components\ceTe.DynamicPDF.Rasterizer.35.x86.xml" />
+    <Content Include="Components\DPDFRast.x86.dll" />
+    <Content Include="Components\Microsoft.Office.Interop.Excel.dll" />
+    <Content Include="Components\WebsitesScreenshot.dll" />
+    <Content Include="Components\WebsitesScreenshot.XML" />
     <Content Include="Reference MCAP\ImageCache.dll" />
     <Content Include="Resources\Error.ico" />
     <Content Include="Resources\Information.ico" />

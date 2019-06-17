@@ -330,7 +330,7 @@ WHERE     (M.MktId = @param1)
               <xs:element name="ListedWeight" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnListedWeight" msprop:Generator_ColumnPropNameInRow="ListedWeight" msprop:Generator_ColumnPropNameInTable="ListedWeightColumn" msprop:Generator_UserColumnName="ListedWeight" type="xs:int" minOccurs="0" />
               <xs:element name="ActualWeight" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnActualWeight" msprop:Generator_ColumnPropNameInRow="ActualWeight" msprop:Generator_ColumnPropNameInTable="ActualWeightColumn" msprop:Generator_UserColumnName="ActualWeight" type="xs:int" minOccurs="0" />
               <xs:element name="VehicleCount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnVehicleCount" msprop:Generator_ColumnPropNameInRow="VehicleCount" msprop:Generator_ColumnPropNameInTable="VehicleCountColumn" msprop:Generator_UserColumnName="VehicleCount" type="xs:int" minOccurs="0" />
-              <xs:element name="ReceivedTime" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnReceivedTime" msprop:Generator_ColumnPropNameInRow="ReceivedTime" msprop:Generator_ColumnPropNameInTable="ReceivedTimeColumn" msprop:Generator_UserColumnName="ReceivedTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ReceivedTime" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnReceivedTime" msprop:Generator_ColumnPropNameInRow="ReceivedTime" msprop:Generator_ColumnPropNameInTable="ReceivedTimeColumn" msprop:Generator_UserColumnName="ReceivedTime" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
