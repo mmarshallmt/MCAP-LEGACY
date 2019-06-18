@@ -10562,8 +10562,9 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 "P.Priority)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN [User] U ON PE.CreatedById = U.UserId AND U.LocationId=" & _
                 "@LocationId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwVehicleStatus VS ON (VS.CodeTypeId=4 AND OrderId < 20" & _
                 ") AND PE.StatusId = VS.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U.LocationId = L.Code" & _
-                "Id" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE (PE.PullDt IS NULL) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.CreateDt BETWEEN @CreateDtFrom AND @Cre" & _
-                "ateDtTo)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
+                "Id" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE (PE.PullDt IS NULL) AND (P.StartDateforPEPImport is null or P.StartDat" & _
+                "eforPEPImport ='')" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.CreateDt BETWEEN @CreateDtFrom AND @CreateDtTo)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "OR" & _
+                "DER BY P.Priority, Days DESC"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LocationId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "LocationId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -10581,8 +10582,9 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 "wVehicleStatus VS ON (VS.CodeTypeId=4 AND OrderId < 20) AND PE.StatusId = VS.Cod" & _
                 "eId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U.LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE (PE.PullDt IS NO" & _
                 "T NULL) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.ScanDt IS NULL) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.CreateDt BETWEEN @CreateDtFrom AND" & _
-                " @CreateDtTo) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                  AND (PE.PullPageCount IS NULL)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Pri" & _
-                "ority, Days DESC"
+                " @CreateDtTo) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                  AND (PE.PullPageCount IS NULL)  AND (P.StartDa" & _
+                "teforPEPImport is null or P.StartDateforPEPImport ='')" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Day" & _
+                "s DESC"
             Me._commandCollection(1).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreateDtFrom", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 0, 0, "CreateDt", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -10600,7 +10602,8 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 "0) AND PE.StatusId = VS.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U.LocationId = L.Cod" & _
                 "eId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE (PE.PullDt IS NOT NULL) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.ScanDt IS NULL) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.CreateD" & _
                 "t BETWEEN @CreateDtFrom AND @CreateDtTo)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                  AND (PE.PullPageCoun" & _
-                "t IS NULL)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
+                "t IS NULL)  AND (P.StartDateforPEPImport is null or P.StartDateforPEPImport ='')" & _
+                "" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
             Me._commandCollection(2).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LocationId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "LocationId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -10623,7 +10626,8 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 "OR @Priority=P.Priority)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN [User] AS U ON PE.CreatedById = U.UserID A" & _
                 "ND U.LocationId = @LocationId " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwVehicleStatus AS VS ON VS.CodeType" & _
                 "Id = 4 AND VS.OrderId < 20 AND PE.StatusID = VS.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L" & _
-                " ON U.LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
+                " ON U.LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "where  (P.StartDateforPEPImport is null or P.StartD" & _
+                "ateforPEPImport ='')" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
             Me._commandCollection(3).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LocationId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "LocationId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -10644,8 +10648,9 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 "N PE.MediaId = Med.MediaID " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN Mkt AS M ON PE.MktId = M.MktId " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER" & _
                 " JOIN Publication AS P ON PE.PublicationId = P.PublicationId AND (@Priority = 0 " & _
                 "OR @Priority=P.Priority)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN [User] AS U ON PE.CreatedById = U.UserID " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwVehicleStatus AS VS ON VS.CodeTypeId = 4 AND VS.OrderId < 20 AND " & _
-                "PE.StatusID = VS.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U.LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "OR" & _
-                "DER BY P.Priority, Days DESC"
+                "PE.StatusID = VS.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U.LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "wh" & _
+                "ere  (P.StartDateforPEPImport is null or P.StartDateforPEPImport ='')" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY " & _
+                "P.Priority, Days DESC"
             Me._commandCollection(4).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreateDtFrom", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 0, 0, "CreateDt", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -10670,8 +10675,8 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 "nId AND (@Priority = 0 OR @Priority=P.Priority)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN [User] AS U ON PE.C" & _
                 "reatedById = U.UserID AND U.LocationId = @LocationId " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwVehicleStat" & _
                 "us AS VS ON VS.CodeTypeId = 4 AND VS.OrderId < 20 AND PE.StatusID = VS.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & _
-                "INNER JOIN vwLocation L ON U.LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DE" & _
-                "SC"
+                "INNER JOIN vwLocation L ON U.LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "where  (P.StartDateforPEPImp" & _
+                "ort is null or P.StartDateforPEPImport ='')" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
             Me._commandCollection(5).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(5).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(5).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LocationId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "LocationId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -10697,7 +10702,8 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 "nId AND (@Priority = 0 OR @Priority=P.Priority)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN [User] AS U ON PE.C" & _
                 "reatedById = U.UserID " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwVehicleStatus AS VS ON VS.CodeTypeId = 4 A" & _
                 "ND VS.OrderId < 20 AND PE.StatusID = VS.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U.Lo" & _
-                "cationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
+                "cationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "where  (P.StartDateforPEPImport is null or P.StartDateforPE" & _
+                "PImport ='')" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
             Me._commandCollection(6).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(6).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(6).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreateDtFrom", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 0, 0, "CreateDt", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -10716,8 +10722,9 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 "y=P.Priority)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN [User] U ON PE.CreatedById = U.UserId " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN v" & _
                 "wVehicleStatus VS ON (VS.CodeTypeId=4 AND OrderId < 20) AND PE.StatusId = VS.Cod" & _
                 "eId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U.LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE (PE.PullDt IS NU" & _
-                "LL) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.CreateDt BETWEEN @CreateDtFrom AND @CreateDtTo)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Prior" & _
-                "ity, Days DESC"
+                "LL) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.CreateDt BETWEEN @CreateDtFrom AND @CreateDtTo)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " AND (P.StartDat" & _
+                "eforPEPImport is null or P.StartDateforPEPImport ='')" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days" & _
+                " DESC"
             Me._commandCollection(7).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(7).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(7).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreateDtFrom", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 0, 0, "Dt", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -10741,8 +10748,8 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 ".MktId = M.MktId " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN Publication AS P ON PE.PublicationId = P.Publicat" & _
                 "ionId AND (@Priority = 0 OR @Priority=P.Priority)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN [User] AS U ON PE" & _
                 ".CreatedById = U.UserID AND U.LocationId = @LocationId " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwVehicleSt" & _
-                "atus AS VS ON VS.CodeTypeId = 4 AND VS.OrderId < 20 AND PE.StatusID = VS.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U.LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days " & _
-                "DESC"
+                "atus AS VS ON VS.CodeTypeId = 4 AND VS.OrderId < 20 AND PE.StatusID = VS.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U.LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " where  (P.StartDateforPEP" & _
+                "Import is null or P.StartDateforPEPImport ='')" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
             Me._commandCollection(8).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(8).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(8).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LocationId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "LocationId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -10768,7 +10775,8 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 "ionId AND (@Priority = 0 OR @Priority=P.Priority)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN [User] AS U ON PE" & _
                 ".CreatedById = U.UserID " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwVehicleStatus AS VS ON VS.CodeTypeId = 4" & _
                 " AND VS.OrderId < 20 AND PE.StatusID = VS.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U." & _
-                "LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
+                "LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "where  (P.StartDateforPEPImport is null or P.StartDatefor" & _
+                "PEPImport ='')" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
             Me._commandCollection(9).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(9).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(9).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreateDtFrom", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 0, 0, "CreateDt", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -10786,7 +10794,8 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 "20) AND PE.StatusId = VS.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U.LocationId = L.Co" & _
                 "deId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE (PE.PullDt IS NOT NULL) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.ScanDt IS NULL) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.Create" & _
                 "Dt BETWEEN @CreateDtFrom AND @CreateDtTo)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                  AND (PE.PullPageCou" & _
-                "nt IS NOT NULL)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
+                "nt IS NOT NULL)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " AND (P.StartDateforPEPImport is null or P.StartDateforPEPImpor" & _
+                "t ='')" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority, Days DESC"
             Me._commandCollection(10).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(10).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(10).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LocationId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "LocationId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -10804,8 +10813,9 @@ Namespace WorkToBeCompletedReportDataSetTableAdapters
                 "wVehicleStatus VS ON (VS.CodeTypeId=4 AND OrderId < 20) AND PE.StatusId = VS.Cod" & _
                 "eId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "INNER JOIN vwLocation L ON U.LocationId = L.CodeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE (PE.PullDt IS NO" & _
                 "T NULL) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.ScanDt IS NULL) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & "AND (PE.CreateDt BETWEEN @CreateDtFrom AND" & _
-                " @CreateDtTo) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                  AND (PE.PullPageCount IS NOT NULL)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P" & _
-                ".Priority, Days DESC"
+                " @CreateDtTo) " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                  AND (PE.PullPageCount IS NOT NULL)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " AND (P.St" & _
+                "artDateforPEPImport is null or P.StartDateforPEPImport ='')" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY P.Priority" & _
+                ", Days DESC"
             Me._commandCollection(11).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(11).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Priority", Global.System.Data.SqlDbType.VarChar, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(11).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@CreateDtFrom", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 0, 0, "CreateDt", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
