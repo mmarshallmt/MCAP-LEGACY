@@ -13,10 +13,12 @@ Namespace UI
         Private MTMktDT As New System.Data.DataTable()
         Private ImportTypedt As New System.Data.DataTable()
         Private dtpriority As New System.Data.DataTable()
+        Private AC_MktDT As New System.Data.DataTable() 'LP430
 
         Private bsACRetailer As New BindingSource()
         Private bsMTRetailer As New BindingSource()
         Private bsMTMkt As New BindingSource()
+        Private bsACMkt As New BindingSource()
         Private bsImportType As New BindingSource()
 
         Private rwAftAltered As Boolean = False
@@ -123,7 +125,11 @@ Namespace UI
             If dsfilter.Tables.Count > 4 Then
                 dtpriority = dsfilter.Tables(4) 'allow additional priority to be added
             End If
-
+            AC_MktDT = dsfilter.Tables(5)
+            Dim ACMktdr As DataRow = AC_MktDT.NewRow()
+            ACMktdr("Descrip") = ""
+            ACMktdr("MktID") = -1
+            AC_MktDT.Rows.InsertAt(ACMktdr, 0)
 
         End Sub
 
@@ -174,6 +180,17 @@ Namespace UI
                     .ValueMember = "MktID"
                     .FlatStyle = FlatStyle.Flat
                 End With
+
+
+                'bsACMkt.DataSource = AC_MktDT.Copy()
+                'With AC_MarketCol
+                '    .DataPropertyName = "AC_MktID"
+                '    AC_MarketCol.DisplayMember = "Descrip"
+                '    AC_MarketCol.ValueMember = "MktID"
+                '    .FlatStyle = FlatStyle.Flat
+
+                '    AC_MarketCol.DataSource = bsACMkt
+                'End With
 
                 Dim dtImportType As New DataTable
                 dtImportType = ImportTypedt.Copy()
@@ -353,10 +370,18 @@ Namespace UI
                             Using Market As DataGridViewComboBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("IsMarketMapCol"), DataGridViewComboBoxCell)
                                 Market.Value = RTrim("False")
                             End Using
+
+
+                            Using ACMKTIDCell As DataGridViewTextBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("AC_MktIDCol"), DataGridViewTextBoxCell)
+                                ACMKTIDCell.Value = RTrim(storedr(0)(7).ToString)
+                            End Using
+                            Using AC_MKT_NMCell As DataGridViewTextBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("AC_MarketCol"), DataGridViewTextBoxCell)
+                                AC_MKT_NMCell.Value = RTrim(storedr(0)(6).ToString)
+                            End Using
                         End If
                     End If
                 End Using
-            ElseIf AddMappingDGV.Columns(e.ColumnIndex).Name = "IsMarketMapCol" And AddMappingDGV.Rows(e.RowIndex).Cells("IsMarketMapCol").Value.ToString = "True" Then
+            ElseIf AddMappingDGV.Columns(e.ColumnIndex).Name = "IsMarketMapCol" AndAlso AddMappingDGV.Rows(e.RowIndex).Cells("IsMarketMapCol").Value.ToString = "True" Then
                 Using store_iCell As DataGridViewComboBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("store_iCol"), DataGridViewComboBoxCell)
                     Dim dt As New DataTable
                     If store_iCell.DataSource IsNot Nothing Then
@@ -372,6 +397,12 @@ Namespace UI
                         End Using
                         Using ZipCell As DataGridViewTextBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("Store_ZipCol"), DataGridViewTextBoxCell)
                             ZipCell.Value = ""
+                        End Using
+                        Using ACMKTIDCell As DataGridViewTextBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("AC_MktIDCol"), DataGridViewTextBoxCell)
+                            ACMKTIDCell.Value = ""
+                        End Using
+                        Using AC_MKT_NMCell As DataGridViewComboBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("AC_MarketCol"), DataGridViewComboBoxCell)
+                            AC_MKT_NMCell.Value = ""
                         End Using
                     End If
                 End Using
@@ -448,6 +479,8 @@ Namespace UI
                 .Cells("FVRequiredCol").Value = False
                 .Cells("IsMarketMapCol").Value = False
                 .Cells("Addr_ID").Value = 0
+                .Cells("AC_MarketCol").Value = ""
+                .Cells("AC_MktIDCol").Value = 0
 
             End With
         End Sub
@@ -457,8 +490,11 @@ Namespace UI
                 If IsDBNull(AddMappingDGV.Rows(e.RowIndex).Cells("store_iCol").Value) Then
                     Exit Sub
                 End If
+                If IsNothing(AddMappingDGV.CurrentCell) Then
+                    Exit Sub
+                End If
 
-                If (AddMappingDGV.CurrentCell.ColumnIndex = 12 Or AddMappingDGV.CurrentCell.ColumnIndex = 13) Then
+                If (AddMappingDGV.CurrentCell.ColumnIndex = 14 Or AddMappingDGV.CurrentCell.ColumnIndex = 15) Then
                     '  AddMappingDGV.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = DBNull.Value
                     Using DateCell As MCAP.UI.Controls.CalendarCell = CType(AddMappingDGV.CurrentCell, MCAP.UI.Controls.CalendarCell)
                         DateCell.Value = CType(Nothing, Date?)
@@ -467,7 +503,7 @@ Namespace UI
                     End Using
                 End If
                 Try
-                    If e.ColumnIndex = 16 And Not IsDBNull(AddMappingDGV.Rows(e.RowIndex).Cells("store_iCol").Value) Then 'ImportTypeCol incase there exists a record with 0
+                    If e.ColumnIndex = 18 And Not IsDBNull(AddMappingDGV.Rows(e.RowIndex).Cells("store_iCol").Value) Then 'ImportTypeCol incase there exists a record with 0
                         Using ImportTypeCol As DataGridViewComboBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("ImportTypeCol"), DataGridViewComboBoxCell)
                             ImportTypeCol.Value = RTrim("")
                         End Using
@@ -500,7 +536,7 @@ Namespace UI
 
         Private Sub AddMappingDGV_UserAddedRow(sender As Object, e As DataGridViewRowEventArgs) Handles AddMappingDGV.UserAddedRow
 
-            If CInt(AddMappingDGV("AC_AdvertiserCol", e.Row.Index - 1).Value.ToString) = 0 And AddMappingDGV.DataSource IsNot Nothing Then
+            If AddMappingDGV("AC_AdvertiserCol", e.Row.Index - 1).Value IsNot Nothing AndAlso CInt(AddMappingDGV("AC_AdvertiserCol", e.Row.Index - 1).Value.ToString) = 0 And AddMappingDGV.DataSource IsNot Nothing Then
                 'BIND THE NEW ROW SO WE CAN FILTER THE STORE LIST used for new rows added once a retailer is selected.
                 Me.AddMappingDGV.BindingContext(Me.AddMappingDGV.DataSource, Me.AddMappingDGV.DataMember).EndCurrentEdit()
             End If
@@ -576,7 +612,6 @@ Namespace UI
         Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
             Try
-
                 If Not String.IsNullOrEmpty(rwToBeDeleted) Then
                     'Removing Deleted rows from DB
                     Dim EndsInComa As Boolean = rwToBeDeleted.EndsWith(",")
@@ -689,7 +724,7 @@ Namespace UI
         End Sub
 
         Private Sub AddMappingDGV_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs) Handles AddMappingDGV.EditingControlShowing
-            If AddMappingDGV.CurrentCell.ColumnIndex = 7 Then
+            If AddMappingDGV.CurrentCell.ColumnIndex = 7 Or AddMappingDGV.CurrentCell.ColumnIndex = 8 Then
                 Dim cb As ComboBox
                 If TypeOf e.Control Is ComboBox Then
                     cb = CType(e.Control, ComboBox)
@@ -698,9 +733,9 @@ Namespace UI
                     cb.AutoCompleteSource = AutoCompleteSource.ListItems
                 End If
             End If
+
+
         End Sub
-
-
 #End Region
 
     End Class

@@ -30,6 +30,8 @@ Namespace UI.Processors
         Public Property Addr_ID As Integer
         Public Property comments As String
         Public Property celledit As Boolean
+        Public Property AC_Market As String
+        Public Property AC_MktID As Integer
 #End Region
 
         Public Sub New()
@@ -78,6 +80,9 @@ Namespace UI.Processors
                     AddrObj.Addr_ID = CInt(IIf(IsDBNull(dr("ImpID")), 0, dr("ImpID")))
                     AddrObj.comments = CStr(IIf(IsDBNull(dr("comments")), "", dr("comments")))
 
+                    AddrObj.AC_Market = CStr(IIf(IsDBNull(dr("AC_Market")), "", dr("AC_Market")))
+                    AddrObj.AC_MktID = CInt(IIf(IsDBNull(dr("AC_MktID")), 0, dr("AC_MktID")))
+
                     AddrList.Add(AddrObj.CopyObj)
                     AddrObj.Clear()
                 Next
@@ -96,6 +101,8 @@ Namespace UI.Processors
             MT_RetID = 0
             MT_Market = ""
             MT_MktID = 0
+            AC_MktID = 0
+            AC_Market = ""
             Store_Address = ""
             Store_City = ""
             Store_State = ""
@@ -135,7 +142,7 @@ Namespace UI.Processors
             Return dbo.UpdateMappedAddress(a.Addr_ID, a.AC_RetID, a.AC_Advertiser, a.MT_Advertiser, a.MT_RetID, a.MT_Market, a.MT_MktID, a.Store_Address,
                                         a.Store_City, a.Store_State, a.Store_Zip, a.store_i, a.StartDt, a.EndDt, a.hold_days, a.PriorityCode,
                                         CInt(a.ImportTypeID), a.ImportMediaID, Convert.ToInt32(a.FVRequired), Convert.ToInt32(a.IsMarketMap),
-                                        queryType, Trim(a.comments))
+                                        queryType, Trim(a.comments), a.AC_Market, a.AC_MktID)
         End Function
 
         Friend Function DeleteMappedAddress(ByVal ImpIDlist As String) As Boolean
