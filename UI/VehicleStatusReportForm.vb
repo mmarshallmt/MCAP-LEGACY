@@ -492,6 +492,7 @@
 
     Private Sub LoadVehicleInformation(ByVal vehicleId As Integer)
             Dim createDt, startDt, endDt As DateTime
+            Dim status As String
       Dim vehicleAdapter As StatusReportDataSetTableAdapters.vwVehicleStatusReportTableAdapter
       Dim pageAdapter As StatusReportDataSetTableAdapters.PageTableAdapter
       Dim pagecropAdapter As StatusReportDataSetTableAdapters.PageCropTableAdapter
@@ -594,13 +595,19 @@
                     Else
                         DurationLabel.Text = String.Empty
                     End If
-                    If .IsStatusChangeByNull And (.Status.ToLower = "duplicate" Or .Status.ToLower = "wrong version") Then
-                        statusChangesLabel.Visible = False
-                        StatusChangedValueLabel.Visible = False
+                    If .IsStatusNull = False Then
+                        status = .Status
                     Else
+                        status = ""
+                    End If
+                    If .IsStatusChangeByNull = False And (status.ToLower = "duplicate" Or status.ToLower = "wrong version") Then
                         statusChangesLabel.Visible = True
                         StatusChangedValueLabel.Visible = True
                         StatusChangedValueLabel.Text = .StatusChangeBy
+                    Else
+                        statusChangesLabel.Visible = False
+                        StatusChangedValueLabel.Visible = False
+
                     End If
 
                     If .IsCompareVehicleIdNull Then
