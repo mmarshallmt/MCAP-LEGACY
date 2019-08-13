@@ -22,14 +22,14 @@
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DESPForm))
-            Me.storedprocedureGroupBox = New System.Windows.Forms.GroupBox
-            Me.descriptionValueLabel = New System.Windows.Forms.Label
-            Me.descriptionLabel = New System.Windows.Forms.Label
-            Me.storedprocedureComboBox = New System.Windows.Forms.ComboBox
-            Me.storedprocedureLabel = New System.Windows.Forms.Label
-            Me.parameterDataGridView = New System.Windows.Forms.DataGridView
-            Me.executeButton = New System.Windows.Forms.Button
-            Me.closeButton = New System.Windows.Forms.Button
+            Me.storedprocedureGroupBox = New System.Windows.Forms.GroupBox()
+            Me.descriptionValueLabel = New System.Windows.Forms.Label()
+            Me.descriptionLabel = New System.Windows.Forms.Label()
+            Me.storedprocedureComboBox = New System.Windows.Forms.ComboBox()
+            Me.storedprocedureLabel = New System.Windows.Forms.Label()
+            Me.parameterDataGridView = New System.Windows.Forms.DataGridView()
+            Me.executeButton = New System.Windows.Forms.Button()
+            Me.closeButton = New System.Windows.Forms.Button()
             CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.storedprocedureGroupBox.SuspendLayout()
             CType(Me.parameterDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -45,7 +45,7 @@
             'storedprocedureGroupBox
             '
             Me.storedprocedureGroupBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.storedprocedureGroupBox.Controls.Add(Me.descriptionValueLabel)
             Me.storedprocedureGroupBox.Controls.Add(Me.descriptionLabel)
             Me.storedprocedureGroupBox.Controls.Add(Me.storedprocedureComboBox)
@@ -98,8 +98,8 @@
             Me.parameterDataGridView.AllowUserToAddRows = False
             Me.parameterDataGridView.AllowUserToDeleteRows = False
             Me.parameterDataGridView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                        Or System.Windows.Forms.AnchorStyles.Left) _
-                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+                Or System.Windows.Forms.AnchorStyles.Left) _
+                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.parameterDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
             Me.parameterDataGridView.Location = New System.Drawing.Point(12, 118)
             Me.parameterDataGridView.Name = "parameterDataGridView"

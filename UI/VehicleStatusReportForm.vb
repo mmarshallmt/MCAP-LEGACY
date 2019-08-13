@@ -578,14 +578,14 @@
                         SentFromLabel.Text = .SentFrom
                     End If
 
-                    If .IsCircularIdNull Then
+                    If .IsCircularIDNull Then
                         CircularIDTextBox.Text = String.Empty
                         CircularIdLabel.Visible = False
                         CircularIDTextBox.Visible = False
                     Else
                         CircularIdLabel.Visible = True
                         CircularIDTextBox.Visible = True
-                        CircularIDTextBox.Text = .CircularId.ToString()
+                        CircularIDTextBox.Text = .CircularID.ToString()
                     End If
                     If .IsStartDtNull = False And .IsEndDtNull = False Then
                         startDt = .StartDt

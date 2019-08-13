@@ -31388,8 +31388,9 @@ Namespace MaintenanceDataSetTableAdapters
             Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@MediaID", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "MediaId", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(2) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(2).Connection = Me.Connection
-            Me._commandCollection(2).CommandText = "SELECT     RetId, Descrip, TradeClassId, LanguageId, Priority, StartDt, EndDt"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FR"& _ 
-                "OM         Ret"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"WHERE     #WhereClause#"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"ORDER BY Descrip, StartDt, EndDt"
+            Me._commandCollection(2).CommandText = "SELECT     RetId, Descrip, TradeClassId, LanguageId, Priority, StartDt, EndDt, Co"& _ 
+                "mment"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM         Ret"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"WHERE     #WhereClause#"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"ORDER BY Descrip, StartDt, End"& _ 
+                "Dt"
             Me._commandCollection(2).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(3) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(3).Connection = Me.Connection
@@ -44860,8 +44861,8 @@ Namespace MaintenanceDataSetTableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " select rop_i PublicationId, rop_nm Publication from  [172.29.75.103].adcentry." & _
-                "dbo.ad_rops ORDER BY rop_nm ASC"
+            Me._commandCollection(0).CommandText = ""&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&" select rop_i PublicationId, rop_nm Publication from  [172.29.75.103].adcentry."& _ 
+                "dbo.ad_rops "
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
         End Sub
         

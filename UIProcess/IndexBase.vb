@@ -648,6 +648,28 @@
 
             vehicleRow.StatusID = duplicateStatusId
             vehicleRow.IndexedById = CInt(User.m_currentUser.UserID)
+            updateVehicleStatusChangedBy(vehicleRow.VehicleId)
+        End Sub
+
+        Public Sub updateVehicleStatusChangedBy(ByVal VehicleID As Object)
+            Dim cmd As System.Data.SqlClient.SqlCommand
+            Dim obj As Object
+
+            cmd = New System.Data.SqlClient.SqlCommand
+
+            Try
+                With cmd
+                    .CommandText = "UPDATE Vehicle SET StatusChangedByID = " + User.m_currentUser.UserID.ToString + " where vehicleID = " + VehicleID.ToString + ""
+                    .CommandType = CommandType.Text
+                    .Connection = New System.Data.SqlClient.SqlConnection(GetConnectionStringForAppDB())
+                    .Connection.Open()
+                    .ExecuteNonQuery()
+                End With
+            Catch ex As Exception
+                My.Application.Log.WriteException(ex)
+            Finally
+                If cmd.Connection.State <> ConnectionState.Closed Then cmd.Connection.Close()
+            End Try
 
         End Sub
 

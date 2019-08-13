@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Materials Collection and Ad Processing application.")> 
 <Assembly: AssemblyCompany("Market Track")> 
 <Assembly: AssemblyProduct("MCAP 1.2")> 
-<Assembly: AssemblyCopyright("Copyright © Market Track 2014")> 
+<Assembly: AssemblyCopyright("Copyright © Market Track 2019")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -33,5 +33,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.2.4.22")> 
-<Assembly: AssemblyFileVersion("1.2.4.22")> 
+<Assembly: AssemblyVersion("1.2.4.30")> 
+<Assembly: AssemblyFileVersion("1.2.4.30")> 

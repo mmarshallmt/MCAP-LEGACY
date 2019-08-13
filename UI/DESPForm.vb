@@ -448,6 +448,24 @@
         Private Sub storedprocedureComboBox_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles storedprocedureComboBox.SelectedIndexChanged
 
         End Sub
+
+        Private Sub parameterDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles parameterDataGridView.RowEnter
+            If parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Name").Value.ToString() = "@userid" Then
+                parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Value").Value = User.UserID
+                parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Value").ReadOnly = True
+            Else
+                parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Value").ReadOnly = False
+            End If
+        End Sub
+
+        Private Sub parameterDataGridView_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles parameterDataGridView.RowsAdded
+            If parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Name").Value.ToString() = "@userid" Then
+                parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Value").Value = User.UserID
+                parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Value").ReadOnly = True
+            Else
+                parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Value").ReadOnly = False
+            End If
+        End Sub
     End Class
 
 End Namespace
