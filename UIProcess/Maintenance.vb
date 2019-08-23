@@ -1184,10 +1184,11 @@
         ''' <param name="filterCondition"></param>
         ''' <remarks></remarks>
         Private Sub LoadFilteredExpectations(ByVal filterCondition As String)
-
+            Dim FilterString As String
+            FilterString = filterCondition.Replace("E.", "")
             Data.Expectation.LoadingTable = True
             Data.Expectation.BeginLoadData()
-            ExpectationAdapter.FillByWhereClause(Data.Expectation, "E." + filterCondition)
+            ExpectationAdapter.FillByWhereClause(Data.Expectation, FilterString)
             Data.Expectation.EndLoadData()
             Data.Expectation.LoadingTable = False
 

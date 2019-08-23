@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <PublishUrlHistory>\\mt6sql1.apima01.local\MCAPInstall\|\\mtcansql1\MCAPInstall\|\\mt4sql06\MCAPInstall\|\\mt1sql04\MCAPInstall\|\\mt3sql1\MCAPInstall\</PublishUrlHistory>
+    <PublishUrlHistory>\\mt3sql1\MCAPInstall\Stage\|\\mt3sql1\MCAPInstall\Staging\|\\mt6sql1.apima01.local\MCAPInstall\|\\mtcansql1\MCAPInstall\|\\mt4sql06\MCAPInstall\</PublishUrlHistory>
     <InstallUrlHistory>
     </InstallUrlHistory>
     <SupportUrlHistory>

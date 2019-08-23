@@ -4086,6 +4086,7 @@ Select r
             Dim mediaButtonColumn As New System.Windows.Forms.DataGridViewButtonColumn
             Dim startDtCalendarColumn As MCAP.UI.Controls.CalendarColumn
             Dim endDtCalendarColumn As MCAP.UI.Controls.CalendarColumn
+            Dim CoverageTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
 
             Dim constraintsRow As System.Data.EnumerableRowCollection(Of MaintenanceDataSet.COLUMNSRow)
 
@@ -4100,11 +4101,12 @@ Select r
             mediaButtonColumn = New System.Windows.Forms.DataGridViewButtonColumn()
             startDtCalendarColumn = New MCAP.UI.Controls.CalendarColumn
             endDtCalendarColumn = New MCAP.UI.Controls.CalendarColumn
+            CoverageTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
 
             maintenanceDataGridView.DataSource = Nothing
             maintenanceDataGridView.Columns.Clear()
             maintenanceDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() _
-                                                       {senderNameTextBoxColumn, medIdTextBoxColumn, mktIdTextBoxColumn, retIdTextBoxColumn, expIdTextBoxColumn, senderIdTextBoxColumn, mediaButtonColumn, startDtCalendarColumn, endDtCalendarColumn})
+                                                       {senderNameTextBoxColumn, medIdTextBoxColumn, mktIdTextBoxColumn, retIdTextBoxColumn, expIdTextBoxColumn, senderIdTextBoxColumn, mediaButtonColumn, startDtCalendarColumn, endDtCalendarColumn, CoverageTextBoxColumn})
             mArray = New List(Of List(Of String))
             For i As Integer = 0 To maintenanceDataGridView.Columns.Count - 1
                 mArray.Add(New List(Of String))
@@ -4254,6 +4256,22 @@ Select r
                 ' .ReadOnly = True
                 '.DataPropertyName = "Button Field"
                 .UseColumnTextForButtonValue = True
+                mArray(ctr).Add(.HeaderText)
+                mArray(ctr).Add(.DataPropertyName)
+                ctr += 1
+            End With
+
+            constraintsRow = Nothing
+            constraintsRow = From r In Processor.Data.COLUMNS _
+                 Where r.Column_Name.ToUpper() = "COVERAGE" AndAlso r.Is_Nullable.ToUpper() = "YES" _
+                 Select r
+            With CoverageTextBoxColumn
+                .HeaderText = "Coverage"
+                'If constraintsRow.Count() > 0 Then _
+                .HeaderCell.Style.Font = New System.Drawing.Font(.HeaderCell.InheritedStyle.Font, FontStyle.Bold)
+                .Name = "CoverageTextBoxColumn"
+                .ReadOnly = True
+                .DataPropertyName = "Coverage"
                 mArray(ctr).Add(.HeaderText)
                 mArray(ctr).Add(.DataPropertyName)
                 ctr += 1
@@ -4290,7 +4308,7 @@ Select r
             Dim mediaButtonColumn As New System.Windows.Forms.DataGridViewButtonColumn
             Dim startDtCalendarColumn As MCAP.UI.Controls.CalendarColumn
             Dim endDtCalendarColumn As MCAP.UI.Controls.CalendarColumn
-
+            Dim CoverageTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
 
             Dim constraintsRow As System.Data.EnumerableRowCollection(Of MaintenanceDataSet.COLUMNSRow)
 
@@ -4305,11 +4323,12 @@ Select r
             mediaButtonColumn = New System.Windows.Forms.DataGridViewButtonColumn()
             startDtCalendarColumn = New MCAP.UI.Controls.CalendarColumn
             endDtCalendarColumn = New MCAP.UI.Controls.CalendarColumn
+            CoverageTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
 
             maintenanceDataGridView.DataSource = Nothing
             maintenanceDataGridView.Columns.Clear()
             maintenanceDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() _
-                                                       {senderNameTextBoxColumn, medIdTextBoxColumn, mktIdTextBoxColumn, retIdTextBoxColumn, expIdTextBoxColumn, senderIdTextBoxColumn, mediaButtonColumn, startDtCalendarColumn, endDtCalendarColumn})
+                                                       {senderNameTextBoxColumn, medIdTextBoxColumn, mktIdTextBoxColumn, retIdTextBoxColumn, expIdTextBoxColumn, senderIdTextBoxColumn, mediaButtonColumn, startDtCalendarColumn, endDtCalendarColumn, CoverageTextBoxColumn})
             mArray = New List(Of List(Of String))
             For i As Integer = 0 To maintenanceDataGridView.Columns.Count - 1
                 mArray.Add(New List(Of String))
@@ -4462,6 +4481,22 @@ Select r
                 mArray(ctr).Add(.DataPropertyName)
                 ctr += 1
             End With
+
+            constraintsRow = From r In Processor.Data.COLUMNS _
+                 Where r.Column_Name.ToUpper() = "Coverage" AndAlso r.Is_Nullable.ToUpper() = "YES" _
+                 Select r
+            With CoverageTextBoxColumn
+                .HeaderText = "Coverage"
+                'If constraintsRow.Count() > 0 Then _
+                .HeaderCell.Style.Font = New System.Drawing.Font(.HeaderCell.InheritedStyle.Font, FontStyle.Bold)
+                .Name = "CoverageTextBoxColumn"
+                ' .ReadOnly = True
+                .DataPropertyName = "Coverage"
+                mArray(ctr).Add(.HeaderText)
+                mArray(ctr).Add(.DataPropertyName)
+                ctr += 1
+            End With
+
 
             senderIdTextBoxColumn = Nothing
             senderNameTextBoxColumn = Nothing
@@ -6602,6 +6637,8 @@ Select r
 
             If filterColumnName = "ExpectationId" Then
                 filterColumnDataType = GetType(System.Int16)
+                'ElseIf filterColumnName.Contains("Coverage") = True Then
+                '    filterColumnDataType = GetType(System.DateTime)
             End If
 
             AppendFilterCriteria(filterCondition, filterColumnName, filterColumnDataType)
@@ -6636,6 +6673,8 @@ Select r
                 End If
                 If filterColumnName = "ExpectationId" Then
                     filterColumnDataType = GetType(System.Int16)
+                    'ElseIf filterColumnName = "Coverage" Then
+                    '    filterColumnDataType = GetType(System.DateTime)
                 End If
 
                 If tableComboBox.Text = "SenderExpectation" And IsFilteredTable = False Then
@@ -6761,7 +6800,7 @@ Select r
                 Try
                     If dgMaintenance.Columns(e.ColumnIndex).Name = "URLTextBoxColumn" And e.RowIndex >= 0 Then
 
-                       
+
 
                         Dim bmb As BindingManagerBase
 
@@ -6773,30 +6812,30 @@ Select r
                             Dim userResponse As DialogResult
                             userResponse = MessageBox.Show("Data on the Main form will be saved ?" _
                                            , ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                      
-                        If userResponse = Windows.Forms.DialogResult.No Then Exit Sub
 
-                        applyButton.PerformClick()
-                    Else
-                        Dim tempTable As Data.DataTable
-                        _DataRefresh = True
-                        If maintenanceDataGridView.DataSource Is Nothing Then Exit Sub
+                            If userResponse = Windows.Forms.DialogResult.No Then Exit Sub
 
-                        tempTable = CType(maintenanceDataGridView.DataSource, Data.DataTable)
-                        tempTable = tempTable.GetChanges(DataRowState.Modified)
+                            applyButton.PerformClick()
+                        Else
+                            Dim tempTable As Data.DataTable
+                            _DataRefresh = True
+                            If maintenanceDataGridView.DataSource Is Nothing Then Exit Sub
 
-                        Processor.UpdateWebsite(Processor.Data.WebsitePageDownload)
-                    End If
+                            tempTable = CType(maintenanceDataGridView.DataSource, Data.DataTable)
+                            tempTable = tempTable.GetChanges(DataRowState.Modified)
 
-                    Dim dsWebsiteURL As DataSet = GetWebsitePageDownload(CInt(dgMaintenance.CurrentRow.Cells("WebsitePageDownloadTextBoxColumn").Value))
-                    Using URLInputBox As New URLInputBox()
-                        URLInputBox.LoadData(dsWebsiteURL)
-                        URLInputBox.StartPosition = FormStartPosition.CenterParent
-                        URLInputBox.ShowDialog()
-                        If URLInputBox.RefreshGrid = True Then
-                            filterButton.PerformClick()
+                            Processor.UpdateWebsite(Processor.Data.WebsitePageDownload)
                         End If
-                    End Using
+
+                        Dim dsWebsiteURL As DataSet = GetWebsitePageDownload(CInt(dgMaintenance.CurrentRow.Cells("WebsitePageDownloadTextBoxColumn").Value))
+                        Using URLInputBox As New URLInputBox()
+                            URLInputBox.LoadData(dsWebsiteURL)
+                            URLInputBox.StartPosition = FormStartPosition.CenterParent
+                            URLInputBox.ShowDialog()
+                            If URLInputBox.RefreshGrid = True Then
+                                filterButton.PerformClick()
+                            End If
+                        End Using
 
 
                     End If
@@ -6806,7 +6845,7 @@ Select r
 
             ElseIf tableComboBox.Text = "Sender" Then
 
-            
+
                 Try
                     If dgMaintenance.Columns(e.ColumnIndex).Name = "commentsTextBoxColumn" And e.RowIndex >= 0 Then
 

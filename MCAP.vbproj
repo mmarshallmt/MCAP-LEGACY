@@ -35,7 +35,7 @@
     <SignManifests>false</SignManifests>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>MCAP_2_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
-    <PublishUrl>\\mt6sql1.apima01.local\MCAPInstall\</PublishUrl>
+    <PublishUrl>\\mt3sql1\MCAPInstall\Stage\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -50,8 +50,8 @@
     <SuiteName>Data Entry</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>35</ApplicationRevision>
-    <ApplicationVersion>1.2.4.35</ApplicationVersion>
+    <ApplicationRevision>113</ApplicationRevision>
+    <ApplicationVersion>1.2.4.113</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>

@@ -5619,52 +5619,6 @@ Partial Public Class MaintenanceDataSet
         
         Private columnROPPageNameInd As Global.System.Data.DataColumn
         
-        Private columnFVReqInd1 As Global.System.Data.DataColumn
-        
-        Private columnADReqInd1 As Global.System.Data.DataColumn
-        
-        Private columnAdDynReqInd1 As Global.System.Data.DataColumn
-        
-        Private columnAdSmtReqInd1 As Global.System.Data.DataColumn
-        
-        Private columnScanReqInd1 As Global.System.Data.DataColumn
-        
-        Private columnFsiInd1 As Global.System.Data.DataColumn
-        
-        Private columnjaAlcInd1 As Global.System.Data.DataColumn
-        
-        Private columnjaAlcMInd1 As Global.System.Data.DataColumn
-        
-        Private columnjaAlcVInd1 As Global.System.Data.DataColumn
-        
-        Private columnjaallInd1 As Global.System.Data.DataColumn
-        
-        Private columnjaAllmInd1 As Global.System.Data.DataColumn
-        
-        Private columnjaAllvInd1 As Global.System.Data.DataColumn
-        
-        Private columnjaasmInd1 As Global.System.Data.DataColumn
-        
-        Private columnjabevInd1 As Global.System.Data.DataColumn
-        
-        Private columnjacanInd1 As Global.System.Data.DataColumn
-        
-        Private columnjafrVInd1 As Global.System.Data.DataColumn
-        
-        Private columnjaHSPeInd1 As Global.System.Data.DataColumn
-        
-        Private columnjaHSPsInd1 As Global.System.Data.DataColumn
-        
-        Private columnjalnetInd1 As Global.System.Data.DataColumn
-        
-        Private columnjamassInd1 As Global.System.Data.DataColumn
-        
-        Private columnjaspanInd1 As Global.System.Data.DataColumn
-        
-        Private columnemail1 As Global.System.Data.DataColumn
-        
-        Private columnROPPageNameInd1 As Global.System.Data.DataColumn
-        
         Private columnIndAutoQC As Global.System.Data.DataColumn
         
         Private columnFVEntry360Ind As Global.System.Data.DataColumn
@@ -5982,190 +5936,6 @@ Partial Public Class MaintenanceDataSet
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property FVReqInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnFVReqInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property ADReqInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnADReqInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property AdDynReqInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnAdDynReqInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property AdSmtReqInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnAdSmtReqInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property ScanReqInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnScanReqInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property FsiInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnFsiInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jaAlcInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjaAlcInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jaAlcMInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjaAlcMInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jaAlcVInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjaAlcVInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jaallInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjaallInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jaAllmInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjaAllmInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jaAllvInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjaAllvInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jaasmInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjaasmInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jabevInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjabevInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jacanInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjacanInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jafrVInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjafrVInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jaHSPeInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjaHSPeInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jaHSPsInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjaHSPsInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jalnetInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjalnetInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jamassInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjamassInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property jaspanInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnjaspanInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property email1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnemail1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property ROPPageNameInd1Column() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnROPPageNameInd1
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public ReadOnly Property IndAutoQCColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnIndAutoQC
@@ -6267,35 +6037,12 @@ Partial Public Class MaintenanceDataSet
                     ByVal jabevInd As Integer,  _
                     ByVal email As Integer,  _
                     ByVal ROPPageNameInd As Integer,  _
-                    ByVal FVReqInd1 As Byte,  _
-                    ByVal ADReqInd1 As Byte,  _
-                    ByVal AdDynReqInd1 As Byte,  _
-                    ByVal AdSmtReqInd1 As Byte,  _
-                    ByVal ScanReqInd1 As Byte,  _
-                    ByVal FsiInd1 As Byte,  _
-                    ByVal jaAlcInd1 As Byte,  _
-                    ByVal jaAlcMInd1 As Byte,  _
-                    ByVal jaAlcVInd1 As Byte,  _
-                    ByVal jaallInd1 As Byte,  _
-                    ByVal jaAllmInd1 As Byte,  _
-                    ByVal jaAllvInd1 As Byte,  _
-                    ByVal jaasmInd1 As Byte,  _
-                    ByVal jabevInd1 As Byte,  _
-                    ByVal jacanInd1 As Byte,  _
-                    ByVal jafrVInd1 As Byte,  _
-                    ByVal jaHSPeInd1 As Byte,  _
-                    ByVal jaHSPsInd1 As Byte,  _
-                    ByVal jalnetInd1 As Byte,  _
-                    ByVal jamassInd1 As Byte,  _
-                    ByVal jaspanInd1 As Byte,  _
-                    ByVal email1 As Byte,  _
-                    ByVal ROPPageNameInd1 As Byte,  _
                     ByVal IndAutoQC As Byte,  _
                     ByVal FVEntry360Ind As Byte,  _
                     ByVal ADEntry360Ind As Byte,  _
                     ByVal Coverage As String) As ExpectationRow
             Dim rowExpectationRow As ExpectationRow = CType(Me.NewRow,ExpectationRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, Nothing, Nothing, Nothing, FrequencyId, StartDt, EndDt, Priority, Comments, FVReqInd, ADReqInd, MissingAdComments, ScanDPI, AdDynReqInd, AdSmtReqInd, ScanReqInd, FsiInd, jaAlcInd, jaAlcMInd, jaAlcVInd, jaallInd, jacanInd, jafrVInd, jaHSPeInd, jaHSPsInd, jalnetInd, jamassInd, jaspanInd, jaAllmInd, jaAllvInd, jaasmInd, jabevInd, email, ROPPageNameInd, FVReqInd1, ADReqInd1, AdDynReqInd1, AdSmtReqInd1, ScanReqInd1, FsiInd1, jaAlcInd1, jaAlcMInd1, jaAlcVInd1, jaallInd1, jaAllmInd1, jaAllvInd1, jaasmInd1, jabevInd1, jacanInd1, jafrVInd1, jaHSPeInd1, jaHSPsInd1, jalnetInd1, jamassInd1, jaspanInd1, email1, ROPPageNameInd1, IndAutoQC, FVEntry360Ind, ADEntry360Ind, Coverage}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Nothing, Nothing, Nothing, FrequencyId, StartDt, EndDt, Priority, Comments, FVReqInd, ADReqInd, MissingAdComments, ScanDPI, AdDynReqInd, AdSmtReqInd, ScanReqInd, FsiInd, jaAlcInd, jaAlcMInd, jaAlcVInd, jaallInd, jacanInd, jafrVInd, jaHSPeInd, jaHSPsInd, jalnetInd, jamassInd, jaspanInd, jaAllmInd, jaAllvInd, jaasmInd, jabevInd, email, ROPPageNameInd, IndAutoQC, FVEntry360Ind, ADEntry360Ind, Coverage}
             If (Not (parentRetRowByFK_Expectation_Ret) Is Nothing) Then
                 columnValuesArray(1) = parentRetRowByFK_Expectation_Ret(0)
             End If
@@ -6367,29 +6114,6 @@ Partial Public Class MaintenanceDataSet
             Me.columnjabevInd = MyBase.Columns("jabevInd")
             Me.columnemail = MyBase.Columns("email")
             Me.columnROPPageNameInd = MyBase.Columns("ROPPageNameInd")
-            Me.columnFVReqInd1 = MyBase.Columns("FVReqInd1")
-            Me.columnADReqInd1 = MyBase.Columns("ADReqInd1")
-            Me.columnAdDynReqInd1 = MyBase.Columns("AdDynReqInd1")
-            Me.columnAdSmtReqInd1 = MyBase.Columns("AdSmtReqInd1")
-            Me.columnScanReqInd1 = MyBase.Columns("ScanReqInd1")
-            Me.columnFsiInd1 = MyBase.Columns("FsiInd1")
-            Me.columnjaAlcInd1 = MyBase.Columns("jaAlcInd1")
-            Me.columnjaAlcMInd1 = MyBase.Columns("jaAlcMInd1")
-            Me.columnjaAlcVInd1 = MyBase.Columns("jaAlcVInd1")
-            Me.columnjaallInd1 = MyBase.Columns("jaallInd1")
-            Me.columnjaAllmInd1 = MyBase.Columns("jaAllmInd1")
-            Me.columnjaAllvInd1 = MyBase.Columns("jaAllvInd1")
-            Me.columnjaasmInd1 = MyBase.Columns("jaasmInd1")
-            Me.columnjabevInd1 = MyBase.Columns("jabevInd1")
-            Me.columnjacanInd1 = MyBase.Columns("jacanInd1")
-            Me.columnjafrVInd1 = MyBase.Columns("jafrVInd1")
-            Me.columnjaHSPeInd1 = MyBase.Columns("jaHSPeInd1")
-            Me.columnjaHSPsInd1 = MyBase.Columns("jaHSPsInd1")
-            Me.columnjalnetInd1 = MyBase.Columns("jalnetInd1")
-            Me.columnjamassInd1 = MyBase.Columns("jamassInd1")
-            Me.columnjaspanInd1 = MyBase.Columns("jaspanInd1")
-            Me.columnemail1 = MyBase.Columns("email1")
-            Me.columnROPPageNameInd1 = MyBase.Columns("ROPPageNameInd1")
             Me.columnIndAutoQC = MyBase.Columns("IndAutoQC")
             Me.columnFVEntry360Ind = MyBase.Columns("FVEntry360Ind")
             Me.columnADEntry360Ind = MyBase.Columns("ADEntry360Ind")
@@ -6467,52 +6191,6 @@ Partial Public Class MaintenanceDataSet
             MyBase.Columns.Add(Me.columnemail)
             Me.columnROPPageNameInd = New Global.System.Data.DataColumn("ROPPageNameInd", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnROPPageNameInd)
-            Me.columnFVReqInd1 = New Global.System.Data.DataColumn("FVReqInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnFVReqInd1)
-            Me.columnADReqInd1 = New Global.System.Data.DataColumn("ADReqInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnADReqInd1)
-            Me.columnAdDynReqInd1 = New Global.System.Data.DataColumn("AdDynReqInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnAdDynReqInd1)
-            Me.columnAdSmtReqInd1 = New Global.System.Data.DataColumn("AdSmtReqInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnAdSmtReqInd1)
-            Me.columnScanReqInd1 = New Global.System.Data.DataColumn("ScanReqInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnScanReqInd1)
-            Me.columnFsiInd1 = New Global.System.Data.DataColumn("FsiInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnFsiInd1)
-            Me.columnjaAlcInd1 = New Global.System.Data.DataColumn("jaAlcInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjaAlcInd1)
-            Me.columnjaAlcMInd1 = New Global.System.Data.DataColumn("jaAlcMInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjaAlcMInd1)
-            Me.columnjaAlcVInd1 = New Global.System.Data.DataColumn("jaAlcVInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjaAlcVInd1)
-            Me.columnjaallInd1 = New Global.System.Data.DataColumn("jaallInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjaallInd1)
-            Me.columnjaAllmInd1 = New Global.System.Data.DataColumn("jaAllmInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjaAllmInd1)
-            Me.columnjaAllvInd1 = New Global.System.Data.DataColumn("jaAllvInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjaAllvInd1)
-            Me.columnjaasmInd1 = New Global.System.Data.DataColumn("jaasmInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjaasmInd1)
-            Me.columnjabevInd1 = New Global.System.Data.DataColumn("jabevInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjabevInd1)
-            Me.columnjacanInd1 = New Global.System.Data.DataColumn("jacanInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjacanInd1)
-            Me.columnjafrVInd1 = New Global.System.Data.DataColumn("jafrVInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjafrVInd1)
-            Me.columnjaHSPeInd1 = New Global.System.Data.DataColumn("jaHSPeInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjaHSPeInd1)
-            Me.columnjaHSPsInd1 = New Global.System.Data.DataColumn("jaHSPsInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjaHSPsInd1)
-            Me.columnjalnetInd1 = New Global.System.Data.DataColumn("jalnetInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjalnetInd1)
-            Me.columnjamassInd1 = New Global.System.Data.DataColumn("jamassInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjamassInd1)
-            Me.columnjaspanInd1 = New Global.System.Data.DataColumn("jaspanInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnjaspanInd1)
-            Me.columnemail1 = New Global.System.Data.DataColumn("email1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnemail1)
-            Me.columnROPPageNameInd1 = New Global.System.Data.DataColumn("ROPPageNameInd1", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnROPPageNameInd1)
             Me.columnIndAutoQC = New Global.System.Data.DataColumn("IndAutoQC", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnIndAutoQC)
             Me.columnFVEntry360Ind = New Global.System.Data.DataColumn("FVEntry360Ind", GetType(Byte), Nothing, Global.System.Data.MappingType.Element)
@@ -6535,29 +6213,6 @@ Partial Public Class MaintenanceDataSet
             Me.columnStartDt.Caption = "Start Date"
             Me.columnEndDt.Caption = "End Date"
             Me.columnMissingAdComments.MaxLength = 250
-            Me.columnFVReqInd1.Caption = "FVReqInd"
-            Me.columnADReqInd1.Caption = "ADReqInd"
-            Me.columnAdDynReqInd1.Caption = "AdDynReqInd"
-            Me.columnAdSmtReqInd1.Caption = "AdSmtReqInd"
-            Me.columnScanReqInd1.Caption = "ScanReqInd"
-            Me.columnFsiInd1.Caption = "FsiInd"
-            Me.columnjaAlcInd1.Caption = "jaAlcInd"
-            Me.columnjaAlcMInd1.Caption = "jaAlcMInd"
-            Me.columnjaAlcVInd1.Caption = "jaAlcVInd"
-            Me.columnjaallInd1.Caption = "jaallInd"
-            Me.columnjaAllmInd1.Caption = "jaAllmInd"
-            Me.columnjaAllvInd1.Caption = "jaAllvInd"
-            Me.columnjaasmInd1.Caption = "jaasmInd"
-            Me.columnjabevInd1.Caption = "jabevInd"
-            Me.columnjacanInd1.Caption = "jacanInd"
-            Me.columnjafrVInd1.Caption = "jafrVInd"
-            Me.columnjaHSPeInd1.Caption = "jaHSPeInd"
-            Me.columnjaHSPsInd1.Caption = "jaHSPsInd"
-            Me.columnjalnetInd1.Caption = "jalnetInd"
-            Me.columnjamassInd1.Caption = "jamassInd"
-            Me.columnjaspanInd1.Caption = "jaspanInd"
-            Me.columnemail1.Caption = "email"
-            Me.columnROPPageNameInd1.Caption = "ROPPageNameInd"
             Me.columnCoverage.ReadOnly = true
             Me.columnCoverage.MaxLength = 50
         End Sub
@@ -13354,6 +13009,12 @@ Partial Public Class MaintenanceDataSet
         
         Private columnSenderId As Global.System.Data.DataColumn
         
+        Private columnCoverage As Global.System.Data.DataColumn
+        
+        Private columnStartDt As Global.System.Data.DataColumn
+        
+        Private columnEndDt As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub New()
@@ -13454,6 +13115,30 @@ Partial Public Class MaintenanceDataSet
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property CoverageColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCoverage
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property StartDtColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnStartDt
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property EndDtColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEndDt
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -13490,12 +13175,18 @@ Partial Public Class MaintenanceDataSet
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Overloads Function AddSenderExpectationRow(ByVal ExpectationID As Integer, ByVal SenderName As String, ByVal MktId As String, ByVal MediaId As String, ByVal RetId As String, ByVal startDate As Date, ByVal endDate As Date, ByVal SenderId As Integer) As SenderExpectationRow
+        Public Overloads Function AddSenderExpectationRow(ByVal ExpectationID As Integer, ByVal SenderName As String, ByVal MktId As String, ByVal MediaId As String, ByVal RetId As String, ByVal startDate As Date, ByVal endDate As Date, ByVal SenderId As Integer, ByVal Coverage As String, ByVal StartDt As Date, ByVal EndDt As Date) As SenderExpectationRow
             Dim rowSenderExpectationRow As SenderExpectationRow = CType(Me.NewRow,SenderExpectationRow)
-            Dim columnValuesArray() As Object = New Object() {ExpectationID, SenderName, MktId, MediaId, RetId, startDate, endDate, SenderId}
+            Dim columnValuesArray() As Object = New Object() {ExpectationID, SenderName, MktId, MediaId, RetId, startDate, endDate, SenderId, Coverage, StartDt, EndDt}
             rowSenderExpectationRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowSenderExpectationRow)
             Return rowSenderExpectationRow
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function FindByExpectationID(ByVal ExpectationID As Integer) As SenderExpectationRow
+            Return CType(Me.Rows.Find(New Object() {ExpectationID}),SenderExpectationRow)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -13523,6 +13214,9 @@ Partial Public Class MaintenanceDataSet
             Me.columnstartDate = MyBase.Columns("startDate")
             Me.columnendDate = MyBase.Columns("endDate")
             Me.columnSenderId = MyBase.Columns("SenderId")
+            Me.columnCoverage = MyBase.Columns("Coverage")
+            Me.columnStartDt = MyBase.Columns("StartDt")
+            Me.columnEndDt = MyBase.Columns("EndDt")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -13544,11 +13238,21 @@ Partial Public Class MaintenanceDataSet
             MyBase.Columns.Add(Me.columnendDate)
             Me.columnSenderId = New Global.System.Data.DataColumn("SenderId", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnSenderId)
+            Me.columnCoverage = New Global.System.Data.DataColumn("Coverage", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCoverage)
+            Me.columnStartDt = New Global.System.Data.DataColumn("StartDt", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnStartDt)
+            Me.columnEndDt = New Global.System.Data.DataColumn("EndDt", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEndDt)
+            Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnExpectationID}, true))
             Me.columnExpectationID.AllowDBNull = false
+            Me.columnExpectationID.Unique = true
             Me.columnSenderName.MaxLength = 200
             Me.columnMktId.MaxLength = 50
             Me.columnMediaId.MaxLength = 50
             Me.columnRetId.MaxLength = 50
+            Me.columnCoverage.ReadOnly = true
+            Me.columnCoverage.MaxLength = 50
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -21332,351 +21036,6 @@ Partial Public Class MaintenanceDataSet
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property FVReqInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.FVReqInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'FVReqInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.FVReqInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property ADReqInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.ADReqInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'ADReqInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.ADReqInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property AdDynReqInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.AdDynReqInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'AdDynReqInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.AdDynReqInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property AdSmtReqInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.AdSmtReqInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'AdSmtReqInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.AdSmtReqInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property ScanReqInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.ScanReqInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'ScanReqInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.ScanReqInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property FsiInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.FsiInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'FsiInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.FsiInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jaAlcInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jaAlcInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jaAlcInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jaAlcInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jaAlcMInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jaAlcMInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jaAlcMInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jaAlcMInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jaAlcVInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jaAlcVInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jaAlcVInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jaAlcVInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jaallInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jaallInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jaallInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jaallInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jaAllmInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jaAllmInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jaAllmInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jaAllmInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jaAllvInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jaAllvInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jaAllvInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jaAllvInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jaasmInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jaasmInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jaasmInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jaasmInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jabevInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jabevInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jabevInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jabevInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jacanInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jacanInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jacanInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jacanInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jafrVInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jafrVInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jafrVInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jafrVInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jaHSPeInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jaHSPeInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jaHSPeInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jaHSPeInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jaHSPsInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jaHSPsInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jaHSPsInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jaHSPsInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jalnetInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jalnetInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jalnetInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jalnetInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jamassInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jamassInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jamassInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jamassInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property jaspanInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.jaspanInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'jaspanInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.jaspanInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property email1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.email1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'email1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.email1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property ROPPageNameInd1() As Byte
-            Get
-                Try 
-                    Return CType(Me(Me.tableExpectation.ROPPageNameInd1Column),Byte)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'ROPPageNameInd1' in table 'Expectation' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tableExpectation.ROPPageNameInd1Column) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property IndAutoQC() As Byte
             Get
                 Try 
@@ -22206,282 +21565,6 @@ Partial Public Class MaintenanceDataSet
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetROPPageNameIndNull()
             Me(Me.tableExpectation.ROPPageNameIndColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsFVReqInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.FVReqInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetFVReqInd1Null()
-            Me(Me.tableExpectation.FVReqInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsADReqInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.ADReqInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetADReqInd1Null()
-            Me(Me.tableExpectation.ADReqInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsAdDynReqInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.AdDynReqInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetAdDynReqInd1Null()
-            Me(Me.tableExpectation.AdDynReqInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsAdSmtReqInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.AdSmtReqInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetAdSmtReqInd1Null()
-            Me(Me.tableExpectation.AdSmtReqInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsScanReqInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.ScanReqInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetScanReqInd1Null()
-            Me(Me.tableExpectation.ScanReqInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsFsiInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.FsiInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetFsiInd1Null()
-            Me(Me.tableExpectation.FsiInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjaAlcInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jaAlcInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjaAlcInd1Null()
-            Me(Me.tableExpectation.jaAlcInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjaAlcMInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jaAlcMInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjaAlcMInd1Null()
-            Me(Me.tableExpectation.jaAlcMInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjaAlcVInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jaAlcVInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjaAlcVInd1Null()
-            Me(Me.tableExpectation.jaAlcVInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjaallInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jaallInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjaallInd1Null()
-            Me(Me.tableExpectation.jaallInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjaAllmInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jaAllmInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjaAllmInd1Null()
-            Me(Me.tableExpectation.jaAllmInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjaAllvInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jaAllvInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjaAllvInd1Null()
-            Me(Me.tableExpectation.jaAllvInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjaasmInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jaasmInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjaasmInd1Null()
-            Me(Me.tableExpectation.jaasmInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjabevInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jabevInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjabevInd1Null()
-            Me(Me.tableExpectation.jabevInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjacanInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jacanInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjacanInd1Null()
-            Me(Me.tableExpectation.jacanInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjafrVInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jafrVInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjafrVInd1Null()
-            Me(Me.tableExpectation.jafrVInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjaHSPeInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jaHSPeInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjaHSPeInd1Null()
-            Me(Me.tableExpectation.jaHSPeInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjaHSPsInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jaHSPsInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjaHSPsInd1Null()
-            Me(Me.tableExpectation.jaHSPsInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjalnetInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jalnetInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjalnetInd1Null()
-            Me(Me.tableExpectation.jalnetInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjamassInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jamassInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjamassInd1Null()
-            Me(Me.tableExpectation.jamassInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsjaspanInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.jaspanInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetjaspanInd1Null()
-            Me(Me.tableExpectation.jaspanInd1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function Isemail1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.email1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub Setemail1Null()
-            Me(Me.tableExpectation.email1Column) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function IsROPPageNameInd1Null() As Boolean
-            Return Me.IsNull(Me.tableExpectation.ROPPageNameInd1Column)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub SetROPPageNameInd1Null()
-            Me(Me.tableExpectation.ROPPageNameInd1Column) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -25300,6 +24383,51 @@ Partial Public Class MaintenanceDataSet
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property Coverage() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableSenderExpectation.CoverageColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Coverage' in table 'SenderExpectation' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableSenderExpectation.CoverageColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property StartDt() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableSenderExpectation.StartDtColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'StartDt' in table 'SenderExpectation' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableSenderExpectation.StartDtColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property EndDt() As Date
+            Get
+                Try 
+                    Return CType(Me(Me.tableSenderExpectation.EndDtColumn),Date)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'EndDt' in table 'SenderExpectation' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableSenderExpectation.EndDtColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsSenderNameNull() As Boolean
             Return Me.IsNull(Me.tableSenderExpectation.SenderNameColumn)
         End Function
@@ -25380,6 +24508,42 @@ Partial Public Class MaintenanceDataSet
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetSenderIdNull()
             Me(Me.tableSenderExpectation.SenderIdColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsCoverageNull() As Boolean
+            Return Me.IsNull(Me.tableSenderExpectation.CoverageColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetCoverageNull()
+            Me(Me.tableSenderExpectation.CoverageColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsStartDtNull() As Boolean
+            Return Me.IsNull(Me.tableSenderExpectation.StartDtColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetStartDtNull()
+            Me(Me.tableSenderExpectation.StartDtColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IsEndDtNull() As Boolean
+            Return Me.IsNull(Me.tableSenderExpectation.EndDtColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetEndDtNull()
+            Me(Me.tableSenderExpectation.EndDtColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -34458,20 +33622,8 @@ Namespace MaintenanceDataSetTableAdapters
             Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@MediaId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "MediaId", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._commandCollection(2) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(2).Connection = Me.Connection
-            Me._commandCollection(2).CommandText = "SELECT     E.ExpectationID, E.RetId, E.MktId, E.MediaId, E.FrequencyId, E.StartDt"& _ 
-                ", E.EndDt, E.Priority, E.Comments, E.MissingAdComments, E.ScanDPI, "&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"           "& _ 
-                "           E.FVReqInd, E.ADReqInd, E.AdDynReqInd, E.AdSmtReqInd, E.ScanReqInd, E"& _ 
-                ".FsiInd, E.jaAlcInd, E.jaAlcMInd, E.jaAlcVInd, E.jaallInd, E.jaAllMInd, "&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"      "& _ 
-                "                E.jaAllVInd, E.jaasMInd, E.jabeVInd, E.jacanInd, E.jafrVInd, E.j"& _ 
-                "aHSPeInd, E.jaHSPsInd, E.jalnetInd, E.jamassInd, E.jaspanInd, E.email, "&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"       "& _ 
-                "               ROPPageNameInd, FVEntry360Ind, ADEntry360Ind, E.IndAutoQC"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&",(sele"& _ 
-                "ct top 1  c.descrip from RetMktCoverage rmc join code c on rmc.coverageid = c.co"& _ 
-                "deid where rmc.mktid=E.MktId and rmc.retid=E.RetId) Coverage"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM         Expec"& _ 
-                "tation E INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                      Ret R ON E.RetId = R.RetId INNER JOIN"& _ 
-                ""&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                      Mkt M ON E.MktId = M.MktId INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                 "& _ 
-                "     Media Med ON E.MediaId = Med.MediaId LEFT JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                      vwFre"& _ 
-                "quency F ON E.FrequencyId = F.CodeId"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"WHERE     #WhereClause#"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"ORDER BY R.Descri"& _ 
-                "p, M.Descrip, Med.Descrip, F.Descrip, E.StartDt, E.EndDt, E.Priority"
+            Me._commandCollection(2).CommandText = "SELECT   *"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM         vw_Expectation "&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"WHERE     #WhereClause#"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"ORDER BY Start"& _ 
+                "Dt, EndDt, Priority"
             Me._commandCollection(2).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(3) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(3).Connection = Me.Connection
@@ -39654,7 +38806,6 @@ Namespace MaintenanceDataSetTableAdapters
             Me.Adapter.SelectCommand.CommandText = tempCmdText
             Return returnValue
         End Function
-        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
@@ -40742,6 +39893,9 @@ Namespace MaintenanceDataSetTableAdapters
             tableMapping.ColumnMappings.Add("startDate", "startDate")
             tableMapping.ColumnMappings.Add("endDate", "endDate")
             tableMapping.ColumnMappings.Add("SenderId", "SenderId")
+            tableMapping.ColumnMappings.Add("StartDt", "StartDt")
+            tableMapping.ColumnMappings.Add("EndDt", "EndDt")
+            tableMapping.ColumnMappings.Add("Coverage", "Coverage")
             Me._adapter.TableMappings.Add(tableMapping)
             Me._adapter.DeleteCommand = New Global.System.Data.SqlClient.SqlCommand()
             Me._adapter.DeleteCommand.Connection = Me.Connection
@@ -40786,14 +39940,15 @@ Namespace MaintenanceDataSetTableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(6) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "SELECT        vwSenderExpectation.ExpectationID, d.name as SenderName, b.descrip "& _ 
-                "as MktId, a.descrip as MediaId, c.descrip as RetId, vwSenderExpectation.SenderId"& _ 
-                " ,vwSenderExpectation.startDt,vwSenderExpectation.endDt"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM            vwSende"& _ 
-                "rExpectation INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Media AS a ON vwSenderExpectat"& _ 
-                "ion.MediaId = a.MediaID INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Mkt AS b ON vwSende"& _ 
-                "rExpectation.MktId = b.MktId INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Ret AS c ON vw"& _ 
-                "SenderExpectation.RetId = c.RetId INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Sender AS"& _ 
-                " d ON vwSenderExpectation.SenderId = d.SenderId"
+            Me._commandCollection(0).CommandText = "SELECT        vwSenderExpectation.ExpectationID, d.Name AS SenderName, b.Descrip "& _ 
+                "AS MktId, a.Descrip AS MediaId, c.Descrip AS RetId, vwSenderExpectation.SenderId"& _ 
+                ", vwSenderExpectation.StartDt, vwSenderExpectation.EndDt, "&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                    "& _ 
+                "     vwSenderExpectation.Coverage"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM            vwSenderExpectation INNER JOI"& _ 
+                "N"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Media AS a ON vwSenderExpectation.MediaId = a.MediaI"& _ 
+                "D INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Mkt AS b ON vwSenderExpectation.MktId = b"& _ 
+                ".MktId INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Ret AS c ON vwSenderExpectation.RetI"& _ 
+                "d = c.RetId INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Sender AS d ON vwSenderExpectat"& _ 
+                "ion.SenderId = d.SenderId"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(1) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(1).Connection = Me.Connection
@@ -40806,12 +39961,12 @@ Namespace MaintenanceDataSetTableAdapters
             Me._commandCollection(2).Connection = Me.Connection
             Me._commandCollection(2).CommandText = "SELECT        vwSenderExpectation.ExpectationID, d.name as SenderName, b.descrip "& _ 
                 "as MktId, a.descrip as MediaId, c.descrip as RetId, vwSenderExpectation.SenderId"& _ 
-                ",vwSenderExpectation.StartDt,vwSenderExpectation.endDt"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM            vwSender"& _ 
-                "Expectation INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Media AS a ON vwSenderExpectati"& _ 
-                "on.MediaId = a.MediaID INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Mkt AS b ON vwSender"& _ 
-                "Expectation.MktId = b.MktId INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Ret AS c ON vwS"& _ 
-                "enderExpectation.RetId = c.RetId INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Sender AS "& _ 
-                "d ON vwSenderExpectation.SenderId = d.SenderId"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"WHERE #WhereClause#"
+                ",vwSenderExpectation.StartDt,vwSenderExpectation.endDt, Coverage"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM          "& _ 
+                "  vwSenderExpectation INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Media AS a ON vwSende"& _ 
+                "rExpectation.MediaId = a.MediaID INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Mkt AS b O"& _ 
+                "N vwSenderExpectation.MktId = b.MktId INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         Ret A"& _ 
+                "S c ON vwSenderExpectation.RetId = c.RetId INNER JOIN"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"                         "& _ 
+                "Sender AS d ON vwSenderExpectation.SenderId = d.SenderId"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"WHERE #WhereClause#"
             Me._commandCollection(2).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(3) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(3).Connection = Me.Connection
