@@ -22,6 +22,8 @@
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DESPForm))
+            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.storedprocedureGroupBox = New System.Windows.Forms.GroupBox()
             Me.descriptionValueLabel = New System.Windows.Forms.Label()
             Me.descriptionLabel = New System.Windows.Forms.Label()
@@ -100,7 +102,23 @@
             Me.parameterDataGridView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                 Or System.Windows.Forms.AnchorStyles.Left) _
                 Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+            DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+            DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+            DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+            DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+            DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+            Me.parameterDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
             Me.parameterDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+            DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+            DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+            DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+            DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+            DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+            DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+            Me.parameterDataGridView.DefaultCellStyle = DataGridViewCellStyle2
             Me.parameterDataGridView.Location = New System.Drawing.Point(12, 118)
             Me.parameterDataGridView.Name = "parameterDataGridView"
             Me.parameterDataGridView.Size = New System.Drawing.Size(706, 300)

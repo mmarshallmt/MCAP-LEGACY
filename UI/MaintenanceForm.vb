@@ -4455,7 +4455,7 @@ Select r
             End With
 
             constraintsRow = From r In Processor.Data.COLUMNS _
-                        Where r.Column_Name.ToUpper() = "startDate" AndAlso r.Is_Nullable.ToUpper() = "NO" _
+                        Where r.Column_Name.ToUpper() = "STARTDATE" AndAlso r.Is_Nullable.ToUpper() = "YES" _
                         Select r
             With startDtCalendarColumn
                 .HeaderText = "Start Date"
@@ -4469,7 +4469,7 @@ Select r
             End With
 
             constraintsRow = From r In Processor.Data.COLUMNS _
-                             Where r.Column_Name.ToUpper() = "endDate" AndAlso r.Is_Nullable.ToUpper() = "NO" _
+                             Where r.Column_Name.ToUpper() = "ENDDATE" AndAlso r.Is_Nullable.ToUpper() = "YES" _
                              Select r
             With endDtCalendarColumn
                 .HeaderText = "End Date"
@@ -4483,7 +4483,7 @@ Select r
             End With
 
             constraintsRow = From r In Processor.Data.COLUMNS _
-                 Where r.Column_Name.ToUpper() = "Coverage" AndAlso r.Is_Nullable.ToUpper() = "YES" _
+                 Where r.Column_Name.ToUpper() = "COVERAGE" AndAlso r.Is_Nullable.ToUpper() = "YES" _
                  Select r
             With CoverageTextBoxColumn
                 .HeaderText = "Coverage"

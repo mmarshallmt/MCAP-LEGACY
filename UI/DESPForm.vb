@@ -369,14 +369,15 @@
                 descriptionValueLabel.Text = storedprocQuery(0).Descrip '' Added by Gaurang 02/28/2013.. Asign storedprocedure Description value to the descriptionValueLabel.
             End If
 
-            Me.Processor.LoadStoredProcedureDetails(storedprocQuery(0).ProcedureName)
-
+           
             '''Commented by Gaurang 02/28/2013.. StoredProcedure Description Asign to descriptionValueLabel
             'If Me.Processor.Data.StoredProcedureDetails.Count > 0 Then
             '  ShowStoredProcedureDescription()
             '      End If
+
             Me.Processor.LoadStoredProcedureParameterDetails(storedprocQuery(0).ProcedureName)
             ResetDataGridView()
+            AssignUserId()
 
         End Sub
 
@@ -446,17 +447,9 @@
     End Sub
 
         Private Sub storedprocedureComboBox_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles storedprocedureComboBox.SelectedIndexChanged
-
+            
         End Sub
 
-        Private Sub parameterDataGridView_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles parameterDataGridView.RowEnter
-            If parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Name").Value.ToString() = "@userid" Then
-                parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Value").Value = User.UserID
-                parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Value").ReadOnly = True
-            Else
-                parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Value").ReadOnly = False
-            End If
-        End Sub
 
         Private Sub parameterDataGridView_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles parameterDataGridView.RowsAdded
             If parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Name").Value.ToString() = "@userid" Then
@@ -466,6 +459,20 @@
                 parameterDataGridView.Rows(e.RowIndex).Cells("Parameter_Value").ReadOnly = False
             End If
         End Sub
+
+        Private Sub AssignUserId()
+            For i As Integer = 0 To parameterDataGridView.Rows.Count - 1
+                ' Add the qty value of the current row to total
+                If parameterDataGridView.Rows(i).Cells("Parameter_Name").Value.ToString() = "@userid" Then
+                    parameterDataGridView.Rows(i).Cells("Parameter_Value").Value = User.UserID
+                    parameterDataGridView.Rows(i).Cells("Parameter_Value").ReadOnly = True
+                Else
+                    parameterDataGridView.Rows(i).Cells("Parameter_Value").ReadOnly = False
+                End If
+            Next
+        End Sub
+     
+       
     End Class
 
 End Namespace
