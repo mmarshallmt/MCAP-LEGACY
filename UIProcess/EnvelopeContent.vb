@@ -1115,12 +1115,15 @@
             Dim envelopeSender As String
 
 
+
             SenderAdapter.Fill(Data.EnvelopeSender, envelopeID)
 
             If Data.EnvelopeSender.Count > 0 AndAlso Data.EnvelopeSender(0).IsNameNull() = False Then
                 envelopeSender = Data.EnvelopeSender(0).Name
                 _tempId = Data.EnvelopeSender(0).SenderId
-                SenderComment = Data.EnvelopeSender(0).Comments
+                If Data.EnvelopeSender(0).IsCommentsNull = False Then
+                    SenderComment = Data.EnvelopeSender(0).Comments
+                End If
             End If
 
             Data.EnvelopeSender.Rows.Clear()

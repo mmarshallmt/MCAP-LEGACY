@@ -1147,19 +1147,19 @@ RetrySaveCroppedPageImage:
             'If user has not cropped ad image out of page image, page image will get considered as ad 
             'image and page size will be considered as cropped ad size.
             '
-            If Me.AdSize = System.Drawing.SizeF.Empty _
-              AndAlso Me.AdRectangle = System.Drawing.RectangleF.Empty _
-            Then
-                Dim userResponse As System.Windows.Forms.DialogResult
-                userResponse = MessageBox.Show("You have not cropped Ad out of page image. New Ad will be created " _
-                                               + "considering page image as cropped Ad image." + Environment.NewLine _
-                                               + "Do you want to continue creation of new Ad with above consideration?" _
-                                               , ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question _
-                                               , MessageBoxDefaultButton.Button2)
-                If userResponse = Windows.Forms.DialogResult.No Then Exit Sub
+            'If Me.AdSize = System.Drawing.SizeF.Empty _
+            '  AndAlso Me.AdRectangle = System.Drawing.RectangleF.Empty _
+            'Then
+            '    Dim userResponse As System.Windows.Forms.DialogResult
+            '    userResponse = MessageBox.Show("You have not cropped Ad out of page image. New Ad will be created " _
+            '                                   + "considering page image as cropped Ad image." + Environment.NewLine _
+            '                                   + "Do you want to continue creation of new Ad with above consideration?" _
+            '                                   , ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question _
+            '                                   , MessageBoxDefaultButton.Button2)
+            '    If userResponse = Windows.Forms.DialogResult.No Then Exit Sub
 
-                Me.AdSize = GetPageImageSize(vehicleId, pageNumber)
-            End If
+            '    Me.AdSize = GetPageImageSize(vehicleId, pageNumber)
+            'End If
 
             OnSame(vehicleId, pageNumber, Me.AdSize, Me.AdRectangle, keepRectangle, isRectRemoved, isRectDrawn)
             keepRectangle = False

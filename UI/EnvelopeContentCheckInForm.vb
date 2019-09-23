@@ -529,7 +529,6 @@ Namespace UI
             Dim isExpectedRetailer As Boolean
             Dim senderName As String
 
-
             Me.SuspendLayout()
 
             'requiredRadioButton.Checked = True
@@ -568,7 +567,11 @@ Namespace UI
             mediaComboBox.SelectedValue = tempEnvelopeRow.MediaId
             marketComboBox.SelectedValue = tempEnvelopeRow.MktId
             newspaperComboBox.SelectedValue = tempEnvelopeRow.PublicationId
-            PageCountTextBox.Text = tempEnvelopeRow.CheckInPageCount.ToString()
+            If tempEnvelopeRow.IsCheckInPageCountNull = False Then
+                PageCountTextBox.Text = tempEnvelopeRow.CheckInPageCount.ToString()
+            Else
+                PageCountTextBox.Text = ""
+            End If
 
             'isExpectedRetailer = Processor.IsRetailerExpectedRetailer(tempEnvelopeRow.RetId)
             isExpectedRetailer = Processor.isRequiredRetailers(_SenderID, tempEnvelopeRow.MediaId, tempEnvelopeRow.MktId, tempEnvelopeRow.RetId)

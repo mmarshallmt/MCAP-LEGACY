@@ -29,13 +29,13 @@
       <Value Profile="(Default)">\\mt3sql1\MCAPInstall\PngToJpeg.exe</Value>
     </Setting>
     <Setting Name="ServerName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">MT6SQL1</Value>
+      <Value Profile="(Default)">MT4SQL06</Value>
     </Setting>
     <Setting Name="appDatabaseName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">MCAP</Value>
+      <Value Profile="(Default)">MCAPTesting</Value>
     </Setting>
     <Setting Name="ApplicationName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">MCAP</Value>
+      <Value Profile="(Default)">MCAPTesting</Value>
     </Setting>
     <Setting Name="MCAPCacheImages" Type="System.String" Scope="Application">
       <Value Profile="(Default)">C:\TEMP\MCAPImages\VehicleImage</Value>
@@ -57,25 +57,25 @@
     <Setting Name="MCAPConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=MT6SQL1;Initial Catalog=MCAP;Integrated Security=True&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=MT4SQL06;Initial Catalog=MCAPTesting;Integrated Security=True&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=MT6SQL1;Initial Catalog=MCAP;Integrated Security=True</Value>
+      <Value Profile="(Default)">Data Source=MT4SQL06;Initial Catalog=MCAPTesting;Integrated Security=True</Value>
     </Setting>
     <Setting Name="MCAPLogConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=MT6SQL1;nitial Catalog=MCAPLog;Integrated Security=True&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=MT4SQL06;nitial Catalog=MCAPLog;Integrated Security=True&lt;/ConnectionString&gt;
   &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=MT6SQL1;nitial Catalog=MCAPLog;Integrated Security=True</Value>
+      <Value Profile="(Default)">Data Source=MT4SQL06;nitial Catalog=MCAPLog;Integrated Security=True</Value>
     </Setting>
     <Setting Name="MCAPConfigConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=MT6SQL1;Initial Catalog=MCAPConfig;Integrated Security=True&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;Data Source=MT4SQL06;Initial Catalog=MCAPConfig;Integrated Security=True&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=MT6SQL1;Initial Catalog=MCAPConfig;Integrated Security=True</Value>
+      <Value Profile="(Default)">Data Source=MT4SQL06;Initial Catalog=MCAPConfig;Integrated Security=True</Value>
     </Setting>
   </Settings>
 </SettingsFile>
