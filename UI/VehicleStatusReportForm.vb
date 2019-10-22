@@ -624,6 +624,17 @@
                         ShowCoverageForVehicle(.MktId, .RetId)
                     End If
 
+                    If .IsVersionNumberNull() Then
+                        versioNumberValueLabel.Text = String.Empty
+                        versioNumberValueLabel.Visible = False
+                        VersionNumberLable.Visible = False
+                    Else
+                        versioNumberValueLabel.Visible = True
+                        VersionNumberLable.Visible = True
+                        versioNumberValueLabel.Text = .VersionNumber.ToString()
+
+                    End If
+
                     If .IsSPReviewStatusIdNull() = False AndAlso .SPReviewStatusId = 67 Then
                         With spStatusValueLabel
                             .Font = New System.Drawing.Font(.Font, FontStyle.Bold)

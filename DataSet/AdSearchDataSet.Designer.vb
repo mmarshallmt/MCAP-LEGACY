@@ -1537,6 +1537,8 @@ Partial Public Class AdSearchDataSet
 
         Private columnLanguage As Global.System.Data.DataColumn
 
+        Private columnVersionNumber As Global.System.Data.DataColumn
+
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Sub New()
@@ -1789,6 +1791,14 @@ Partial Public Class AdSearchDataSet
         End Property
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public ReadOnly Property VersionNumberColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnVersionNumber
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
          Global.System.ComponentModel.Browsable(False)> _
         Public ReadOnly Property Count() As Integer
@@ -1850,9 +1860,10 @@ Partial Public Class AdSearchDataSet
                     ByVal CircularId As Integer, _
                     ByVal Flyerid As String, _
                     ByVal Subject As String, _
-                    ByVal Language As String) As VehicleListRow
+                    ByVal Language As String, _
+                    ByVal VersionNumber As Integer) As VehicleListRow
             Dim rowVehicleListRow As VehicleListRow = CType(Me.NewRow, VehicleListRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, Retailer, Market, Media, BreakDt, FlashStatus, Newspaper, Sender, Priority, CreateDt, Status, ReQCedBy, ReQCedDate, PageCount, ExportStatus, FamilyId, RetId, MktId, PublicationId, MediaId, Details, Coverage, CircularId, Nothing, Flyerid, Subject, Language}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Retailer, Market, Media, BreakDt, FlashStatus, Newspaper, Sender, Priority, CreateDt, Status, ReQCedBy, ReQCedDate, PageCount, ExportStatus, FamilyId, RetId, MktId, PublicationId, MediaId, Details, Coverage, CircularId, Nothing, Flyerid, Subject, Language, VersionNumber}
             rowVehicleListRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowVehicleListRow)
             Return rowVehicleListRow
@@ -1908,6 +1919,7 @@ Partial Public Class AdSearchDataSet
             Me.columnFlyerid = MyBase.Columns("Flyerid")
             Me.columnSubject = MyBase.Columns("Subject")
             Me.columnLanguage = MyBase.Columns("Language")
+            Me.columnVersionNumber = MyBase.Columns("VersionNumber")
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
@@ -1967,6 +1979,8 @@ Partial Public Class AdSearchDataSet
             MyBase.Columns.Add(Me.columnSubject)
             Me.columnLanguage = New Global.System.Data.DataColumn("Language", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnLanguage)
+            Me.columnVersionNumber = New Global.System.Data.DataColumn("VersionNumber", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnVersionNumber)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnVehicleId}, True))
             Me.columnVehicleId.AutoIncrement = True
             Me.columnVehicleId.AutoIncrementSeed = -1
@@ -4162,6 +4176,21 @@ Partial Public Class AdSearchDataSet
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Property VersionNumber() As Integer
+            Get
+                Try
+                    Return CType(Me(Me.tableVehicleList.VersionNumberColumn), Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'VersionNumber' in table 'VehicleList' is DBNull.", e)
+                End Try
+            End Get
+            Set(value As Integer)
+                Me(Me.tableVehicleList.VersionNumberColumn) = value
+            End Set
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Function IsRetailerNull() As Boolean
             Return Me.IsNull(Me.tableVehicleList.RetailerColumn)
         End Function
@@ -4470,6 +4499,18 @@ Partial Public Class AdSearchDataSet
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Sub SetLanguageNull()
             Me(Me.tableVehicleList.LanguageColumn) = Global.System.Convert.DBNull
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Function IsVersionNumberNull() As Boolean
+            Return Me.IsNull(Me.tableVehicleList.VersionNumberColumn)
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Sub SetVersionNumberNull()
+            Me(Me.tableVehicleList.VersionNumberColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
 
@@ -5980,6 +6021,7 @@ Namespace AdSearchDataSetTableAdapters
             tableMapping.ColumnMappings.Add("Flyerid", "Flyerid")
             tableMapping.ColumnMappings.Add("Subject", "Subject")
             tableMapping.ColumnMappings.Add("Language", "Language")
+            tableMapping.ColumnMappings.Add("VersionNumber", "VersionNumber")
             Me._adapter.TableMappings.Add(tableMapping)
         End Sub
 
@@ -6010,16 +6052,17 @@ Namespace AdSearchDataSetTableAdapters
                 "MktCoverage rmc join code c on rmc.coverageid = c.codeid where rmc.mktid=v.MktId" & _
                 " and rmc.retid=v.RetId) Coverage" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " V.CircularId," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " (select min(Flyerid) from " & _
                 "vehiclePages with(nolock) where vehicleid= v.VehicleId) as Flyerid , L.Descrip a" & _
-                "s [Language]" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM            vwCircular AS V INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                      " & _
-                "   Vehicle as V2  with(nolock) ON v.VehicleId = V2.VehicleId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  " & _
-                "                       Ret AS R ON V.RetId = R.RetId AND V.VehicleId = @VehicleI" & _
-                "d INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Mkt AS M ON V.MktId = M.MktId INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Media AS Med ON V.MediaId = Med.MediaID LEFT OUTER JOI" & _
-                "N" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Publication AS P ON V.PublicationId = P.PublicationI" & _
-                "d  LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         [User] AS U ON V2.ReQCedById = U.Us" & _
-                "erID LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Code AS C ON V.StatusID = C.CodeI" & _
-                "d " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & "   Left  OUTER JOIN Envelope as E on V.EnvelopeId=E.EnvelopeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & " " & _
-                " Left  OUTER JOIN Sender as S on S.SenderId=E.SenderId " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & "  left join [Langu" & _
-                "age] as L on L.languageid = v.Languageid" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY V.VehicleId"
+                "s [Language], V.VersionNumber" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM            vwCircular AS V INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "     " & _
+                "                    Vehicle as V2  with(nolock) ON v.VehicleId = V2.VehicleId LE" & _
+                "FT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Ret AS R ON V.RetId = R.RetId AND V.Vehi" & _
+                "cleId = @VehicleId INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Mkt AS M ON V.MktId = M." & _
+                "MktId INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Media AS Med ON V.MediaId = Med.Media" & _
+                "ID LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Publication AS P ON V.PublicationId" & _
+                " = P.PublicationId  LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         [User] AS U ON V2." & _
+                "ReQCedById = U.UserID LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Code AS C ON V.S" & _
+                "tatusID = C.CodeId " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & "   Left  OUTER JOIN Envelope as E on V.EnvelopeId=E.E" & _
+                "nvelopeId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & "  Left  OUTER JOIN Sender as S on S.SenderId=E.SenderId " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & Global.Microsoft.VisualBasic.ChrW(9) & " " & _
+                " left join [Language] as L on L.languageid = v.Languageid" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY V.VehicleId"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VehicleId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "VehicleId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(1) = New Global.System.Data.SqlClient.SqlCommand()
@@ -6044,27 +6087,27 @@ Namespace AdSearchDataSetTableAdapters
                 " (rmc.retid = V.RetId)) AS Coverage, V2.CircularID," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                           " & _
                 "  (SELECT        MIN(FlyerId) AS Expr1" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                               FROM     " & _
                 "       VehiclePages WITH (nolock)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                               WHERE        (" & _
-                "VehicleId = V.VehicleId)) AS Flyerid, L.Descrip AS Language" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM            vwC" & _
-                "ircular AS V INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Vehicle AS V2 WITH (nolock) ON" & _
-                " V.VehicleId = V2.VehicleId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Ret AS R O" & _
-                "N V.RetId = R.RetId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Mkt AS M ON M.MktI" & _
-                "d = V.MktId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Publication AS P ON P.Publ" & _
-                "icationId = V.PublicationId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Media AS M" & _
-                "ed ON Med.MediaID = V.MediaId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         [User] A" & _
-                "S U ON V2.ReQCedById = U.UserID LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Code A" & _
-                "S C ON V.StatusID = C.CodeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Envelope " & _
-                "AS E ON V.EnvelopeId = E.EnvelopeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Se" & _
-                "nder AS S ON S.SenderId = E.SenderId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         L" & _
-                "anguage AS L ON L.LanguageID = V.LanguageId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE        (CASE WHEN @dateType =" & _
-                " 0 THEN V.BreakDt ELSE V.CreateDt END BETWEEN @FromDate AND @ToDate) AND (V.RetI" & _
-                "d = @RetId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@RetId, 0) = 0) AND (V.MktId = @M" & _
-                "ktId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@MktId, 0) = 0) AND (V.MediaId = @Media" & _
-                "Id OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@MediaId, 0) = 0) AND (V.PublicationId = " & _
-                "@PublicationId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@PublicationId, 0) = 0) AND (" & _
-                "V.StatusID = @StatusId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@StatusId, 0) = 0) AN" & _
-                "D (S.SenderId = @SenderId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@SenderId, 0) = 0)" & _
-                " AND (V.LanguageId = @LanguageId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@LanguageId" & _
-                ", 0) = 0)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY Retailer, Market, V.BreakDt"
+                "VehicleId = V.VehicleId)) AS Flyerid, L.Descrip AS Language , V.VersionNumber" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "F" & _
+                "ROM            vwCircular AS V INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Vehicle AS V" & _
+                "2 WITH (nolock) ON V.VehicleId = V2.VehicleId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                 " & _
+                "        Ret AS R ON V.RetId = R.RetId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         " & _
+                "Mkt AS M ON M.MktId = V.MktId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Publicat" & _
+                "ion AS P ON P.PublicationId = V.PublicationId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                 " & _
+                "        Media AS Med ON Med.MediaID = V.MediaId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "               " & _
+                "          [User] AS U ON V2.ReQCedById = U.UserID LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "             " & _
+                "            Code AS C ON V.StatusID = C.CodeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                " & _
+                "         Envelope AS E ON V.EnvelopeId = E.EnvelopeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "         " & _
+                "                Sender AS S ON S.SenderId = E.SenderId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "        " & _
+                "                 Language AS L ON L.LanguageID = V.LanguageId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE        (CAS" & _
+                "E WHEN @dateType = 0 THEN V.BreakDt ELSE V.CreateDt END BETWEEN @FromDate AND @T" & _
+                "oDate) AND (V.RetId = @RetId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@RetId, 0) = 0)" & _
+                " AND (V.MktId = @MktId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@MktId, 0) = 0) AND (" & _
+                "V.MediaId = @MediaId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@MediaId, 0) = 0) AND (" & _
+                "V.PublicationId = @PublicationId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@Publicatio" & _
+                "nId, 0) = 0) AND (V.StatusID = @StatusId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@St" & _
+                "atusId, 0) = 0) AND (S.SenderId = @SenderId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(" & _
+                "@SenderId, 0) = 0) AND (V.LanguageId = @LanguageId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         " & _
+                "ISNULL(@LanguageId, 0) = 0)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY Retailer, Market, V.BreakDt"
             Me._commandCollection(1).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@FromDate", Global.System.Data.SqlDbType.DateTime, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ToDate", Global.System.Data.SqlDbType.DateTime, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -6075,7 +6118,7 @@ Namespace AdSearchDataSetTableAdapters
             Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StatusId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "StatusID", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@SenderId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "SenderId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LanguageId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "LanguageId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
-            Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@datetype", Global.System.Data.SqlDbType.TinyInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
+            Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@dateType", Global.System.Data.SqlDbType.TinyInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(2) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(2).Connection = Me.Connection
             Me._commandCollection(2).CommandText = "SELECT        V.VehicleId, V.FamilyId, E.EnvelopeId, V.RetId, R.Descrip AS Retail" & _
@@ -6098,30 +6141,30 @@ Namespace AdSearchDataSetTableAdapters
                 " = V.RetId)) AS Coverage, V2.CircularID," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                             (SELECT  " & _
                 "      MIN(FlyerId) AS Expr1" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                               FROM            Vehi" & _
                 "clePages WITH (nolock)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                               WHERE        (VehicleId =" & _
-                " V.VehicleId)) AS Flyerid, L.Descrip AS Language" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM            vwCircular AS " & _
-                "V INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Vehicle AS V2 WITH (nolock) ON V.VehicleI" & _
-                "d = V2.VehicleId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Ret AS R ON V.RetId =" & _
-                " R.RetId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Mkt AS M ON M.MktId = V.MktId" & _
-                " LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Publication AS P ON P.PublicationId =" & _
-                " V.PublicationId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Media AS Med ON Med.M" & _
-                "ediaID = V.MediaId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         [User] AS U ON V2.R" & _
-                "eQCedById = U.UserID LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Code AS C ON V.St" & _
-                "atusID = C.CodeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Envelope AS E ON V.E" & _
-                "nvelopeId = E.EnvelopeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Sender AS S O" & _
-                "N S.SenderId = E.SenderId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Language AS " & _
-                "L ON L.LanguageID = V.LanguageId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE        (CASE WHEN @dateType = 0 THEN V.B" & _
-                "reakDt ELSE V.CreateDt END BETWEEN @FromDate AND @ToDate) AND (V.FlashInd = 1) A" & _
-                "ND (V.RetId = @RetId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@RetId, 0) = 0) AND (V." & _
-                "MktId = @MktId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@MktId, 0) = 0) AND (V.MediaI" & _
-                "d = @MediaId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@MediaId, 0) = 0) AND (V.Public" & _
-                "ationId = @PublicationId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@PublicationId, 0) " & _
-                "= 0) AND (V.StatusID = @StatusId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@StatusId, " & _
-                "0) = 0) AND (S.SenderId = @SenderId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@SenderI" & _
-                "d, 0) = 0) AND (V.CreatedById IN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                             (SELECT        Us" & _
-                "erID" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                               FROM            [User]" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                   " & _
-                "            WHERE        (LocationId <> 2072))) AND (V.LanguageId = @LanguageId " & _
-                "OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@LanguageId, 0) = 0)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY Retailer, Mar" & _
-                "ket, V.BreakDt"
+                " V.VehicleId)) AS Flyerid, L.Descrip AS Language, V.VersionNumber" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM         " & _
+                "   vwCircular AS V INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Vehicle AS V2 WITH (nolo" & _
+                "ck) ON V.VehicleId = V2.VehicleId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Ret " & _
+                "AS R ON V.RetId = R.RetId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Mkt AS M ON " & _
+                "M.MktId = V.MktId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Publication AS P ON " & _
+                "P.PublicationId = V.PublicationId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Medi" & _
+                "a AS Med ON Med.MediaID = V.MediaId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         [U" & _
+                "ser] AS U ON V2.ReQCedById = U.UserID LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         " & _
+                "Code AS C ON V.StatusID = C.CodeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Env" & _
+                "elope AS E ON V.EnvelopeId = E.EnvelopeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                     " & _
+                "    Sender AS S ON S.SenderId = E.SenderId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                    " & _
+                "     Language AS L ON L.LanguageID = V.LanguageId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE        (CASE WHEN @date" & _
+                "Type = 0 THEN V.BreakDt ELSE V.CreateDt END BETWEEN @FromDate AND @ToDate) AND (" & _
+                "V.FlashInd = 1) AND (V.RetId = @RetId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@RetId" & _
+                ", 0) = 0) AND (V.MktId = @MktId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@MktId, 0) =" & _
+                " 0) AND (V.MediaId = @MediaId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@MediaId, 0) =" & _
+                " 0) AND (V.PublicationId = @PublicationId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@P" & _
+                "ublicationId, 0) = 0) AND (V.StatusID = @StatusId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         I" & _
+                "SNULL(@StatusId, 0) = 0) AND (S.SenderId = @SenderId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                       " & _
+                "  ISNULL(@SenderId, 0) = 0) AND (V.CreatedById IN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                             " & _
+                "(SELECT        UserID" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                               FROM            [User]" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  " & _
+                "                             WHERE        (LocationId <> 2072))) AND (V.Language" & _
+                "Id = @LanguageId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@LanguageId, 0) = 0)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER" & _
+                " BY Retailer, Market, V.BreakDt"
             Me._commandCollection(2).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@FromDate", Global.System.Data.SqlDbType.DateTime, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ToDate", Global.System.Data.SqlDbType.DateTime, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -6132,7 +6175,7 @@ Namespace AdSearchDataSetTableAdapters
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StatusId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "StatusID", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@SenderId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "SenderId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LanguageId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "LanguageId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
-            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@datetype", Global.System.Data.SqlDbType.TinyInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
+            Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@dateType", Global.System.Data.SqlDbType.TinyInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(3) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(3).Connection = Me.Connection
             Me._commandCollection(3).CommandText = "SELECT        V.VehicleId, V.FamilyId, E.EnvelopeId, V.RetId, R.Descrip AS Retail" & _
@@ -6151,29 +6194,30 @@ Namespace AdSearchDataSetTableAdapters
                 "Details, V2.CircularID," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                             (SELECT        MIN(FlyerId" & _
                 ") AS Expr1" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                               FROM            VehiclePages WITH (no" & _
                 "lock)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                               WHERE        (VehicleId = V.VehicleId)) AS" & _
-                " Flyerid, L.Descrip AS Language" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM            vwCircular AS V INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "   " & _
-                "                      Vehicle AS V2 ON V.VehicleId = V2.VehicleId LEFT OUTER JOI" & _
-                "N" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Ret AS R ON V.RetId = R.RetId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "     " & _
-                "                    Mkt AS M ON M.MktId = V.MktId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "             " & _
-                "            Publication AS P ON P.PublicationId = V.PublicationId LEFT OUTER JOI" & _
-                "N" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Media AS Med ON Med.MediaID = V.MediaId LEFT OUTER J" & _
-                "OIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         [User] AS U ON V2.ReQCedById = U.UserID LEFT OUTER" & _
-                " JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Code AS C ON V.StatusID = C.CodeId LEFT OUTER JO" & _
-                "IN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Envelope AS E ON V.EnvelopeId = E.EnvelopeId LEFT O" & _
-                "UTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Sender AS S ON S.SenderId = E.SenderId LEFT " & _
-                "OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Language AS L ON L.LanguageID = V.LanguageI" & _
-                "d" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE        (CASE WHEN @dateType = 0 THEN V.BreakDt ELSE V.CreateDt END BETW" & _
-                "EEN @FromDate AND @ToDate) AND (V.FlashInd = 1) AND (V.RetId = @RetId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "      " & _
-                "                   ISNULL(@RetId, 0) = 0) AND (V.MktId = @MktId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "            " & _
-                "             ISNULL(@MktId, 0) = 0) AND (V.MediaId = @MediaId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "              " & _
-                "           ISNULL(@MediaId, 0) = 0) AND (V.PublicationId = @PublicationId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  " & _
-                "                       ISNULL(@PublicationId, 0) = 0) AND (V.StatusID = @StatusI" & _
-                "d OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@StatusId, 0) = 0) AND (S.SenderId = @Send" & _
-                "erId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@SenderId, 0) = 0) AND (V.CreatedById I" & _
-                "N" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                             (SELECT        UserID" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         " & _
-                "      FROM            [User]" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                               WHERE        (Locat" & _
-                "ionId = 2072))) AND (V.LanguageId = @LanguageId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISN" & _
-                "ULL(@LanguageId, 0) = 0)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY Retailer, Market, V.BreakDt"
+                " Flyerid, L.Descrip AS Language, V.VersionNumber" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM            vwCircular AS " & _
+                "V INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Vehicle AS V2 ON V.VehicleId = V2.Vehicle" & _
+                "Id LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Ret AS R ON V.RetId = R.RetId LEFT " & _
+                "OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Mkt AS M ON M.MktId = V.MktId LEFT OUTER JO" & _
+                "IN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Publication AS P ON P.PublicationId = V.Publication" & _
+                "Id LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Media AS Med ON Med.MediaID = V.Med" & _
+                "iaId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         [User] AS U ON V2.ReQCedById = U." & _
+                "UserID LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Code AS C ON V.StatusID = C.Cod" & _
+                "eId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Envelope AS E ON V.EnvelopeId = E." & _
+                "EnvelopeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Sender AS S ON S.SenderId =" & _
+                " E.SenderId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Language AS L ON L.Languag" & _
+                "eID = V.LanguageId " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE        (CASE WHEN @dateType = 0 THEN V.BreakDt ELSE V" & _
+                ".CreateDt END BETWEEN @FromDate AND @ToDate) AND (V.FlashInd = 1) AND (V.RetId =" & _
+                " @RetId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@RetId, 0) = 0) AND (V.MktId = @MktI" & _
+                "d OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@MktId, 0) = 0) AND (V.MediaId = @MediaId " & _
+                "OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@MediaId, 0) = 0) AND (V.PublicationId = @Pu" & _
+                "blicationId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@PublicationId, 0) = 0) AND (V.S" & _
+                "tatusID = @StatusId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@StatusId, 0) = 0) AND (" & _
+                "S.SenderId = @SenderId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@SenderId, 0) = 0) AN" & _
+                "D (V.CreatedById IN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                             (SELECT        UserID" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "       " & _
+                "                        FROM            [User]" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                               W" & _
+                "HERE        (LocationId = 2072))) AND (V.LanguageId = @LanguageId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "          " & _
+                "               ISNULL(@LanguageId, 0) = 0)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY Retailer, Market, V.BreakDt" & _
+                ""
             Me._commandCollection(3).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@FromDate", Global.System.Data.SqlDbType.DateTime, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ToDate", Global.System.Data.SqlDbType.DateTime, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -6184,7 +6228,7 @@ Namespace AdSearchDataSetTableAdapters
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StatusId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "StatusID", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@SenderId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "SenderId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LanguageId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "LanguageId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
-            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@datetype", Global.System.Data.SqlDbType.TinyInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
+            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@dateType", Global.System.Data.SqlDbType.TinyInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(4) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(4).Connection = Me.Connection
             Me._commandCollection(4).CommandText = "SELECT        V.VehicleId, V.FamilyId, E.EnvelopeId, V.RetId, R.Descrip AS Retail" & _
@@ -6203,27 +6247,26 @@ Namespace AdSearchDataSetTableAdapters
                 "," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                             (SELECT        MIN(FlyerId) AS Expr1" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "          " & _
                 "                     FROM            VehiclePages WITH (nolock)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "               " & _
                 "                WHERE        (VehicleId = V.VehicleId)) AS Flyerid, L.Descrip AS" & _
-                " Language" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM            vwCircular AS V INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         " & _
-                "Vehicle AS V2 ON V.VehicleId = V2.VehicleId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                   " & _
-                "      Ret AS R ON V.RetId = R.RetId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Mk" & _
-                "t AS M ON M.MktId = V.MktId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Publicatio" & _
-                "n AS P ON P.PublicationId = V.PublicationId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                   " & _
-                "      Media AS Med ON Med.MediaID = V.MediaId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                 " & _
-                "        [User] AS U ON V2.ReQCedById = U.UserID LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "               " & _
-                "          Code AS C ON V.StatusID = C.CodeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                  " & _
-                "       Envelope AS E ON V.EnvelopeId = E.EnvelopeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "           " & _
-                "              Sender AS S ON S.SenderId = E.SenderId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "          " & _
-                "               Language AS L ON L.LanguageID = V.LanguageId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE        (CASE " & _
-                "WHEN @dateType = 0 THEN V.BreakDt ELSE V.CreateDt END BETWEEN @FromDate AND @ToD" & _
-                "ate) AND (V.FlashInd = 1) AND (V.RetId = @RetId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISN" & _
-                "ULL(@RetId, 0) = 0) AND (V.MktId = @MktId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@M" & _
-                "ktId, 0) = 0) AND (V.MediaId = @MediaId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@Med" & _
-                "iaId, 0) = 0) AND (V.PublicationId = @PublicationId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                        " & _
-                " ISNULL(@PublicationId, 0) = 0) AND (V.StatusID = @StatusId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                " & _
-                "         ISNULL(@StatusId, 0) = 0) AND (S.SenderId = @SenderId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "             " & _
-                "            ISNULL(@SenderId, 0) = 0) AND (V.LanguageId = @LanguageId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "      " & _
-                "                   ISNULL(@LanguageId, 0) = 0)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY Retailer, Market, V.Bre" & _
-                "akDt"
+                " Language, V.VersionNumber" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM            vwCircular AS V INNER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "        " & _
+                "                 Vehicle AS V2 ON V.VehicleId = V2.VehicleId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  " & _
+                "                       Ret AS R ON V.RetId = R.RetId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "          " & _
+                "               Mkt AS M ON M.MktId = V.MktId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                  " & _
+                "       Publication AS P ON P.PublicationId = V.PublicationId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  " & _
+                "                       Media AS Med ON Med.MediaID = V.MediaId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & _
+                "                         [User] AS U ON V2.ReQCedById = U.UserID LEFT OUTER JOIN" & _
+                "" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Code AS C ON V.StatusID = C.CodeId LEFT OUTER JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " " & _
+                "                        Envelope AS E ON V.EnvelopeId = E.EnvelopeId LEFT OUTER " & _
+                "JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Sender AS S ON S.SenderId = E.SenderId LEFT OUTER" & _
+                " JOIN" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Language AS L ON L.LanguageID = V.LanguageId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WH" & _
+                "ERE        (CASE WHEN @dateType = 0 THEN V.BreakDt ELSE V.CreateDt END BETWEEN @" & _
+                "FromDate AND @ToDate) AND (V.FlashInd = 1) AND (V.RetId = @RetId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "           " & _
+                "              ISNULL(@RetId, 0) = 0) AND (V.MktId = @MktId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                 " & _
+                "        ISNULL(@MktId, 0) = 0) AND (V.MediaId = @MediaId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                   " & _
+                "      ISNULL(@MediaId, 0) = 0) AND (V.PublicationId = @PublicationId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "       " & _
+                "                  ISNULL(@PublicationId, 0) = 0) AND (V.StatusID = @StatusId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@StatusId, 0) = 0) AND (S.SenderId = @SenderId " & _
+                "OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@SenderId, 0) = 0) AND (V.LanguageId = @Lang" & _
+                "uageId OR" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ISNULL(@LanguageId, 0) = 0)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY Retail" & _
+                "er, Market, V.BreakDt"
             Me._commandCollection(4).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@FromDate", Global.System.Data.SqlDbType.DateTime, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@ToDate", Global.System.Data.SqlDbType.DateTime, 1024, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
@@ -6234,7 +6277,7 @@ Namespace AdSearchDataSetTableAdapters
             Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@StatusId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "StatusID", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@SenderId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "SenderId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LanguageId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "LanguageId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
-            Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@datetype", Global.System.Data.SqlDbType.TinyInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
+            Me._commandCollection(4).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@dateType", Global.System.Data.SqlDbType.TinyInt, 0, Global.System.Data.ParameterDirection.Input, 0, 0, Nothing, Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
@@ -6255,7 +6298,7 @@ Namespace AdSearchDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"), _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, False)> _
-        Public Overridable Overloads Function FillByBreakDtRetMktMedia(ByVal dataTable As AdSearchDataSet.VehicleListDataTable, ByVal FromDate As Date, ByVal ToDate As Date, ByVal RetId As Global.System.Nullable(Of Integer), ByVal MktId As Global.System.Nullable(Of Integer), ByVal MediaId As Global.System.Nullable(Of Integer), ByVal PublicationId As Global.System.Nullable(Of Integer), ByVal StatusId As Global.System.Nullable(Of Integer), ByVal SenderId As Integer, ByVal LanguageId As Global.System.Nullable(Of Integer), ByVal datetype As Byte) As Integer
+        Public Overridable Overloads Function FillByBreakDtRetMktMedia(ByVal dataTable As AdSearchDataSet.VehicleListDataTable, ByVal FromDate As Date, ByVal ToDate As Date, ByVal RetId As Global.System.Nullable(Of Integer), ByVal MktId As Global.System.Nullable(Of Integer), ByVal MediaId As Global.System.Nullable(Of Integer), ByVal PublicationId As Global.System.Nullable(Of Integer), ByVal StatusId As Global.System.Nullable(Of Integer), ByVal SenderId As Integer, ByVal LanguageId As Global.System.Nullable(Of Integer), ByVal dateType As Byte) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(1)
             Me.Adapter.SelectCommand.Parameters(0).Value = CType(FromDate, Date)
             Me.Adapter.SelectCommand.Parameters(1).Value = CType(ToDate, Date)
@@ -6290,7 +6333,7 @@ Namespace AdSearchDataSetTableAdapters
             Else
                 Me.Adapter.SelectCommand.Parameters(8).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.SelectCommand.Parameters(9).Value = CType(datetype, Byte)
+            Me.Adapter.SelectCommand.Parameters(9).Value = CType(dateType, Byte)
             If (Me.ClearBeforeFill = True) Then
                 dataTable.Clear()
             End If
@@ -6302,7 +6345,7 @@ Namespace AdSearchDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"), _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, False)> _
-        Public Overridable Overloads Function FillByBreakDtRetMktMediaForFlashOrNational(ByVal dataTable As AdSearchDataSet.VehicleListDataTable, ByVal FromDate As Date, ByVal ToDate As Date, ByVal RetId As Global.System.Nullable(Of Integer), ByVal MktId As Global.System.Nullable(Of Integer), ByVal MediaId As Global.System.Nullable(Of Integer), ByVal PublicationId As Global.System.Nullable(Of Integer), ByVal StatusId As Global.System.Nullable(Of Integer), ByVal SenderId As Integer, ByVal LanguageId As Global.System.Nullable(Of Integer), ByVal datetype As Byte) As Integer
+        Public Overridable Overloads Function FillByBreakDtRetMktMediaForFlashOrNational(ByVal dataTable As AdSearchDataSet.VehicleListDataTable, ByVal FromDate As Date, ByVal ToDate As Date, ByVal RetId As Global.System.Nullable(Of Integer), ByVal MktId As Global.System.Nullable(Of Integer), ByVal MediaId As Global.System.Nullable(Of Integer), ByVal PublicationId As Global.System.Nullable(Of Integer), ByVal StatusId As Global.System.Nullable(Of Integer), ByVal SenderId As Integer, ByVal LanguageId As Global.System.Nullable(Of Integer), ByVal dateType As Byte) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(2)
             Me.Adapter.SelectCommand.Parameters(0).Value = CType(FromDate, Date)
             Me.Adapter.SelectCommand.Parameters(1).Value = CType(ToDate, Date)
@@ -6337,7 +6380,7 @@ Namespace AdSearchDataSetTableAdapters
             Else
                 Me.Adapter.SelectCommand.Parameters(8).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.SelectCommand.Parameters(9).Value = CType(datetype, Byte)
+            Me.Adapter.SelectCommand.Parameters(9).Value = CType(dateType, Byte)
             If (Me.ClearBeforeFill = True) Then
                 dataTable.Clear()
             End If
@@ -6349,7 +6392,7 @@ Namespace AdSearchDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"), _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, False)> _
-        Public Overridable Overloads Function FillByCanadaFlash(ByVal dataTable As AdSearchDataSet.VehicleListDataTable, ByVal FromDate As Date, ByVal ToDate As Date, ByVal RetId As Global.System.Nullable(Of Integer), ByVal MktId As Global.System.Nullable(Of Integer), ByVal MediaId As Global.System.Nullable(Of Integer), ByVal PublicationId As Global.System.Nullable(Of Integer), ByVal StatusId As Global.System.Nullable(Of Integer), ByVal SenderId As Integer, ByVal LanguageId As Global.System.Nullable(Of Integer), ByVal datetype As Byte) As Integer
+        Public Overridable Overloads Function FillByCanadaFlash(ByVal dataTable As AdSearchDataSet.VehicleListDataTable, ByVal FromDate As Date, ByVal ToDate As Date, ByVal RetId As Global.System.Nullable(Of Integer), ByVal MktId As Global.System.Nullable(Of Integer), ByVal MediaId As Global.System.Nullable(Of Integer), ByVal PublicationId As Global.System.Nullable(Of Integer), ByVal StatusId As Global.System.Nullable(Of Integer), ByVal SenderId As Integer, ByVal LanguageId As Global.System.Nullable(Of Integer), ByVal dateType As Byte) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(3)
             Me.Adapter.SelectCommand.Parameters(0).Value = CType(FromDate, Date)
             Me.Adapter.SelectCommand.Parameters(1).Value = CType(ToDate, Date)
@@ -6384,7 +6427,7 @@ Namespace AdSearchDataSetTableAdapters
             Else
                 Me.Adapter.SelectCommand.Parameters(8).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.SelectCommand.Parameters(9).Value = CType(datetype, Byte)
+            Me.Adapter.SelectCommand.Parameters(9).Value = CType(dateType, Byte)
             If (Me.ClearBeforeFill = True) Then
                 dataTable.Clear()
             End If
@@ -6396,7 +6439,7 @@ Namespace AdSearchDataSetTableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"), _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, False)> _
-        Public Overridable Overloads Function FillByMixFlash(ByVal dataTable As AdSearchDataSet.VehicleListDataTable, ByVal FromDate As Date, ByVal ToDate As Date, ByVal RetId As Global.System.Nullable(Of Integer), ByVal MktId As Global.System.Nullable(Of Integer), ByVal MediaId As Global.System.Nullable(Of Integer), ByVal PublicationId As Global.System.Nullable(Of Integer), ByVal StatusId As Global.System.Nullable(Of Integer), ByVal SenderId As Integer, ByVal LanguageId As Global.System.Nullable(Of Integer), ByVal datetype As Byte) As Integer
+        Public Overridable Overloads Function FillByMixFlash(ByVal dataTable As AdSearchDataSet.VehicleListDataTable, ByVal FromDate As Date, ByVal ToDate As Date, ByVal RetId As Global.System.Nullable(Of Integer), ByVal MktId As Global.System.Nullable(Of Integer), ByVal MediaId As Global.System.Nullable(Of Integer), ByVal PublicationId As Global.System.Nullable(Of Integer), ByVal StatusId As Global.System.Nullable(Of Integer), ByVal SenderId As Integer, ByVal LanguageId As Global.System.Nullable(Of Integer), ByVal dateType As Byte) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(4)
             Me.Adapter.SelectCommand.Parameters(0).Value = CType(FromDate, Date)
             Me.Adapter.SelectCommand.Parameters(1).Value = CType(ToDate, Date)
@@ -6431,7 +6474,7 @@ Namespace AdSearchDataSetTableAdapters
             Else
                 Me.Adapter.SelectCommand.Parameters(8).Value = Global.System.DBNull.Value
             End If
-            Me.Adapter.SelectCommand.Parameters(9).Value = CType(datetype, Byte)
+            Me.Adapter.SelectCommand.Parameters(9).Value = CType(dateType, Byte)
             If (Me.ClearBeforeFill = True) Then
                 dataTable.Clear()
             End If

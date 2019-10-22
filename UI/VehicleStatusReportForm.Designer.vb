@@ -23,8 +23,8 @@
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(VehicleStatusReportForm))
-            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
             Me.searchGroupBox = New System.Windows.Forms.GroupBox()
             Me.searchOptionsComboBox = New System.Windows.Forms.ComboBox()
             Me.searchButton = New System.Windows.Forms.Button()
@@ -81,6 +81,7 @@
             Me.envelopeIdLinkLabel = New System.Windows.Forms.LinkLabel()
             Me.envelopeIdLabel = New System.Windows.Forms.Label()
             Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+            Me.VersionNumberLable = New System.Windows.Forms.Label()
             Me.StatusChangedValueLabel = New System.Windows.Forms.Label()
             Me.statusChangesLabel = New System.Windows.Forms.Label()
             Me.MatchedInPaperValueLabel = New System.Windows.Forms.Label()
@@ -188,6 +189,7 @@
             Me.DataGridViewTextBoxColumn32 = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.DataGridViewTextBoxColumn33 = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.DataGridViewImageColumn2 = New System.Windows.Forms.DataGridViewImageColumn()
+            Me.versioNumberValueLabel = New System.Windows.Forms.Label()
             CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.searchGroupBox.SuspendLayout()
             CType(Me.StatusReportDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -760,6 +762,7 @@
             Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.00062!))
             Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108.0!))
             Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.99813!))
+            Me.TableLayoutPanel1.Controls.Add(Me.VersionNumberLable, 6, 8)
             Me.TableLayoutPanel1.Controls.Add(Me.StatusChangedValueLabel, 1, 11)
             Me.TableLayoutPanel1.Controls.Add(Me.statusChangesLabel, 0, 11)
             Me.TableLayoutPanel1.Controls.Add(Me.MatchedInPaperValueLabel, 1, 12)
@@ -834,6 +837,7 @@
             Me.TableLayoutPanel1.Controls.Add(Me.exportStatusValueLabel, 5, 9)
             Me.TableLayoutPanel1.Controls.Add(Me.couponValueLabel, 3, 11)
             Me.TableLayoutPanel1.Controls.Add(Me.couponLabel, 2, 11)
+            Me.TableLayoutPanel1.Controls.Add(Me.versioNumberValueLabel, 7, 8)
             Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top
             Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 49)
             Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
@@ -853,6 +857,15 @@
             Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
             Me.TableLayoutPanel1.Size = New System.Drawing.Size(1343, 258)
             Me.TableLayoutPanel1.TabIndex = 1
+            '
+            'VersionNumberLable
+            '
+            Me.VersionNumberLable.AutoSize = True
+            Me.VersionNumberLable.Location = New System.Drawing.Point(996, 143)
+            Me.VersionNumberLable.Name = "VersionNumberLable"
+            Me.VersionNumberLable.Size = New System.Drawing.Size(82, 13)
+            Me.VersionNumberLable.TabIndex = 68
+            Me.VersionNumberLable.Text = "Version Number"
             '
             'StatusChangedValueLabel
             '
@@ -1107,8 +1120,8 @@
             '
             Me.pagesDataGridView.AllowUserToAddRows = False
             Me.pagesDataGridView.AllowUserToDeleteRows = False
-            DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-            Me.pagesDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+            DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+            Me.pagesDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
             Me.pagesDataGridView.AutoGenerateColumns = False
             Me.pagesDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
             Me.pagesDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
@@ -1248,8 +1261,8 @@
             '
             Me.pagecropDataGridView.AllowUserToAddRows = False
             Me.pagecropDataGridView.AllowUserToDeleteRows = False
-            DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-            Me.pagecropDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+            DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+            Me.pagecropDataGridView.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
             Me.pagecropDataGridView.AutoGenerateColumns = False
             Me.pagecropDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
             Me.pagecropDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
@@ -1800,6 +1813,15 @@
             Me.DataGridViewImageColumn2.ReadOnly = True
             Me.DataGridViewImageColumn2.Width = 62
             '
+            'versioNumberValueLabel
+            '
+            Me.versioNumberValueLabel.AutoSize = True
+            Me.versioNumberValueLabel.Location = New System.Drawing.Point(1104, 143)
+            Me.versioNumberValueLabel.Name = "versioNumberValueLabel"
+            Me.versioNumberValueLabel.Size = New System.Drawing.Size(91, 13)
+            Me.versioNumberValueLabel.TabIndex = 68
+            Me.versioNumberValueLabel.Text = "<VersionNumber>"
+            '
             'VehicleStatusReportForm
             '
             Me.AcceptButton = Me.searchButton
@@ -1997,6 +2019,8 @@
         Friend WithEvents CircularIDTextBox As System.Windows.Forms.TextBox
         Friend WithEvents StatusChangedValueLabel As System.Windows.Forms.Label
         Friend WithEvents statusChangesLabel As System.Windows.Forms.Label
+        Friend WithEvents VersionNumberLable As System.Windows.Forms.Label
+        Friend WithEvents versioNumberValueLabel As System.Windows.Forms.Label
 
     End Class
 

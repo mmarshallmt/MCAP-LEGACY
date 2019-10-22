@@ -1310,6 +1310,8 @@ Partial Public Class StatusReportDataSet
 
         Private columnCircularID As Global.System.Data.DataColumn
 
+        Private columnVersionNumber As Global.System.Data.DataColumn
+
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Sub New()
@@ -1770,6 +1772,14 @@ Partial Public Class StatusReportDataSet
         End Property
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public ReadOnly Property VersionNumberColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnVersionNumber
+            End Get
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0"), _
          Global.System.ComponentModel.Browsable(False)> _
         Public ReadOnly Property Count() As Integer
@@ -1859,9 +1869,10 @@ Partial Public Class StatusReportDataSet
                     ByVal CompareVehicleId As Integer, _
                     ByVal FlyerId As String, _
                     ByVal StatusChangeBy As String, _
-                    ByVal CircularID As Integer) As vwVehicleStatusReportRow
+                    ByVal CircularID As Integer, _
+                    ByVal VersionNumber As Integer) As vwVehicleStatusReportRow
             Dim rowvwVehicleStatusReportRow As vwVehicleStatusReportRow = CType(Me.NewRow, vwVehicleStatusReportRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, Nothing, VehicleId, RetId, Retailer, Tradeclass, MktId, Market, MediaId, Media, PublicationId, Publication, LanguageId, Language, EventId, _Event, ThemeId, Theme, Priority, BreakDt, StartDt, EndDt, Coupon, Flash, CreateDt, CreatedById, CreatedBy, IndexDt, IndexedById, IndexedBy, ScanDt, ScannedById, ScannedBy, QCDt, QCedById, QCedBy, CreateSizedDt, StatusID, Status, FTPDt, FTPStatusId, FTPStatus, SPReviewStatusId, SPReviewStatus, Subject, SentBy, SentFrom, _ftpDt, _ftpStatusId, CompareVehicleId, FlyerId, StatusChangeBy, CircularID}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Nothing, VehicleId, RetId, Retailer, Tradeclass, MktId, Market, MediaId, Media, PublicationId, Publication, LanguageId, Language, EventId, _Event, ThemeId, Theme, Priority, BreakDt, StartDt, EndDt, Coupon, Flash, CreateDt, CreatedById, CreatedBy, IndexDt, IndexedById, IndexedBy, ScanDt, ScannedById, ScannedBy, QCDt, QCedById, QCedBy, CreateSizedDt, StatusID, Status, FTPDt, FTPStatusId, FTPStatus, SPReviewStatusId, SPReviewStatus, Subject, SentBy, SentFrom, _ftpDt, _ftpStatusId, CompareVehicleId, FlyerId, StatusChangeBy, CircularID, VersionNumber}
             If (Not (parentvwEnvelopeStatusReportRowByvwEnvelopeStatusReport_vwVehicleStatusReport) Is Nothing) Then
                 columnValuesArray(0) = parentvwEnvelopeStatusReportRowByvwEnvelopeStatusReport_vwVehicleStatusReport(0)
             End If
@@ -1949,6 +1960,7 @@ Partial Public Class StatusReportDataSet
             Me.columnFlyerId = MyBase.Columns("FlyerId")
             Me.columnStatusChangeBy = MyBase.Columns("StatusChangeBy")
             Me.columnCircularID = MyBase.Columns("CircularID")
+            Me.columnVersionNumber = MyBase.Columns("VersionNumber")
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
@@ -2071,6 +2083,8 @@ Partial Public Class StatusReportDataSet
             MyBase.Columns.Add(Me.columnStatusChangeBy)
             Me.columnCircularID = New Global.System.Data.DataColumn("CircularID", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCircularID)
+            Me.columnVersionNumber = New Global.System.Data.DataColumn("VersionNumber", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnVersionNumber)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnVehicleId}, True))
             Me.columnVehicleId.AllowDBNull = False
             Me.columnVehicleId.Unique = True
@@ -4445,6 +4459,21 @@ Partial Public Class StatusReportDataSet
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Property VersionNumber() As Integer
+            Get
+                Try
+                    Return CType(Me(Me.tablevwVehicleStatusReport.VersionNumberColumn), Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'VersionNumber' in table 'vwVehicleStatusReport' is DBNull.", e)
+                End Try
+            End Get
+            Set(value As Integer)
+                Me(Me.tablevwVehicleStatusReport.VersionNumberColumn) = value
+            End Set
+        End Property
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Property vwEnvelopeStatusReportRow() As vwEnvelopeStatusReportRow
             Get
                 Return CType(Me.GetParentRow(Me.Table.ParentRelations("vwEnvelopeStatusReport_vwVehicleStatusReport")), vwEnvelopeStatusReportRow)
@@ -5087,6 +5116,18 @@ Partial Public Class StatusReportDataSet
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
         Public Sub SetCircularIDNull()
             Me(Me.tablevwVehicleStatusReport.CircularIDColumn) = Global.System.Convert.DBNull
+        End Sub
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Function IsVersionNumberNull() As Boolean
+            Return Me.IsNull(Me.tablevwVehicleStatusReport.VersionNumberColumn)
+        End Function
+
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")> _
+        Public Sub SetVersionNumberNull()
+            Me(Me.tablevwVehicleStatusReport.VersionNumberColumn) = Global.System.Convert.DBNull
         End Sub
 
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
@@ -6523,6 +6564,7 @@ Namespace StatusReportDataSetTableAdapters
             tableMapping.ColumnMappings.Add("SentFrom", "SentFrom")
             tableMapping.ColumnMappings.Add("SentBy", "SentBy")
             tableMapping.ColumnMappings.Add("CircularID", "CircularID")
+            tableMapping.ColumnMappings.Add("VersionNumber", "VersionNumber")
             Me._adapter.TableMappings.Add(tableMapping)
         End Sub
 
@@ -6539,15 +6581,18 @@ Namespace StatusReportDataSetTableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(4) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "SELECT EnvelopeId, (SELECT MIN(FlyerId) AS FlyerId FROM VehiclePages WHERE (Vehic" & _
-                "leId = vwVehicleStatusReport.VehicleId)) AS FlyerId, SenderId, VehicleId, RetId," & _
-                " Retailer, Tradeclass, MktId, Market, MediaId, Media, PublicationId, Publication" & _
-                ", LanguageId, Language, EventId, Event, ThemeId, Theme, Priority, BreakDt, Start" & _
-                "Dt, EndDt, Coupon, Flash, CreateDt, CreatedById, CreatedBy, IndexDt, IndexedById" & _
-                ", IndexedBy, ScanDt, ScannedById, ScannedBy, QCDt, QCedById, QCedBy, CreateSized" & _
-                "Dt, StatusID, Status, ftpDt, ftpStatusId, FTPStatus, SPReviewStatusId, SPReviewS" & _
-                "tatus, CompareVehicleId, Subject, CircularID, StatusChangeBy, SentFrom, SentBy F" & _
-                "ROM vwVehicleStatusReport WHERE (EnvelopeId = @EnvelopeId) ORDER BY VehicleId"
+            Me._commandCollection(0).CommandText = "SELECT        EnvelopeId," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                             (SELECT        MIN(FlyerI" & _
+                "d) AS FlyerId" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                               FROM            VehiclePages" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "    " & _
+                "                           WHERE        (VehicleId = vwVehicleStatusReport.Vehic" & _
+                "leId)) AS FlyerId, SenderId, VehicleId, RetId, Retailer, Tradeclass, MktId, Mark" & _
+                "et, MediaId, Media, PublicationId, Publication, LanguageId, Language, EventId, E" & _
+                "vent, " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         ThemeId, Theme, Priority, BreakDt, StartDt, End" & _
+                "Dt, Coupon, Flash, CreateDt, CreatedById, CreatedBy, IndexDt, IndexedById, Index" & _
+                "edBy, ScanDt, ScannedById, ScannedBy, QCDt, QCedById, QCedBy, CreateSizedDt, Sta" & _
+                "tusID, " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "                         Status, ftpDt, ftpStatusId, FTPStatus, SPRevie" & _
+                "wStatusId, SPReviewStatus, CompareVehicleId, Subject, CircularID, StatusChangeBy" & _
+                ", SentFrom, SentBy, VersionNumber" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "FROM            vwVehicleStatusReport" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "WHERE " & _
+                "       (EnvelopeId = @EnvelopeId)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "ORDER BY VehicleId"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@EnvelopeId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "EnvelopeId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(1) = New Global.System.Data.SqlClient.SqlCommand()
@@ -6559,8 +6604,8 @@ Namespace StatusReportDataSetTableAdapters
                 " Media, MediaId, MktId, Priority, Publication, PublicationId, QCDt, QCedBy, QCed" & _
                 "ById, RetId, Retailer, SPReviewStatus, SPReviewStatusId, ScanDt, ScannedBy, Scan" & _
                 "nedById, SenderId, SentBy, SentFrom, StartDt, Status, StatusChangeBy, StatusID, " & _
-                "Subject, CircularID, Theme, ThemeId, Tradeclass, VehicleId, ftpDt, ftpStatusId F" & _
-                "ROM vwVehicleStatusReport WHERE (VehicleId = @VehicleId)"
+                "Subject, CircularID, Theme, ThemeId, Tradeclass, VehicleId, ftpDt, ftpStatusId, " & _
+                "versionNumber FROM vwVehicleStatusReport WHERE (VehicleId = @VehicleId)"
             Me._commandCollection(1).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(1).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@VehicleId", Global.System.Data.SqlDbType.Int, 4, Global.System.Data.ParameterDirection.Input, 0, 0, "VehicleId", Global.System.Data.DataRowVersion.Current, False, Nothing, "", "", ""))
             Me._commandCollection(2) = New Global.System.Data.SqlClient.SqlCommand()

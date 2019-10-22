@@ -53,9 +53,15 @@
             Me.Panel2 = New System.Windows.Forms.Panel()
             Me.ResultsGroupBox = New System.Windows.Forms.GroupBox()
             Me.vehicleDataGridView = New System.Windows.Forms.DataGridView()
+            Me.VehicleListBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+            Me.AdSearchDataSet = New MCAP.AdSearchDataSet()
+            Me.MyStatusStrip = New System.Windows.Forms.StatusStrip()
+            Me.SearchLabel = New System.Windows.Forms.ToolStripStatusLabel()
+            Me.VehicleListTableAdapter = New MCAP.AdSearchDataSetTableAdapters.VehicleListTableAdapter()
             Me.VehicleIdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.Flyerid = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.CircularIdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+            Me.VersionNumberTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.FamilyId = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.EnvelopeId = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.RetailerDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -74,11 +80,6 @@
             Me.PageCountDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.ExportStatusDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             Me.CoverageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-            Me.VehicleListBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-            Me.AdSearchDataSet = New MCAP.AdSearchDataSet()
-            Me.MyStatusStrip = New System.Windows.Forms.StatusStrip()
-            Me.SearchLabel = New System.Windows.Forms.ToolStripStatusLabel()
-            Me.VehicleListTableAdapter = New MCAP.AdSearchDataSetTableAdapters.VehicleListTableAdapter()
             Me.LanguageTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
             CType(Me.m_ErrorProvider, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.searchGroupBox.SuspendLayout()
@@ -423,7 +424,7 @@
             Me.vehicleDataGridView.AllowUserToDeleteRows = False
             Me.vehicleDataGridView.AutoGenerateColumns = False
             Me.vehicleDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-            Me.vehicleDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.VehicleIdDataGridViewTextBoxColumn, Me.Flyerid, Me.CircularIdDataGridViewTextBoxColumn, Me.FamilyId, Me.EnvelopeId, Me.RetailerDataGridViewTextBoxColumn, Me.MarketDataGridViewTextBoxColumn, Me.MediaDataGridViewTextBoxColumn, Me.Subject, Me.BreakDtDataGridViewTextBoxColumn, Me.FlashStatusDataGridViewTextBoxColumn, Me.NewspaperDataGridViewTextBoxColumn, Me.SenderDataGridViewTextBoxColumn, Me.PriorityDataGridViewTextBoxColumn, Me.CreateDtDataGridViewTextBoxColumn, Me.StatusDataGridViewTextBoxColumn, Me.ReQCedByDataGridViewTextBoxColumn, Me.ReQCedDateDataGridViewTextBoxColumn, Me.PageCountDataGridViewTextBoxColumn, Me.ExportStatusDataGridViewTextBoxColumn, Me.CoverageDataGridViewTextBoxColumn, Me.LanguageTextBoxColumn})
+            Me.vehicleDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.VehicleIdDataGridViewTextBoxColumn, Me.Flyerid, Me.CircularIdDataGridViewTextBoxColumn, Me.VersionNumberTextBoxColumn, Me.FamilyId, Me.EnvelopeId, Me.RetailerDataGridViewTextBoxColumn, Me.MarketDataGridViewTextBoxColumn, Me.MediaDataGridViewTextBoxColumn, Me.Subject, Me.BreakDtDataGridViewTextBoxColumn, Me.FlashStatusDataGridViewTextBoxColumn, Me.NewspaperDataGridViewTextBoxColumn, Me.SenderDataGridViewTextBoxColumn, Me.PriorityDataGridViewTextBoxColumn, Me.CreateDtDataGridViewTextBoxColumn, Me.StatusDataGridViewTextBoxColumn, Me.ReQCedByDataGridViewTextBoxColumn, Me.ReQCedDateDataGridViewTextBoxColumn, Me.PageCountDataGridViewTextBoxColumn, Me.ExportStatusDataGridViewTextBoxColumn, Me.CoverageDataGridViewTextBoxColumn, Me.LanguageTextBoxColumn})
             Me.vehicleDataGridView.DataSource = Me.VehicleListBindingSource
             Me.vehicleDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
             Me.vehicleDataGridView.Location = New System.Drawing.Point(3, 16)
@@ -431,6 +432,36 @@
             Me.vehicleDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
             Me.vehicleDataGridView.Size = New System.Drawing.Size(945, 372)
             Me.vehicleDataGridView.TabIndex = 3
+            '
+            'VehicleListBindingSource
+            '
+            Me.VehicleListBindingSource.DataMember = "VehicleList"
+            Me.VehicleListBindingSource.DataSource = Me.AdSearchDataSet
+            '
+            'AdSearchDataSet
+            '
+            Me.AdSearchDataSet.DataSetName = "AdSearchDataSet"
+            Me.AdSearchDataSet.EnforceConstraints = False
+            Me.AdSearchDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+            '
+            'MyStatusStrip
+            '
+            Me.MyStatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SearchLabel})
+            Me.MyStatusStrip.Location = New System.Drawing.Point(0, 391)
+            Me.MyStatusStrip.Name = "MyStatusStrip"
+            Me.MyStatusStrip.Size = New System.Drawing.Size(951, 22)
+            Me.MyStatusStrip.TabIndex = 2
+            Me.MyStatusStrip.Text = "StatusStrip1"
+            '
+            'SearchLabel
+            '
+            Me.SearchLabel.Name = "SearchLabel"
+            Me.SearchLabel.Size = New System.Drawing.Size(35, 17)
+            Me.SearchLabel.Text = "Done"
+            '
+            'VehicleListTableAdapter
+            '
+            Me.VehicleListTableAdapter.ClearBeforeFill = True
             '
             'VehicleIdDataGridViewTextBoxColumn
             '
@@ -452,6 +483,12 @@
             Me.CircularIdDataGridViewTextBoxColumn.HeaderText = "CircularId"
             Me.CircularIdDataGridViewTextBoxColumn.Name = "CircularIdDataGridViewTextBoxColumn"
             Me.CircularIdDataGridViewTextBoxColumn.ReadOnly = True
+            '
+            'VersionNumberTextBoxColumn
+            '
+            Me.VersionNumberTextBoxColumn.DataPropertyName = "VersionNumber"
+            Me.VersionNumberTextBoxColumn.HeaderText = "VersionNumber"
+            Me.VersionNumberTextBoxColumn.Name = "VersionNumberTextBoxColumn"
             '
             'FamilyId
             '
@@ -567,36 +604,6 @@
             Me.CoverageDataGridViewTextBoxColumn.Name = "CoverageDataGridViewTextBoxColumn"
             Me.CoverageDataGridViewTextBoxColumn.ReadOnly = True
             '
-            'VehicleListBindingSource
-            '
-            Me.VehicleListBindingSource.DataMember = "VehicleList"
-            Me.VehicleListBindingSource.DataSource = Me.AdSearchDataSet
-            '
-            'AdSearchDataSet
-            '
-            Me.AdSearchDataSet.DataSetName = "AdSearchDataSet"
-            Me.AdSearchDataSet.EnforceConstraints = False
-            Me.AdSearchDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-            '
-            'MyStatusStrip
-            '
-            Me.MyStatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SearchLabel})
-            Me.MyStatusStrip.Location = New System.Drawing.Point(0, 391)
-            Me.MyStatusStrip.Name = "MyStatusStrip"
-            Me.MyStatusStrip.Size = New System.Drawing.Size(951, 22)
-            Me.MyStatusStrip.TabIndex = 2
-            Me.MyStatusStrip.Text = "StatusStrip1"
-            '
-            'SearchLabel
-            '
-            Me.SearchLabel.Name = "SearchLabel"
-            Me.SearchLabel.Size = New System.Drawing.Size(35, 17)
-            Me.SearchLabel.Text = "Done"
-            '
-            'VehicleListTableAdapter
-            '
-            Me.VehicleListTableAdapter.ClearBeforeFill = True
-            '
             'LanguageTextBoxColumn
             '
             Me.LanguageTextBoxColumn.DataPropertyName = "Language"
@@ -665,9 +672,14 @@
         Friend WithEvents StatusComboBox As System.Windows.Forms.ComboBox
         Friend WithEvents Label As System.Windows.Forms.Label
         Friend WithEvents SenderComboBox As System.Windows.Forms.ComboBox
+        Friend WithEvents createDateRadioButton As System.Windows.Forms.RadioButton
+        Friend WithEvents addateRadioButton As System.Windows.Forms.RadioButton
+        Friend WithEvents LanguageComboBox As System.Windows.Forms.ComboBox
+        Friend WithEvents Label2 As System.Windows.Forms.Label
         Friend WithEvents VehicleIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents Flyerid As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents CircularIdDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents VersionNumberTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents FamilyId As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents EnvelopeId As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents RetailerDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -686,10 +698,6 @@
         Friend WithEvents PageCountDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents ExportStatusDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents CoverageDataGridViewTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
-        Friend WithEvents createDateRadioButton As System.Windows.Forms.RadioButton
-        Friend WithEvents addateRadioButton As System.Windows.Forms.RadioButton
-        Friend WithEvents LanguageComboBox As System.Windows.Forms.ComboBox
-        Friend WithEvents Label2 As System.Windows.Forms.Label
         Friend WithEvents LanguageTextBoxColumn As System.Windows.Forms.DataGridViewTextBoxColumn
 
   End Class
