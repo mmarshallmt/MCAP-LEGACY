@@ -120,7 +120,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("MT3SQL5")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("MT4SQL06")>  _
         Public ReadOnly Property ServerName() As String
             Get
                 Return CType(Me("ServerName"),String)
@@ -185,7 +185,7 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=MT3SQL5;Initial Catalog=MCAP;Integrated Security=True")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=MT4SQL06;Initial Catalog=MCAP;Integrated Security=True")>  _
         Public ReadOnly Property MCAPConnectionString() As String
             Get
                 Return CType(Me("MCAPConnectionString"),String)
@@ -195,7 +195,7 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=MT3SQL5;nitial Catalog=MCAPLog;Integrated Security=True")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=MT4SQL06;nitial Catalog=MCAPLog;Integrated Security=True")>  _
         Public ReadOnly Property MCAPLogConnectionString() As String
             Get
                 Return CType(Me("MCAPLogConnectionString"),String)
@@ -205,7 +205,7 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=MT3SQL5;Initial Catalog=MCAPConfig;Integrated Security=True")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=MT4SQL06;Initial Catalog=MCAPConfig;Integrated Security=True")>  _
         Public ReadOnly Property MCAPConfigConnectionString() As String
             Get
                 Return CType(Me("MCAPConfigConnectionString"),String)
