@@ -7001,8 +7001,8 @@ Namespace AdSearchDataSetTableAdapters
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
             Me._commandCollection(0).CommandText = "SELECT CodeId, Descrip FROM Code WHERE (CodeTypeId = 4) AND (CodeId NOT IN (23, 2" & _
-                "8, 2217, 2221, 21, 30, 29, 24, 2219, 2218, 2220)) UNION SELECT 0 AS codeid, '' A" & _
-                "S descrip ORDER BY Descrip"
+                "8, 2217, 2221, 21, 30, 29, 2219, 2218, 2220)) UNION SELECT 0 AS codeid, '' AS de" & _
+                "scrip ORDER BY Descrip"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
         End Sub
 

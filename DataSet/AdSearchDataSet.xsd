@@ -445,7 +445,7 @@ order by name asc</CommandText>
               <DbSource ConnectionRef="MCAPConnectionString (MySettings)" DbObjectName="MCAP.dbo.Code" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT CodeId, Descrip FROM Code WHERE (CodeTypeId = 4) AND (CodeId NOT IN (23, 28, 2217, 2221, 21, 30, 29, 24, 2219, 2218, 2220)) UNION SELECT 0 AS codeid, '' AS descrip ORDER BY Descrip</CommandText>
+                    <CommandText>SELECT CodeId, Descrip FROM Code WHERE (CodeTypeId = 4) AND (CodeId NOT IN (23, 28, 2217, 2221, 21, 30, 29, 2219, 2218, 2220)) UNION SELECT 0 AS codeid, '' AS descrip ORDER BY Descrip</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -711,7 +711,7 @@ SELECT LanguageID, Descrip FROM Language WHERE (LanguageID = @LanguageID)</Comma
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Sender" msprop:Generator_TableClassName="SenderDataTable" msprop:Generator_TableVarName="tableSender" msprop:Generator_RowChangedName="SenderRowChanged" msprop:Generator_TablePropName="Sender" msprop:Generator_RowDeletingName="SenderRowDeleting" msprop:Generator_RowChangingName="SenderRowChanging" msprop:Generator_RowEvHandlerName="SenderRowChangeEventHandler" msprop:Generator_RowDeletedName="SenderRowDeleted" msprop:Generator_RowClassName="SenderRow" msprop:Generator_UserTableName="Sender" msprop:Generator_RowEvArgName="SenderRowChangeEvent">
+        <xs:element name="Sender" msprop:Generator_TableClassName="SenderDataTable" msprop:Generator_TableVarName="tableSender" msprop:Generator_TablePropName="Sender" msprop:Generator_RowDeletingName="SenderRowDeleting" msprop:Generator_RowChangingName="SenderRowChanging" msprop:Generator_RowEvHandlerName="SenderRowChangeEventHandler" msprop:Generator_RowDeletedName="SenderRowDeleted" msprop:Generator_UserTableName="Sender" msprop:Generator_RowChangedName="SenderRowChanged" msprop:Generator_RowEvArgName="SenderRowChangeEvent" msprop:Generator_RowClassName="SenderRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="SenderId" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnSenderId" msprop:Generator_ColumnPropNameInRow="SenderId" msprop:Generator_ColumnPropNameInTable="SenderIdColumn" msprop:Generator_UserColumnName="SenderId" type="xs:int" />
@@ -725,7 +725,7 @@ SELECT LanguageID, Descrip FROM Language WHERE (LanguageID = @LanguageID)</Comma
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Status" msprop:Generator_TableClassName="StatusDataTable" msprop:Generator_TableVarName="tableStatus" msprop:Generator_RowChangedName="StatusRowChanged" msprop:Generator_TablePropName="Status" msprop:Generator_RowDeletingName="StatusRowDeleting" msprop:Generator_RowChangingName="StatusRowChanging" msprop:Generator_RowEvHandlerName="StatusRowChangeEventHandler" msprop:Generator_RowDeletedName="StatusRowDeleted" msprop:Generator_RowClassName="StatusRow" msprop:Generator_UserTableName="Status" msprop:Generator_RowEvArgName="StatusRowChangeEvent">
+        <xs:element name="Status" msprop:Generator_TableClassName="StatusDataTable" msprop:Generator_TableVarName="tableStatus" msprop:Generator_TablePropName="Status" msprop:Generator_RowDeletingName="StatusRowDeleting" msprop:Generator_RowChangingName="StatusRowChanging" msprop:Generator_RowEvHandlerName="StatusRowChangeEventHandler" msprop:Generator_RowDeletedName="StatusRowDeleted" msprop:Generator_UserTableName="Status" msprop:Generator_RowChangedName="StatusRowChanged" msprop:Generator_RowEvArgName="StatusRowChangeEvent" msprop:Generator_RowClassName="StatusRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="CodeId" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCodeId" msprop:Generator_ColumnPropNameInRow="CodeId" msprop:Generator_ColumnPropNameInTable="CodeIdColumn" msprop:Generator_UserColumnName="CodeId" type="xs:int" minOccurs="0" />
@@ -739,7 +739,7 @@ SELECT LanguageID, Descrip FROM Language WHERE (LanguageID = @LanguageID)</Comma
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Language" msprop:Generator_TableClassName="LanguageDataTable" msprop:Generator_TableVarName="tableLanguage" msprop:Generator_TablePropName="Language" msprop:Generator_RowDeletingName="LanguageRowDeleting" msprop:Generator_RowChangingName="LanguageRowChanging" msprop:Generator_RowEvHandlerName="LanguageRowChangeEventHandler" msprop:Generator_RowDeletedName="LanguageRowDeleted" msprop:Generator_UserTableName="Language" msprop:Generator_RowChangedName="LanguageRowChanged" msprop:Generator_RowEvArgName="LanguageRowChangeEvent" msprop:Generator_RowClassName="LanguageRow">
+        <xs:element name="Language" msprop:Generator_TableClassName="LanguageDataTable" msprop:Generator_TableVarName="tableLanguage" msprop:Generator_RowChangedName="LanguageRowChanged" msprop:Generator_TablePropName="Language" msprop:Generator_RowDeletingName="LanguageRowDeleting" msprop:Generator_RowChangingName="LanguageRowChanging" msprop:Generator_RowEvHandlerName="LanguageRowChangeEventHandler" msprop:Generator_RowDeletedName="LanguageRowDeleted" msprop:Generator_RowClassName="LanguageRow" msprop:Generator_UserTableName="Language" msprop:Generator_RowEvArgName="LanguageRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="LanguageID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnLanguageID" msprop:Generator_ColumnPropNameInRow="LanguageID" msprop:Generator_ColumnPropNameInTable="LanguageIDColumn" msprop:Generator_UserColumnName="LanguageID" type="xs:int" />
@@ -786,8 +786,8 @@ SELECT LanguageID, Descrip FROM Language WHERE (LanguageID = @LanguageID)</Comma
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="FK_Ret_Language" msdata:parent="Language" msdata:child="Ret" msdata:parentkey="LanguageID" msdata:childkey="LanguageId" msprop:Generator_UserChildTable="Ret" msprop:Generator_ChildPropName="GetRetRows" msprop:Generator_UserRelationName="FK_Ret_Language" msprop:Generator_RelationVarName="relationFK_Ret_Language" msprop:Generator_UserParentTable="Language" msprop:Generator_ParentPropName="LanguageRow" />
-      <msdata:Relationship name="FK_Publication_Language" msdata:parent="Language" msdata:child="Publication" msdata:parentkey="LanguageID" msdata:childkey="LanguageID" msprop:Generator_UserChildTable="Publication" msprop:Generator_ChildPropName="GetPublicationRows" msprop:Generator_UserRelationName="FK_Publication_Language" msprop:Generator_RelationVarName="relationFK_Publication_Language" msprop:Generator_UserParentTable="Language" msprop:Generator_ParentPropName="LanguageRow" />
+      <msdata:Relationship name="FK_Ret_Language" msdata:parent="Language" msdata:child="Ret" msdata:parentkey="LanguageID" msdata:childkey="LanguageId" msprop:Generator_UserChildTable="Ret" msprop:Generator_ChildPropName="GetRetRows" msprop:Generator_UserRelationName="FK_Ret_Language" msprop:Generator_ParentPropName="LanguageRow" msprop:Generator_RelationVarName="relationFK_Ret_Language" msprop:Generator_UserParentTable="Language" />
+      <msdata:Relationship name="FK_Publication_Language" msdata:parent="Language" msdata:child="Publication" msdata:parentkey="LanguageID" msdata:childkey="LanguageID" msprop:Generator_UserChildTable="Publication" msprop:Generator_ChildPropName="GetPublicationRows" msprop:Generator_UserRelationName="FK_Publication_Language" msprop:Generator_ParentPropName="LanguageRow" msprop:Generator_RelationVarName="relationFK_Publication_Language" msprop:Generator_UserParentTable="Language" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>
