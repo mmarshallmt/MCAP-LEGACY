@@ -4409,15 +4409,16 @@
         ''' <remarks></remarks>
         Private Sub LoadFilteredRetPublicationCoverage(ByVal filterCondition As String)
             Dim ColumnPrefix As String = "RPC."
-            If filterCondition.Contains("RPC.MKTID") = True Then
-                filterCondition = filterCondition.Replace("RPC.MKTID", "P.MKTID")
+            If filterCondition.Contains("MKTID") Then
+                filterCondition = filterCondition.Replace("MKTID", "P.MKTID")
                 ''ColumnPrefix = "P."
             End If
 
+            filterCondition = (ColumnPrefix + filterCondition).Replace("RPC.P.", "P.")
 
             Data.RetPublicationCoverage.LoadingTable = True
             Data.RetPublicationCoverage.BeginLoadData()
-            RetPublicationCoverageAdapter.FillByWhereClause(Data.RetPublicationCoverage, ColumnPrefix + filterCondition)
+            RetPublicationCoverageAdapter.FillByWhereClause(Data.RetPublicationCoverage, filterCondition)
             Data.RetPublicationCoverage.EndLoadData()
             Data.RetPublicationCoverage.LoadingTable = False
 
