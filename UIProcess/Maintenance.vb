@@ -4409,8 +4409,9 @@
         ''' <remarks></remarks>
         Private Sub LoadFilteredRetPublicationCoverage(ByVal filterCondition As String)
             Dim ColumnPrefix As String = "RPC."
-            If filterCondition.Contains("MKTID") = True Then
-                ColumnPrefix = "P."
+            If filterCondition.Contains("RPC.MKTID") = True Then
+                filterCondition = filterCondition.Replace("RPC.MKTID", "P.MKTID")
+                ''ColumnPrefix = "P."
             End If
 
 
