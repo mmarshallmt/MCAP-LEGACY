@@ -308,7 +308,7 @@
             Me.requiredRetailersDataGridView.AllowUserToResizeColumns = False
             Me.requiredRetailersDataGridView.AllowUserToResizeRows = False
             Me.requiredRetailersDataGridView.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.requiredRetailersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
             Me.requiredRetailersDataGridView.Location = New System.Drawing.Point(388, 224)
             Me.requiredRetailersDataGridView.Name = "requiredRetailersDataGridView"
@@ -341,7 +341,7 @@
             'vehicleIdTextBox
             '
             Me.vehicleIdTextBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.vehicleIdTextBox.Location = New System.Drawing.Point(7, 20)
             Me.vehicleIdTextBox.MaxLength = 9
             Me.vehicleIdTextBox.Name = "vehicleIdTextBox"
@@ -588,7 +588,6 @@
             '
             'SenderTextBox
             '
-            Me.SenderTextBox.Enabled = False
             Me.SenderTextBox.Location = New System.Drawing.Point(388, 86)
             Me.SenderTextBox.Multiline = True
             Me.SenderTextBox.Name = "SenderTextBox"
