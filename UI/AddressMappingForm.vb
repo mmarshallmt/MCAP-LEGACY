@@ -401,7 +401,7 @@ Namespace UI
                         Using ACMKTIDCell As DataGridViewTextBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("AC_MktIDCol"), DataGridViewTextBoxCell)
                             ACMKTIDCell.Value = ""
                         End Using
-                        Using AC_MKT_NMCell As DataGridViewComboBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("AC_MarketCol"), DataGridViewComboBoxCell)
+                        Using AC_MKT_NMCell As DataGridViewTextBoxCell = CType(AddMappingDGV.Rows(e.RowIndex).Cells("AC_MarketCol"), DataGridViewTextBoxCell)
                             AC_MKT_NMCell.Value = ""
                         End Using
                     End If
