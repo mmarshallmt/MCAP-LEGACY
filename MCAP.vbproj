@@ -35,7 +35,7 @@
     <SignManifests>false</SignManifests>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>MCAP_2_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
-    <PublishUrl>\\mt6sql1.apima01.local\MCAPInstall\</PublishUrl>
+    <PublishUrl>\\mt3sql1\MCAPInstall\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -46,12 +46,12 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>MCAP 1.2</ProductName>
-    <PublisherName>Market Track, LLC</PublisherName>
+    <PublisherName>Numerator</PublisherName>
     <SuiteName>Data Entry</SuiteName>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>40</ApplicationRevision>
-    <ApplicationVersion>1.2.4.40</ApplicationVersion>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>45</ApplicationRevision>
+    <ApplicationVersion>1.2.4.45</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -614,9 +614,7 @@
     <Compile Include="UIProcess\VehicleLabelPrint.vb" />
     <Compile Include="UI\Controls\DataGridViewAutoFilterTextBoxColumn.vb">
     </Compile>
-    <Compile Include="UI\Controls\DataGridViewAutoFilterColumnHeaderCell.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="UI\Controls\DataGridViewAutoFilterColumnHeaderCell.vb" />
     <Compile Include="UI\Controls\DataGridViewCheckedListBoxCell.vb" />
     <Compile Include="UI\Controls\DataGridViewCheckedListBoxColumn.vb" />
     <Compile Include="UI\Controls\DataGridViewCheckedListBoxEditingControl.vb">

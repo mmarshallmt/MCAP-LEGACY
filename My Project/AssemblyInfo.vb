@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("MCAP 1.2")> 
-<Assembly: AssemblyDescription("Materials Collection and Ad Processing application.")> 
-<Assembly: AssemblyCompany("Market Track")> 
-<Assembly: AssemblyProduct("MCAP 1.2")> 
-<Assembly: AssemblyCopyright("Copyright © Market Track 2019")> 
+<Assembly: AssemblyTitle("MCAP 1.2")>
+<Assembly: AssemblyDescription("Materials Collection and Ad Processing application.")>
+<Assembly: AssemblyCompany("Numerator")>
+<Assembly: AssemblyProduct("MCAP 1.2")>
+<Assembly: AssemblyCopyright("Copyright © Numerator 2020")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -33,5 +33,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.2.4.32")> 
-<Assembly: AssemblyFileVersion("1.2.4.32")> 
+<Assembly: AssemblyVersion("1.2.4.44")>
+<Assembly: AssemblyFileVersion("1.2.4.44")>
